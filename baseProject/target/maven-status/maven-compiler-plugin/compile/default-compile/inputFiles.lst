@@ -1,51 +1,51 @@
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\dao\AlertDao.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\dao\MessageDao.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\Message.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\service\UserUpdateService.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\dao\AdPictureDao.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\dao\RatingDao.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\EnquiryController.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\service\BookmarkService.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\VisitEnquiryState.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\pojos\forms\EditProfileForm.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\ProfileController.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\Location.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\service\EnquiryService.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\service\MessageService.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\service\UserService.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\Visit.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\Picture.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\pojos\forms\PlaceAdForm.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\service\SignupService.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\pojos\PictureUploader.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\pojos\forms\MessageForm.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\EditAdController.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\PlaceAdController.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\pojos\forms\AlertForm.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\AdController.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\AlertController.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\MessageController.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\dao\AdDao.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\service\GeoDataService.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\Alert.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\service\EditAdService.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\Ad.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\Gender.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\UserRole.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\pojos\forms\SearchForm.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\dao\UserDao.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\MessageState.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\UserPicture.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\pojos\forms\SignupForm.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\service\AlertService.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\service\AdService.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\service\VisitService.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\PictureMeta.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\dao\VisitEnquiryDao.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\VisitEnquiry.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\IndexController.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\controller\SearchController.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\AdPicture.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\User.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\Rating.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\baseProject\src\main\java\ch\unibe\ese\team1\model\dao\VisitDao.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/service/VisitService.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/dao/VisitDao.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/AdController.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/EditAdController.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/AlertController.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/service/BookmarkService.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/MessageController.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/service/AlertService.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/service/MessageService.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/service/UserUpdateService.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/dao/AdPictureDao.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/service/GeoDataService.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/PictureMeta.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/pojos/forms/SignupForm.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/Message.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/service/EnquiryService.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/dao/AdDao.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/EnquiryController.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/service/AdService.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/service/EditAdService.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/PlaceAdController.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/Ad.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/dao/RatingDao.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/service/SignupService.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/service/UserService.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/Alert.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/Visit.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/dao/MessageDao.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/UserPicture.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/pojos/forms/PlaceAdForm.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/Location.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/MessageState.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/pojos/forms/MessageForm.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/dao/VisitEnquiryDao.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/VisitEnquiryState.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/pojos/forms/AlertForm.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/IndexController.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/pojos/PictureUploader.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/Gender.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/SearchController.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/ProfileController.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/UserRole.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/User.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/Rating.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/pojos/forms/EditProfileForm.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/Picture.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/dao/UserDao.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/AdPicture.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/dao/AlertDao.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/controller/pojos/forms/SearchForm.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/main/java/ch/unibe/ese/team1/model/VisitEnquiry.java
