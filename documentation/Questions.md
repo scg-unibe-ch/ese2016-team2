@@ -15,4 +15,4 @@
  - Should a premium user pay something?
  
 ###General questions regarding the project
- - How detailed must use cases and scenarios be in a SRS?
+- How detailed must use cases and scenarios be in a SRS?
