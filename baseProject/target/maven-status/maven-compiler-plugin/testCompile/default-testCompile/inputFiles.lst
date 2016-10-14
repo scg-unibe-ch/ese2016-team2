@@ -1,13 +1,13 @@
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\ese2016-team2\baseProject\src\test\java\ch\unibe\ese\team1\controller\service\GeoDataServiceTest.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\ese2016-team2\baseProject\src\test\java\ch\unibe\ese\team1\test\testData\VisitEnquiryTestDataSaver.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\ese2016-team2\baseProject\src\test\java\ch\unibe\ese\team1\test\testData\RatingTestDataSaver.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\ese2016-team2\baseProject\src\test\java\ch\unibe\ese\team1\test\testData\AlertTestDataSaver.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\ese2016-team2\baseProject\src\test\java\ch\unibe\ese\team1\test\testData\MessageTestDataSaver.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\ese2016-team2\baseProject\src\test\java\ch\unibe\ese\team1\test\testData\VisitTestDataSaver.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\ese2016-team2\baseProject\src\test\java\ch\unibe\ese\team1\test\testData\TestDataSeeder.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\ese2016-team2\baseProject\src\test\java\ch\unibe\ese\team1\test\testData\BookmarkTestDataSaver.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\ese2016-team2\baseProject\src\test\java\ch\unibe\ese\team1\controller\service\AlertServiceTest.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\ese2016-team2\baseProject\src\test\java\ch\unibe\ese\team1\test\testData\AdTestDataSaver.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\ese2016-team2\baseProject\src\test\java\ch\unibe\ese\team1\controller\service\EnquiryServiceTest.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\ese2016-team2\baseProject\src\test\java\ch\unibe\ese\team1\controller\service\AdServiceTest.java
-C:\Users\Julian Schuhmacher\Desktop\ESE\team2\ese2016-team2\baseProject\src\test\java\ch\unibe\ese\team1\test\testData\UserTestDataSaver.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/test/java/ch/unibe/ese/team1/controller/service/GeoDataServiceTest.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/test/java/ch/unibe/ese/team1/test/testData/AdTestDataSaver.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/test/java/ch/unibe/ese/team1/test/testData/MessageTestDataSaver.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/test/java/ch/unibe/ese/team1/test/testData/RatingTestDataSaver.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/test/java/ch/unibe/ese/team1/test/testData/VisitEnquiryTestDataSaver.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/test/java/ch/unibe/ese/team1/test/testData/VisitTestDataSaver.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/test/java/ch/unibe/ese/team1/test/testData/AlertTestDataSaver.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/test/java/ch/unibe/ese/team1/test/testData/BookmarkTestDataSaver.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/test/java/ch/unibe/ese/team1/test/testData/UserTestDataSaver.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/test/java/ch/unibe/ese/team1/controller/service/AdServiceTest.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/test/java/ch/unibe/ese/team1/controller/service/EnquiryServiceTest.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/test/java/ch/unibe/ese/team1/controller/service/AlertServiceTest.java
+/Users/Jerome/Documents/Eclipse/Uni/Project_0/baseProject/src/test/java/ch/unibe/ese/team1/test/testData/TestDataSeeder.java

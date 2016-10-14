@@ -175,7 +175,7 @@ button {
 	border-width: 2px;
 	border-radius: 10px;
 	border-color: #2dc16d;
-	border-style: solid; 
+	border-style: solid;
 	color: grey;
 	font-size: 0.9em;
 }
@@ -186,7 +186,7 @@ button {
 	border-width: 2px;
 	border-radius: 10px;
 	border-color: #ff0000;
-	border-style: solid; 
+	border-style: solid;
 	color: grey;
 	font-size: 0.9em;
 }
@@ -974,7 +974,7 @@ footer nav ul li {
   display: inline-block;
   position: relative;
   width: 1.1em;
-  
+
 }
 
 .rating:hover > span {
@@ -988,7 +988,7 @@ footer nav ul li {
 .rating:hover > span:before {
 	content: "\2605";
 	position: absolute;
-	left: 0; 
+	left: 0;
 	color: #2dc16d;
 	width: 1.1em;
 }
