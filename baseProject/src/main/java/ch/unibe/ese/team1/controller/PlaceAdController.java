@@ -2,6 +2,7 @@ package ch.unibe.ese.team1.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -93,6 +94,7 @@ public class PlaceAdController {
 		if (pictureUploader == null) {
 			pictureUploader = new PictureUploader(realPath, IMAGE_DIRECTORY);
 		}
+		
 		return model;
 	}
 
