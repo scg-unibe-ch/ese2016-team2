@@ -1,0 +1,38 @@
+// @Jerome
+// NB: Changed "addons/font-stacks" to work with Bitters, which uses Bourbon 5.0.0.beta.6.
+// This is the error that occurs when transpiling without the mentioned change:
+// ----------
+// Error: Undefined variable: "$font-stack-system".
+// ...
+// ----------
+// Variables are differently declared in the file of the Bourbon 4.2.7 version.
+// Issue: https://github.com/thoughtbot/bitters/issues/234 (closed [?])
+//
+// TODO: Remove as soon as Bourbon 5 is out of beta, resp. when issue is gone.
+@import "_bourbon_font-stack-FIX";
+
+
+@import
+  "../../components/bourbon/app/assets/stylesheets/bourbon";
+  // Commented out because it should not mess with existing styles.
+  //"../../components/neat/app/assets/stylesheets/neat",
+  //"../../components/bitters/core/base";
+
+// @Jerome
+// TODO: Borrow the following from jquery ui:
+//   - Datepicker, n/a in Bourbon, as far as i know
+//   - Form field auto-completion (used for zip codes)
+//
+// NB: There might be more to borrow.
+
+@import 'mixins';
+@import 'reset';
+@import 'vars';
+@import 'base';
+@import 'grid';
+
+@import 'text';
+
+@import 'header';
+@import 'main';
+@import 'footer';

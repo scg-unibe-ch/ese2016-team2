@@ -1,0 +1,11 @@
+# webapp dir specific
+
+.sass-cache/
+resources/components
+node_modules/
+
+**/prod/*.*
+!**/prod/.keep
+
+config.codekit
+.codekit-cache

@@ -7,11 +7,15 @@
 
 <c:import url="template/header.jsp" />
 
+<%--
+@Jerome:
+	This was given. What for? What's the point in adding head and body twice?
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Welcome to FlatFindr</title>
+<title>The FlatFoundrs</title>
 </head>
-<body>
+<body> --%>
 
 <pre>Home</pre>
 
@@ -22,8 +26,8 @@
 		<h2>No ads placed yet</h2>
 	</c:when>
 	<c:otherwise>
-		<div id="resultsDiv" class="resultsDiv">	
-			<h2>Our newest ads:</h2>		
+		<div id="resultsDiv" class="resultsDiv">
+			<h2>Our newest ads:</h2>
 			<c:forEach var="ad" items="${newest}">
 				<div class="resultAd">
 					<div class="resultLeft">
@@ -56,4 +60,4 @@
 	</c:otherwise>
 </c:choose>
 
-<c:import url="template/footer.jsp" /><br />
+<c:import url="template/footer.jsp" />

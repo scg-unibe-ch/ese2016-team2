@@ -24,12 +24,12 @@
 		<br /><br />
 	</c:when>
 	<c:otherwise>
-	
+
 		<div id="resultsDiv" class="resultsDiv">
 		<h1>My Advertisements</h1>
-		<hr />			
+		<hr />
 			<c:forEach var="ad" items="${ownAdvertisements}">
-				<div class="resultAd" data-price="${ad.prizePerMonth}" 
+				<div class="resultAd" data-price="${ad.prizePerMonth}"
 								data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">
 					<div class="resultLeft">
 						<a href="<c:url value='/ad?id=${ad.id}' />"><img
@@ -54,7 +54,7 @@
 				</div>
 			</c:forEach>
 			<br /> <br />
-		</div>		
+		</div>
 	</c:otherwise>
 </c:choose>
 
@@ -66,12 +66,12 @@
 		<p>You have not bookmarked anything yet.</p><br /><br />
 	</c:when>
 	<c:otherwise>
-		
+
 		<div id="resultsDiv" class="resultsDiv">
 		<h1>My Bookmarks</h1>
-		<hr />			
+		<hr />
 			<c:forEach var="ad" items="${bookmarkedAdvertisements}">
-				<div class="resultAd" data-price="${ad.prizePerMonth}" 
+				<div class="resultAd" data-price="${ad.prizePerMonth}"
 								data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">
 					<div class="resultLeft">
 						<a href="<c:url value='/ad?id=${ad.id}' />"><img
@@ -95,7 +95,7 @@
 					</div>
 				</div>
 			</c:forEach>
-		</div>		
+		</div>
 	</c:otherwise>
 </c:choose>
 

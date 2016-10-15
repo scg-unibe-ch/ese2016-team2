@@ -6,6 +6,11 @@
 
 <c:import url="template/header.jsp" />
 
+<%--
+@Jerome
+	TODO: Put this js snippets somewhere else if possible (file). By adding them here,
+	they reside within the body, which is somewhat bad, i think.
+--%>
 <script>
 function star(starnr, rating) {
     if(starnr <= rating)
@@ -17,7 +22,7 @@ function star(starnr, rating) {
 
 <script>
 function stars(id, rating) {
-	document.getElementById(id).innerHTML = 
+	document.getElementById(id).innerHTML =
 	"<span onClick=\"rate(" + id + ", 1)\">" + star(1, rating) + "</span>" +
 	"<span onClick=\"rate(" + id + ", 2)\">" + star(2, rating) + "</span>" +
 	"<span onClick=\"rate(" + id + ", 3)\">" + star(3, rating) + "</span>" +
@@ -44,7 +49,7 @@ function rate(id, rating) {
 
 <p>Information about the property: <a href="/ad?id=${ad.id }">${ad.street }, ${ad.zipcode } ${ad.city }</a></p>
 
-<div id="visitorsDiv">			
+<div id="visitorsDiv">
 <c:choose>
 	<c:when test="${empty visitors}">
 		<p>This property doesn't have any scheduled visitors at the moment.

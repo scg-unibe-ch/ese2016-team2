@@ -7,14 +7,23 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
+<html>
 <head>
+<Title>FlatFindr</Title>
+
 <link rel="stylesheet" type="text/css" media="screen"
 	href="/css/main.css">
 <link rel="stylesheet" type="text/css"
 	media="only screen and (max-device-width: 480px)"
 	href="/css/smartphone.css" />
 
-<Title>FlatFindr</Title>
+<%--
+	@Jerome
+	NB: Ideally, everything css should be put here into one file (per page if reasonable).
+			This css file should add "yay." to the heading 1 for testing purposes.
+--%>
+<link rel="stylesheet" href="/resources/css/prod/app.css">
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script
 	src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
@@ -34,11 +43,17 @@
 </style>
 
 </head>
+<body class="<%
+	String servletPath = request.getServletPath();
+	int indexFrom = servletPath.lastIndexOf("/")+1;
+	int indexTo = servletPath.lastIndexOf(".");
+	out.print(servletPath.substring(indexFrom, indexTo)); %>">
 
-<!-- check if user is logged in -->
+
+<%-- check if user is logged in --%>
 <security:authorize var="loggedIn" url="/profile" />
 
-<!-- check if user has a profile picture -->
+<%-- check if user has a profile picture --%>
 
 <header>
 	<div class="left">
@@ -52,15 +67,15 @@
 					<script>
 						$(document).ready(unreadMessages("header"));
 					</script>
-					
+
 					<!-- include user details -->
 					<%@include file='/pages/getUserPicture.jsp' %>
 						<li id="profile_picture"><a href="#">
-						<% 
+						<%
 							out.print("<img src='" + filePath + "' />");
 
 							out.print("<p class='text'>" + realUser.getFirstName() + "<br />"
-								+ realUser.getLastName() + "</p>"); 
+								+ realUser.getLastName() + "</p>");
 						%>
 						</a>
 							<ul>
@@ -86,8 +101,6 @@
 	</div>
 </header>
 
-<body>
-	<!-- will be closed in footer-->
 	<div id="content">
 
 		<c:if test="${not empty confirmationMessage }">

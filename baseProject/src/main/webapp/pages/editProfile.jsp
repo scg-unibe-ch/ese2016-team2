@@ -10,7 +10,7 @@
 <script>
 	$(document).ready(function() {
 		$("#about-me").val("${currentUser.aboutMe}")
-		});		
+		});
 </script>
 
 <pre><a href="/">Home</a>   &gt;   <a href="/user?id=${currentUser.id}">Public Profile</a>   &gt;   Edit profile</pre>
@@ -41,17 +41,17 @@
 	<tr>
 		<td class="spacingTable"><label for="user-name">Username:</label><a>&emsp;</a>
 		<form:input id="user-name" path="username" value="${currentUser.username}" /></td>
-		
+
 	</tr>
 	<tr>
 		<td class="spacingTable"><label for="first-name">First name:</label><a>&emsp;</a>
 		<form:input id="first-name" path="firstName" value="${currentUser.firstName}" /></td>
 	</tr>
-	<tr>	
+	<tr>
 		<td class="spacingTable"><label for="last-name">Last name:</label><a>&emsp;</a>
 		<form:input id="last-name" path="lastName" value="${currentUser.lastName}" /></td>
 	</tr>
-	<tr>	
+	<tr>
 		<td class="spacingTable"><label for="password">Password:</label><a>&emsp;&thinsp;</a>
 		<form:input type="password" id="password" path="password" value="${currentUser.password}" /></td>
 	</tr>
@@ -70,4 +70,3 @@
 
 
 <c:import url="template/footer.jsp" />
-

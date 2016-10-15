@@ -11,7 +11,7 @@
 
 <h2>Your presentations</h2>
 
-<div id="presentationsDiv">			
+<div id="presentationsDiv">
 <c:choose>
 	<c:when test="${empty presentations}">
 		<p>You currently haven't scheduled any presentations.
@@ -35,7 +35,7 @@
 						type="date" pattern="dd.MM.yyyy" />
 					${formattedVisitDay}
 				</td>
-				<td>	
+				<td>
 					<fmt:formatDate value="${presentation.startTimestamp}" var="formattedStartTime"
 						type="date" pattern="hh.mm" />
 					<fmt:formatDate value="${presentation.endTimestamp}" var="formattedEndTime"
@@ -53,7 +53,7 @@
 
 <h2>Your visits</h2>
 
-<div id="visitsDiv">			
+<div id="visitsDiv">
 <c:choose>
 	<c:when test="${empty visits}">
 		<p>You currently haven't scheduled any visits.
@@ -76,7 +76,7 @@
 						type="date" pattern="dd.MM.yyyy" />
 					${formattedVisitDay}
 				</td>
-				<td>	
+				<td>
 					<fmt:formatDate value="${visit.startTimestamp}" var="formattedStartTime"
 						type="date" pattern="hh.mm" />
 					<fmt:formatDate value="${visit.endTimestamp}" var="formattedEndTime"
