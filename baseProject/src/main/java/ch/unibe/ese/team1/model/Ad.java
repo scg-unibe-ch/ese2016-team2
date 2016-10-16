@@ -102,6 +102,9 @@ public class Ad {
 	// true if studio, false if room
 	@Column(nullable = false)
 	private boolean studio;
+	
+	@Column(nullable = false)
+	private String room = "";
 
 	@Fetch(FetchMode.SELECT)
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -127,6 +130,14 @@ public class Ad {
 
 	public void setStudio(boolean studio) {
 		this.studio = studio;
+	}
+	
+	public String getRoom() {
+		return room;
+	}
+
+	public void setRoom(String room) {
+		this.room = room;
 	}
 
 	public boolean getSmokers() {
