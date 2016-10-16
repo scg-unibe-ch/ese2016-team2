@@ -1,11 +1,13 @@
 // @Jerome
-// NB: Changed "addons/font-stacks" to work with Bitters, which uses Bourbon 5.0.0.beta.6.
-// This is the error that occurs when transpiling without the mentioned change:
+// NB: Added variables to"_bourbon_font-stack-FIX" to work with Bitters,
+// which seems to rely on Bourbon 5.0.0.beta.6.
+// This is the error that occurs when transpiling without the mentioned FIX:
 // ----------
 // Error: Undefined variable: "$font-stack-system".
 // ...
 // ----------
-// Variables are differently declared in the file of the Bourbon 4.2.7 version.
+// Variables are differently declared in addons/_font-stacks.scss of the
+// Bourbon 4.2.7 version.
 // Issue: https://github.com/thoughtbot/bitters/issues/234 (closed [?])
 //
 // TODO: Remove as soon as Bourbon 5 is out of beta, resp. when issue is gone.
