@@ -574,5 +574,4 @@ public class AdTestDataSaver {
 		picture.setFilePath(filePath);
 		return picture;
 	}
-
 }

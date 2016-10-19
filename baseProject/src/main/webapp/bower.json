@@ -1,0 +1,28 @@
+{
+  "name": "flatfindr",
+  "description": "web application for finding real estate",
+  "main": "index.jsp",
+  "authors": [
+    "scg-unibe",
+    "ese2016-team2"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/scg-unibe-ch/ese2016-team2",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "resources/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "bourbon": "^4.2.7",
+    "neat": "^1.8.0",
+    "bitters": "^1.4.0",
+    "blueimp-file-upload": "fileupload#^9.12.5",
+    "jquery-ui": "jquery.ui#^1.12.1",
+    "jquery.iframe-transport": "^1.0.0"
+  }
+}
