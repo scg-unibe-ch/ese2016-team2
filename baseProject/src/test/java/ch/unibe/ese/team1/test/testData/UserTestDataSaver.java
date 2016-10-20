@@ -1,6 +1,6 @@
 package ch.unibe.ese.team1.test.testData;
 
-import java.util.HashSet;
+import java.util.HashSet; 
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class UserTestDataSaver {
 
 		// Another advertiser & searcher
 		User bernerBaer = createUser("user@bern.com", "password",
-				"Berner", "BÃ¤r", Gender.MALE);
+				"Berner", "Bär", Gender.MALE);
 		UserPicture picture = new UserPicture();
 		picture.setFilePath("/img/test/berner_baer.png");
 		picture.setUser(bernerBaer);
@@ -123,7 +123,7 @@ public class UserTestDataSaver {
 		return "I am a Master student from switzerland. I'm 25 years old, "
 				+ "my hobbies are summer-sports, hiking, traveling and cooking. "
 				+ "I enjoy spending time with friends, watching movies, "
-				+ "going for drinks and organizing dinners. I have lived in FrÃ¤kmÃ¼ndegg, "
+				+ "going for drinks and organizing dinners. I have lived in Fräkmündegg, "
 				+ "London and Zurich, always in flatshares and i have never had "
 				+ "problems with my flatmates because I am a nice person.";
 	}
