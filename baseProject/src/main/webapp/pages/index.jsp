@@ -7,12 +7,6 @@
 
 <c:import url="template/header.jsp" />
 
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Welcome to FlatFindr</title>
-</head>
-<body>
-
 <pre>Home</pre>
 
 <h1>Welcome to FlatFindr!</h1>
@@ -22,8 +16,8 @@
 		<h2>No ads placed yet</h2>
 	</c:when>
 	<c:otherwise>
-		<div id="resultsDiv" class="resultsDiv">	
-			<h2>Our newest ads:</h2>		
+		<div id="resultsDiv" class="resultsDiv">
+			<h2>Our newest ads:</h2>
 			<c:forEach var="ad" items="${newest}">
 				<div class="resultAd">
 					<div class="resultLeft">
@@ -53,4 +47,4 @@
 	</c:otherwise>
 </c:choose>
 
-<c:import url="template/footer.jsp" /><br />
+<c:import url="template/footer.jsp" />
