@@ -31,4 +31,5 @@ dependency-reduced-pom.xml
 
 README.html
 
-*.lst
+# 
+baseProject/temp/
