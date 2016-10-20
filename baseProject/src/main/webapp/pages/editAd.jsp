@@ -141,19 +141,23 @@
 
 			<tr>
 				<td><form:input id="field-title" path="title" value="${ad.title}" /></td>
-				<td>
-					<c:choose>
-						<c:when test="${ad.studio == 'true'}">
-							<form:radiobutton id="type-room" path="studio" value="1"
-								checked="checked" />Room <form:radiobutton id="type-studio"
-								path="studio" value="0" />Studio
+				<td><c:choose>
+						<c:when test="${ad.roomType == 'Room'}">
+							<form:radiobutton id="type-room" path="roomType" value="Room" checked="checked"/>Room 
+							<form:radiobutton id="type-room" path="roomType" value="Studio" />Studio
+							<form:radiobutton id="type-room" path="roomType" value="House" />House
+						</c:when>
+						<c:when test="${ad.roomType == 'Studio'}">
+							<form:radiobutton id="type-room" path="roomType" value="Room" />Room 
+							<form:radiobutton id="type-room" path="roomType" value="Studio" checked="checked"/>Studio
+							<form:radiobutton id="type-room" path="roomType" value="House" />House
 						</c:when>
 						<c:otherwise>
-							<form:radiobutton id="type-room" path="studio" value="0"
-								checked="checked" />Room <form:radiobutton id="type-studio"
-								path="studio" value="1" />Studio
+							<form:radiobutton id="type-room" path="roomType" value="Room" />Room 
+							<form:radiobutton id="type-room" path="roomType" value="Studio" />Studio
+							<form:radiobutton id="type-room" path="roomType" value="House" checked="checked"/>House
 						</c:otherwise>
-					</c:choose>
+					</c:choose></td>
 			</tr>
 
 			<tr>

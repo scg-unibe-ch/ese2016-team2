@@ -46,7 +46,7 @@ public class PlaceAdForm {
 	// optional for input
 	private String roomFriends;
 	
-	private String room;
+	private String roomType;
 	
 	private String[] rooms = {"Studio", "Room", "House"};	
 	
@@ -233,12 +233,12 @@ public class PlaceAdForm {
 		this.studio = studio;
 	}
 	
-	public String getRoom() {
-		return room;
+	public String getRoomType() {
+		return roomType;
 	}
 
-	public void setRoom(String room) {
-		this.room = room;
+	public void setRoomType(String roomType) {
+		this.roomType = roomType;
 	}
 	
 	public String[] getRooms() {

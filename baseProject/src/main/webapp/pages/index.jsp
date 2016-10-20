@@ -35,7 +35,7 @@
 						<p>${ad.street}, ${ad.zipcode} ${ad.city}</p>
 						<br />
 						<p>
-							<i>${ad.room}</i>
+							<i>${ad.roomType}</i>
 						</p>
 					</div>
 					<div class="resultRight">

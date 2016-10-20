@@ -159,7 +159,7 @@
 	<table id="adDescTable" class="adDescDiv">
 		<tr>
 			<td><h2>Type</h2></td>
-			<td>${shownAd.room}</td>
+			<td>${shownAd.roomType}</td>
 		</tr>
 
 		<tr>
