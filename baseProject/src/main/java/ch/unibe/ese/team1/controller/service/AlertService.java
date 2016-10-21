@@ -60,7 +60,8 @@ public class AlertService {
 		alert.setRadius(alertForm.getRadius());
 		alert.setRoom(alertForm.getRoom());
 		alert.setStudio(alertForm.getStudio());
-		alert.setBothRoomAndStudio(alertForm.getBothRoomAndStudio());
+		alert.setAlertType(alertForm.getAlertType());
+		alert.setHouse(alertForm.getHouse());
 		alert.setUser(user);
 		alertDao.save(alert);
 	}
@@ -140,11 +141,18 @@ public class AlertService {
 
 	/** Checks if an ad is conforming to the criteria in an alert. */
 	private boolean typeMismatchWith(Ad ad, Alert alert) {
-		boolean mismatch = false;
-		if (!alert.getBothRoomAndStudio()
-				&& ad.getStudio() != alert.getStudio())
-			mismatch = true;
-		return mismatch;
+		if (alert.getAlertType().equals("Room and Studio") && (ad.getRoomType().equals("Room") || ad.getRoomType().equals("Studio")))
+			return false;
+		else if (alert.getAlertType().equals("Room and House") && (ad.getRoomType().equals("Room") || ad.getRoomType().equals("House")))
+			return false;
+		else if (alert.getAlertType().equals("Studio and House") && (ad.getRoomType().equals("Studio") || ad.getRoomType().equals("House")))
+			return false;
+		else if (alert.getAlertType().equals("All"))
+			return false;
+		else if (!alert.getAlertType().equals(ad.getRoomType()))
+			return true;
+		else
+			return false;
 	}
 
 	/**
@@ -162,6 +170,7 @@ public class AlertService {
 		final int earthRadiusKm = 6380;
 		Location adLocation = geoDataService.getLocationsByCity(ad.getCity())
 				.get(0);
+		String city = alert.getCity();
 		Location alertLocation = geoDataService.getLocationsByCity(
 				alert.getCity()).get(0);
 

@@ -16,6 +16,8 @@ public class AlertForm {
 
 	private boolean studio;
 	private boolean room;
+	private boolean house;
+	private String alertType;
 
 	@NotBlank(message = "Required")
 	@Pattern(regexp = "^[0-9]{4} - [-\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
@@ -81,6 +83,22 @@ public class AlertForm {
 
 	public void setRoom(boolean room) {
 		this.room = room;
+	}
+	
+	public boolean getHouse() {
+		return house;
+	}
+	
+	public void setHouse(boolean house) {
+		this.house = house;
+	}
+	
+	public String getAlertType() {
+		return alertType;
+	}
+	
+	public void setAlertType(String alertType) {
+		this.alertType = alertType;
 	}
 
 	public boolean getNoRoomNoStudio() {
