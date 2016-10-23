@@ -36,4 +36,17 @@ public class IndexController {
 	public ModelAndView disclaimer() {
 		return new ModelAndView("disclaimer");
 	}
+
+	/**
+	 * @Jerome
+	 * This mapping will be just temporarily used for developing the new
+	 * front-end within the files with a tilde-prefix, e.g. ~index.jsp, which are
+	 * not linked within the public pages. They are only reachable by typing
+	 * the provided values into the address bar. E.g. for the ~index page, this
+	 * would be ~.
+	 */
+	@RequestMapping(value = "/~")
+	public ModelAndView _index() {
+		return new ModelAndView("~index");
+	}
 }
