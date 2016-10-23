@@ -101,7 +101,7 @@ public class AdServiceTest {
 		assertEquals("Test preferences", ad.getPreferences());
 		assertEquals("Test Room description", ad.getRoomDescription());
 		assertEquals("Test Roommate description", ad.getRoommates());
-		assertEquals(600, ad.getPrizePerMonth());
+		assertEquals(600, ad.getPrize());
 		assertEquals(50, ad.getSquareFootage());
 		assertEquals("title", ad.getTitle());
 		assertEquals("Hauptstrasse 13", ad.getStreet());

@@ -21,11 +21,14 @@ import ch.unibe.ese.team1.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.AdPicture;
+import ch.unibe.ese.team1.model.Advertisement;
+import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.Location;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.Visit;
 import ch.unibe.ese.team1.model.dao.AdDao;
 import ch.unibe.ese.team1.model.dao.AlertDao;
+import ch.unibe.ese.team1.model.dao.AuctionDao;
 import ch.unibe.ese.team1.model.dao.MessageDao;
 import ch.unibe.ese.team1.model.dao.UserDao;
 
@@ -35,6 +38,9 @@ public class AdService {
 
 	@Autowired
 	private AdDao adDao;
+	
+	@Autowired
+	private AuctionDao auctionDao;
 
 	@Autowired
 	private UserDao userDao;
@@ -111,7 +117,7 @@ public class AdService {
 		} catch (NumberFormatException e) {
 		}
 
-		ad.setPrizePerMonth(placeAdForm.getPrize());
+		ad.setPrize(placeAdForm.getPrize());
 		ad.setSquareFootage(placeAdForm.getSquareFootage());
 
 		ad.setRoomDescription(placeAdForm.getRoomDescription());
@@ -181,6 +187,8 @@ public class AdService {
 				visits.add(visit);
 			}
 			ad.setVisits(visits);
+			
+			ad.setAuction(false);
 		}
 
 		ad.setUser(user);
@@ -212,20 +220,23 @@ public class AdService {
 	 * Returns the newest ads in the database. Parameter 'newest' says how many.
 	 */
 	@Transactional
-	public Iterable<Ad> getNewestAds(int newest) {
+	public Iterable<Advertisement> getNewestAds(int newest) {
 		Iterable<Ad> allAds = adDao.findAll();
-		List<Ad> ads = new ArrayList<Ad>();
+		Iterable<Auction> allAuctions = auctionDao.findAll();
+		List<Advertisement> advertisements = new ArrayList<Advertisement>();
 		for (Ad ad : allAds)
-			ads.add(ad);
-		Collections.sort(ads, new Comparator<Ad>() {
+			advertisements.add(ad);
+		for (Auction auction: allAuctions)
+			advertisements.add(auction);
+		Collections.sort(advertisements, new Comparator<Advertisement>() {
 			@Override
-			public int compare(Ad ad1, Ad ad2) {
+			public int compare(Advertisement ad1, Advertisement ad2) {
 				return ad2.getCreationDate().compareTo(ad1.getCreationDate());
 			}
 		});
-		List<Ad> fourNewest = new ArrayList<Ad>();
+		List<Advertisement> fourNewest = new ArrayList<Advertisement>();
 		for (int i = 0; i < newest; i++)
-			fourNewest.add(ads.get(i));
+			fourNewest.add(advertisements.get(i));
 		return fourNewest;
 	}
 
@@ -244,11 +255,11 @@ public class AdService {
 		// we use this method if we are looking for rooms AND studios
 		if (searchForm.getBothRoomAndStudio()) {
 			results = adDao
-					.findByPrizePerMonthLessThan(searchForm.getPrize() + 1);
+					.findByPrizeLessThan(searchForm.getPrize() + 1);
 		}
 		// we use this method if we are looking EITHER for rooms OR for studios
 		else {
-			results = adDao.findByStudioAndPrizePerMonthLessThan(
+			results = adDao.findByStudioAndPrizeLessThan(
 					searchForm.getStudio(), searchForm.getPrize() + 1);
 		}
 

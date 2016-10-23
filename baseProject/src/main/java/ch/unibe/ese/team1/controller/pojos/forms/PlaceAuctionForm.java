@@ -1,5 +1,6 @@
 package ch.unibe.ese.team1.controller.pojos.forms;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.Min;
@@ -7,8 +8,8 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-/** This form is used when a user wants to place a new ad. */
-public class PlaceAdForm {
+/** This form is used when a user wants to place a new auction. */
+public class PlaceAuctionForm {
 	
 	@NotBlank(message = "Required")
 	private String title;
@@ -63,6 +64,8 @@ public class PlaceAdForm {
 	private List<String> visits;
 	
 	private boolean auction;
+	
+	private Date endTime;
 
 	public String getCity() {
 		return city;
@@ -256,11 +259,19 @@ public class PlaceAdForm {
 		this.visits = visits;
 	}
 
-	public boolean getAuction() {
+	public boolean isAuction() {
 		return auction;
 	}
 
 	public void setAuction(boolean auction) {
 		this.auction = auction;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 }

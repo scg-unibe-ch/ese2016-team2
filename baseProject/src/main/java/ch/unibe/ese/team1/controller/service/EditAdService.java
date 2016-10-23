@@ -97,7 +97,7 @@ public class EditAdService {
 		} catch (NumberFormatException e) {
 		}
 
-		ad.setPrizePerMonth(placeAdForm.getPrize());
+		ad.setPrize(placeAdForm.getPrize());
 		ad.setSquareFootage(placeAdForm.getSquareFootage());
 
 		ad.setRoomDescription(placeAdForm.getRoomDescription());

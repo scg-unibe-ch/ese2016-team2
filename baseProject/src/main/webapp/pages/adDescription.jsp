@@ -182,7 +182,7 @@
 
 		<tr>
 			<td><h2>Monthly Rent</h2></td>
-			<td>${shownAd.prizePerMonth}&#32;CHF</td>
+			<td>${shownAd.prize}&#32;CHF</td>
 		</tr>
 
 		<tr>

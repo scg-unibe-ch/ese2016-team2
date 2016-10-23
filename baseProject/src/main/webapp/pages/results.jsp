@@ -141,7 +141,7 @@ function sort_div_attribute() {
 	<c:otherwise>
 		<div id="resultsDiv" class="resultsDiv">
 			<c:forEach var="ad" items="${results}">
-				<div class="resultAd" data-price="${ad.prizePerMonth}"
+				<div class="resultAd" data-price="${ad.prize}"
 								data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">
 					<div class="resultLeft">
 						<a href="<c:url value='/ad?id=${ad.id}' />"><img
@@ -159,7 +159,7 @@ function sort_div_attribute() {
 						</p>
 					</div>
 					<div class="resultRight">
-						<h2>CHF ${ad.prizePerMonth }</h2>
+						<h2>CHF ${ad.prize}</h2>
 						<br /> <br />
 
 						<fmt:formatDate value="${ad.moveInDate}" var="formattedMoveInDate"
