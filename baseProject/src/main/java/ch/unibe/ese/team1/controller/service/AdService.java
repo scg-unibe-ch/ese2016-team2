@@ -252,12 +252,12 @@ public class AdService {
 	public Iterable<Ad> queryResults(SearchForm searchForm) {
 		Iterable<Ad> results = null;
 
-		// we use this method if we are looking for rooms AND studios
+		// we use this method if we are looking for rooms AND studios AND houses
 		if (searchForm.getBothRoomAndStudio()) {
 			results = adDao
 					.findByPrizeLessThan(searchForm.getPrize() + 1);
 		}
-		// we use this method if we are looking EITHER for rooms OR for studios
+		// we use this method if we are looking EITHER for rooms OR for studios OR houses
 		else {
 			results = adDao.findByStudioAndPrizeLessThan(
 					searchForm.getStudio(), searchForm.getPrize() + 1);

@@ -64,6 +64,14 @@
 						<form:option value="MALE" label="Male" />
 					</form:select></td>
 			</tr>
+			
+			<tr>
+				<td class="signupDescription"><label for="field-account">Account type:</label></td>
+				<td><form:select path="account">
+						<form:option value="NORMAL" label="Normal" />
+						<form:option value="PREMIUM" label="Premium" />
+					</form:select></td>
+			</tr>
 		</table>
 		<br />
 		<button type="submit">Sign up</button>
