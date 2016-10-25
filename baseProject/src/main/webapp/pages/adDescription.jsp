@@ -250,6 +250,15 @@
 								female
 							</c:otherwise>
 						</c:choose></td>
+						<td>
+						<c:choose>
+							<c:when test="${mate.account == 'NORMAL'}">
+								normal
+							</c:when>
+							<c:otherwise>
+								premium
+							</c:otherwise>
+						</c:choose></td>
 					</tr>
 				</table>
 			</div>

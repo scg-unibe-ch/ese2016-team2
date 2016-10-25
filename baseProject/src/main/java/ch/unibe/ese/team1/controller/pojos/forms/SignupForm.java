@@ -5,6 +5,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import ch.unibe.ese.team1.model.Gender;
+import ch.unibe.ese.team1.model.Account;
 
 /** This form is used when a user want to sign up for an account. */
 public class SignupForm {
@@ -27,6 +28,10 @@ public class SignupForm {
 	
 	@NotNull
 	private Gender gender;
+	
+	@NotNull
+	private Account account;
+
 
 	public String getEmail() {
 		return email;
@@ -66,6 +71,14 @@ public class SignupForm {
 
 	public void setGender(Gender gender) {
 		this.gender = gender;
+	}
+	
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 	
 }

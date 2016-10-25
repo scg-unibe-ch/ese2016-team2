@@ -14,8 +14,7 @@ public class SearchForm {
 
 	// studio: true, room: false
 	private boolean studio;
-
-	@NotBlank(message = "Required")
+	
 	@Pattern(regexp = "^[0-9]{4} - [-\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
 	private String city;
 	

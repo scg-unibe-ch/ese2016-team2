@@ -52,7 +52,7 @@ public class PlaceAdForm {
 	
 	//true if studio, false if room
 	private boolean studio;
-	
+
 	private boolean smokers;
 	private boolean animals;
 	private boolean garden;
@@ -112,7 +112,7 @@ public class PlaceAdForm {
 	public void setRoommates(String roommates) {
 		this.roommates = roommates;
 	}
-
+	
 	public boolean isSmokers() {
 		return smokers;
 	}

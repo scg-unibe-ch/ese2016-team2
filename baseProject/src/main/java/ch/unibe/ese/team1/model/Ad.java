@@ -71,7 +71,7 @@ public class Ad {
 	@Fetch(FetchMode.SELECT)
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<User> registeredRoommates;
-
+	
 	@Column(nullable = false)
 	private boolean smokers;
 
@@ -147,7 +147,7 @@ public class Ad {
 	public void setSmokers(boolean allowsSmokers) {
 		this.smokers = allowsSmokers;
 	}
-
+	
 	public boolean getAnimals() {
 		return animals;
 	}
