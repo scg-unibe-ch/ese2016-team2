@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team1.controller.pojos.forms.AlertForm;
 import ch.unibe.ese.team1.model.Ad;
+import ch.unibe.ese.team1.model.Advertisement;
 import ch.unibe.ese.team1.model.Alert;
 import ch.unibe.ese.team1.model.Location;
 import ch.unibe.ese.team1.model.Message;
@@ -85,8 +86,8 @@ public class AlertService {
 	 * message is sent.
 	 */
 	@Transactional
-	public void triggerAlerts(Ad ad) {
-		int adPrice = ad.getPrizePerMonth();
+	public void triggerAlerts(Advertisement ad) {
+		int adPrice = ad.getPrize();
 		Iterable<Alert> alerts = alertDao.findByPriceGreaterThan(adPrice - 1);
 
 		// loop through all ads with matching city and price range, throw out
@@ -127,7 +128,7 @@ public class AlertService {
 	 * Returns the text for an alert message with the properties of the given
 	 * ad.
 	 */
-	private String getAlertText(Ad ad) {
+	private String getAlertText(Advertisement ad) {
 		return "Dear user,<br>good news. A new ad matching one of your alerts has been "
 				+ "entered into our system. You can visit it here:<br><br>"
 				+ "<a class=\"link\" href=/ad?id="
@@ -140,7 +141,7 @@ public class AlertService {
 	}
 
 	/** Checks if an ad is conforming to the criteria in an alert. */
-	private boolean typeMismatchWith(Ad ad, Alert alert) {
+	private boolean typeMismatchWith(Advertisement ad, Alert alert) {
 		if (alert.getAlertType().equals("Room and Studio") && (ad.getRoomType().equals("Room") || ad.getRoomType().equals("Studio")))
 			return false;
 		else if (alert.getAlertType().equals("Room and House") && (ad.getRoomType().equals("Room") || ad.getRoomType().equals("House")))
@@ -166,7 +167,7 @@ public class AlertService {
 	 * @return true in case the alert does not match the ad (the ad is too far
 	 *         away), false otherwise
 	 */
-	private boolean radiusMismatchWith(Ad ad, Alert alert) {
+	private boolean radiusMismatchWith(Advertisement ad, Alert alert) {
 		final int earthRadiusKm = 6380;
 		Location adLocation = geoDataService.getLocationsByCity(ad.getCity())
 				.get(0);

@@ -49,6 +49,9 @@ public class EnquiryService {
 					.getId()) {
 				enquiries.add(enquiry);
 			}
+			if (enquiry.getVisit().getAuction().getUser().getId() == recipient.getId()) {
+				enquiries.add(enquiry);
+			}
 		}
 		Collections.sort(enquiries, new Comparator<VisitEnquiry>() {
 			@Override

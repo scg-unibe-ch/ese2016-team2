@@ -136,7 +136,7 @@ public class AlertServiceTest {
 		oltenResidence.setZipcode(4600);
 		oltenResidence.setMoveInDate(date);
 		oltenResidence.setCreationDate(date);
-		oltenResidence.setPrizePerMonth(1200);
+		oltenResidence.setPrize(1200);
 		oltenResidence.setSquareFootage(42);
 		oltenResidence.setStudio(false);
 		oltenResidence.setSmokers(true);

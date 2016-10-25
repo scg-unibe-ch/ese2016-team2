@@ -85,6 +85,13 @@ public class PlaceAdController {
 	@Autowired
 	private AdService adService;
 
+	@RequestMapping(value = "profile/placeAdvertisement", method = RequestMethod.GET)
+	public ModelAndView placeAdvertisement() throws IOException {
+		ModelAndView model = new ModelAndView("placeAdvertisement");
+		
+		return model;
+	}
+	
 	/** Shows the place ad form. */
 	@RequestMapping(value = "/profile/placeAd", method = RequestMethod.GET)
 	public ModelAndView placeAd() throws IOException {
