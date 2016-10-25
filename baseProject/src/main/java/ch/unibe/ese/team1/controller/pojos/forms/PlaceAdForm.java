@@ -45,13 +45,11 @@ public class PlaceAdForm {
 	// optional for input
 	private String roomFriends;
 	
-	private String room;
-	
-	private String[] rooms = {"Studio", "Room", "House"};	
+	private String roomType;	
 	
 	//true if studio, false if room
 	private boolean studio;
-	
+
 	private boolean smokers;
 	private boolean animals;
 	private boolean garden;
@@ -63,6 +61,8 @@ public class PlaceAdForm {
 	private boolean internet;
 	
 	private List<String> visits;
+	
+	private boolean auction;
 
 	public String getCity() {
 		return city;
@@ -111,7 +111,7 @@ public class PlaceAdForm {
 	public void setRoommates(String roommates) {
 		this.roommates = roommates;
 	}
-
+	
 	public boolean isSmokers() {
 		return smokers;
 	}
@@ -232,16 +232,12 @@ public class PlaceAdForm {
 		this.studio = studio;
 	}
 	
-	public String getRoom() {
-		return room;
+	public String getRoomType() {
+		return roomType;
 	}
 
-	public void setRoom(String room) {
-		this.room = room;
-	}
-	
-	public String[] getRooms() {
-		return rooms;
+	public void setRoomType(String roomType) {
+		this.roomType = roomType;
 	}
 	
 	public List<String> getRegisteredRoommateEmails() {
@@ -258,5 +254,13 @@ public class PlaceAdForm {
 
 	public void setVisits(List<String> visits) {
 		this.visits = visits;
+	}
+
+	public boolean getAuction() {
+		return auction;
+	}
+
+	public void setAuction(boolean auction) {
+		this.auction = auction;
 	}
 }

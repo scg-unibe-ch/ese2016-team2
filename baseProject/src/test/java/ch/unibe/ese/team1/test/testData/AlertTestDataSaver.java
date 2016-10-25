@@ -17,7 +17,7 @@ public class AlertTestDataSaver {
 
 	@Autowired
 	private AlertDao alertDao;
-	
+
 	@Autowired
 	private UserDao userDao;
 
@@ -30,33 +30,36 @@ public class AlertTestDataSaver {
 		// 2 Alerts for the ese test-user
 		Alert alert = new Alert();
 		alert.setUser(ese);
-		alert.setBothRoomAndStudio(true);
 		alert.setRoom(true);
 		alert.setStudio(true);
+		alert.setHouse(false);
+		alert.setAlertType("Room and Studio");
 		alert.setCity("Bern");
 		alert.setZipcode(3000);
 		alert.setPrice(1500);
 		alert.setRadius(30);
 		alertDao.save(alert);
-		
+
 		alert = new Alert();
 		alert.setUser(ese);
-		alert.setBothRoomAndStudio(false);
 		alert.setRoom(true);
 		alert.setStudio(false);
-		alert.setCity("ZÃ¼rich");
+		alert.setHouse(false);
+		alert.setAlertType("Room");
+		alert.setCity("Zürich");
 		alert.setZipcode(8000);
 		alert.setPrice(1000);
 		alert.setRadius(25);
 		alertDao.save(alert);
-		
-		
+
+
 		// One alert for Jane Doe
 		alert = new Alert();
 		alert.setUser(jane);
-		alert.setBothRoomAndStudio(false);
 		alert.setRoom(false);
 		alert.setStudio(true);
+		alert.setHouse(false);
+		alert.setAlertType("Studio");
 		alert.setCity("Luzern");
 		alert.setZipcode(6003);
 		alert.setPrice(900);

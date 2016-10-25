@@ -27,6 +27,9 @@ public class Visit {
 	
 	@ManyToOne
 	private Ad ad;
+	
+	@ManyToOne
+	private Auction auction;
 
 	@Fetch(FetchMode.SELECT)
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -54,6 +57,14 @@ public class Visit {
 
 	public void setAd(Ad ad) {
 		this.ad = ad;
+	}
+	
+	public Auction getAuction() {
+		return auction;
+	}
+	
+	public void setAd(Auction auction) {
+		this.auction = auction;
 	}
 
 	public List<User> getSearchers() {

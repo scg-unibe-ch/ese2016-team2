@@ -33,13 +33,13 @@ public class AdTestDataSaver {
 		User jane = userDao.findByUsername("jane@doe.com");
 		User hans = userDao.findByUsername("hans@unibe.ch");
 		User mathilda = userDao.findByUsername("mathilda@unibe.ch");
-		
+
 		List<User> regRoommatesAdBern = new LinkedList<User>();
 		regRoommatesAdBern.add(hans);
 		regRoommatesAdBern.add(mathilda);
-		
+
 		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-		
+
 		Date creationDate1 = formatter.parse("03.10.2014");
 		Date creationDate2 = formatter.parse("11.10.2014");
 		Date creationDate3 = formatter.parse("25.10.2014");
@@ -48,7 +48,7 @@ public class AdTestDataSaver {
 		Date creationDate6 = formatter.parse("01.12.2014");
 		Date creationDate7 = formatter.parse("16.11.2014");
 		Date creationDate8 = formatter.parse("27.11.2014");
-		
+
 		Date moveInDate1 = formatter.parse("15.12.2014");
 		Date moveInDate2 = formatter.parse("21.12.2014");
 		Date moveInDate3 = formatter.parse("01.01.2015");
@@ -57,13 +57,13 @@ public class AdTestDataSaver {
 		Date moveInDate6 = formatter.parse("01.03.2015");
 		Date moveInDate7 = formatter.parse("15.03.2015");
 		Date moveInDate8 = formatter.parse("16.02.2015");
-		
+
 		Date moveOutDate1 = formatter.parse("31.03.2015");
 		Date moveOutDate2 = formatter.parse("30.04.2015");
 		Date moveOutDate3 = formatter.parse("31.03.2016");
 		Date moveOutDate4 = formatter.parse("01.07.2015");
 		Date moveOutDate5 = formatter.parse("30.09.2016");
-		
+
 		String roomDescription1 = "The room is a part of 3.5 rooms apartment completely renovated"
 				+ "in 2010 at Kramgasse, Bern. The apartment is about 50 m2 on 1st floor."
 				+ "Apt is equipped modern kitchen, hall and balcony. Near to shops and public"
@@ -80,9 +80,9 @@ public class AdTestDataSaver {
 		adBern.setMoveInDate(moveInDate1);
 		adBern.setCreationDate(creationDate1);
 		adBern.setMoveOutDate(moveOutDate1);
-		adBern.setPrizePerMonth(400);
+		adBern.setPrize(400);
 		adBern.setSquareFootage(50);
-		adBern.setRoom("Room");
+		adBern.setRoomType("Room");
 		adBern.setStudio(false);
 		adBern.setSmokers(false);
 		adBern.setAnimals(true);
@@ -121,15 +121,15 @@ public class AdTestDataSaver {
 		String roomPreferences2 = "I would like to have an easy going person who"
 				+ "is trustworthy and can take care of the flat. No animals please."
 				+ "Non smoker preferred.";
-		
+
 		Ad adBern2 = new Ad();
 		adBern2.setZipcode(3012);
 		adBern2.setMoveInDate(moveInDate2);
 		adBern2.setCreationDate(creationDate2);
 		adBern2.setMoveOutDate(moveOutDate4);
-		adBern2.setPrizePerMonth(700);
+		adBern2.setPrize(700);
 		adBern2.setSquareFootage(60);
-		adBern2.setRoom("Studio");
+		adBern2.setRoomType("Studio");
 		adBern2.setStudio(true);
 		adBern2.setSmokers(false);
 		adBern2.setAnimals(true);
@@ -138,7 +138,7 @@ public class AdTestDataSaver {
 		adBern2.setRoommates("None");
 		adBern2.setUser(ese);
 		adBern2.setTitle("Cheap studio in Bern!");
-		adBern2.setStreet("Lï¿½ngassstr. 40");
+		adBern2.setStreet("Längassstr. 40");
 		adBern2.setCity("Bern");
 		adBern2.setGarden(false);
 		adBern2.setBalcony(false);
@@ -159,21 +159,21 @@ public class AdTestDataSaver {
 				+ "savage wine stocks, without any neighbours but with a garden. The"
 				+ "house has two storey, on the first floor your new room is waiting"
 				+ "for you. The house is totally equipped with everything a household "
-				+ ": washing machine, kitchen, batroom, W-Lan...if you donÂ´t have any"
-				+ "furniture, donÂ´t worry, I am sure, we will find something around"
+				+ ": washing machine, kitchen, batroom, W-Lan...if you don't have any"
+				+ "furniture, don't worry, I am sure, we will find something around"
 				+ "the house. The price for the room and all included is 480 CHF /month. "
 				+ " (29, Graphic designer) and Linda (31, curator) are looking for a"
 				+ "new female flatmate from December on.";
 		String roomPreferences3 = "smoking female flatmate";
-		
+
 		Ad adBasel = new Ad();
 		adBasel.setZipcode(4051);
 		adBasel.setMoveInDate(moveInDate3);
 		adBasel.setMoveOutDate(moveOutDate2);
 		adBasel.setCreationDate(creationDate3);
-		adBasel.setPrizePerMonth(480);
+		adBasel.setPrize(480);
 		adBasel.setSquareFootage(10);
-		adBasel.setRoom("Studio");
+		adBasel.setRoomType("Studio");
 		adBasel.setStudio(true);
 		adBasel.setSmokers(true);
 		adBasel.setAnimals(false);
@@ -197,7 +197,7 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adBasel, "/img/test/ad3_3.jpg"));
 		adBasel.setPictures(pictures);
 		adDao.save(adBasel);
-		
+
 		String studioDescription4 = "Flatshare of 3 persons. Flat with 5 rooms"
 				+ "on the second floor. The bedroom is about 60 square meters"
 				+ "with access to a nice balcony. In addition to the room, the"
@@ -206,14 +206,14 @@ public class AdTestDataSaver {
 				+ "The bedroom is big and bright and has a nice parquet floor."
 				+ "Possibility to keep some furnitures like the bed.";
 		String roomPreferences4 = "an easy going flatmate man or woman between 20 and 30";
-		
+
 		Ad adOlten = new Ad();
 		adOlten.setZipcode(4600);
 		adOlten.setMoveInDate(moveInDate4);
 		adOlten.setCreationDate(creationDate4);
-		adOlten.setPrizePerMonth(430);
+		adOlten.setPrize(430);
 		adOlten.setSquareFootage(60);
-		adOlten.setRoom("Room");
+		adOlten.setRoomType("Room");
 		adOlten.setStudio(false);
 		adOlten.setSmokers(true);
 		adOlten.setAnimals(false);
@@ -238,58 +238,59 @@ public class AdTestDataSaver {
 		adOlten.setPictures(pictures);
 		adDao.save(adOlten);
 
-		String studioDescription5 = "Studio meublÃ© au 3iÃ©me Ã©tage, comprenant"
-				+ "une kitchenette entiÃ©rement Ã©quipÃ©e (frigo, plaques,"
-				+ "four et hotte), une piÃ©ce Ã©vivre donnant sur un balcon,"
+		String studioDescription5 = "Studio meublé au 3ième étage, comprenant"
+				+ "une kitchenette entièrement équipée (frigo, plaques,"
+				+ "four et hotte), une pièce à vivre donnant sur un balcon,"
 				+ "une salle de bains avec wc. Cave, buanderie et site satellite"
-				+ "Ã  disposition.";
+				+ "à disposition.";
 		String roomPreferences5 = "tout le monde est bienvenu";
-		
-		Ad adNeuchÃ¢tel = new Ad();
-		adNeuchÃ¢tel.setZipcode(2000);
-		adNeuchÃ¢tel.setMoveInDate(moveInDate5);
-		adNeuchÃ¢tel.setMoveOutDate(moveOutDate3);
-		adNeuchÃ¢tel.setCreationDate(creationDate5);
-		adNeuchÃ¢tel.setPrizePerMonth(410);
-		adNeuchÃ¢tel.setSquareFootage(40);
-		adNeuchÃ¢tel.setRoom("Studio");
-		adNeuchÃ¢tel.setStudio(true);
-		adNeuchÃ¢tel.setSmokers(true);
-		adNeuchÃ¢tel.setAnimals(false);
-		adNeuchÃ¢tel.setRoomDescription(studioDescription5);
-		adNeuchÃ¢tel.setPreferences(roomPreferences5);
-		adNeuchÃ¢tel.setRoommates("None");
-		adNeuchÃ¢tel.setUser(bernerBaer);
-		adNeuchÃ¢tel.setTitle("Studio extrï¿½mement bon marchï¿½ ï¿½ NeuchÃ¢tel");
-		adNeuchÃ¢tel.setStreet("Rue de l'Hï¿½pital 11");
-		adNeuchÃ¢tel.setCity("NeuchÃ¢tel");
-		adNeuchÃ¢tel.setGarden(true);
-		adNeuchÃ¢tel.setBalcony(false);
-		adNeuchÃ¢tel.setCellar(true);
-		adNeuchÃ¢tel.setFurnished(true);
-		adNeuchÃ¢tel.setCable(false);
-		adNeuchÃ¢tel.setGarage(false);
-		adNeuchÃ¢tel.setInternet(true);
+
+		Ad adNeuchâtel = new Ad();
+		adNeuchâtel.setZipcode(2000);
+		adNeuchâtel.setMoveInDate(moveInDate5);
+		adNeuchâtel.setMoveOutDate(moveOutDate3);
+		adNeuchâtel.setCreationDate(creationDate5);
+		adNeuchâtel.setPrize(410);
+		adNeuchâtel.setSquareFootage(40);
+		adNeuchâtel.setRoomType("Studio");
+		adNeuchâtel.setStudio(true);
+		adNeuchâtel.setSmokers(true);
+		adNeuchâtel.setAnimals(false);
+		adNeuchâtel.setRoomDescription(studioDescription5);
+		adNeuchâtel.setPreferences(roomPreferences5);
+		adNeuchâtel.setRoommates("None");
+		adNeuchâtel.setUser(bernerBaer);
+		adNeuchâtel.setTitle("Studio extrêmement bon marché à Neuchâtel");
+		adNeuchâtel.setStreet("Rue de l'Hôpital 11");
+		adNeuchâtel.setCity("Neuchâtel");
+		adNeuchâtel.setGarden(true);
+		adNeuchâtel.setBalcony(false);
+		adNeuchâtel.setCellar(true);
+		adNeuchâtel.setFurnished(true);
+		adNeuchâtel.setCable(false);
+		adNeuchâtel.setGarage(false);
+		adNeuchâtel.setInternet(true);
+
 		pictures = new ArrayList<>();
-		pictures.add(createPicture(adNeuchÃ¢tel, "/img/test/ad5_1.jpg"));
-		pictures.add(createPicture(adNeuchÃ¢tel, "/img/test/ad5_2.jpg"));
-		pictures.add(createPicture(adNeuchÃ¢tel, "/img/test/ad5_3.jpg"));
-		adNeuchÃ¢tel.setPictures(pictures);
-		adDao.save(adNeuchÃ¢tel);
+		pictures.add(createPicture(adNeuchâtel, "/img/test/ad5_1.jpg"));
+		pictures.add(createPicture(adNeuchâtel, "/img/test/ad5_2.jpg"));
+		pictures.add(createPicture(adNeuchâtel, "/img/test/ad5_3.jpg"));
+		adNeuchâtel.setPictures(pictures);
+		adDao.save(adNeuchâtel);
 
 		String studioDescription6 = "A place just for yourself in a very nice part of Biel."
 				+ "A studio for 1-2 persons with a big balcony, bathroom, kitchen and furniture already there."
 				+ "It's quiet and nice, very close to the old city of Biel.";
 		String roomPreferences6 = "A nice and easy going person. Minimum rent is two months";
-		
+
 		Ad adBiel = new Ad();
 		adBiel.setZipcode(2503);
 		adBiel.setMoveInDate(moveInDate6);
 		adBiel.setMoveOutDate(moveOutDate5);
 		adBiel.setCreationDate(creationDate6);
-		adBiel.setPrizePerMonth(480);
+		adBiel.setPrize(480);
 		adBiel.setSquareFootage(10);
-		adBiel.setRoom("Studio");
+		adBiel.setRoomType("Studio");
 		adBiel.setStudio(true);
 		adBiel.setSmokers(true);
 		adBiel.setAnimals(false);
@@ -297,7 +298,7 @@ public class AdTestDataSaver {
 		adBiel.setPreferences(roomPreferences6);
 		adBiel.setRoommates("None");
 		adBiel.setUser(ese);
-		adBiel.setTitle("Direkt am Quai: hï¿½bsches Studio");
+		adBiel.setTitle("Direkt am Quai: hübsches Studio");
 		adBiel.setStreet("Oberer Quai 12");
 		adBiel.setCity("Biel/Bienne");
 		adBiel.setGarden(false);
@@ -313,8 +314,8 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adBiel, "/img/test/ad6_3.png"));
 		adBiel.setPictures(pictures);
 		adDao.save(adBiel);
-		
-		
+
+
 		String roomDescription7 = "The room is a part of 3.5 rooms apartment completely renovated"
 				+ "in 2010 at Kramgasse, Bern. The apartment is about 50 m2 on 1st floor."
 				+ "Apt is equipped modern kitchen, hall and balcony. Near to shops and public"
@@ -331,9 +332,9 @@ public class AdTestDataSaver {
 		adZurich.setMoveInDate(moveInDate7);
 		adZurich.setCreationDate(creationDate7);
 		adZurich.setMoveOutDate(moveOutDate5);
-		adZurich.setPrizePerMonth(480);
+		adZurich.setPrize(480);
 		adZurich.setSquareFootage(32);
-		adZurich.setRoom("Room");
+		adZurich.setRoomType("Room");
 		adZurich.setStudio(false);
 		adZurich.setSmokers(false);
 		adZurich.setAnimals(false);
@@ -357,8 +358,8 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adZurich, "/img/test/ad1_1.jpg"));
 		adZurich.setPictures(pictures);
 		adDao.save(adZurich);
-	
-		
+
+
 		String studioDescription8 = "It is small studio close to the"
 				+ "university and the bahnhof. The lovely neighbourhood"
 				+ "Langgasse makes it an easy place to feel comfortable."
@@ -372,14 +373,14 @@ public class AdTestDataSaver {
 		String roomPreferences8 = "I would like to have an easy going person who"
 				+ "is trustworthy and can take care of the flat. No animals please."
 				+ "Non smoker preferred.";
-		
+
 		Ad adLuzern = new Ad();
 		adLuzern.setZipcode(6000);
 		adLuzern.setMoveInDate(moveInDate8);
 		adLuzern.setCreationDate(creationDate2);
-		adLuzern.setPrizePerMonth(700);
+		adLuzern.setPrize(700);
 		adLuzern.setSquareFootage(60);
-		adLuzern.setRoom("Studio");
+		adLuzern.setRoomType("Studio");
 		adLuzern.setStudio(true);
 		adLuzern.setSmokers(false);
 		adLuzern.setAnimals(false);
@@ -409,21 +410,21 @@ public class AdTestDataSaver {
 				+ "savage wine stocks, without any neighbours but with a garden. The"
 				+ "house has two storey, on the first floor your new room is waiting"
 				+ "for you. The house is totally equipped with everything a household "
-				+ ": washing machine, kitchen, batroom, W-Lan...if you donï¿½t have any"
-				+ "furniture, donï¿½t worry, I am sure, we will find something around"
+				+ ": washing machine, kitchen, batroom, W-Lan...if you don't have any"
+				+ "furniture, don't worry, I am sure, we will find something around"
 				+ "the house. The price for the room and all included is 480 CHF /month. "
 				+ " (29, Graphic designer) and Linda (31, curator) are looking for a"
 				+ "new female flatmate from December on.";
 		String roomPreferences9 = "smoking female flatmate";
-		
+
 		Ad adAarau = new Ad();
 		adAarau.setZipcode(5000);
 		adAarau.setMoveInDate(moveInDate3);
 		adAarau.setMoveOutDate(moveOutDate4);
 		adAarau.setCreationDate(creationDate8);
-		adAarau.setPrizePerMonth(800);
+		adAarau.setPrize(800);
 		adAarau.setSquareFootage(26);
-		adAarau.setRoom("Studio");
+		adAarau.setRoomType("Studio");
 		adAarau.setStudio(true);
 		adAarau.setSmokers(true);
 		adAarau.setAnimals(false);
@@ -447,10 +448,10 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adAarau, "/img/test/ad3_1.jpg"));
 		pictures.add(createPicture(adAarau, "/img/test/ad2_2.jpg"));
 		pictures.add(createPicture(adAarau, "/img/test/ad2_3.jpg"));
-		
+
 		adAarau.setPictures(pictures);
 		adDao.save(adAarau);
-		
+
 		String studioDescription10 = "Flatshare of 3 persons. Flat with 5 rooms"
 				+ "on the second floor. The bedroom is about 60 square meters"
 				+ "with access to a nice balcony. In addition to the room, the"
@@ -459,14 +460,14 @@ public class AdTestDataSaver {
 				+ "The bedroom is big and bright and has a nice parquet floor."
 				+ "Possibility to keep some furnitures like the bed.";
 		String roomPreferences10 = "an easy going flatmate man or woman between 20 and 30";
-		
+
 		Ad adDavos = new Ad();
 		adDavos.setZipcode(7260);
 		adDavos.setMoveInDate(moveInDate2);
 		adDavos.setCreationDate(creationDate4);
-		adDavos.setPrizePerMonth(1100);
+		adDavos.setPrize(1100);
 		adDavos.setSquareFootage(74);
-		adDavos.setRoom("Room");
+		adDavos.setRoomType("Room");
 		adDavos.setStudio(false);
 		adDavos.setSmokers(true);
 		adDavos.setAnimals(false);
@@ -491,21 +492,21 @@ public class AdTestDataSaver {
 		adDavos.setPictures(pictures);
 		adDao.save(adDavos);
 
-		String studioDescription11 = "Studio meublï¿½ au 3iï¿½me ï¿½tage, comprenant"
-				+ "une kitchenette entiï¿½rement ï¿½quipï¿½e (frigo, plaques,"
-				+ "four et hotte), une piï¿½ce ï¿½ vivre donnant sur un balcon,"
+		String studioDescription11 = "Studio meublé au 3ième étage, comprenant"
+				+ "une kitchenette entièrement équiée (frigo, plaques,"
+				+ "four et hotte), une pièce Ã  vivre donnant sur un balcon,"
 				+ "une salle de bains avec wc. Cave, buanderie et site satellite"
-				+ "ï¿½ disposition.";
+				+ "à disposition.";
 		String roomPreferences11 = "tout le monde est bienvenu";
-		
+
 		Ad adLausanne = new Ad();
 		adLausanne.setZipcode(1000);
 		adLausanne.setMoveInDate(moveInDate5);
 		adLausanne.setMoveOutDate(moveOutDate3);
 		adLausanne.setCreationDate(creationDate5);
-		adLausanne.setPrizePerMonth(360);
+		adLausanne.setPrize(360);
 		adLausanne.setSquareFootage(8);
-		adLausanne.setRoom("Room");
+		adLausanne.setRoomType("Room");
 		adLausanne.setStudio(false);
 		adLausanne.setSmokers(true);
 		adLausanne.setAnimals(false);
@@ -534,15 +535,15 @@ public class AdTestDataSaver {
 				+ "A studio for 1-2 persons with a big balcony, bathroom, kitchen and furniture already there."
 				+ "It's quiet and nice, very close to the old city of Biel.";
 		String roomPreferences12 = "A nice and easy going person. Minimum rent is two months";
-		
+
 		Ad adLocarno = new Ad();
 		adLocarno.setZipcode(6600);
 		adLocarno.setMoveInDate(moveInDate6);
 		adLocarno.setMoveOutDate(moveOutDate5);
 		adLocarno.setCreationDate(creationDate6);
-		adLocarno.setPrizePerMonth(960);
+		adLocarno.setPrize(960);
 		adLocarno.setSquareFootage(42);
-		adLocarno.setRoom("Room");
+		adLocarno.setRoomType("Room");
 		adLocarno.setStudio(false);
 		adLocarno.setSmokers(true);
 		adLocarno.setAnimals(false);
@@ -574,5 +575,4 @@ public class AdTestDataSaver {
 		picture.setFilePath(filePath);
 		return picture;
 	}
-
 }

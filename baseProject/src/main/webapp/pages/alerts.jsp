@@ -22,20 +22,47 @@ function validateType(form)
 {
 	var room = document.getElementById('room');
 	var studio = document.getElementById('studio');
+	var house = document.getElementById('house');
 	var neither = document.getElementById('neither');
-	var both = document.getElementById('both');
+	var r = document.getElementById('r');
+	var s = document.getElementById('s');
+	var h = document.getElementById('h');
+	var ras = document.getElementById('ras');
+	var rah = document.getElementById('rah');
+	var sah = document.getElementById('sah');
+	var all = document.getElementById('all');
 	
-	if(room.checked && studio.checked) {
-		both.checked = true;
-		neither.checked = false;
-	}
-	else if(!room.checked && !studio.checked) {
-		both.checked = false;
+	r.checked = false;
+	h.checked = false;
+	s.checked = false;
+	ras.checked = false;
+	rah.checked = false;
+	sah.checked = false;
+	all.checked = false;
+	
+	if(!room.checked && !studio.checked && !house.checked) {
 		neither.checked = true;
 	}
+	else if(room.checked && !studio.checked && !house.checked) {
+		r.checked = true;
+	}
+	else if(!room.checked && studio.checked && !house.checked) {
+		s.checked = true;
+	}
+	else if(!room.checked && !studio.checked && house.checked) {
+		h.checked = true;
+	}
+	else if(room.checked && studio.checked && !house.checked) {
+		ras.checked = true;
+	}
+	else if(room.checked && !studio.checked && house.checked) {
+		rah.checked = true;
+	}
+	else if(!room.checked && studio.checked && house.checked) {
+		sah.checked = true;
+	}
 	else {
-		both.checked = false;
-		neither.checked = false;
+		all.checked = true;
 	}
 }
 </script>
@@ -84,9 +111,16 @@ function typeOfAlert(alert) {
 	<fieldset>
 		<form:checkbox name="room" id="room" path="room" /><label>Room</label>
 		<form:checkbox name="studio" id="studio" path="studio" /><label>Studio</label>
+		<form:checkbox name="house" id="house" path="house" /><label>House</label>
 		
 		<form:checkbox style="display:none" name="neither" id="neither" path="noRoomNoStudio" />
-		<form:checkbox style="display:none" name="both" id="both" path="bothRoomAndStudio" />
+		<form:checkbox style="display:none" name="r" id="r" path="alertType" value="Room" />
+		<form:checkbox style="display:none" name="s" id="s" path="alertType" value="Studio" />
+		<form:checkbox style="display:none" name="h" id="h" path="alertType" value="House" />
+		<form:checkbox style="display:none" name="ras" id="ras" path="alertType" value="Room and Studio" />
+		<form:checkbox style="display:none" name="rah" id="rah" path="alertType" value="Room and House" />
+		<form:checkbox style="display:none" name="sah" id="sah" path="alertType" value="Studio and House" />
+		<form:checkbox style="display:none" name="all" id="all" path="alertType" value="All" />
 		<form:errors path="noRoomNoStudio" cssClass="validationErrorText" /><br />
 		
 		<label for="city">City / zip code:</label>
@@ -131,19 +165,7 @@ function typeOfAlert(alert) {
 			</thead>
 		<c:forEach var="alert" items="${alerts}">
 			<tr>
-				<td>
-				<c:choose>
-					<c:when test="${alert.bothRoomAndStudio}">
-						Both
-					</c:when>
-					<c:when test="${alert.studio}">
-						Studio
-					</c:when>
-					<c:otherwise>
-						Room
-					</c:otherwise>
-				</c:choose>
-				</td>
+				<td>${alert.alertType}</td>
 				<td>${alert.city}</td>
 				<td>${alert.radius} km</td>
 				<td>${alert.price} Chf</td>

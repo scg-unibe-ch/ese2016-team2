@@ -38,9 +38,12 @@ public class Alert {
 
 	@Column
 	private boolean room;
-
+	
 	@Column
-	private boolean bothRoomAndStudio;
+	private boolean house;
+	
+	@Column
+	private String alertType;
 
 	public long getId() {
 		return id;
@@ -105,12 +108,20 @@ public class Alert {
 	public void setRoom(boolean room) {
 		this.room = room;
 	}
-
-	public boolean getBothRoomAndStudio() {
-		return bothRoomAndStudio;
+	
+	public boolean getHouse() {
+		return house;
 	}
-
-	public void setBothRoomAndStudio(boolean bothRoomAndStudio) {
-		this.bothRoomAndStudio = bothRoomAndStudio;
+	
+	public void setHouse(boolean house) {
+		this.house = house;
+	}
+	
+	public String getAlertType() {
+		return alertType;
+	}
+	
+	public void setAlertType(String alertType) {
+		this.alertType = alertType;
 	}
 }

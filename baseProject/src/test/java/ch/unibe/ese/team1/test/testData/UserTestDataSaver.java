@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team1.model.Gender;
+import ch.unibe.ese.team1.model.Account;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.UserPicture;
 import ch.unibe.ese.team1.model.UserRole;
@@ -26,25 +27,25 @@ public class UserTestDataSaver {
 	public void saveTestData() throws Exception {
 		// system account
 		User system = createUser("System", "1234", "FlatFindr", "Admin",
-				"/img/test/system.jpg", Gender.ADMIN);
+				"/img/test/portrait.jpg", Gender.ADMIN, Account.NORMAL);
 		system.setAboutMe("We keep you off the streets.");
 		userDao.save(system);
 
 		// Main test-user for the assistants (advertiser)
 		User ese = createUser("ese@unibe.ch", "ese", "John", "Wayne",
-				"/img/test/portrait.jpg", Gender.MALE);
+				"/img/test/portrait.jpg", Gender.MALE, Account.NORMAL);
 		ese.setAboutMe(getDummyText());
 		userDao.save(ese);
-		
+
 		// Searcher
 		User janeDoe = createUser("jane@doe.com", "password", "Jane", "Doe",
-				Gender.FEMALE);
+				"/img/test/portrait.jpg", Gender.FEMALE, Account.NORMAL);
 		janeDoe.setAboutMe(getDummyText());
 		userDao.save(janeDoe);
 
 		// Another advertiser & searcher
 		User bernerBaer = createUser("user@bern.com", "password",
-				"Berner", "BÃ¤r", Gender.MALE);
+				"Berner", "Bär", Gender.MALE, Account.PREMIUM);
 		UserPicture picture = new UserPicture();
 		picture.setFilePath("/img/test/berner_baer.png");
 		picture.setUser(bernerBaer);
@@ -56,29 +57,29 @@ public class UserTestDataSaver {
 				+ "London and Zurich, always in flatshares and i have never had"
 				+ "problems with my flatmates.");
 		userDao.save(bernerBaer);
-		
+
 		// Another advertiser & searcher
 		User oprah = createUser("oprah@winfrey.com", "password", "Oprah", "Winfrey",
-				"/img/test/oprah.jpg", Gender.FEMALE);
+				"/img/test/oprah.jpg", Gender.FEMALE, Account.PREMIUM);
 		oprah.setAboutMe(getDummyText());
 		userDao.save(oprah);
-		
+
 		// Dummy users to be added for Roommates
 		User hans = createUser("hans@unibe.ch", "password", "Hans", "DummyOne",
-				Gender.MALE);
+				"/img/test/portrait.jpg", Gender.MALE, Account.PREMIUM);
 		hans.setAboutMe("Hello, I am the dummy user Hans for the AdBern. I am living" +
 				"at Kramgasse 22 and I am very very happy there.");
 		userDao.save(hans);
-		
+
 		User mathilda = createUser("mathilda@unibe.ch", "password", "Mathilda",
-				"DummyTwo", Gender.FEMALE);
+				"DummyTwo", "/img/test/portrait.jpg", Gender.FEMALE, Account.PREMIUM);
 		mathilda.setAboutMe("Hello, I am the dummy user Mathilda for the AdBern. I am living" +
 				"at Kramgasse 22 and I am very very happy there.");
 		userDao.save(mathilda);
 	}
 
 	public User createUser(String email, String password, String firstName,
-			String lastName, Gender gender) {
+			String lastName, Gender gender, Account account) {
 		User user = new User();
 		user.setUsername(email);
 		user.setPassword(password);
@@ -87,6 +88,7 @@ public class UserTestDataSaver {
 		user.setLastName(lastName);
 		user.setEnabled(true);
 		user.setGender(gender);
+		user.setAccount(account);
 		Set<UserRole> userRoles = new HashSet<>();
 		UserRole role = new UserRole();
 		role.setRole("ROLE_USER");
@@ -97,7 +99,7 @@ public class UserTestDataSaver {
 	}
 
 	public User createUser(String email, String password, String firstName,
-			String lastName, String picPath, Gender gender) {
+			String lastName, String picPath, Gender gender, Account account) {
 		User user = new User();
 		user.setUsername(email);
 		user.setPassword(password);
@@ -106,6 +108,7 @@ public class UserTestDataSaver {
 		user.setLastName(lastName);
 		user.setEnabled(true);
 		user.setGender(gender);
+		user.setAccount(account);
 		Set<UserRole> userRoles = new HashSet<>();
 		UserRole role = new UserRole();
 		UserPicture picture = new UserPicture();
@@ -123,7 +126,7 @@ public class UserTestDataSaver {
 		return "I am a Master student from switzerland. I'm 25 years old, "
 				+ "my hobbies are summer-sports, hiking, traveling and cooking. "
 				+ "I enjoy spending time with friends, watching movies, "
-				+ "going for drinks and organizing dinners. I have lived in FrÃ¤kmÃ¼ndegg, "
+				+ "going for drinks and organizing dinners. I have lived in Fräkmüntegg, "
 				+ "London and Zurich, always in flatshares and i have never had "
 				+ "problems with my flatmates because I am a nice person.";
 	}

@@ -2,6 +2,7 @@ package ch.unibe.ese.team1.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -84,6 +85,13 @@ public class PlaceAdController {
 	@Autowired
 	private AdService adService;
 
+	@RequestMapping(value = "profile/placeAdvertisement", method = RequestMethod.GET)
+	public ModelAndView placeAdvertisement() throws IOException {
+		ModelAndView model = new ModelAndView("placeAdvertisement");
+		
+		return model;
+	}
+	
 	/** Shows the place ad form. */
 	@RequestMapping(value = "/profile/placeAd", method = RequestMethod.GET)
 	public ModelAndView placeAd() throws IOException {
@@ -93,6 +101,7 @@ public class PlaceAdController {
 		if (pictureUploader == null) {
 			pictureUploader = new PictureUploader(realPath, IMAGE_DIRECTORY);
 		}
+		
 		return model;
 	}
 

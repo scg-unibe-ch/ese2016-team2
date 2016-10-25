@@ -7,44 +7,81 @@
 
 <c:import url="template/header.jsp" />
 
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Welcome to FlatFindr</title>
+</head>
+<body>
+
 <pre>Home</pre>
 
 <h1>Welcome to FlatFindr!</h1>
 
 <c:choose>
-	<c:when test="${empty newest}">
+	<c:when test="${empty newestAds}">
 		<h2>No ads placed yet</h2>
 	</c:when>
 	<c:otherwise>
-		<div id="resultsDiv" class="resultsDiv">
-			<h2>Our newest ads:</h2>
-			<c:forEach var="ad" items="${newest}">
+		<div id="resultsDiv" class="resultsDiv">	
+			<h2>Our newest ads:</h2>		
+			<c:forEach var="advertisement" items="${newestAds}">
 				<div class="resultAd">
-					<div class="resultLeft">
-						<a href="<c:url value='/ad?id=${ad.id}' />"><img
-							src="${ad.pictures[0].filePath}" /></a>
-						<h2>
-							<a class="link" href="<c:url value='/ad?id=${ad.id}' />">${ad.title}</a>
-						</h2>
-						<p>${ad.street}, ${ad.zipcode} ${ad.city}</p>
-						<br />
-						<p>
-							<i>${ad.room}</i>
-						</p>
-					</div>
-					<div class="resultRight">
-						<h2>CHF ${ad.prizePerMonth }</h2>
-						<br /> <br />
+				<c:choose>
+					<c:when test="${advertisement.auction}">
+						<div class="resultLeft">
+								<!-- <a href="<c:url value='/ad?id=${ad.id}' />"><img
+								src="${ad.pictures[0].filePath}" /></a> -->
+							<h2>
+								<a class="link" href="<c:url value='/auction?id=${advertisement.id}' />">${advertisement.title}</a>
+							</h2>
+							<p>${advertisement.street}, ${advertisement.zipcode} ${advertisement.city}</p>
+							<br />
+							<p>
+								<i>${advertisement.roomType}</i>
+							</p>
+						</div>
+						<div class="resultRight">
+							<h2>CHF ${advertisement.prize}</h2>
 
-						<fmt:formatDate value="${ad.moveInDate}" var="formattedMoveInDate"
-							type="date" pattern="dd.MM.yyyy" />
+							<fmt:formatDate value="${advertisement.moveInDate}" var="formattedMoveInDate"
+								type="date" pattern="dd.MM.yyyy" />
 
-						<p>Move-in date: ${formattedMoveInDate }</p>
-					</div>
+							<p>Move-in date: ${formattedMoveInDate }</p>
+							
+							<fmt:formatDate value="${advertisement.endTime}" var="formattedEndTime"
+								type="date" pattern="dd.MM.yyyy" />
+
+							<p>Auction end-date: ${formattedEndTime}</p>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="resultLeft">
+								<a href="<c:url value='/ad?id=${advertisement.id}' />"><img
+								src="${advertisement.pictures[0].filePath}" /></a>
+							<h2>
+								<a class="link" href="<c:url value='/ad?id=${advertisement.id}' />">${advertisement.title}</a>
+							</h2>
+							<p>${advertisement.street}, ${advertisement.zipcode} ${advertisement.city}</p>
+							<br />
+							<p>
+								<i>${advertisement.roomType}</i>
+							</p>
+						</div>
+						<div class="resultRight">
+							<h2>CHF ${advertisement.prize}</h2>
+							<br /> <br />	
+
+							<fmt:formatDate value="${advertisement.moveInDate}" var="formattedMoveInDate"
+								type="date" pattern="dd.MM.yyyy" />
+
+							<p>Move-in date: ${formattedMoveInDate }</p>
+						</div>
+					</c:otherwise>
+					</c:choose>
 				</div>
 			</c:forEach>
 		</div>
 	</c:otherwise>
 </c:choose>
 
-<c:import url="template/footer.jsp" />
+<c:import url="template/footer.jsp" /><br />

@@ -159,7 +159,7 @@
 	<table id="adDescTable" class="adDescDiv">
 		<tr>
 			<td><h2>Type</h2></td>
-			<td>${shownAd.room}</td>
+			<td>${shownAd.roomType}</td>
 		</tr>
 
 		<tr>
@@ -182,7 +182,7 @@
 
 		<tr>
 			<td><h2>Monthly Rent</h2></td>
-			<td>${shownAd.prizePerMonth}&#32;CHF</td>
+			<td>${shownAd.prize}&#32;CHF</td>
 		</tr>
 
 		<tr>
@@ -248,6 +248,15 @@
 							</c:when>
 							<c:otherwise>
 								female
+							</c:otherwise>
+						</c:choose></td>
+						<td>
+						<c:choose>
+							<c:when test="${mate.account == 'NORMAL'}">
+								normal
+							</c:when>
+							<c:otherwise>
+								premium
 							</c:otherwise>
 						</c:choose></td>
 					</tr>
@@ -458,6 +467,5 @@
 	<button type="button" id="confirmationDialogCancel">Cancel</button>
 	</form>
 </div>
-
 
 <c:import url="template/footer.jsp" />
