@@ -48,7 +48,7 @@ public class RatingTestDataSaver {
 		rating.setRating(5);
 		ratingDao.save(rating);
 		
-		//Berner BÃ¤r doesn't rate anyone
+		//Berner Bär doesn't rate anyone
 		rating = new Rating();
 		rating.setRater(berner);
 		rating.setRatee(ese);

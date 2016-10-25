@@ -62,7 +62,7 @@ public class MessageTestDataSaver {
 
 		message = new Message();
 		message.setSubject("Check this out");
-		message.setText("Hello Mr. BÃ¤r\n " + getDummyText3());
+		message.setText("Hello Mr. Bär\n " + getDummyText3());
 		message.setSender(oprah);
 		message.setRecipient(testerMuster);
 		message.setState(MessageState.READ);
@@ -140,7 +140,7 @@ public class MessageTestDataSaver {
 	private String getDummyText2() {
 		return "I totally agree with you, glad that we settled this. I can visit the flat another time, this"
 				+ "is no problem for me, looking forward to it."
-				+ "\nSee you later,\n\n" + "Berner BÃ¤r";
+				+ "\nSee you later,\n\n" + "Berner Bär";
 	}
 
 	private String getDummyText3() {
