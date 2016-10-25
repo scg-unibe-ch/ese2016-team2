@@ -244,41 +244,13 @@ public class AdTestDataSaver {
 				+ "une salle de bains avec wc. Cave, buanderie et site satellite"
 				+ "√† disposition.";
 		String roomPreferences5 = "tout le monde est bienvenu";
-<<<<<<< HEAD
-		
-		Ad adNeuch‚tel = new Ad();
-		adNeuch‚tel.setZipcode(2000);
-		adNeuch‚tel.setMoveInDate(moveInDate5);
-		adNeuch‚tel.setMoveOutDate(moveOutDate3);
-		adNeuch‚tel.setCreationDate(creationDate5);
-		adNeuch‚tel.setPrize(410);
-		adNeuch‚tel.setSquareFootage(40);
-		adNeuch‚tel.setRoomType("Studio");
-		adNeuch‚tel.setStudio(true);
-		adNeuch‚tel.setSmokers(true);
-		adNeuch‚tel.setAnimals(false);
-		adNeuch‚tel.setRoomDescription(studioDescription5);
-		adNeuch‚tel.setPreferences(roomPreferences5);
-		adNeuch‚tel.setRoommates("None");
-		adNeuch‚tel.setUser(bernerBaer);
-		adNeuch‚tel.setTitle("Studio extrÍmement bon marchÈ ‡† Neuch‚tel");
-		adNeuch‚tel.setStreet("Rue de l'HÙpital 11");
-		adNeuch‚tel.setCity("Neuch‚tel");
-		adNeuch‚tel.setGarden(true);
-		adNeuch‚tel.setBalcony(false);
-		adNeuch‚tel.setCellar(true);
-		adNeuch‚tel.setFurnished(true);
-		adNeuch‚tel.setCable(false);
-		adNeuch‚tel.setGarage(false);
-		adNeuch‚tel.setInternet(true);
-=======
 
 		Ad adNeuch√¢tel = new Ad();
 		adNeuch√¢tel.setZipcode(2000);
 		adNeuch√¢tel.setMoveInDate(moveInDate5);
 		adNeuch√¢tel.setMoveOutDate(moveOutDate3);
 		adNeuch√¢tel.setCreationDate(creationDate5);
-		adNeuch√¢tel.setPrizePerMonth(410);
+		adNeuch√¢tel.setPrize(410);
 		adNeuch√¢tel.setSquareFootage(40);
 		adNeuch√¢tel.setRoomType("Studio");
 		adNeuch√¢tel.setStudio(true);
@@ -288,8 +260,8 @@ public class AdTestDataSaver {
 		adNeuch√¢tel.setPreferences(roomPreferences5);
 		adNeuch√¢tel.setRoommates("None");
 		adNeuch√¢tel.setUser(bernerBaer);
-		adNeuch√¢tel.setTitle("Studio extr√©mement bon march√© √† Neuch√¢tel");
-		adNeuch√¢tel.setStreet("Rue de l'H√¥pital 11");
+		adNeuch√¢tel.setTitle("Studio extr√¢mement bon march√¢ √¢√¢ Neuch√¢tel");
+		adNeuch√¢tel.setStreet("Rue de l'H√¢pital 11");
 		adNeuch√¢tel.setCity("Neuch√¢tel");
 		adNeuch√¢tel.setGarden(true);
 		adNeuch√¢tel.setBalcony(false);
@@ -298,7 +270,7 @@ public class AdTestDataSaver {
 		adNeuch√¢tel.setCable(false);
 		adNeuch√¢tel.setGarage(false);
 		adNeuch√¢tel.setInternet(true);
->>>>>>> addNewIndexPage
+
 		pictures = new ArrayList<>();
 		pictures.add(createPicture(adNeuch√¢tel, "/img/test/ad5_1.jpg"));
 		pictures.add(createPicture(adNeuch√¢tel, "/img/test/ad5_2.jpg"));
