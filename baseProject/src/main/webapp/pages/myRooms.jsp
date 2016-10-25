@@ -20,7 +20,6 @@
 <c:choose>
 	<c:when test="${empty ownAds}">
 		<h1>My Advertisements</h1>
-		<hr />
 		<p>You have not advertised anything yet.</p>
 		<br /><br />
 	</c:when>
@@ -28,7 +27,6 @@
 
 		<div id="resultsDiv" class="resultsDiv">
 		<h1>My Advertisements</h1>
-		<hr />
 			<c:forEach var="ad" items="${ownAds}">
 				<div class="resultAd" data-price="${ad.prize}"
 								data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">
@@ -58,18 +56,18 @@
 	</c:otherwise>
 </c:choose>
 
+<hr class="clearBoth">
+
 <c:choose>
 
 	<c:when test="${empty ownAuctions}">
 		<h1>My Auctions</h1>
-		<hr />
 		<p>You have not advertised anything yet.</p>
 		<br /><br />
 	</c:when>
 	<c:otherwise>
 		<div id="resultsDiv" class="resultsDiv">
 		<h1>My Auctions</h1>
-		<hr />
 			<c:forEach var="auction" items="${ownAuctions}">
 				<div class="resultAuction" data-price="${auction.prize}"
 								data-moveIn="${auction.moveInDate}" data-age="${auction.moveInDate}">
@@ -90,8 +88,8 @@
 							type="date" pattern="dd.MM.yyyy" />
 						<p>Move-in date: ${formattedMoveInDate}</p>
 						<fmt:formatDate value="${auction.endTime}" var="formattedEndTime" 
-							type="date" pattern="dd.MM.yyyy, HH:mm:ss" />
-						<p>End-time: ${formattedEndTime}</p>
+							type="date" pattern="dd.MM.yyyy" />
+						<p>Auction end-date: ${formattedEndTime}</p>
 					</div>
 				</div>
 			</c:forEach>
@@ -101,17 +99,17 @@
 
 </c:choose>
 
+<hr class="clearBoth">
+
 <c:choose>
 	<c:when test="${empty bookmarkedAdvertisements}">
 		<h1>My Bookmarks</h1>
-		<hr />
 		<p>You have not bookmarked anything yet.</p><br /><br />
 	</c:when>
 	<c:otherwise>
 
 		<div id="resultsDiv" class="resultsDiv">
 		<h1>My Bookmarks</h1>
-		<hr />
 			<c:forEach var="ad" items="${bookmarkedAdvertisements}">
 				<div class="resultAd" data-price="${ad.prize}"
 								data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">

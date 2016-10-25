@@ -19,6 +19,8 @@
 	type="date" pattern="dd.MM.yyyy" />
 <fmt:formatDate value="${shownAuction.creationDate}" var="formattedCreationDate"
 	type="date" pattern="dd.MM.yyyy" />
+<fmt:formatDate value="${shownAuction.endTime}" var="formattedEndTime"
+	type="date" pattern="dd.MM.yyyy" />
 <c:choose>
 	<c:when test="${empty shownAuction.moveOutDate }">
 		<c:set var="formattedMoveOutDate" value="unlimited" />
@@ -33,14 +35,6 @@
 <h1 id="shownAdTitle">${shownAuction.title}</h1>
 
 <section>
-	<c:choose>
-		<c:when test="${loggedIn}">
-			<c:if test="${loggedInUserEmail == shownAuction.user.username }">
-				<!-- <a href="<c:url value='/profile/editAuction?id=${shownAuction.id}' />"> -->
-					<button type="button">Edit Auction</button>
-			</c:if>
-		</c:when>
-	</c:choose>
 	<br>
 	<br>
 
@@ -73,28 +67,36 @@
 			<td>${shownAuction.squareFootage}&#32;m²</td>
 		</tr>
 		<tr>
-			<td><h2>Ad created on</h2></td>
+			<td><h2>Auction created on</h2></td>
 			<td>${formattedCreationDate}</td>
+		</tr>
+		<tr>
+			<td><h2>Auction end-date</h2></td>
+			<td>${formattedEndTime}</td>
 		</tr>
 	</table>
 </section>
 
 <hr class="clearBoth" />
 
+
 <section>
 	<table id="adDescTable" class="adDescDiv">
 		<tr>
 			<td><h2>Highest bid:</h2></td>
-			<td>${shownAuction.prize}</td>
+			<td>${shownAuction.prize}&#32;CHF</td>
 		</tr>
-		<tr>
-			<td><h2>New bid:</h2></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><button type="submit">Submit</button></td>
-		</tr>
+		<tr><td><c:choose>
+		<c:when test="${loggedIn}">
+			<c:if test="${loggedInUserEmail != shownAuction.user.username}">
+				<a href="<c:url value='/auction/placeBid?id=${shownAuction.id}' />">
+					<button type="button">Place new bid</button></a>
+			</c:if>
+		</c:when>
+		<c:otherwise>
+						<a href="/login"><button class="thinInactiveButton" type="button">Login to place new bid</button></a>
+		</c:otherwise>
+		</c:choose></td></tr>
 	</table>
 </section>
 
@@ -275,46 +277,7 @@
 				<a href="/login"><button class="thinInactiveButton" type="button">Login to visit profile</button></a>
 			</c:otherwise>
 		</c:choose>
-
-		<td>
-			<form>
-				<c:choose>
-					<c:when test="${loggedIn}">
-						<c:if test="${loggedInUserEmail != shownAuction.user.username }">
-							<button id="newMsg" type="button">Contact Advertiser</button>
-						</c:if>
-					</c:when>
-					<c:otherwise>
-						<a href="/login"><button class="thinInactiveButton" type="button">Login to contact advertiser</button></a>
-					</c:otherwise>
-				</c:choose>
-			</form>
-		</td>
 	</tr>
 </table>
-
-<div id="msgDiv">
-<form class="msgForm">
-	<h2>Contact the advertiser</h2>
-	<br>
-	<br>
-	<label>Subject: <span>*</span></label>
-	<input  class="msgInput" type="text" id="msgSubject" placeholder="Subject" />
-	<br><br>
-	<label>Message: </label>
-	<textarea id="msgTextarea" placeholder="Message" ></textarea>
-	<br/>
-	<button type="button" id="messageSend">Send</button>
-	<button type="button" id="messageCancel">Cancel</button>
-	</form>
-</div>
-
-<div id="confirmationDialog">
-	<form>
-	<p>Send enquiry to advertiser?</p>
-	<button type="button" id="confirmationDialogSend">Send</button>
-	<button type="button" id="confirmationDialogCancel">Cancel</button>
-	</form>
-</div>
 
 <c:import url="template/footer.jsp" />

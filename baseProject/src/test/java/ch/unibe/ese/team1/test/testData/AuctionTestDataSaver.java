@@ -36,10 +36,10 @@ public class AuctionTestDataSaver {
 		Date moveOutDate1 = formatter.parse("31.03.2018");
 		Date moveOutDate2 = formatter.parse("30.04.2018");
 		
-		SimpleDateFormat timeFormatter = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
+		SimpleDateFormat timeFormatter = new SimpleDateFormat("dd.MM.yyyy");
 	
-		Date endTime1 = timeFormatter.parse("14.12.2017, 12:00:00");
-		Date endTime2 = timeFormatter.parse("20.12.2017, 12:00:00");
+		Date endTime1 = timeFormatter.parse("14.12.2017");
+		Date endTime2 = timeFormatter.parse("20.12.2017");
 		
 		String roomDescription1 = "The room is a part of 3.5 rooms apartment completely renovated"
 				+ "in 2010 at Kramgasse, Bern. The apartment is about 50 m2 on 1st floor."
@@ -52,34 +52,34 @@ public class AuctionTestDataSaver {
 				+ "Cleanliness is must. Apart from personal life, sometimes glass of wine,"
 				+ "eat and cook together and go out in the evenings.";
 
-		Auction adBern = new Auction();
-		adBern.setZipcode(3011);
-		adBern.setMoveInDate(moveInDate1);
-		adBern.setCreationDate(creationDate1);
-		adBern.setMoveOutDate(moveOutDate1);
-		adBern.setPrize(400);
-		adBern.setSquareFootage(50);
-		adBern.setRoomType("Room");
-		adBern.setStudio(false);
-		adBern.setSmokers(false);
-		adBern.setAnimals(true);
-		adBern.setRoomDescription(roomDescription1);
-		adBern.setPreferences(preferences1);
-		adBern.setRoommates("One roommate");
-		adBern.setUser(ese);
-		adBern.setTitle("Roommate wanted in Bern");
-		adBern.setStreet("Kramgasse 22");
-		adBern.setCity("Bern");
-		adBern.setGarden(true);
-		adBern.setBalcony(true);
-		adBern.setCellar(true);
-		adBern.setFurnished(true);
-		adBern.setCable(true);
-		adBern.setGarage(true);
-		adBern.setInternet(true);
-		adBern.setAuction(true);
-		adBern.setEndTime(endTime1);
-		auctionDao.save(adBern);
+		Auction auctionBern = new Auction();
+		auctionBern.setZipcode(3011);
+		auctionBern.setMoveInDate(moveInDate1);
+		auctionBern.setCreationDate(creationDate1);
+		auctionBern.setMoveOutDate(moveOutDate1);
+		auctionBern.setPrize(400);
+		auctionBern.setSquareFootage(50);
+		auctionBern.setRoomType("Room");
+		auctionBern.setStudio(false);
+		auctionBern.setSmokers(false);
+		auctionBern.setAnimals(true);
+		auctionBern.setRoomDescription(roomDescription1);
+		auctionBern.setPreferences(preferences1);
+		auctionBern.setRoommates("One roommate");
+		auctionBern.setUser(ese);
+		auctionBern.setTitle("Roommate wanted in Bern");
+		auctionBern.setStreet("Kramgasse 22");
+		auctionBern.setCity("Bern");
+		auctionBern.setGarden(true);
+		auctionBern.setBalcony(true);
+		auctionBern.setCellar(true);
+		auctionBern.setFurnished(true);
+		auctionBern.setCable(true);
+		auctionBern.setGarage(true);
+		auctionBern.setInternet(true);
+		auctionBern.setAuction(true);
+		auctionBern.setEndTime(endTime1);
+		auctionDao.save(auctionBern);
 
 		String studioDescription2 = "It is small studio close to the"
 				+ "university and the bahnhof. The lovely neighbourhood"
@@ -95,33 +95,33 @@ public class AuctionTestDataSaver {
 				+ "is trustworthy and can take care of the flat. No animals please."
 				+ "Non smoker preferred.";
 		
-		Auction adBern2 = new Auction();
-		adBern2.setZipcode(3012);
-		adBern2.setMoveInDate(moveInDate2);
-		adBern2.setCreationDate(creationDate2);
-		adBern2.setMoveOutDate(moveOutDate2);
-		adBern2.setPrize(700);
-		adBern2.setSquareFootage(60);
-		adBern2.setRoomType("Studio");
-		adBern2.setStudio(true);
-		adBern2.setSmokers(false);
-		adBern2.setAnimals(true);
-		adBern2.setRoomDescription(studioDescription2);
-		adBern2.setPreferences(roomPreferences2);
-		adBern2.setRoommates("None");
-		adBern2.setUser(bernerBaer);
-		adBern2.setTitle("Cheap studio in Bern!");
-		adBern2.setStreet("Längassstr. 40");
-		adBern2.setCity("Bern");
-		adBern2.setGarden(false);
-		adBern2.setBalcony(false);
-		adBern2.setCellar(false);
-		adBern2.setFurnished(false);
-		adBern2.setCable(false);
-		adBern2.setGarage(false);
-		adBern2.setInternet(true);
-		adBern2.setAuction(true);
-		adBern2.setEndTime(endTime2);
-		auctionDao.save(adBern2);
+		Auction auctionBern2 = new Auction();
+		auctionBern2.setZipcode(3012);
+		auctionBern2.setMoveInDate(moveInDate2);
+		auctionBern2.setCreationDate(creationDate2);
+		auctionBern2.setMoveOutDate(moveOutDate2);
+		auctionBern2.setPrize(700);
+		auctionBern2.setSquareFootage(60);
+		auctionBern2.setRoomType("Studio");
+		auctionBern2.setStudio(true);
+		auctionBern2.setSmokers(false);
+		auctionBern2.setAnimals(true);
+		auctionBern2.setRoomDescription(studioDescription2);
+		auctionBern2.setPreferences(roomPreferences2);
+		auctionBern2.setRoommates("None");
+		auctionBern2.setUser(bernerBaer);
+		auctionBern2.setTitle("Cheap studio in Bern!");
+		auctionBern2.setStreet("Längassstr. 40");
+		auctionBern2.setCity("Bern");
+		auctionBern2.setGarden(false);
+		auctionBern2.setBalcony(false);
+		auctionBern2.setCellar(false);
+		auctionBern2.setFurnished(false);
+		auctionBern2.setCable(false);
+		auctionBern2.setGarage(false);
+		auctionBern2.setInternet(true);
+		auctionBern2.setAuction(true);
+		auctionBern2.setEndTime(endTime2);
+		auctionDao.save(auctionBern2);
 	}
 }

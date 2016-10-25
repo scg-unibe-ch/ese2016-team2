@@ -49,9 +49,9 @@
 							<p>Move-in date: ${formattedMoveInDate }</p>
 							
 							<fmt:formatDate value="${advertisement.endTime}" var="formattedEndTime"
-								type="date" pattern="dd.MM.yyyy, HH:mm:ss" />
+								type="date" pattern="dd.MM.yyyy" />
 
-							<p>End-time: ${formattedEndTime}</p>
+							<p>Auction end-date: ${formattedEndTime}</p>
 						</div>
 					</c:when>
 					<c:otherwise>

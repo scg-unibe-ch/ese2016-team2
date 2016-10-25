@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
+import ch.unibe.ese.team1.controller.pojos.forms.PlaceBidForm;
 import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.AdPicture;
 import ch.unibe.ese.team1.model.Auction;
@@ -52,14 +53,11 @@ public class AuctionService {
 	 * 
 	 * @param placeAuctionForm
 	 *            the form to take the data from
-	 * @param a
-	 *            list of the file paths the pictures are saved under
 	 * @param the
 	 *            currently logged in user
 	 */
 	@Transactional
-	public Auction saveFrom(PlaceAuctionForm placeAuctionForm, List<String> filePaths,
-			User user) {
+	public Auction saveFrom(PlaceAuctionForm placeAuctionForm, User user) {
 		
 		Auction auction = new Auction();
 
@@ -104,6 +102,16 @@ public class AuctionService {
 				calendar.set(yearMoveOut, monthMoveOut - 1, dayMoveOut);
 				auction.setMoveOutDate(calendar.getTime());
 			}
+			if (placeAuctionForm.getEndTime().length() >= 1) {
+				int dayMoveIn = Integer.parseInt(placeAuctionForm.getEndTime()
+						.substring(0, 2));
+				int monthMoveIn = Integer.parseInt(placeAuctionForm.getEndTime()
+						.substring(3, 5));
+				int yearMoveIn = Integer.parseInt(placeAuctionForm.getEndTime()
+						.substring(6, 10));
+				calendar.set(yearMoveIn, monthMoveIn - 1, dayMoveIn);
+				auction.setEndTime(calendar.getTime());
+			}
 		} catch (NumberFormatException e) {
 		}
 
@@ -124,18 +132,6 @@ public class AuctionService {
 		auction.setCable(placeAuctionForm.getCable());
 		auction.setGarage(placeAuctionForm.getGarage());
 		auction.setInternet(placeAuctionForm.getInternet());
-		
-		/*
-		 * Save the paths to the picture files, the pictures are assumed to be
-		 * uploaded at this point!
-		 */
-		List<AdPicture> pictures = new ArrayList<>();
-		for (String filePath : filePaths) {
-			AdPicture picture = new AdPicture();
-			picture.setFilePath(filePath);
-			pictures.add(picture);
-		}
-		auction.setPictures(pictures);
 
 		/*
 		 * Roommates are saved in the form as strings. They need to be converted
@@ -150,42 +146,23 @@ public class AuctionService {
 			}
 		}
 		auction.setRegisteredRoommates(registeredUserRommates);
-
-		// visits
-		List<Visit> visits = new LinkedList<>();
-		List<String> visitStrings = placeAuctionForm.getVisits();
-		if (visitStrings != null) {
-			for (String visitString : visitStrings) {
-				Visit visit = new Visit();
-				// format is 28-02-2014;10:02;13:14
-				DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-				String[] parts = visitString.split(";");
-				String startTime = parts[0] + " " + parts[1];
-				String endTime = parts[0] + " " + parts[2];
-				Date startDate = null;
-				Date endDate = null;
-				try {
-					startDate = dateFormat.parse(startTime);
-					endDate = dateFormat.parse(endTime);
-				} catch (ParseException ex) {
-					ex.printStackTrace();
-				}
-
-				visit.setStartTimestamp(startDate);
-				visit.setEndTimestamp(endDate);
-				visit.setAd(auction);
-				visits.add(visit);
-			}
-			auction.setVisits(visits);
-			
-			auction.setAuction(true);
-			auction.setEndTime(placeAuctionForm.getEndTime());
-		}
+		
+		auction.setAuction(true);
 
 		auction.setUser(user);
 		
 		auctionDao.save(auction);
 
+		return auction;
+	}
+	
+	@Transactional
+	public Auction saveBidPrize(PlaceBidForm placeBidForm, long id) {
+		Auction auction = getAuctionById(id);
+		auction.setPrize(placeBidForm.getPrize());
+		
+		auctionDao.save(auction);
+		
 		return auction;
 	}
 
@@ -197,7 +174,7 @@ public class AuctionService {
 	 * @return the found ad or null, if no ad with this id exists
 	 */
 	@Transactional
-	public Auction getAdById(long id) {
+	public Auction getAuctionById(long id) {
 		return auctionDao.findOne(id);
 	}
 
@@ -231,5 +208,29 @@ public class AuctionService {
 	/** Returns all ads that were placed by the given user. */
 	public Iterable<Auction> getAuctionsByUser(User user) {
 		return auctionDao.findByUser(user);
+	}
+	
+	/**
+	 * Checks if the email of a user is already contained in the given string.
+	 * 
+	 * @param email
+	 *            the email string to search for
+	 * @param alreadyAdded
+	 *            the string of already added emails, which should be searched
+	 *            in
+	 * 
+	 * @return true if the email has been added already, false otherwise
+	 */
+	public Boolean checkIfAlreadyAdded(String email, String alreadyAdded) {
+		email = email.toLowerCase();
+		alreadyAdded = alreadyAdded.replaceAll("\\s+", "").toLowerCase();
+		String delimiter = "[:;]+";
+		String[] toBeTested = alreadyAdded.split(delimiter);
+		for (int i = 0; i < toBeTested.length; i++) {
+			if (email.equals(toBeTested[i])) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

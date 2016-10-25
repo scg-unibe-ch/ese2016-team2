@@ -65,7 +65,8 @@ public class PlaceAuctionForm {
 	
 	private boolean auction;
 	
-	private Date endTime;
+	@NotBlank(message = "Required")
+	private String endTime;
 
 	public String getCity() {
 		return city;
@@ -267,11 +268,11 @@ public class PlaceAuctionForm {
 		this.auction = auction;
 	}
 
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 }
