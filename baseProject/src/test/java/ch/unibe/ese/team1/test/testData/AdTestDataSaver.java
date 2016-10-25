@@ -159,8 +159,8 @@ public class AdTestDataSaver {
 				+ "savage wine stocks, without any neighbours but with a garden. The"
 				+ "house has two storey, on the first floor your new room is waiting"
 				+ "for you. The house is totally equipped with everything a household "
-				+ ": washing machine, kitchen, batroom, W-Lan...if you don´t have any"
-				+ "furniture, don´t worry, I am sure, we will find something around"
+				+ ": washing machine, kitchen, batroom, W-Lan...if you don't have any"
+				+ "furniture, don't worry, I am sure, we will find something around"
 				+ "the house. The price for the room and all included is 480 CHF /month. "
 				+ " (29, Graphic designer) and Linda (31, curator) are looking for a"
 				+ "new female flatmate from December on.";
@@ -342,9 +342,9 @@ public class AdTestDataSaver {
 		adZurich.setPreferences(preferences7);
 		adZurich.setRoommates("One roommate");
 		adZurich.setUser(oprah);
-		adZurich.setTitle("Roommate wanted in Zürich");
+		adZurich.setTitle("Roommate wanted in Zï¿½rich");
 		adZurich.setStreet("Hauptstrasse 61");
-		adZurich.setCity("Zürich");
+		adZurich.setCity("Zï¿½rich");
 		adZurich.setGarden(false);
 		adZurich.setBalcony(true);
 		adZurich.setCellar(false);
@@ -514,7 +514,7 @@ public class AdTestDataSaver {
 		adLausanne.setPreferences(roomPreferences11);
 		adLausanne.setRoommates("None");
 		adLausanne.setUser(oprah);
-		adLausanne.setTitle("Studio extrêmement bon marché à Lausanne");
+		adLausanne.setTitle("Studio extrï¿½mement bon marchï¿½ ï¿½ Lausanne");
 		adLausanne.setStreet("Rue de l'Eglise 26");
 		adLausanne.setCity("Lausanne");
 		adLausanne.setGarden(true);
