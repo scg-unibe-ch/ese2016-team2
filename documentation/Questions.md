@@ -1,25 +1,15 @@
-##Questions for meeting 19-10-2016
+##Questions for meeting 26-10-2016
 ##Requirements
-#### #R4 - Users can sell, rent or buy properties.
-* Should this be implemented by a additional checkbox?
-* Are there additional information which only should be entered when an advertiser want rent a property?
+#### #R24 - Users can view the bills for the premium membership in a private area. (JF)
+* Should the bills displayed in an additional menu item like "Bills" as examples or in "Messages"?
+* Should the user have the possibility to change a premium account to a normal account?
 
-#### #R26 - Questions and proposals in terms of the new front-end design.
-* May the sitemap and document structure be altered/changed? If yes, then
-  - Add Search (Find) / Place ad (Offer)  to 'Home'?
-  - Remove or constrain latest entries to Geolocation (or more criteria)?
-  - Sign in/up on same page? OR "Quick" Sign in 'Home'?
-  - Turn user profile (and all admin tools) into single page with sidebar-menu?
-
-* Any wishes/restrictions regarding the look of the site (colors, fonts, graphical elements, etc.)?
-* What browsers should be surpported?
-
-
-#### Verification of tasks in sprint 1
-* #R26 Questions and proposals in terms of the new front-end design.
-* #R3 House as a new type of property, which can by bought, sold and rented.
-* Decompose user requirements to stories/epics/themes in Trello.
-* Create logo, update GitHub Readme-File, SRS and UML Use Case Diagram.
+#### Verification of tasks in sprint 2
+* #R26-S1 - Add extra .jsp pages | in order to build new doc structures/flows.
+* #R24 - Extend the signup form with the possibility to choose a premium account.
+* #R22 - Extend the search criteria with the filter criteria.
+* #R19 - Integrating the function that a user can choose between an normal ad and an auction (with min. price and Duration).
+* #R3 - Make sure that the house as new property appears in the views when an ad is edited, alerts managed and when a user look to all his rooms.
 
 ###General questions regarding the project
-- 
+
