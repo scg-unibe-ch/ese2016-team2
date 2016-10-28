@@ -42,14 +42,6 @@
 			<li>Email: <i>oprah@winfrey.com</i>, password: <i>password</i></li>
 		</ul>
 		<br />
-
-		<h2>Roommates for AdBern</h2>
-		<ul class="test-users">
-			<li>Email: <i>hans@unibe.ch</i>, password: <i>password</i></li>
-			<li>Email: <i>mathilda@unibe.ch</i>, password: <i>password</i></li>
-		</ul>
-		<br />
-
 			Or <a class="link" href="<c:url value="/signup" />">sign up</a> as a new user.
 
 	</c:otherwise>

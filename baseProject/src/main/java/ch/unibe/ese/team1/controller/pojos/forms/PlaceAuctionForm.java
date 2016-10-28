@@ -35,13 +35,6 @@ public class PlaceAuctionForm {
 	private String roomDescription;
 
 	private String preferences;
-
-	// optional free text description
-	private String roommates;
-	
-	// First user are added as strings, then transformed
-	// to Users and added to the DB in through adService
-	private List<String> registeredRoommateEmails;
 	
 	// optional for input
 	private String roomFriends;
@@ -106,14 +99,6 @@ public class PlaceAuctionForm {
 
 	public void setSquareFootage(int squareFootage) {
 		this.squareFootage = squareFootage;
-	}
-
-	public String getRoommates() {
-		return roommates;
-	}
-
-	public void setRoommates(String roommates) {
-		this.roommates = roommates;
 	}
 
 	public boolean isSmokers() {
@@ -242,14 +227,6 @@ public class PlaceAuctionForm {
 
 	public void setRoomType(String roomType) {
 		this.roomType = roomType;
-	}
-	
-	public List<String> getRegisteredRoommateEmails() {
-		return registeredRoommateEmails;
-	}
-
-	public void setRegisteredRoommateEmails(List<String> registeredRoommateEmails) {
-		this.registeredRoommateEmails = registeredRoommateEmails;
 	}
 
 	public List<String> getVisits() {
