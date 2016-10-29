@@ -112,6 +112,10 @@ public class AuctionController {
 		// reset the place bid form
 		this.placeBidForm = null;
 
+		messageService.sendMessage(userService.findUserByUsername("System"), 
+				auction.getUser(), "New bid", "Someone placed a new bid in your auction for " + 
+				auction.getTitle() +". Bid placed by " + auction.getBidderName());
+		
 		model = new ModelAndView("redirect:/auction?id=" + auction.getId());
 		redirectAttributes.addFlashAttribute("confirmationMessage", "Bid placed successfully.");
 		return model;
