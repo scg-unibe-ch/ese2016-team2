@@ -21,15 +21,6 @@
 	type="date" pattern="dd.MM.yyyy" />
 <fmt:formatDate value="${shownAuction.endTime}" var="formattedEndTime"
 	type="date" pattern="dd.MM.yyyy" />
-<c:choose>
-	<c:when test="${empty shownAuction.moveOutDate }">
-		<c:set var="formattedMoveOutDate" value="unlimited" />
-	</c:when>
-	<c:otherwise>
-		<fmt:formatDate value="${shownAuction.moveOutDate}"
-			var="formattedMoveOutDate" type="date" pattern="dd.MM.yyyy" />
-	</c:otherwise>
-</c:choose>
 
 
 <h1 id="shownAdTitle">${shownAuction.title}</h1>
@@ -55,11 +46,6 @@
 		<tr>
 			<td><h2>Available from</h2></td>
 			<td>${formattedMoveInDate}</td>
-		</tr>
-
-		<tr>
-			<td><h2>Move-out Date</h2></td>
-			<td>${formattedMoveOutDate}</td>
 		</tr>
 
 		<tr>

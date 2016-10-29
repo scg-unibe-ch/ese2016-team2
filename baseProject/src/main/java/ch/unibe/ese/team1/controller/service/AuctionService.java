@@ -91,17 +91,6 @@ public class AuctionService {
 				calendar.set(yearMoveIn, monthMoveIn - 1, dayMoveIn);
 				auction.setMoveInDate(calendar.getTime());
 			}
-
-			if (placeAuctionForm.getMoveOutDate().length() >= 1) {
-				int dayMoveOut = Integer.parseInt(placeAuctionForm.getMoveOutDate()
-						.substring(0, 2));
-				int monthMoveOut = Integer.parseInt(placeAuctionForm
-						.getMoveOutDate().substring(3, 5));
-				int yearMoveOut = Integer.parseInt(placeAuctionForm.getMoveOutDate()
-						.substring(6, 10));
-				calendar.set(yearMoveOut, monthMoveOut - 1, dayMoveOut);
-				auction.setMoveOutDate(calendar.getTime());
-			}
 			if (placeAuctionForm.getEndTime().length() >= 1) {
 				int dayMoveIn = Integer.parseInt(placeAuctionForm.getEndTime()
 						.substring(0, 2));
@@ -133,7 +122,7 @@ public class AuctionService {
 		auction.setInternet(placeAuctionForm.getInternet());
 		
 		auction.setAuction(true);
-
+		auction.setBuyable(true);
 		auction.setUser(user);
 		
 		auctionDao.save(auction);

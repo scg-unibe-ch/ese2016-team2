@@ -111,6 +111,9 @@ public abstract class Advertisement {
 	
 	@Column(nullable=false)
 	private boolean auction;
+	
+	@Column(nullable=false)
+	private boolean buyable;
 
 	public Date getCreationDate() {
 		return creationDate;
@@ -333,6 +336,14 @@ public abstract class Advertisement {
 	
 	public void setAuction(boolean auction) {
 		this.auction = auction;
+	}
+	
+	public boolean getBuyable() {
+		return buyable;
+	}
+	
+	public void setBuyable(boolean buyable) {
+		this.buyable = buyable;
 	}
 
 	@Override

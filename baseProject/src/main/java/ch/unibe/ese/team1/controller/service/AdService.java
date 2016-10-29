@@ -172,10 +172,10 @@ public class AdService {
 				visits.add(visit);
 			}
 			ad.setVisits(visits);
-			
-			ad.setAuction(false);
 		}
-
+		
+		ad.setAuction(false);
+		ad.setBuyable(false);
 		ad.setUser(user);
 		
 		adDao.save(ad);

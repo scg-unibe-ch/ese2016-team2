@@ -63,6 +63,7 @@ public class AuctionTestDataSaver {
 		auctionBern.setStudio(false);
 		auctionBern.setSmokers(false);
 		auctionBern.setAnimals(true);
+		auctionBern.setBuyable(true);
 		auctionBern.setRoomDescription(roomDescription1);
 		auctionBern.setPreferences(preferences1);
 		auctionBern.setUser(ese);
@@ -105,6 +106,7 @@ public class AuctionTestDataSaver {
 		auctionBern2.setStudio(true);
 		auctionBern2.setSmokers(false);
 		auctionBern2.setAnimals(true);
+		auctionBern2.setBuyable(true);
 		auctionBern2.setRoomDescription(studioDescription2);
 		auctionBern2.setPreferences(roomPreferences2);
 		auctionBern2.setUser(bernerBaer);

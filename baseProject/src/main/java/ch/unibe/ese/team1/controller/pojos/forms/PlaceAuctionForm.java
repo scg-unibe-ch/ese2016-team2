@@ -23,7 +23,7 @@ public class PlaceAuctionForm {
 	@NotBlank(message = "Required")
 	private String moveInDate;
 	
-	private String moveOutDate;
+	private boolean buyable;
 
 	@Min(value = 1, message = "Has to be equal to 1 or more")
 	private int prize;
@@ -181,12 +181,12 @@ public class PlaceAuctionForm {
 		this.moveInDate = moveInDate;
 	}
 
-	public String getMoveOutDate() {
-		return moveOutDate;
+	public boolean getBuyable() {
+		return buyable;
 	}
-
-	public void setMoveOutDate(String moveOutDate) {
-		this.moveOutDate = moveOutDate;
+	
+	public void setBuyable(boolean buyable) {
+		this.buyable = buyable;
 	}
 
 	public String getTitle() {
