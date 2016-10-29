@@ -65,7 +65,6 @@ public class AuctionTestDataSaver {
 		auctionBern.setAnimals(true);
 		auctionBern.setRoomDescription(roomDescription1);
 		auctionBern.setPreferences(preferences1);
-		auctionBern.setRoommates("One roommate");
 		auctionBern.setUser(ese);
 		auctionBern.setTitle("Roommate wanted in Bern");
 		auctionBern.setStreet("Kramgasse 22");
@@ -108,7 +107,6 @@ public class AuctionTestDataSaver {
 		auctionBern2.setAnimals(true);
 		auctionBern2.setRoomDescription(studioDescription2);
 		auctionBern2.setPreferences(roomPreferences2);
-		auctionBern2.setRoommates("None");
 		auctionBern2.setUser(bernerBaer);
 		auctionBern2.setTitle("Cheap studio in Bern!");
 		auctionBern2.setStreet("Längassstr. 40");

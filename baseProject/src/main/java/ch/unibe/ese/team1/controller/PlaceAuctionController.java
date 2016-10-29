@@ -89,24 +89,6 @@ public class PlaceAuctionController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/profile/placeAuction/validateEmail", method = RequestMethod.POST)
-	@ResponseBody
-	public String validateEmail(@RequestParam String email,
-			@RequestParam String alreadyIn) {
-		User user = userService.findUserByUsername(email);
-
-		Boolean isAdded = auctionService.checkIfAlreadyAdded(email, alreadyIn);
-
-		if (user == null) {
-			return "This user does not exist, did your roommate register?";
-		}
-		if (isAdded) {
-			return "You already added this person.";
-		} else {
-			return user.getEmail();
-		}
-	}
-	
 	@ModelAttribute("placeAuctionForm")
 	public PlaceAuctionForm placeAuctionForm() {
 		if (placeAuctionForm == null) {

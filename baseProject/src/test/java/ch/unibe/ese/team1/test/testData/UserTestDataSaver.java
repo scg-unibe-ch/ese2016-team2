@@ -63,19 +63,6 @@ public class UserTestDataSaver {
 				"/img/test/oprah.jpg", Gender.FEMALE, Account.PREMIUM);
 		oprah.setAboutMe(getDummyText());
 		userDao.save(oprah);
-
-		// Dummy users to be added for Roommates
-		User hans = createUser("hans@unibe.ch", "password", "Hans", "DummyOne",
-				"/img/test/portrait.jpg", Gender.MALE, Account.PREMIUM);
-		hans.setAboutMe("Hello, I am the dummy user Hans for the AdBern. I am living" +
-				"at Kramgasse 22 and I am very very happy there.");
-		userDao.save(hans);
-
-		User mathilda = createUser("mathilda@unibe.ch", "password", "Mathilda",
-				"DummyTwo", "/img/test/portrait.jpg", Gender.FEMALE, Account.PREMIUM);
-		mathilda.setAboutMe("Hello, I am the dummy user Mathilda for the AdBern. I am living" +
-				"at Kramgasse 22 and I am very very happy there.");
-		userDao.save(mathilda);
 	}
 
 	public User createUser(String email, String password, String firstName,
