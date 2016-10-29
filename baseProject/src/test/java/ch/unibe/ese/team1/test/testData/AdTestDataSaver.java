@@ -329,7 +329,6 @@ public class AdTestDataSaver {
 		adZurich.setAnimals(false);
 		adZurich.setRoomDescription(roomDescription7);
 		adZurich.setPreferences(preferences7);
-		adZurich.setRoommates("One roommate");
 		adZurich.setUser(oprah);
 		adZurich.setTitle("Roommate wanted in Z�rich");
 		adZurich.setStreet("Hauptstrasse 61");
@@ -460,7 +459,6 @@ public class AdTestDataSaver {
 		adDavos.setAnimals(false);
 		adDavos.setRoomDescription(studioDescription10);
 		adDavos.setPreferences(roomPreferences10);
-		adDavos.setRoommates("One roommate");
 		adDavos.setUser(oprah);
 		adDavos.setTitle("Free room in Davos City");
 		adDavos.setStreet("Kathrinerweg 5");

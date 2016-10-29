@@ -458,7 +458,6 @@ public class AdTestDataSaver {
 		adDavos.setAnimals(false);
 		adDavos.setRoomDescription(studioDescription10);
 		adDavos.setPreferences(roomPreferences10);
-		adDavos.setRoommates("One roommate");
 		adDavos.setUser(oprah);
 		adDavos.setTitle("Free room in Davos City");
 		adDavos.setStreet("Kathrinerweg 5");
