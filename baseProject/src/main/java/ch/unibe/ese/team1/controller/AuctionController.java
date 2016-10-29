@@ -90,21 +90,24 @@ public class AuctionController {
 
 	/** Shows the place new bid form. */
 	@RequestMapping(value = "/auction/placeBid", method = RequestMethod.GET)
-	public ModelAndView placeBid(@RequestParam("id") long id) {
+	public ModelAndView placeBid(@RequestParam("id") long id, Principal principal) {
 		ModelAndView model = new ModelAndView("placeBid");
 		Auction auction = auctionService.getAuctionById(id);
 		model.addObject("shownAuction", auction);
-
+		String loggedInUser = (principal == null) ? "" : principal.getName();
+		model.addObject("loggedInUser", loggedInUser);
 		return model;
 	}
 
 	@RequestMapping(value = "/auction/placeBid", method = RequestMethod.POST)
 	public ModelAndView create(@Valid PlaceBidForm placeBidForm,
-			BindingResult result, RedirectAttributes redirectAttributes) {
+			BindingResult result, RedirectAttributes redirectAttributes,
+			Principal principal) {
 		if(!result.hasErrors()) {
 		ModelAndView model = new ModelAndView("placeBid");
-
-		Auction auction = auctionService.saveBidPrize(placeBidForm, placeBidForm.getId());
+		String bidderName = principal.getName();
+		
+		Auction auction = auctionService.saveBidPrize(placeBidForm, placeBidForm.getId(), bidderName);
 
 		// reset the place bid form
 		this.placeBidForm = null;

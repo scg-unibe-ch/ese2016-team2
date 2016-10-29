@@ -14,6 +14,9 @@ public class Auction extends Advertisement{
 	@Column
 	@Temporal(TemporalType.DATE)
 	private Date endTime;
+	
+	@Column
+	private String bidderName;
 
 	public Date getEndTime() {
 		return endTime;
@@ -21,6 +24,14 @@ public class Auction extends Advertisement{
 
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
+	}
+	
+	public String getBidderName() {
+		return bidderName;
+	}
+	
+	public void setBidderName(String bidderName) {
+		this.bidderName = bidderName;
 	}
 
 }

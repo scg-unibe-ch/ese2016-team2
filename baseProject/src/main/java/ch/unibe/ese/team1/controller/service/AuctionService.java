@@ -131,8 +131,9 @@ public class AuctionService {
 	}
 	
 	@Transactional
-	public Auction saveBidPrize(PlaceBidForm placeBidForm, long id) {
+	public Auction saveBidPrize(PlaceBidForm placeBidForm, long id, String bidderName) {
 		Auction auction = getAuctionById(id);
+		auction.setBidderName(bidderName);
 		auction.setPrize(placeBidForm.getPrize());
 		
 		auctionDao.save(auction);
