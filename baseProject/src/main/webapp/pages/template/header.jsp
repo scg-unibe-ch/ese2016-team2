@@ -9,20 +9,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<Title>FlatFindr</Title>
+<meta charset="utf-8">
+
+<title>FlatFindr</title>
 
 <link rel="stylesheet" type="text/css" media="screen"
 	href="/css/main.css">
 <link rel="stylesheet" type="text/css"
 	media="only screen and (max-device-width: 480px)"
 	href="/css/smartphone.css" />
-
-<%--
-	@Jerome
-	NB: Ideally, everything css should be put here into one file (per page if reasonable).
-			This css file should add "yay." to the heading 1 for testing purposes.
---%>
-<link rel="stylesheet" href="/resources/css/prod/app.css">
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script

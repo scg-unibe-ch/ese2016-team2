@@ -1,0 +1,88 @@
+.action {
+  a, span {
+    cursor: pointer;
+  }
+
+  a {
+    appearance: none;
+    background-color: $action-color;
+    border: 0;
+    border-radius: $base-border-radius;
+    color: $white;
+    display: inline-block;
+    font-family: $base-font-family;
+    font-size: $base-font-size;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 600;
+    line-height: 1.5;
+    padding: $small-spacing $base-spacing;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color $base-duration $base-timing;
+    user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+
+    &:hover,
+    &:focus {
+      background-color: $action-color-hover;//shade($action-color, 20%);
+      color: $white;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+
+      &:hover {
+        background-color: $action-color;
+      }
+    }
+  }
+}
+
+
+
+.action-medium {
+  a {
+    background-color: $action-medium-color;
+
+    &:hover,
+    &:focus {
+      background-color: $action-medium-color-hover;
+      color: $white;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+
+      &:hover {
+        background-color: $action-medium-color;
+      }
+    }
+  }
+}
+
+
+
+.action-tile a {
+  display: block;
+  border-radius: 0;
+  transition: all $base-duration $base-timing;
+
+  @include sidebar-button-pad;
+}
+
+
+
+.action-menu-primary {
+  position: absolute;
+  right: -116px;
+
+  @include sidebar-icon-pad;
+
+  span {
+    color: $white;
+    margin-right: 16px;
+  }
+}

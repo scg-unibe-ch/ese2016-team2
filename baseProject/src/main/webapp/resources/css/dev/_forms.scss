@@ -1,0 +1,161 @@
+.form {
+
+  input {
+    margin: 0;
+    background-color: $white;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    border-bottom: 1px solid $whiff-of-gray;
+    line-height: 1.5;
+    color: $light-gray;
+    transition: padding $base-duration $base-timing;
+
+    @include sidebar-slip-pad;
+
+    &::placeholder {
+      opacity: 1;
+      color: $bright-gray;
+    }
+
+    &:hover {
+      border-color: $whiff-of-gray;
+    }
+
+    /*
+     * @Jerome
+     * Regarding [type=number], this a workaround for a ff bug which is
+     * discussed here:
+     * http://stackoverflow.com/questions/27206414/how-to-change-placeholder-color-for-number-input-firefox
+     */
+    &[type=number] {
+      color: darken($bright-gray, 28%);
+
+      &:active,
+      &:focus {
+        color: $light-gray;
+      }
+    }
+
+    &[type=checkbox] {
+      display: none;
+
+      ~ label {
+        display: inline-block;
+        width: 100%;
+        margin: 0;
+        border-right: 1px solid $whiff-of-gray;
+        text-align: center;
+        font-weight: normal;
+        color: $bright-gray;
+        cursor: pointer;
+        transition: all $base-duration $base-timing;
+
+        @include sidebar-button-pad;
+      }
+
+      &:checked {
+        ~ label {
+          background-color: $whiff-of-gray;
+          color: $light-gray;
+        }
+      }
+    }
+  }
+
+
+
+  button {
+    &[type=submit],
+    &[type=reset] {
+      display: block;
+      width: 100%;
+      background-color: $whiff-of-gray;
+      border-radius: 0;
+      color: $light-gray;
+      line-height: 1.5;
+      transition: all $base-duration $base-timing;
+
+      &:hover {
+        background-color: $slight-gray;
+      }
+
+      @include sidebar-button-pad;
+    }
+  }
+
+  .checkboxes {
+    border-bottom: 1px solid $whiff-of-gray;
+
+    :last-child label {
+      border-right: none;
+    }
+  }
+}
+
+
+
+// @Jerome
+// TODO: Calculate slip heights by variable client values if possible.
+$slip-height-small: 56px;
+$slip-height-medium: 72px;
+
+.header-primary .form-search {
+  height: $slip-height-small;
+  overflow: hidden;
+  transition: height $base-duration $base-timing;
+
+  @include media($bq-medium) {
+    height: $slip-height-medium;
+  }
+
+
+  &.js-show {
+    height: 286px;
+
+    @include media($bq-medium) {
+      height: 366px;
+    }
+  }
+}
+
+
+
+.ui-autocomplete {
+  position: fixed;
+  z-index: 3;
+  top: $slip-height-small + 1 !important;
+  width: 100% !important;
+  height: (4 * ($slip-height-small + 1));
+  overflow: scroll;
+  background-color: $white;
+  transition:
+    top $base-duration $base-timing,
+    height $base-duration $base-timing,
+    width $base-duration $base-timing;
+
+  @include media($bq-medium) {
+    top: $slip-height-medium + 1 !important;
+    height: (4 * ($slip-height-medium + 1));
+  }
+
+  li {
+    background-color: $white;
+    border-bottom: 1px solid $whiff-of-gray;
+    cursor: pointer;
+
+    & > div {
+      transition: padding $base-duration $base-timing;
+      @include sidebar-slip-pad;
+    }
+  }
+
+  @include media($bq-huge/2) {
+    width: 50% !important;
+  }
+}
+
+.ui-helper-hidden-accessible {
+  display: none !important;
+  visibility: hidden !important;
+}

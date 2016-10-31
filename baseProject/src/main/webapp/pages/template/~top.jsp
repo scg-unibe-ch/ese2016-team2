@@ -8,7 +8,7 @@
 
 <%
 	String servletPath = request.getServletPath();
-	int indexFrom = servletPath.lastIndexOf("/")+1;
+	int indexFrom = servletPath.lastIndexOf("/")+2;
 	int indexTo = servletPath.lastIndexOf(".");
 	String pageName = servletPath.substring(indexFrom, indexTo);
 %>
@@ -34,6 +34,3 @@
   <![endif]-->
 </head>
 <body class="<% out.print(pageName); %>">
-
-<%-- check if user is logged in --%>
-<security:authorize var="loggedIn" url="/profile" />

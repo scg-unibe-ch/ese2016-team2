@@ -1,24 +1,30 @@
-// @Jerome
-// NB: Added variables to"_bourbon_font-stack-FIX" to work with Bitters,
-// which seems to rely on Bourbon 5.0.0.beta.6.
-// This is the error that occurs when transpiling without the mentioned FIX:
-// ----------
-// Error: Undefined variable: "$font-stack-system".
-// ...
-// ----------
-// Variables are differently declared in addons/_font-stacks.scss of the
-// Bourbon 4.2.7 version.
-// Issue: https://github.com/thoughtbot/bitters/issues/234 (closed [?])
-//
-// TODO: Remove when issue is gone.
-@import "_bourbon_font-stack-FIX";
-
-
+// Dependencies
 @import
-  "../../components/bourbon/app/assets/stylesheets/bourbon";
-  // Commented out because it should not mess with existing styles.
-  //"../../components/neat/app/assets/stylesheets/neat",
-  //"../../components/bitters/core/base";
+  // @Jerome
+  // NB: Uncomment this dependency if something's oddly styled and place
+  // hooked style(s) into _slider_blender.scss. Then comment out again.
+  //"../../components/flexslider/flexslider.css",
+
+  // @Jerome
+  // NB: Added variables to"_bourbon_font-stack-FIX" to work with Bitters,
+  // which seems to rely on Bourbon 5.0.0.beta.6.
+  // This is the error that occurs when transpiling without the mentioned FIX:
+  // ----------
+  // Error: Undefined variable: "$font-stack-system".
+  // ...
+  // ----------
+  // Variables are differently declared in addons/_font-stacks.scss of the
+  // Bourbon 4.2.7 version.
+  // Issue: https://github.com/thoughtbot/bitters/issues/234 (closed [?])
+  //
+  // TODO: Remove when issue is gone.
+  "_bourbon_font-stack-FIX",
+
+  // Tools / Sets
+  "../../components/bourbon/app/assets/stylesheets/bourbon",
+  "../../components/neat/app/assets/stylesheets/neat",
+  "../../components/bitters/core/base",
+  "../../components/font-awesome/scss/font-awesome";
 
 // @Jerome
 // TODO: Borrow the following from jquery ui:
@@ -34,7 +40,11 @@
 @import 'grid';
 
 @import 'text';
+@import 'actions';
+@import 'forms';
 
 @import 'header';
 @import 'main';
 @import 'footer';
+
+@import 'slider_blender';
