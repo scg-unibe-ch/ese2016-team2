@@ -120,7 +120,6 @@ public class AuctionService {
 
 		auction.setRoomDescription(placeAuctionForm.getRoomDescription());
 		auction.setPreferences(placeAuctionForm.getPreferences());
-		auction.setRoommates(placeAuctionForm.getRoommates());
 
 		// auction description values
 		auction.setSmokers(placeAuctionForm.isSmokers());
@@ -132,20 +131,6 @@ public class AuctionService {
 		auction.setCable(placeAuctionForm.getCable());
 		auction.setGarage(placeAuctionForm.getGarage());
 		auction.setInternet(placeAuctionForm.getInternet());
-
-		/*
-		 * Roommates are saved in the form as strings. They need to be converted
-		 * into Users and saved as a List which will be accessible through the
-		 * auction object itself.
-		 */
-		List<User> registeredUserRommates = new LinkedList<>();
-		if (placeAuctionForm.getRegisteredRoommateEmails() != null) {
-			for (String userEmail : placeAuctionForm.getRegisteredRoommateEmails()) {
-				User roommateUser = userService.findUserByUsername(userEmail);
-				registeredUserRommates.add(roommateUser);
-			}
-		}
-		auction.setRegisteredRoommates(registeredUserRommates);
 		
 		auction.setAuction(true);
 

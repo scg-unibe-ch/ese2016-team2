@@ -257,7 +257,7 @@ function sort_div_attribute() {
 
 
 		<button type="submit" onClick="validateType(this.form)">Filter</button>
-		<button type="reset">Cancel</button>
+		<button form="filterForm" type="reset" tabindex="8">Cancel</button>
 	</div>
 </form:form>
 

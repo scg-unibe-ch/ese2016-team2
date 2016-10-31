@@ -43,6 +43,9 @@ public class User {
 
 	@Column(nullable = false)
 	private Gender gender;
+	
+	@Column(nullable = false)
+	private Account account;
 
 	@Column(nullable = false)
 	private boolean enabled;
@@ -141,6 +144,14 @@ public class User {
 
 	public void setGender(Gender gender) {
 		this.gender = gender;
+	}
+	
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 	public String getAboutMe() {
