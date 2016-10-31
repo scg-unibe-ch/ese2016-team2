@@ -298,7 +298,7 @@ public class AdTestDataSaver {
 		adBiel.setPreferences(roomPreferences6);
 		adBiel.setRoommates("None");
 		adBiel.setUser(ese);
-		adBiel.setTitle("Direkt am Quai: hübsches Studio");
+		adBiel.setTitle("Direkt am Quai: nette, kleine Studio");
 		adBiel.setStreet("Oberer Quai 12");
 		adBiel.setCity("Biel/Bienne");
 		adBiel.setGarden(false);
