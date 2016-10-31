@@ -58,4 +58,5 @@ public class EditProfileForm {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 }

@@ -36,12 +36,10 @@
 <form:form method="post" modelAttribute="editProfileForm"
 	action="/profile/editProfile" id="editProfileForm" autocomplete="off"
 	enctype="multipart/form-data">
-
 <table class="editProfileTable">
 	<tr>
 		<td class="spacingTable"><label for="user-name">Username:</label><a>&emsp;</a>
 		<form:input id="user-name" path="username" value="${currentUser.username}" /></td>
-
 	</tr>
 	<tr>
 		<td class="spacingTable"><label for="first-name">First name:</label><a>&emsp;</a>
@@ -55,7 +53,7 @@
 		<td class="spacingTable"><label for="password">Password:</label><a>&emsp;&thinsp;</a>
 		<form:input type="password" id="password" path="password" value="${currentUser.password}" /></td>
 	</tr>
-
+	
 	<tr>
 		<td class="spacingTable"><label for="about-me">About me:</label><a>&emsp;&thinsp;</a><br>
 		<form:textarea id="about-me" path="aboutMe" rows="10" cols="100" /></td>
