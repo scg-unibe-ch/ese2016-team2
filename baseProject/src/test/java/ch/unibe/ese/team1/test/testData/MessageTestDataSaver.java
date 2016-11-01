@@ -107,7 +107,7 @@ public class MessageTestDataSaver {
 		message.setDateSent(dateFormat.parse("11:30 24.02.2014"));
 		messageDao.save(message);
 
-		// Messages for Oprah
+		/* Messages for Oprah
 		message = new Message();
 		message.setSubject("Best Ad ever");
 		message.setText("Hey Oprah\n\n" + getDummyText1());
@@ -124,7 +124,7 @@ public class MessageTestDataSaver {
 		message.setRecipient(oprah);
 		message.setState(MessageState.UNREAD);
 		message.setDateSent(dateFormat.parse("11:30 24.02.2014"));
-		messageDao.save(message);
+		messageDao.save(message);*/
 	}
 
 	private String getDummyText1() {

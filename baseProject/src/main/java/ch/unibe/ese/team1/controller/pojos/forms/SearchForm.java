@@ -12,8 +12,10 @@ public class SearchForm {
 
 	private boolean filtered;
 
-	// studio: true, room: false
 	private boolean studio;
+	private boolean room;
+	private boolean house;
+	private String roomType;
 	
 	@Pattern(regexp = "^[0-9]{4} - [-\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
 	private String city;
@@ -61,6 +63,30 @@ public class SearchForm {
 
 	public void setStudio(boolean studio) {
 		this.studio = studio;
+	}
+	
+	public boolean getRoom() {
+		return room;
+	}
+
+	public void setRoom(boolean room) {
+		this.room = room;
+	}
+	
+	public boolean getHouse() {
+		return house;
+	}
+	
+	public void setHouse(boolean house) {
+		this.house = house;
+	}
+	
+	public String getRoomType() {
+		return roomType;
+	}
+	
+	public void setRoomType(String roomType) {
+		this.roomType = roomType;
 	}
 
 	public boolean getNoRoomNoStudio() {

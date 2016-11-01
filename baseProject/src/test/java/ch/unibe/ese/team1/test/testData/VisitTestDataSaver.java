@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team1.model.Ad;
+import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.Visit;
 import ch.unibe.ese.team1.model.dao.AdDao;
+import ch.unibe.ese.team1.model.dao.AuctionDao;
 import ch.unibe.ese.team1.model.dao.UserDao;
 import ch.unibe.ese.team1.model.dao.VisitDao;
 
@@ -39,12 +41,17 @@ public class VisitTestDataSaver{
 	private Ad ad10;
 	private Ad ad11;
 	private Ad ad12;
+	
+	private Auction auction1;
 
 	@Autowired
 	private UserDao userDao;
 
 	@Autowired
 	private AdDao adDao;
+	
+	@Autowired
+	private AuctionDao auctionDao;
 
 	@Autowired
 	private VisitDao visitDao;
@@ -70,7 +77,10 @@ public class VisitTestDataSaver{
 		ad10 = adDao.findOne(10L);
 		ad11 = adDao.findOne(11L);
 		ad12 = adDao.findOne(12L);
-
+		
+		//load auction
+		auction1 = auctionDao.findOne(1L);
+		
 		Visit visit;
 		List<User> searchers;
 		DateFormat dateFormat = new SimpleDateFormat("HH:mm dd.MM.yyyy");
@@ -495,6 +505,14 @@ public class VisitTestDataSaver{
 		
 		visit = new Visit();
 		visit.setAd(ad12);
+		visit.setSearchers(new LinkedList<>());
+		visit.setStartTimestamp(dateFormat.parse("18:30 27.12.2014"));
+		visit.setEndTimestamp(dateFormat.parse("20:00 27.12.2014"));
+		visitDao.save(visit);
+		
+		// visits for auction1
+		visit = new Visit();
+		visit.setAuction(auction1);
 		visit.setSearchers(new LinkedList<>());
 		visit.setStartTimestamp(dateFormat.parse("18:30 27.12.2014"));
 		visit.setEndTimestamp(dateFormat.parse("20:00 27.12.2014"));

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ch.unibe.ese.team1.model.Ad;
+import ch.unibe.ese.team1.model.Advertisement;
+import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.Visit;
 import ch.unibe.ese.team1.model.VisitEnquiry;
@@ -33,6 +35,16 @@ public class VisitService {
 	@Transactional
 	public Iterable<Visit> getVisitsByAd(Ad ad) {
 		return visitDao.findByAd(ad);
+	}
+	
+	/**
+	 * Returns all possible visits of an advertisement.
+	 * 
+	 * @return an Iterable of all matching visits
+	 */
+	@Transactional
+	public Iterable<Visit> getVisitsByAuction(Auction auction) {
+		return visitDao.findByAuction(auction);
 	}
 
 	/** Returns the visit with the given id. */

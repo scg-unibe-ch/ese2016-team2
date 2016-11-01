@@ -65,6 +65,7 @@ public class AuctionController {
 
 		String loggedInUserEmail = (principal == null) ? "" : principal.getName();
 		model.addObject("loggedInUserEmail", loggedInUserEmail);
+		model.addObject("visits", visitService.getVisitsByAuction(auction));
 
 		return model;
 	}
@@ -86,44 +87,5 @@ public class AuctionController {
 			messageService.saveFrom(messageForm);
 		}
 		return model;
-	}
-
-	/** Shows the place new bid form. */
-	@RequestMapping(value = "/auction/placeBid", method = RequestMethod.GET)
-	public ModelAndView placeBid(@RequestParam("id") long id) {
-		ModelAndView model = new ModelAndView("placeBid");
-		Auction auction = auctionService.getAuctionById(id);
-		model.addObject("shownAuction", auction);
-
-		return model;
-	}
-
-	@RequestMapping(value = "/auction/placeBid", method = RequestMethod.POST)
-	public ModelAndView create(@Valid PlaceBidForm placeBidForm,
-			BindingResult result, RedirectAttributes redirectAttributes) {
-		if(!result.hasErrors()) {
-		ModelAndView model = new ModelAndView("placeBid");
-
-		Auction auction = auctionService.saveBidPrize(placeBidForm, placeBidForm.getId());
-
-		// reset the place bid form
-		this.placeBidForm = null;
-
-		model = new ModelAndView("redirect:/auction?id=" + auction.getId());
-		redirectAttributes.addFlashAttribute("confirmationMessage", "Bid placed successfully.");
-		return model;
-		}
-		else {
-			return new ModelAndView("auction?id=" + placeBidForm.getId());
-		}
-
-	}
-	
-	@ModelAttribute("placeBidForm")
-	public PlaceBidForm placeBidForm() {
-		if (placeBidForm == null) {
-			placeBidForm = new PlaceBidForm();
-		}
-		return placeBidForm;
 	}
 }
