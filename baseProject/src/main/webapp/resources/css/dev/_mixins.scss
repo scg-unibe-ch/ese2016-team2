@@ -1,0 +1,35 @@
+@mixin sidebar-slip-pad {
+  @include pad($medium $small);
+
+  @include media($bq-medium) {
+    @include pad(($large - $small) $medium);
+  }
+
+  @include media($bq-large) {
+    @include pad(($large - $small) $large);
+  }
+
+  @include media($bq-huge) {
+    @include pad(($large - $small) $huge);
+  }
+}
+
+
+
+@mixin sidebar-icon-pad {
+  @include pad(($medium - 3px) 0);
+
+  @include media($bq-medium) {
+    @include pad(($large - $small - 7px) 0);
+  }
+}
+
+
+
+@mixin sidebar-button-pad {
+  @include pad($medium $small);
+
+  @include media($bq-medium) {
+    @include pad(($large - $small) $medium);
+  }
+}

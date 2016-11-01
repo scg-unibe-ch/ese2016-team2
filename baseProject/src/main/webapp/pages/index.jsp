@@ -7,11 +7,11 @@
 
 <c:import url="template/header.jsp" />
 
-<head>
+<%-- <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Welcome to FlatFindr</title>
 </head>
-<body>
+<body> --%>
 
 <pre>Home</pre>
 
@@ -22,8 +22,8 @@
 		<h2>No ads placed yet</h2>
 	</c:when>
 	<c:otherwise>
-		<div id="resultsDiv" class="resultsDiv">	
-			<h2>Our newest ads:</h2>		
+		<div id="resultsDiv" class="resultsDiv">
+			<h2>Our newest ads:</h2>
 			<c:forEach var="advertisement" items="${newestAds}">
 				<div class="resultAd">
 				<c:choose>
@@ -48,6 +48,9 @@
 
 							<p>Move-in date: ${formattedMoveInDate }</p>
 
+							<fmt:formatDate value="${advertisement.endTime}" var="formattedEndTime"
+								type="date" pattern="dd.MM.yyyy" />
+
 							<p>Auction end-date: ${advertisement.endTime}</p>
 						</div>
 					</c:when>
@@ -66,7 +69,7 @@
 						</div>
 						<div class="resultRight">
 							<h2>CHF ${advertisement.prize}</h2>
-							<br /> <br />	
+							<br /> <br />
 
 							<fmt:formatDate value="${advertisement.moveInDate}" var="formattedMoveInDate"
 								type="date" pattern="dd.MM.yyyy" />

@@ -8,7 +8,7 @@
 
 <%
 	String servletPath = request.getServletPath();
-	int indexFrom = servletPath.lastIndexOf("/")+1;
+	int indexFrom = servletPath.lastIndexOf("/")+2;
 	int indexTo = servletPath.lastIndexOf(".");
 	String pageName = servletPath.substring(indexFrom, indexTo);
 %>
@@ -33,7 +33,4 @@
       <script>window.html5 || document.write('<script src="js/dep/html5shiv.js"><\/script>')</script>
   <![endif]-->
 </head>
-<body class="<% out.print(pageName); %>">
-
-<%-- check if user is logged in --%>
-<security:authorize var="loggedIn" url="/profile" />
+<body view class="<% out.print(pageName); %> headerPrimaryClosed headerPrimarySearchClosed">
