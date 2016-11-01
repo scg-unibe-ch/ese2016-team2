@@ -178,14 +178,19 @@ function sort_div_attribute() {
 
 	<div id="filterDiv">
 		<h2>Filter results:</h2>
-		<form:checkbox name="room" id="room" path="roomHelper" /><label>Room</label>
-		<form:checkbox name="studio" id="studio" path="studioHelper" /><label>Studio</label>
-
+		<form:checkbox name="room" id="room" path="room" /><label>Room</label>
+		<form:checkbox name="studio" id="studio" path="studio" /><label>Studio</label>
+		<form:checkbox name="house" id="house" path="house" /><label>House</label>
+		
 		<form:checkbox style="display:none" name="neither" id="neither" path="noRoomNoStudio" />
-		<form:checkbox style="display:none" name="both" id="both" path="bothRoomAndStudio" />
-		<form:checkbox style="display:none" name="type" id="type" path="studio" />
-		<form:checkbox style="display:none" name="filtered" id="filtered" path="filtered" />
-		<form:errors path="noRoomNoStudio" cssClass="validationErrorText" /> <br />
+		<form:checkbox style="display:none" name="r" id="r" path="roomType" value="Room" />
+		<form:checkbox style="display:none" name="s" id="s" path="roomType" value="Studio" />
+		<form:checkbox style="display:none" name="h" id="h" path="roomType" value="House" />
+		<form:checkbox style="display:none" name="ras" id="ras" path="roomType" value="Room and Studio" />
+		<form:checkbox style="display:none" name="rah" id="rah" path="roomType" value="Room and House" />
+		<form:checkbox style="display:none" name="sah" id="sah" path="roomType" value="Studio and House" />
+		<form:checkbox style="display:none" name="all" id="all" path="roomType" value="All" />
+		<form:errors path="noRoomNoStudio" cssClass="validationErrorText" /><br />
 
 		<label for="city">City / zip code:</label>
 		<form:input type="text" name="city" id="city" path="city"

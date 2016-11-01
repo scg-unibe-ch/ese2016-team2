@@ -10,7 +10,7 @@
 <script src="/js/jquery.iframe-transport.js"></script>
 <script src="/js/jquery.fileupload.js"></script>
 
-<script src="/js/pictureUpload.js"></script>
+<script src="/js/pictureUploadAd.js"></script>
 
 
 <script>

@@ -67,7 +67,6 @@
 					<script>
 						$(document).ready(unreadMessages("header"));
 					</script>
-
 					<!-- include user details -->
 					<%@include file='/pages/getUserPicture.jsp' %>
 						<li id="profile_picture"><a href="#">
@@ -88,6 +87,7 @@
 								<li>
 								<% out.print("<a href=\"/user?id=" + realUser.getId() + "\">Public Profile</a>"); %>
 								</li>
+								<li><a href="/register">Premium Account</a></li>
 								<li><a href="/logout">Logout</a></li>
 							</ul></li>
 					</c:when>

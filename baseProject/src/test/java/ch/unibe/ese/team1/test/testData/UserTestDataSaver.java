@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team1.model.Gender;
-import ch.unibe.ese.team1.model.Account;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.UserPicture;
 import ch.unibe.ese.team1.model.UserRole;
@@ -27,25 +26,25 @@ public class UserTestDataSaver {
 	public void saveTestData() throws Exception {
 		// system account
 		User system = createUser("System", "1234", "FlatFindr", "Admin",
-				"/img/test/portrait.jpg", Gender.ADMIN, Account.NORMAL);
+				"/img/test/portrait.jpg", Gender.ADMIN, "Normal");
 		system.setAboutMe("We keep you off the streets.");
 		userDao.save(system);
 
 		// Main test-user for the assistants (advertiser)
 		User ese = createUser("ese@unibe.ch", "ese", "John", "Wayne",
-				"/img/test/portrait.jpg", Gender.MALE, Account.NORMAL);
+				"/img/test/portrait.jpg", Gender.MALE, "Normal");
 		ese.setAboutMe(getDummyText());
 		userDao.save(ese);
 
 		// Searcher
 		User janeDoe = createUser("jane@doe.com", "password", "Jane", "Doe",
-				"/img/test/portrait.jpg", Gender.FEMALE, Account.NORMAL);
+				"/img/test/portrait.jpg", Gender.FEMALE, "Normal");
 		janeDoe.setAboutMe(getDummyText());
 		userDao.save(janeDoe);
 
 		// Another advertiser & searcher
-		User bernerBaer = createUser("user@bern.com", "password",
-				"Berner", "Bär", Gender.MALE, Account.PREMIUM);
+		User bernerBaer = createUser("user@bern.com", "password", "Berner", "Bär", 
+				"/img/avatar.jpg", Gender.MALE, "Premium", "Alpenstrasse 35", "Bern", 3000);
 		UserPicture picture = new UserPicture();
 		picture.setFilePath("/img/test/berner_baer.png");
 		picture.setUser(bernerBaer);
@@ -60,13 +59,13 @@ public class UserTestDataSaver {
 
 		// Another advertiser & searcher
 		User oprah = createUser("oprah@winfrey.com", "password", "Oprah", "Winfrey",
-				"/img/test/oprah.jpg", Gender.FEMALE, Account.PREMIUM);
+				"/img/test/oprah.jpg", Gender.FEMALE, "Premium",  "Alpenstrasse 35", "Bern", 3000);
 		oprah.setAboutMe(getDummyText());
 		userDao.save(oprah);
 	}
 
-	public User createUser(String email, String password, String firstName,
-			String lastName, Gender gender, Account account) {
+	public User createUser(String email, String password, String firstName, 
+			String lastName, String picPath, Gender gender, String account) {
 		User user = new User();
 		user.setUsername(email);
 		user.setPassword(password);
@@ -78,6 +77,10 @@ public class UserTestDataSaver {
 		user.setAccount(account);
 		Set<UserRole> userRoles = new HashSet<>();
 		UserRole role = new UserRole();
+		UserPicture picture = new UserPicture();
+		picture.setUser(user);
+		picture.setFilePath(picPath);
+		user.setPicture(picture);
 		role.setRole("ROLE_USER");
 		role.setUser(user);
 		userRoles.add(role);
@@ -86,7 +89,7 @@ public class UserTestDataSaver {
 	}
 
 	public User createUser(String email, String password, String firstName,
-			String lastName, String picPath, Gender gender, Account account) {
+			String lastName, String picPath, Gender gender, String account, String street, String city, int zipcode) {
 		User user = new User();
 		user.setUsername(email);
 		user.setPassword(password);
@@ -96,6 +99,9 @@ public class UserTestDataSaver {
 		user.setEnabled(true);
 		user.setGender(gender);
 		user.setAccount(account);
+		user.setStreet(street);
+		user.setCity(city);
+		user.setZipcode(zipcode);
 		Set<UserRole> userRoles = new HashSet<>();
 		UserRole role = new UserRole();
 		UserPicture picture = new UserPicture();

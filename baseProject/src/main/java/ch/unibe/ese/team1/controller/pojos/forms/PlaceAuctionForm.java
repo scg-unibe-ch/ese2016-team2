@@ -23,7 +23,7 @@ public class PlaceAuctionForm {
 	@NotBlank(message = "Required")
 	private String moveInDate;
 	
-	private String moveOutDate;
+	private boolean buyable;
 
 	@Min(value = 1, message = "Has to be equal to 1 or more")
 	private int prize;
@@ -57,6 +57,9 @@ public class PlaceAuctionForm {
 	private List<String> visits;
 	
 	private boolean auction;
+	
+	@NotBlank(message = "Required")
+	private String endDate;
 	
 	@NotBlank(message = "Required")
 	private String endTime;
@@ -181,12 +184,12 @@ public class PlaceAuctionForm {
 		this.moveInDate = moveInDate;
 	}
 
-	public String getMoveOutDate() {
-		return moveOutDate;
+	public boolean getBuyable() {
+		return buyable;
 	}
-
-	public void setMoveOutDate(String moveOutDate) {
-		this.moveOutDate = moveOutDate;
+	
+	public void setBuyable(boolean buyable) {
+		this.buyable = buyable;
 	}
 
 	public String getTitle() {
@@ -243,6 +246,14 @@ public class PlaceAuctionForm {
 
 	public void setAuction(boolean auction) {
 		this.auction = auction;
+	}
+	
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 
 	public String getEndTime() {

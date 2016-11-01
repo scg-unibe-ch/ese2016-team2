@@ -42,6 +42,8 @@ public class PlaceAdForm {
 	
 	//true if studio, false if room
 	private boolean studio;
+	
+	private boolean buyable;
 
 	private boolean smokers;
 	private boolean animals;
@@ -239,5 +241,13 @@ public class PlaceAdForm {
 
 	public void setAuction(boolean auction) {
 		this.auction = auction;
+	}
+	
+	public boolean getBuyable() {
+		return buyable;
+	}
+	
+	public void setBuyable(boolean buyable) {
+		this.buyable = buyable;
 	}
 }
