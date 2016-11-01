@@ -238,14 +238,26 @@ public class AdService {
 	public Iterable<Ad> queryResults(SearchForm searchForm) {
 		Iterable<Ad> results = null;	
 		// we use this method if we are looking for rooms AND studios AND houses
-		if (searchForm.getBothRoomAndStudio()) {
-			results = adDao
-					.findByPrizeLessThan(searchForm.getPrize() + 1);
-		}
-		// we use this method if we are looking EITHER for rooms OR for studios OR houses
-		else {
-			results = adDao.findByStudioAndPrizeLessThan(
-					searchForm.getStudio(), searchForm.getPrize() + 1);
+		if (searchForm.getRoom() && searchForm.getStudio() && searchForm.getHouse()) {
+			results = adDao.findByPrizeLessThan(searchForm.getPrize() + 1);
+		} else if (searchForm.getRoom() && searchForm.getHouse()) {
+			List<Ad> temp = adDao.findByRoomTypeAndPrizeLessThan("Room", searchForm.getPrize() + 1);
+			temp.addAll(adDao.findByRoomTypeAndPrizeLessThan("House", searchForm.getPrize() + 1));
+			results = temp;
+		} else if (searchForm.getRoom() && searchForm.getStudio()) {
+			List<Ad> temp = adDao.findByRoomTypeAndPrizeLessThan("Room", searchForm.getPrize() + 1);
+			temp.addAll(adDao.findByRoomTypeAndPrizeLessThan("Studio", searchForm.getPrize() + 1));
+			results = temp;
+		} else if (searchForm.getStudio() && searchForm.getHouse()) {
+			List<Ad> temp = adDao.findByRoomTypeAndPrizeLessThan("Studio", searchForm.getPrize() + 1);
+			temp.addAll(adDao.findByRoomTypeAndPrizeLessThan("House", searchForm.getPrize() + 1));
+			results = temp;
+		} else if (searchForm.getRoom()) {
+			results = adDao.findByRoomTypeAndPrizeLessThan("Room", searchForm.getPrize() + 1);
+		} else if (searchForm.getStudio()) {
+			results = adDao.findByRoomTypeAndPrizeLessThan("Studio", searchForm.getPrize() + 1);
+		} else {
+			results = adDao.findByRoomTypeAndPrizeLessThan("House", searchForm.getPrize() + 1);
 		}
 
 		// filter out zipcodez

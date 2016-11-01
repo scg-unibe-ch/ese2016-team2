@@ -11,11 +11,15 @@ import org.hibernate.validator.constraints.NotBlank;
 public class SearchForm {
 
 	private boolean filtered;
+	
+	@AssertFalse(message = "Please select a sale type")
+	private boolean buyableNotFilled;
+	
+	private boolean buyable;
 
 	private boolean studio;
 	private boolean room;
 	private boolean house;
-	private String roomType;
 	
 	@Pattern(regexp = "^[0-9]{4} - [-\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
 	private String city;
@@ -28,10 +32,16 @@ public class SearchForm {
 	@Min(value = 0, message = "In your dreams.")
 	private Integer prize;
 
-	@AssertFalse(message = "Please select either or both types")
-	private boolean noRoomNoStudio;
-
-	private boolean bothRoomAndStudio;
+	@AssertFalse(message = "Please select at least a type")
+	private boolean neither;
+	
+	public boolean getBuyable() {
+		return buyable;
+	}
+	
+	public void setBuyable(boolean buyable) {
+		this.buyable = buyable;
+	}
 
 	public String getCity() {
 		return city;
@@ -80,29 +90,21 @@ public class SearchForm {
 	public void setHouse(boolean house) {
 		this.house = house;
 	}
+
+	public boolean getNeither() {
+		return neither;
+	}
+
+	public void setNeither(boolean neither) {
+		this.neither = neither;
+	}
 	
-	public String getRoomType() {
-		return roomType;
+	public boolean getBuyableNotFilled() {
+		return buyableNotFilled;
 	}
 	
-	public void setRoomType(String roomType) {
-		this.roomType = roomType;
-	}
-
-	public boolean getNoRoomNoStudio() {
-		return noRoomNoStudio;
-	}
-
-	public void setNoRoomNoStudio(boolean noRoomNoStudio) {
-		this.noRoomNoStudio = noRoomNoStudio;
-	}
-
-	public boolean getBothRoomAndStudio() {
-		return bothRoomAndStudio;
-	}
-
-	public void setBothRoomAndStudio(boolean bothRoomAndStudio) {
-		this.bothRoomAndStudio = bothRoomAndStudio;
+	public void setBuyableNotFilled(boolean buyableNotFilled) {
+		this.buyableNotFilled = buyableNotFilled;
 	}
 
 	// //////////////////

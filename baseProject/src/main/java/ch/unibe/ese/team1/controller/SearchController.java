@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team1.controller.service.AdService;
+import ch.unibe.ese.team1.controller.service.AuctionService;
 import ch.unibe.ese.team1.controller.service.UserService;
 
 /** Handles all requests concerning the search for ads. */
@@ -20,6 +21,9 @@ public class SearchController {
 
 	@Autowired
 	private AdService adService;
+
+	@Autowired
+	private AuctionService auctionService;
 
 	@Autowired
 	private UserService userService;
@@ -42,12 +46,16 @@ public class SearchController {
 	 * in the search form.
 	 */
 	@RequestMapping(value = "/results", method = RequestMethod.POST)
-	public ModelAndView results(@Valid SearchForm searchForm,
-			BindingResult result) {
+	public ModelAndView results(@Valid SearchForm searchForm, BindingResult result) {
 		if (!result.hasErrors()) {
 			ModelAndView model = new ModelAndView("results");
-			model.addObject("results", adService.queryResults(searchForm));
-			return model;
+			if (!searchForm.getBuyable()) {
+				model.addObject("results", adService.queryResults(searchForm));
+				return model;
+			} else {
+				model.addObject("results", auctionService.queryResults(searchForm));
+				return model;
+			}
 		} else {
 			// go back
 			return searchAd();
