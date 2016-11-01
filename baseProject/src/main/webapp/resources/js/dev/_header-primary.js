@@ -26,35 +26,15 @@
      * differently.
      *
      * @type {Number}
-     * @see #toggleSearch
      */
     DURATION_MIN = 10,
 
 
 
-    /**
-     * Used to store states of css transitioning elements.
-     * searchIn - when search form within primary header is opening/closing
-     * menuIn - when primary header is opening/closing
-     * menuOpen - when primary header has just opened/closed
-     * 0/1 ints are used as booleans
-     *
-     * @type {Number}
-     * @see #toggleMenu
-     * @see #toggleSearch
-     * @see #ev0_toggleMenu
-     * @see #ev0_toggleSearch
-     * @see #ev1_toggleSearch
-     */
-    searchIn = 0,
-    menuIn = 0,
-    menuOpen = 0,
 
-
-
+    $view = $('[view]'),
     $js_menu_icon = $('#js-menu-icon'),
     $js_menu_form_search_icon = $('#js-menu-form-search-icon'),
-
 
 
     $header_primary = $('.header-primary'),
@@ -64,128 +44,153 @@
 
 
   /**
-   * Open or closes the primary header sidebar according to its state.
-   * Also changes the icon element (ev) bars <-> cross (times X)
-   * State changes are stored in menuIn and menuOpen which are used
-   * throughout this script. menuIn when a header primary sidebare state
-   * change is triggered, spoken: before it is closing/opening.
-   * menuOpen changes spoken: when it has just closed/openend.
+   * Handles classname replacement for css transitioning when a element should
+   * be hidden. It adds/removes useful classes based on the state of the object
+   * over time.
    *
-   * @see #menuIn
-   * @see #menuOpen
-   * @see _header.scss .header-primary
+   * @param  {string} prefix  the classname prefix to be combined with the state
+   * @param  {integer} duration   the delay duration in ms
+   * @return {object}          the jquery object with the delayed function
    */
-  var toggleMenu = function() {
-    menuIn = 1 - menuIn;
-    $header_primary.toggleClass('js-show');
-    $js_menu_icon.toggleClass('fa-bars fa-times');
-
-    setTimeout(function t_menuOpen() {
-      menuOpen = 1 - menuOpen;
-    }, BASE_DURATION + DURATION_BUFFER);
+  $.fn.unearth = function(prefix, duration) {
+    var $this = $(this);
+    $this.toggleClass(prefix +'Closed '+ prefix +'In');
+    setTimeout(function () {
+      return $this.toggleClass(prefix +'In '+ prefix +'Open');
+    }, duration);
   };
 
 
 
   /**
-   * Add or remove class js-show of the form search within the primary header.
-   * js-show holds animated css properties.
+   * Handles classname replacement for css transitioning when a element should
+   * be shown. It adds/removes useful classes based on the state of the object
+   * over time.
    *
-   * @see _from.scss .header-primary .form-search
+   * @param  {string} prefix  the classname prefix to be combined with the state
+   * @param  {integer} duration   the delay duration in ms
+   * @return {object}          the jquery object with the delayed function
    */
-  var toggleSearchForm = function() {
-    $header_primary_form_search.toggleClass('js-show');
+  $.fn.bury = function(prefix, duration) {
+    var $this = $(this);
+    $this.toggleClass(prefix +'Open '+ prefix +'Out');
+    setTimeout(function () {
+      return $this.toggleClass(prefix +'Out '+ prefix +'Closed');
+    }, duration);
   };
 
 
 
   /**
-   * Alter header primary search form icon (ev).
-   * fa-search-minus when it's open, fa-search when it's closed.
+   * Adds/emoves useful classnames based on the interaction of the user. These
+   * classnames trigger css transition effects on header elements. The $view
+   * decides on the presence of its own classnames (states) and on the user input
+   * what classnames to add or remove, which in turn results in various changes
+   * in the ui.
    */
-  var toggleSearchFormIcon = function() {
-    $js_menu_form_search_icon.toggleClass('fa-search fa-search-minus');
-  };
+  $view
+    .on('header.toggle', function() {
+      var
+        $this = $(this),
+        duration = BASE_DURATION + DURATION_BUFFER;
+
+      if ($this.is('.headerPrimaryClosed')) {
+        $this.unearth('headerPrimary', duration);
+      } else {
+        $this.bury('headerPrimary', duration);
+        if ($this.is('.headerPrimarySearchOpen'))
+          setTimeout(function() {
+            $this.trigger('search.toggle')
+          }, duration);
+      }
+
+      $js_menu_icon.trigger('headerToggle');
+    })
+    .on('search.toggle', function() {
+      var
+        $this = $(this),
+        duration = BASE_DURATION + DURATION_BUFFER;
+
+      if ($this.is('.headerPrimaryClosed.headerPrimarySearchClosed')) {
+        $this.trigger('header.toggle')
+        setTimeout(function() {
+          $this.unearth('headerPrimarySearch', duration);
+        }, duration);
+      } else {
+        if ($this.is('.headerPrimarySearchOpen'))
+          $this.bury('headerPrimarySearch', duration);
+        else
+          $this.unearth('headerPrimarySearch', duration);
+      }
+
+      $header_primary_form_search.trigger('toggle');
+      $js_menu_form_search_icon.trigger('searchToggle');
+    });
 
 
 
   /**
-   * [toggleSearch description]
-   * @return {[type]} [description]
+   * Dictates change of the first input field based on the $view state.
+   *
+   * @see $first_form_input
    */
-  var toggleSearch = function() {
-    var timeout_duration = (menuIn && menuOpen) ?
-      DURATION_MIN : BASE_DURATION + DURATION_BUFFER;
+  $header_primary_form_search.on('toggle', function() {
+    if ($view.is('.headerPrimaryIn, .headerPrimarySearchIn'))
+      $first_form_input.trigger('formIn');
+    else
+      $first_form_input.trigger('formOut');
+  });
 
-    searchIn = 1 - searchIn;
 
-    if (searchIn)
-      $first_form_input
+
+  /**
+   * Triggers the header
+   */
+  $js_menu_icon
+    .on('click touch', function (e) {
+      e.preventDefault();
+      $view.trigger('header.toggle');
+    })
+    .on('headerToggle', function() {
+      $(this).toggleClass('fa-bars fa-times');
+    });
+
+
+
+  /**
+   *
+   *
+   */
+  $js_menu_form_search_icon
+    .on('click touch', function (e) {
+      e.preventDefault();
+      $view.trigger('search.toggle');
+    })
+    .on('searchToggle', function() {
+      $(this).toggleClass('fa-search fa-search-minus');
+    });
+
+
+
+  /**
+   *
+   *
+   */
+  $first_form_input
+    .on('click touch', function (e) {
+      e.preventDefault();
+      if ($view.is('.headerPrimarySearchClosed'))
+        $view.trigger('search.toggle');
+    })
+    .on('formIn', function() {
+      $(this)
         .focus()
         .attr('placeholder', 'City / ZIP');
-    else
-      $first_form_input
+    })
+    .on('formOut', function() {
+      $(this)
         .off('focus')
         .attr('placeholder', 'Find...');
-
-    toggleSearchFormIcon();
-    setTimeout(function t_toggleSearchForm() {
-      toggleSearchForm();
-    }, timeout_duration);
-  };
-
-
-
-  /**
-   * Eventhandler that triggers the logic of the primary header visibility.
-   * If the search form within the primary header is open and the primary
-   * header gets closed, it will also trigger #toggleSearch to close the
-   * search form.
-   *
-   * @see #toggleMenu
-   * @see #toggleSearch
-   */
-  $js_menu_icon.on(
-    'click touch',
-    function ev0_toggleMenu(e) {
-      e.preventDefault();
-      toggleMenu();
-      if (searchIn) toggleSearch();
-  });
-
-
-
-  /**
-   * Eventhandler that triggers the logic of primary header search form
-   * visibility. If the primary header is not open/visible, it will also open
-   * the primary header.
-   *
-   * @see #toggleMenu
-   * @see #toggleSearch
-   */
-  $js_menu_form_search_icon.on(
-    'click touch',
-    function ev0_toggleSearch(e) {
-      e.preventDefault();
-      if (!menuIn) toggleMenu();
-      toggleSearch();
-  });
-
-
-
-  /**
-   * Eventhandler that triggers the logic of the primary header search form
-   * visibility. If the search is closed/not fully visible (the first input is
-   * always visible, which is in fact this element (ev)), clicking/touching this
-   * element will fully open the search form.
-   *
-   * @see #toggleSearch
-   */
-  $first_form_input.on(
-    'click touch',
-    function ev1_toggleSearch(e) {
-      e.preventDefault();
-      if (!searchIn) toggleSearch();
-  });
+    });
 
 }(window, document, jQuery);

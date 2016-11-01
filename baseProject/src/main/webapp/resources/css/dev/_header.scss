@@ -15,6 +15,11 @@
     left: 0;
   }
 
+  [view].headerPrimaryIn &,
+  [view].headerPrimaryOpen & {
+    left: 0;
+  }
+
   @include media($bq-huge/2) {
     left: -50%;
     width: 50%;
