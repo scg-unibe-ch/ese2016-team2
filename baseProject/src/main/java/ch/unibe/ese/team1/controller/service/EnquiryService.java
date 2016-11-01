@@ -49,7 +49,8 @@ public class EnquiryService {
 					.getId()) {
 				enquiries.add(enquiry);
 			}
-			if (enquiry.getVisit().getAuction().getUser().getId() == recipient.getId()) {
+			if (enquiry.getVisit().getAuction().getUser().getId() == recipient
+					.getId()) {
 				enquiries.add(enquiry);
 			}
 		}

@@ -87,9 +87,7 @@
 						<fmt:formatDate value="${auction.moveInDate}" var="formattedMoveInDate"
 							type="date" pattern="dd.MM.yyyy" />
 						<p>Move-in date: ${formattedMoveInDate}</p>
-						<fmt:formatDate value="${auction.endTime}" var="formattedEndTime" 
-							type="date" pattern="dd.MM.yyyy" />
-						<p>Auction end-date: ${formattedEndTime}</p>
+						<p>Auction end-date: ${auction.endTime}</p>
 					</div>
 				</div>
 			</c:forEach>

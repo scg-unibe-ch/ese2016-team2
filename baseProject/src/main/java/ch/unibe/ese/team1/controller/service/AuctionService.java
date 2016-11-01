@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceBidForm;
-import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.AdPicture;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.User;
@@ -57,7 +56,7 @@ public class AuctionService {
 	 *            currently logged in user
 	 */
 	@Transactional
-	public Auction saveFrom(PlaceAuctionForm placeAuctionForm, User user) {
+	public Auction saveFrom(PlaceAuctionForm placeAuctionForm, List<String> filePaths,  User user) {
 		
 		Auction auction = new Auction();
 
@@ -91,15 +90,20 @@ public class AuctionService {
 				calendar.set(yearMoveIn, monthMoveIn - 1, dayMoveIn);
 				auction.setMoveInDate(calendar.getTime());
 			}
-			if (placeAuctionForm.getEndTime().length() >= 1) {
-				int dayMoveIn = Integer.parseInt(placeAuctionForm.getEndTime()
+			//dd.MM.yyyy - endDate, HH:mm - endTime
+			if (placeAuctionForm.getEndDate().length() >= 1 && placeAuctionForm.getEndTime().length() >= 1) {
+				int dayAuctionEnd = Integer.parseInt(placeAuctionForm.getEndDate()
 						.substring(0, 2));
-				int monthMoveIn = Integer.parseInt(placeAuctionForm.getEndTime()
+				int monthAuctionEnd = Integer.parseInt(placeAuctionForm.getEndDate()
 						.substring(3, 5));
-				int yearMoveIn = Integer.parseInt(placeAuctionForm.getEndTime()
+				int yearAuctionEnd = Integer.parseInt(placeAuctionForm.getEndDate()
 						.substring(6, 10));
-				calendar.set(yearMoveIn, monthMoveIn - 1, dayMoveIn);
-				auction.setEndTime(calendar.getTime());
+				int hourAuctionEnd = Integer.parseInt(placeAuctionForm.getEndTime()
+						.substring(0, 2));
+				int minAuctionEnd = Integer.parseInt(placeAuctionForm.getEndTime()
+						.substring(3, 5));
+				calendar.set(yearAuctionEnd, monthAuctionEnd - 1, dayAuctionEnd, hourAuctionEnd, minAuctionEnd);
+				auction.setEndTime(new SimpleDateFormat("HH:mm, dd.MM.yyyy").format(calendar.getTime()));
 			}
 		} catch (NumberFormatException e) {
 		}
@@ -121,9 +125,46 @@ public class AuctionService {
 		auction.setGarage(placeAuctionForm.getGarage());
 		auction.setInternet(placeAuctionForm.getInternet());
 		
+		List<AdPicture> pictures = new ArrayList<>();
+		for (String filePath : filePaths) {
+			AdPicture picture = new AdPicture();
+			picture.setFilePath(filePath);
+			pictures.add(picture);
+		}
+		auction.setPictures(pictures);
+		
+		// visits
+				List<Visit> visits = new LinkedList<>();
+				List<String> visitStrings = placeAuctionForm.getVisits();
+				if (visitStrings != null) {
+					for (String visitString : visitStrings) {
+						Visit visit = new Visit();
+						// format is 28-02-2014;10:02;13:14
+						DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+						String[] parts = visitString.split(";");
+						String startTime = parts[0] + " " + parts[1];
+						String endTime = parts[0] + " " + parts[2];
+						Date startDate = null;
+						Date endDate = null;
+						try {
+							startDate = dateFormat.parse(startTime);
+							endDate = dateFormat.parse(endTime);
+						} catch (ParseException ex) {
+							ex.printStackTrace();
+						}
+
+						visit.setStartTimestamp(startDate);
+						visit.setEndTimestamp(endDate);
+						visit.setAuction(auction);
+						visits.add(visit);
+					}
+					auction.setVisits(visits);
+				}
+		
 		auction.setAuction(true);
 		auction.setBuyable(true);
 		auction.setUser(user);
+		auction.setAuctionEnded(false);
 		
 		auctionDao.save(auction);
 

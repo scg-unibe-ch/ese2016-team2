@@ -5,24 +5,23 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <!-- check if user is logged in -->
 <security:authorize var="loggedIn" url="/profile" />
 
 <c:import url="template/header.jsp" />
 
-<pre>
-	<a href="/">Home</a>   &gt;   <a href="/profile/myRooms">My Rooms</a>   &gt;   Auction Description</pre>
+<pre><a href="/">Home</a>   &gt;   <a href="/profile/myRooms">My Rooms</a>   &gt;   Auction Description</pre>
+
+<script src="/js/image_slider.js"></script>
+<script src="/js/adDescription.js"></script>
 
 <!-- format the dates -->
 <fmt:formatDate value="${shownAuction.moveInDate}"
 	var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
 <fmt:formatDate value="${shownAuction.creationDate}"
 	var="formattedCreationDate" type="date" pattern="dd.MM.yyyy" />
-<fmt:formatDate value="${shownAuction.endTime}" var="formattedEndTime"
-	type="date" pattern="dd.MM.yyyy" />
 
 
 <h1 id="shownAdTitle">${shownAuction.title}</h1>
@@ -58,10 +57,24 @@
 		</tr>
 		<tr>
 			<td><h2>Auction end-date</h2></td>
-			<td>${formattedEndTime}</td>
+			<td>${shownAuction.endTime}</td>
 		</tr>
 	</table>
 </section>
+
+<div id="image-slider">
+	<div id="left-arrow">
+		<img src="/img/left-arrow.png" />
+	</div>
+	<div id="images">
+		<c:forEach items="${shownAuction.pictures}" var="picture">
+			<img src="${picture.filePath}" />
+		</c:forEach>
+	</div>
+	<div id="right-arrow">
+		<img src="/img/right-arrow.png" />
+	</div>
+</div>
 
 <hr class="clearBoth" />
 
@@ -118,6 +131,7 @@
 		</c:choose>
 	</table>
 </section>
+<br />
 
 <hr class="clearBoth" />
 
@@ -133,7 +147,38 @@
 			<p>${shownAuction.preferences}</p>
 		</div>
 		<br />
+		<!-- <div id="visitList" class="adDescDiv">
+			<h2>Visiting times</h2>
+			<table>
+				<c:forEach items="${visits }" var="visit">
+					<tr>
+						<td>
+							<fmt:formatDate value="${visit.startTimestamp}" pattern="dd-MM-yyyy " />
+							&nbsp; from
+							<fmt:formatDate value="${visit.startTimestamp}" pattern=" HH:mm " />
+							until
+							<fmt:formatDate value="${visit.endTimestamp}" pattern=" HH:mm" />
+						</td>
+						<td><c:choose>
+								<c:when test="${loggedIn}">
+									<c:if test="${loggedInUserEmail != shownAuction.user.username}">
+										<button class="thinButton" type="button" data-id="${visit.id}">Send
+											enquiry to advertiser</button>
+									</c:if>
+								</c:when>
+								<c:otherwise>
+									<a href="/login"><button class="thinInactiveButton" type="button"
+										data-id="${visit.id}">Login to send enquiries</button></a>
+								</c:otherwise>
+							</c:choose></td>
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
+		<br /> -->
 	</div>
+	
+	
 
 	<table id="checkBoxTable" class="adDescDiv">
 		<tr>
@@ -280,5 +325,13 @@
 			</c:choose>
 	</tr>
 </table>
+
+<div id="confirmationDialog">
+	<form>
+	<p>Send enquiry to advertiser?</p>
+	<button type="button" id="confirmationDialogSend">Send</button>
+	<button type="button" id="confirmationDialogCancel">Cancel</button>
+	</form>
+</div>
 
 <c:import url="template/footer.jsp" />

@@ -29,8 +29,8 @@
 				<c:choose>
 					<c:when test="${advertisement.auction}">
 						<div class="resultLeft">
-								<!-- <a href="<c:url value='/ad?id=${ad.id}' />"><img
-								src="${ad.pictures[0].filePath}" /></a> -->
+								<a href="<c:url value='/auction?id=${advertisement.id}' />"><img
+								src="${advertisement.pictures[0].filePath}" /></a>
 							<h2>
 								<a class="link" href="<c:url value='/auction?id=${advertisement.id}' />">${advertisement.title}</a>
 							</h2>
@@ -47,11 +47,8 @@
 								type="date" pattern="dd.MM.yyyy" />
 
 							<p>Move-in date: ${formattedMoveInDate }</p>
-							
-							<fmt:formatDate value="${advertisement.endTime}" var="formattedEndTime"
-								type="date" pattern="dd.MM.yyyy" />
 
-							<p>Auction end-date: ${formattedEndTime}</p>
+							<p>Auction end-date: ${advertisement.endTime}</p>
 						</div>
 					</c:when>
 					<c:otherwise>

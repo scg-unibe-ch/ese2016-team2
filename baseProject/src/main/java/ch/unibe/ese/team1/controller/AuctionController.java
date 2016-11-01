@@ -65,6 +65,7 @@ public class AuctionController {
 
 		String loggedInUserEmail = (principal == null) ? "" : principal.getName();
 		model.addObject("loggedInUserEmail", loggedInUserEmail);
+		model.addObject("visits", visitService.getVisitsByAuction(auction));
 
 		return model;
 	}
@@ -86,51 +87,5 @@ public class AuctionController {
 			messageService.saveFrom(messageForm);
 		}
 		return model;
-	}
-
-	/** Shows the place new bid form. */
-	@RequestMapping(value = "/auction/placeBid", method = RequestMethod.GET)
-	public ModelAndView placeBid(@RequestParam("id") long id, Principal principal) {
-		ModelAndView model = new ModelAndView("placeBid");
-		Auction auction = auctionService.getAuctionById(id);
-		model.addObject("shownAuction", auction);
-		String loggedInUser = (principal == null) ? "" : principal.getName();
-		model.addObject("loggedInUser", loggedInUser);
-		return model;
-	}
-
-	@RequestMapping(value = "/auction/placeBid", method = RequestMethod.POST)
-	public ModelAndView create(@Valid PlaceBidForm placeBidForm,
-			BindingResult result, RedirectAttributes redirectAttributes,
-			Principal principal) {
-		if(!result.hasErrors()) {
-		ModelAndView model = new ModelAndView("placeBid");
-		String bidderName = principal.getName();
-		
-		Auction auction = auctionService.saveBidPrize(placeBidForm, placeBidForm.getId(), bidderName);
-
-		// reset the place bid form
-		this.placeBidForm = null;
-
-		messageService.sendMessage(userService.findUserByUsername("System"), 
-				auction.getUser(), "New bid", "Someone placed a new bid in your auction for " + 
-				auction.getTitle() +". Bid placed by " + auction.getBidderName());
-		
-		model = new ModelAndView("redirect:/auction?id=" + auction.getId());
-		redirectAttributes.addFlashAttribute("confirmationMessage", "Bid placed successfully.");
-		return model;
-		}
-		else {
-			return new ModelAndView("auction?id=" + placeBidForm.getId());
-		}
-
-	}
-	
-	@ModelAttribute("placeBidForm")
-	public PlaceBidForm placeBidForm() {
-		if (placeBidForm == null) {
-			placeBidForm = new PlaceBidForm();
-		}
-		return placeBidForm;
 	}
 }

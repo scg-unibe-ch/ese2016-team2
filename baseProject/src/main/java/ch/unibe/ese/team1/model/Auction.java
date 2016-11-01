@@ -1,5 +1,6 @@
 package ch.unibe.ese.team1.model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -12,17 +13,19 @@ import javax.persistence.TemporalType;
 public class Auction extends Advertisement{
 	
 	@Column
-	@Temporal(TemporalType.DATE)
-	private Date endTime;
+	private String endTime;
+	
+	@Column
+	private boolean auctionEnded;
 	
 	@Column
 	private String bidderName;
 
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 	
@@ -32,6 +35,14 @@ public class Auction extends Advertisement{
 	
 	public void setBidderName(String bidderName) {
 		this.bidderName = bidderName;
+	}
+	
+	public boolean getAuctionEnded() {
+		return auctionEnded;
+	}
+	
+	public void setAuctionEnded(boolean auctionEnded) {
+		this.auctionEnded = auctionEnded;
 	}
 
 }
