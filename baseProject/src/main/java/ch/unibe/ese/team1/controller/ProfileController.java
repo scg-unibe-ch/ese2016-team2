@@ -16,8 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ch.unibe.ese.team1.controller.pojos.forms.EditProfileForm;
 import ch.unibe.ese.team1.controller.pojos.forms.MessageForm;
+import ch.unibe.ese.team1.controller.pojos.forms.RegisterForm;
+import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team1.controller.pojos.forms.SignupForm;
 import ch.unibe.ese.team1.controller.service.AdService;
+import ch.unibe.ese.team1.controller.service.RegisterService;
 import ch.unibe.ese.team1.controller.service.SignupService;
 import ch.unibe.ese.team1.controller.service.UserService;
 import ch.unibe.ese.team1.controller.service.UserUpdateService;
@@ -35,6 +38,9 @@ public class ProfileController {
 
 	@Autowired
 	private SignupService signupService;
+	
+	@Autowired
+	private RegisterService registerService;
 
 	@Autowired
 	private UserService userService;
@@ -62,7 +68,26 @@ public class ProfileController {
 		model.addObject("signupForm", new SignupForm());
 		return model;
 	}
-
+	
+	/** Returns the register page. */
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public ModelAndView registerPage(Principal principal) {
+		ModelAndView model = new ModelAndView("register");
+		model.addObject("registerForm", new RegisterForm());
+		String username = principal.getName();
+		User user = userService.findUserByUsername(username);
+		model.addObject("editProfileForm", new EditProfileForm());
+		model.addObject("currentUser", user);
+		return model;
+	}
+	
+	/** Returns the register page. */
+	@RequestMapping(value = "/profile/registerProfile", method = RequestMethod.GET)
+	public ModelAndView registerProfilePage() {
+		ModelAndView model = new ModelAndView("register");
+		return model;
+	}
+	
 	/** Validates the signup form and on success persists the new user. */
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public ModelAndView signupResultPage(@Valid SignupForm signupForm,
@@ -95,7 +120,7 @@ public class ProfileController {
 		model.addObject("currentUser", user);
 		return model;
 	}
-
+	
 	/** Handles the request for editing the user profile. */
 	@RequestMapping(value = "/profile/editProfile", method = RequestMethod.POST)
 	public ModelAndView editProfileResultPage(
@@ -115,6 +140,25 @@ public class ProfileController {
 			model.addObject("message",
 					"Something went wrong, please contact the WebAdmin if the problem persists!");
 			return model;
+		}
+	}
+	
+	/** Handles the request for editing the user profile. */
+	@RequestMapping(value = "/profile/registerProfile", method = RequestMethod.POST)
+	public ModelAndView registerProfileResultPage(
+			@Valid RegisterForm registerForm,
+			BindingResult bindingResult, Principal principal) {
+		ModelAndView model;
+		String username = principal.getName();
+		User user = userService.findUserByUsername(username);
+		if (!bindingResult.hasErrors()) {
+			registerService.updateFrom(registerForm);
+			model = new ModelAndView("updatedProfile");
+			model.addObject("message", "Your Profile has been updated!");
+			model.addObject("currentUser", user);
+			return model;
+		} else {
+			return registerProfilePage();
 		}
 	}
 

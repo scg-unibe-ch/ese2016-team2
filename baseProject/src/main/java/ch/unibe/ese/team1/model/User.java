@@ -45,7 +45,16 @@ public class User {
 	private Gender gender;
 	
 	@Column(nullable = false)
-	private Account account;
+	private String account;
+	
+	@Column(nullable = true)
+	private String street;
+	
+	@Column(nullable = true)
+	private int zipcode;
+
+	@Column(nullable = true)
+	private String city;
 
 	@Column(nullable = false)
 	private boolean enabled;
@@ -146,14 +155,38 @@ public class User {
 		this.gender = gender;
 	}
 	
-	public Account getAccount() {
+	public String getAccount() {
 		return account;
 	}
 
-	public void setAccount(Account account) {
+	public void setAccount(String account) {
 		this.account = account;
 	}
 
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	
+	public int getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(int zipcode) {
+		this.zipcode = zipcode;
+	}
+	
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
 	public String getAboutMe() {
 		return aboutMe;
 	}

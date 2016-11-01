@@ -83,6 +83,7 @@ public class AdService {
 		ad.setStudio(placeAdForm.getStudio());
 		
 		ad.setRoomType(placeAdForm.getRoomType());
+		
 
 		// take the zipcode - first four digits
 		String zip = placeAdForm.getCity().substring(0, 4);
@@ -235,8 +236,7 @@ public class AdService {
 	 */
 	@Transactional
 	public Iterable<Ad> queryResults(SearchForm searchForm) {
-		Iterable<Ad> results = null;
-
+		Iterable<Ad> results = null;	
 		// we use this method if we are looking for rooms AND studios AND houses
 		if (searchForm.getBothRoomAndStudio()) {
 			results = adDao
@@ -248,7 +248,7 @@ public class AdService {
 					searchForm.getStudio(), searchForm.getPrize() + 1);
 		}
 
-		// filter out zipcode
+		// filter out zipcodez
 		String city = searchForm.getCity().substring(7);
 
 		// get the location that the user searched for and take the one with the

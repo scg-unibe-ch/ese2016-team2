@@ -68,8 +68,8 @@
 			<tr>
 				<td class="signupDescription"><label for="field-account">Account type:</label></td>
 				<td><form:select path="account">
-						<form:option value="NORMAL" label="Normal" />
-						<form:option value="PREMIUM" label="Premium" />
+						<form:option value="Normal" label="Normal" />
+						<form:option value="Premium" label="Premium" />
 					</form:select></td>
 			</tr>
 		</table>

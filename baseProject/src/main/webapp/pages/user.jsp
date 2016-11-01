@@ -65,6 +65,11 @@
 			<img src="/img/avatar.png">
 		</c:otherwise>
 	</c:choose>
+	<c:choose>	
+		<c:when test="${user.account eq 'Premium'}">
+			<img src='/img/crone.png' width ="45" height="35"/>
+		</c:when>
+	</c:choose>
 	<p>
 	<h2>Username</h2>${user.email}<p>
 	<h2>Name</h2>${user.firstName}
