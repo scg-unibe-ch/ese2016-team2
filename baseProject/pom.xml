@@ -184,7 +184,7 @@
 									<onError>continue</onError>
 								</configuration>
 							</execution>
-						
+
 							<execution>
 								<id>drop-zipcodes-table</id>
 								<phase>process-test-resources</phase>
@@ -196,7 +196,7 @@
 									<onError>continue</onError>
 								</configuration>
 							</execution>
-							
+
 							<execution>
 								<id>insert-zipcode-data</id>
 								<phase>process-test-resources</phase>
@@ -213,6 +213,21 @@
 							</execution>
 						</executions>
 					</plugin>
+					<!-- <plugin>
+				    <groupId>org.apache.maven.plugins</groupId>
+				    <artifactId>maven-resources-plugin</artifactId>
+				    <version>2.7</version>
+				    <configuration>
+				      <nonFilteredFileExtensions>
+				        <nonFilteredFileExtension>woff</nonFilteredFileExtension>
+				        <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+				        <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+				        <nonFilteredFileExtension>eot</nonFilteredFileExtension>
+				        <nonFilteredFileExtension>swf</nonFilteredFileExtension>
+				        <nonFilteredFileExtension>ico</nonFilteredFileExtension>
+				      </nonFilteredFileExtensions>
+				    </configuration>
+				  </plugin> -->
 				</plugins>
 			</build>
 		</profile>
@@ -221,7 +236,7 @@
 	<build>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
+				<!--This plugin's configuration is used to store Eclipse m2e settings
 					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>

@@ -33,7 +33,7 @@ public class AdController {
 
 	@Autowired
 	private AdService adService;
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -87,7 +87,7 @@ public class AdController {
 	 * List bookmarkedAds. In case it is present, true is returned changing
 	 * the "Bookmark Ad" button to "Bookmarked". If it is not present it is
 	 * added to the List bookmarkedAds.
-	 * 
+	 *
 	 * @return 0 and 1 for errors; 3 to update the button to bookmarked 3 and 2
 	 *         for bookmarking or undo bookmarking respectively 4 for removing
 	 *         button completly (because its the users ad)

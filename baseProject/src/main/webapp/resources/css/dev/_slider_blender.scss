@@ -1,0 +1,79 @@
+.slider-blender-full {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+
+  // NB: No fallback here.
+  // check http://caniuse.com/#search=vh
+  height: 100vh;
+
+  .index & {
+    opacity: .64;
+    transition: opacity $base-duration $base-timing;
+
+    &.js-show {
+      opacity: 1;
+    }
+  }
+}
+
+
+
+.slides {
+  height: 100%;
+}
+
+
+
+.slide {
+  height: inherit;
+  list-style: none;
+
+  // @Jerome
+  // If .blender-full is set, the use of background-image instead of a IMG
+  // element is assumed.
+  .slider-blender-full & {
+    background-repeat: none;
+    background-size: cover;
+    background-position: center center;
+  }
+
+  .index .slider-blender-full & {
+    background-color: $base-color-light;
+  }
+}
+
+
+
+.slide-caption {
+  display: inline-block;
+  vertical-align: bottom;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+
+  transition: padding $base-duration $base-timing;
+
+
+  @include pad($atom $small);
+
+  @include media($bq-medium) {
+    @include pad($small $medium);
+  }
+
+  @include media($bq-large) {
+    @include pad($medium $large);
+  }
+
+  @include media($bq-huge) {
+    @include pad($large $huge);
+  }
+
+  span {
+    display: block;
+    text-align: right;
+    color: $white;
+  }
+}
