@@ -5,7 +5,7 @@
   - Is an estate always for renting when it is placed in an Ad and always for buying when it is placed in an Auction?
   - Could an estate be for renting or for buying when it is placed as an Ad?
   
-#### Verification of Sprint 2 and 3
+### Verification of Sprint 2 and 3
 - #R26-S2 - #2 - Create wireframes for ~index, ~ad doc structure | in order to implement new front-end design.
 - #3 - SRS: Determine complexity of user requirements. Then, flesh out a "running" long-term plan.
 - #3 - SRS: Replace the word "scenario" with "event flow" within use cases. Format as numerical list.
