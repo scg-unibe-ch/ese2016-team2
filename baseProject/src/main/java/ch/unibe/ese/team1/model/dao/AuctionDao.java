@@ -1,5 +1,7 @@
 package ch.unibe.ese.team1.model.dao;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
 import ch.unibe.ese.team1.model.Auction;
@@ -11,7 +13,7 @@ public interface AuctionDao extends CrudRepository<Auction, Long> {
 	public Iterable<Auction> findByPrizeLessThan (int prize);
 
 	/** this will be used if only rooms or studios are searched */
-	public Iterable<Auction> findByStudioAndPrizeLessThan(boolean studio,
+	public List<Auction> findByRoomTypeAndPrizeLessThan(String roomType,
 			int i);
 
 	public Iterable<Auction> findByUser(User user);
