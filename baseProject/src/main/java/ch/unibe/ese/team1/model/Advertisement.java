@@ -66,13 +66,6 @@ public abstract class Advertisement {
 	private String preferences;
 
 	@Column(nullable = false)
-	private String roommates;
-
-	@Fetch(FetchMode.SELECT)
-	@ManyToMany(fetch = FetchType.EAGER)
-	private List<User> registeredRoommates;
-
-	@Column(nullable = false)
 	private boolean smokers;
 
 	@Column(nullable = false)
@@ -103,6 +96,14 @@ public abstract class Advertisement {
 	@Column(nullable = false)
 	private boolean studio;
 	
+	// true if studio, false if room
+	@Column(nullable = false)
+	private boolean room;
+	
+	// true if studio, false if room
+	@Column(nullable = false)
+	private boolean house;
+	
 	@Column(nullable = false)
 	private String roomType = "";
 
@@ -118,6 +119,9 @@ public abstract class Advertisement {
 	
 	@Column(nullable=false)
 	private boolean auction;
+	
+	@Column(nullable=false)
+	private boolean buyable;
 
 	public Date getCreationDate() {
 		return creationDate;
@@ -133,6 +137,22 @@ public abstract class Advertisement {
 
 	public void setStudio(boolean studio) {
 		this.studio = studio;
+	}
+	
+	public boolean getRoom() {
+		return room;
+	}
+
+	public void setRoom(boolean room) {
+		this.room = room;
+	}
+	
+	public boolean getHouse() {
+		return house;
+	}
+
+	public void setHouse(boolean house) {
+		this.house = house;
 	}
 	
 	public String getRoomType() {
@@ -275,14 +295,6 @@ public abstract class Advertisement {
 		this.preferences = preferences;
 	}
 
-	public String getRoommates() {
-		return roommates;
-	}
-
-	public void setRoommates(String roommates) {
-		this.roommates = roommates;
-	}
-
 	public List<AdPicture> getPictures() {
 		return pictures;
 	}
@@ -334,14 +346,6 @@ public abstract class Advertisement {
 			return moveOutDate;
 	}
 
-	public List<User> getRegisteredRoommates() {
-		return registeredRoommates;
-	}
-
-	public void setRegisteredRoommates(List<User> registeredRoommates) {
-		this.registeredRoommates = registeredRoommates;
-	}
-
 	public List<Visit> getVisits() {
 		return visits;
 	}
@@ -356,6 +360,14 @@ public abstract class Advertisement {
 	
 	public void setAuction(boolean auction) {
 		this.auction = auction;
+	}
+	
+	public boolean getBuyable() {
+		return buyable;
+	}
+	
+	public void setBuyable(boolean buyable) {
+		this.buyable = buyable;
 	}
 
 	@Override

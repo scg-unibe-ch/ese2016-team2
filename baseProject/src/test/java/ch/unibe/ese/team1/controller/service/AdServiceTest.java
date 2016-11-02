@@ -56,7 +56,6 @@ public class AdServiceTest {
 		placeAdForm.setCity("3018 - Bern");
 		placeAdForm.setPreferences("Test preferences");
 		placeAdForm.setRoomDescription("Test Room description");
-		placeAdForm.setRoommates("Test Roommate description");
 		placeAdForm.setPrize(600);
 		placeAdForm.setSquareFootage(50);
 		placeAdForm.setTitle("title");
@@ -100,7 +99,6 @@ public class AdServiceTest {
 		assertEquals(3018, ad.getZipcode());
 		assertEquals("Test preferences", ad.getPreferences());
 		assertEquals("Test Room description", ad.getRoomDescription());
-		assertEquals("Test Roommate description", ad.getRoommates());
 		assertEquals(600, ad.getPrize());
 		assertEquals(50, ad.getSquareFootage());
 		assertEquals("title", ad.getTitle());

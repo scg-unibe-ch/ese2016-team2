@@ -9,6 +9,22 @@
 <pre><a href="/">Home</a>   &gt;   Search</pre>
 
 <script>
+function validateType(form)
+{
+	var room = document.getElementById('room');
+	var studio = document.getElementById('studio');
+	var house = document.getElementById('house');
+	var neither = document.getElementById('neither');
+
+	neither.checked = false;
+	
+	if(!room.checked && !studio.checked && !house.checked) {
+		neither.checked = true;
+	}
+}
+</script>
+
+<script>
 	$(document).ready(function() {
 		$("#city").autocomplete({
 			minLength : 2
@@ -23,7 +39,6 @@
 
 		var price = document.getElementById('prizeInput');
 		var radius = document.getElementById('radiusInput');
-		var smoker = document.getElementById('field-smoker');
 		
 		/**************************/
 		// Noetig?
@@ -48,31 +63,6 @@
 	});
 </script>
 
-<script>
-function validateType(form)
-{
-	var room = document.getElementById('room');
-	var studio = document.getElementById('studio');
-	var neither = document.getElementById('neither');
-	var both = document.getElementById('both');
-	var type = document.getElementById('type');
-
-	if(room.checked && studio.checked) {
-		both.checked = true;
-		neither.checked = false;
-	}
-	else if(!room.checked && !studio.checked) {
-		both.checked = false;
-		neither.checked = true;
-	}
-	else {
-		both.checked = false;
-		neither.checked = false;
-		type.checked = studio.checked;
-	}
-}
-</script>
-
 <h1>Search for an ad</h1>
 <hr />
 
@@ -80,13 +70,16 @@ function validateType(form)
 	id="searchForm" autocomplete="off">
 	<fieldset>
 		<h2>Mandatory search criteria:</h2>
-		<form:checkbox name="room" id="room" path="roomHelper" /><label>Room</label>
-		<form:checkbox name="studio" id="studio" path="studioHelper" /><label>Studio</label>
-
-		<form:checkbox style="display:none" name="neither" id="neither" path="noRoomNoStudio" />
-		<form:checkbox style="display:none" name="both" id="both" path="bothRoomAndStudio" />
-		<form:checkbox style="display:none" name="type" id="type" path="studio" />
-		<form:errors path="noRoomNoStudio" cssClass="validationErrorText" /> <br/>
+		
+		<form:radiobutton name="buyable" id="buyable" path="buyable" value="0" /><label>Rent</label> 
+		<form:radiobutton name="buyable" id="buyable" path="buyable" value="1" /><label>Buy</label> <br />
+		
+		<form:checkbox name="room" id="room" path="room" /><label>Room</label>
+		<form:checkbox name="studio" id="studio" path="studio" /><label>Studio</label>
+		<form:checkbox name="house" id="house" path="house" /><label>House</label>
+		
+		<form:checkbox style="display:none" name="neither" id="neither" path="neither" />
+		<form:errors path="neither" cssClass="validationErrorText" /><br />
 
 		<label for="city">City / zip code:</label>
 		<form:input type="text" name="city" id="city" path="city" placeholder="e.g. Bern" tabindex="3" />

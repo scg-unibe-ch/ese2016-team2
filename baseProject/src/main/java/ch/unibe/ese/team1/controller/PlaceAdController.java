@@ -203,29 +203,6 @@ public class PlaceAdController {
 		}
 	}
 
-	/**
-	 * Checks if the email passed as post parameter is a valid email. In case it
-	 * is valid, the email address is returned. If it is not, a error message is
-	 * returned.
-	 */
-	@RequestMapping(value = "/profile/placeAd/validateEmail", method = RequestMethod.POST)
-	@ResponseBody
-	public String validateEmail(@RequestParam String email,
-			@RequestParam String alreadyIn) {
-		User user = userService.findUserByUsername(email);
-
-		Boolean isAdded = adService.checkIfAlreadyAdded(email, alreadyIn);
-
-		if (user == null) {
-			return "This user does not exist, did your roommate register?";
-		}
-		if (isAdded) {
-			return "You already added this person.";
-		} else {
-			return user.getEmail();
-		}
-	}
-
 	@ModelAttribute("placeAdForm")
 	public PlaceAdForm placeAdForm() {
 		if (placeAdForm == null) {

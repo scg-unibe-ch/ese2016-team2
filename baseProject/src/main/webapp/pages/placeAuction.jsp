@@ -6,6 +6,12 @@
 
 <c:import url="template/header.jsp" />
 
+<script src="/js/jquery.ui.widget.js"></script>
+<script src="/js/jquery.iframe-transport.js"></script>
+<script src="/js/jquery.fileupload.js"></script>
+
+<script src="/js/pictureUploadAuction.js"></script>
+
 <script>
 	$(document).ready(function() {
 		
@@ -27,46 +33,43 @@
 		$("#field-moveInDate").datepicker({
 			dateFormat : 'dd-mm-yy'
 		});
-		$("#field-moveOutDate").datepicker({
+		$("#field-endDate").datepicker({
 			dateFormat : 'dd-mm-yy'
 		});
-		
-		$("#field-endTime").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		
 		$("#field-visitDay").datepicker({
 			dateFormat : 'dd-mm-yy'
 		});
 		
-
-		$("#addbutton").click(function() {
-			var text = $("#roomFriends").val();
-			var alreadyAdded = $("#addedRoommates").html();
-			if(validateForm(text)) {
-				$.post("/profile/placeAd/validateEmail",{email: text, alreadyIn: alreadyAdded}, function(data) {
-					if(validateForm(data)) {
-						var index = $("#roommateCell input.roommateInput").length;
-						$("#roommateCell").append("<input class='roommateInput' type='hidden' name='registeredRoommateEmails[" + index + "]' value='" + data + "' />");
-						$("#addedRoommates").append(data + "; ");
-					} else {
-						alert(data);
-					}});
+		$("#addVisitButton").click(function() {
+			var date = $("#field-visitDay").val();
+			if(date == ""){
+				return;
 			}
-			else {
-				alert("Please enter an e-mail adress");
+			
+			var startHour = $("#startHour").val();
+			var startMinutes = $("#startMinutes").val();
+			var endHour = $("#endHour").val();
+			var endMinutes = $("#endMinutes").val();
+			
+			if (startHour > endHour) {
+				alert("Invalid times. The visit can't end before being started.");
+				return;
+			} else if (startHour == endHour && startMinutes >= endMinutes) {
+				alert("Invalid times. The visit can't end before being started.");
+				return;
 			}
-			 
-			// Validates the input for Email Syntax
-			function validateForm(text) {
-			    var positionAt = text.indexOf("@");
-			    var positionDot = text.lastIndexOf(".");
-			    if (positionAt< 1 || positionDot<positionAt+2 || positionDot+2>=text.length) {
-			        return false;
-			    } else {
-			    	return true;
-			    }
-			}
+			
+			var newVisit = date + ";" + startHour + ":" + startMinutes + 
+				";" + endHour + ":" + endMinutes; 
+			var newVisitLabel = date + " " + startHour + ":" + startMinutes + 
+			" to " + endHour + ":" + endMinutes; 
+			
+			var index = $("#addedVisits input").length;
+			
+			var label = "<p>" + newVisitLabel + "</p>";
+			var input = "<input type='hidden' value='" + newVisit + "' name='visits[" + index + "]' />";
+			
+			$("#addedVisits").append(label + input);
 		});
 	});
 </script>
@@ -111,13 +114,10 @@
 
 			<tr>
 				<td><label for="moveInDate">Move-in date</label></td>
-				<td><label for="moveOutDate">Move-out date (optional)</label></td>
 			</tr>
 			<tr>
 				<td><form:input type="text" id="field-moveInDate"
 						path="moveInDate" /></td>
-				<td><form:input type="text" id="field-moveOutDate"
-						path="moveOutDate" /></td>
 			</tr>
 
 			<tr>
@@ -133,9 +133,11 @@
 						path="squareFootage" cssClass="validationErrorText" /></td>
 			</tr>
 			<tr>
-				<td><label for="field-endTime">Auction end-date</label><td>
+				<td><label for="field-endDate">Auction end-date</label></td>
+				<td><label for="field-endTime">Auction end-Time</label></td>
 			</tr>
 			<tr>
+				<td><form:input id="field-endDate" type="text" path="endDate" /></td>
 				<td><form:input id="field-endTime" type="text" path="endTime" /></td>
 			</tr>
 		</table>
@@ -185,42 +187,76 @@
 
 	<br />
 	<fieldset>
-		<legend>Roommates (optional)</legend>
-		<p>If your roommates have an account, simply add them by email.</p>
-
-		<table class="placeAdTable">
-			<tr>
-				<td><label for="roomFriends">Add by email</label></td>
-			</tr>
-
-			<tr>
-				<td id="roommateCell"><form:input type="text" id="roomFriends"
-						path="roomFriends" placeholder="email" />
-
-					<div id="addbutton" class="smallPlusButton">+</div></td>
-			</tr>
-			<tr>
-				<td><p id="addedRoommates" path="addedRoommates">Added
-						roommates:</p></td>
-			</tr>
-		</table>
-
-		<br />
-		<p>If the roommates do not have accounts or you wish to give
-			further information, you can add a text in which you describe the
-			roommates.</p>
-		<br/>
-		<form:textarea path="roommates" rows="10" cols="100"
-			placeholder="Roommates" />
-		<form:errors path="roommates" cssClass="validationErrorText" />
-	</fieldset>
-
-	<br />
-	<fieldset>
 		<legend>Preferences (optional)</legend>
 		<form:textarea path="preferences" rows="5" cols="100"
 			placeholder="Preferences"></form:textarea>
 	</fieldset>
+	
+	<fieldset>
+		<legend>Pictures (optional)</legend>
+		<br /> <label for="field-pictures">Pictures</label> <input
+			type="file" id="field-pictures" accept="image/*" multiple="multiple" />
+		<table id="uploaded-pictures" class="styledTable">
+			<tr>
+				<th id="name-column">Uploaded picture</th>
+				<th>Size</th>
+				<th>Delete</th>
+			</tr>
+		</table>
+		<br>
+	</fieldset>
+	
+	<!-- <fieldset>
+		<legend>Visiting times (optional)</legend>
+
+		<table>
+			<tr>
+				<td><input type="text" id="field-visitDay" /> <select
+					id="startHour">
+						<%
+							for (int i = 0; i < 24; i++) {
+									String hour = String.format("%02d", i);
+									out.print("<option value=\"" + hour + "\">" + hour
+											+ "</option>");
+								}
+						%>
+				</select> <select id="startMinutes">
+						<%
+							for (int i = 0; i < 60; i++) {
+									String minute = String.format("%02d", i);
+									out.print("<option value=\"" + minute + "\">" + minute
+											+ "</option>");
+								}
+						%>
+				</select> <span>to&thinsp; </span> <select id="endHour">
+						<%
+							for (int i = 0; i < 24; i++) {
+									String hour = String.format("%02d", i);
+									out.print("<option value=\"" + hour + "\">" + hour
+											+ "</option>");
+								}
+						%>
+				</select> <select id="endMinutes">
+						<%
+							for (int i = 0; i < 60; i++) {
+									String minute = String.format("%02d", i);
+									out.print("<option value=\"" + minute + "\">" + minute
+											+ "</option>");
+								}
+						%>
+				</select>
+
+
+
+					<div id="addVisitButton" class="smallPlusButton">+</div>
+
+					<div id="addedVisits"></div></td>
+
+			</tr>
+
+		</table>
+		<br>
+	</fieldset> -->
 	
 	<br />
 	<div>

@@ -63,8 +63,8 @@ public class Visit {
 		return auction;
 	}
 	
-	public void setAd(Auction auction) {
-		this.auction = auction;
+	public void setAuction(Auction auction) {
+		this.auction= auction;
 	}
 
 	public List<User> getSearchers() {

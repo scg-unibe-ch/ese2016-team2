@@ -83,6 +83,7 @@ public class AdService {
 		ad.setStudio(placeAdForm.getStudio());
 		
 		ad.setRoomType(placeAdForm.getRoomType());
+		
 
 		// take the zipcode - first four digits
 		String zip = placeAdForm.getCity().substring(0, 4);
@@ -122,7 +123,6 @@ public class AdService {
 
 		ad.setRoomDescription(placeAdForm.getRoomDescription());
 		ad.setPreferences(placeAdForm.getPreferences());
-		ad.setRoommates(placeAdForm.getRoommates());
 
 		// ad description values
 		ad.setSmokers(placeAdForm.isSmokers());
@@ -146,20 +146,6 @@ public class AdService {
 			pictures.add(picture);
 		}
 		ad.setPictures(pictures);
-
-		/*
-		 * Roommates are saved in the form as strings. They need to be converted
-		 * into Users and saved as a List which will be accessible through the
-		 * ad object itself.
-		 */
-		List<User> registeredUserRommates = new LinkedList<>();
-		if (placeAdForm.getRegisteredRoommateEmails() != null) {
-			for (String userEmail : placeAdForm.getRegisteredRoommateEmails()) {
-				User roommateUser = userService.findUserByUsername(userEmail);
-				registeredUserRommates.add(roommateUser);
-			}
-		}
-		ad.setRegisteredRoommates(registeredUserRommates);
 
 		// visits
 		List<Visit> visits = new LinkedList<>();
@@ -187,10 +173,10 @@ public class AdService {
 				visits.add(visit);
 			}
 			ad.setVisits(visits);
-			
-			ad.setAuction(false);
 		}
-
+		
+		ad.setAuction(false);
+		ad.setBuyable(false);
 		ad.setUser(user);
 		
 		adDao.save(ad);
@@ -250,20 +236,31 @@ public class AdService {
 	 */
 	@Transactional
 	public Iterable<Ad> queryResults(SearchForm searchForm) {
-		Iterable<Ad> results = null;
-
+		Iterable<Ad> results = null;	
 		// we use this method if we are looking for rooms AND studios AND houses
-		if (searchForm.getBothRoomAndStudio()) {
-			results = adDao
-					.findByPrizeLessThan(searchForm.getPrize() + 1);
-		}
-		// we use this method if we are looking EITHER for rooms OR for studios OR houses
-		else {
-			results = adDao.findByStudioAndPrizeLessThan(
-					searchForm.getStudio(), searchForm.getPrize() + 1);
+		if (searchForm.getRoom() && searchForm.getStudio() && searchForm.getHouse()) {
+			results = adDao.findByPrizeLessThan(searchForm.getPrize() + 1);
+		} else if (searchForm.getRoom() && searchForm.getHouse()) {
+			List<Ad> temp = adDao.findByRoomTypeAndPrizeLessThan("Room", searchForm.getPrize() + 1);
+			temp.addAll(adDao.findByRoomTypeAndPrizeLessThan("House", searchForm.getPrize() + 1));
+			results = temp;
+		} else if (searchForm.getRoom() && searchForm.getStudio()) {
+			List<Ad> temp = adDao.findByRoomTypeAndPrizeLessThan("Room", searchForm.getPrize() + 1);
+			temp.addAll(adDao.findByRoomTypeAndPrizeLessThan("Studio", searchForm.getPrize() + 1));
+			results = temp;
+		} else if (searchForm.getStudio() && searchForm.getHouse()) {
+			List<Ad> temp = adDao.findByRoomTypeAndPrizeLessThan("Studio", searchForm.getPrize() + 1);
+			temp.addAll(adDao.findByRoomTypeAndPrizeLessThan("House", searchForm.getPrize() + 1));
+			results = temp;
+		} else if (searchForm.getRoom()) {
+			results = adDao.findByRoomTypeAndPrizeLessThan("Room", searchForm.getPrize() + 1);
+		} else if (searchForm.getStudio()) {
+			results = adDao.findByRoomTypeAndPrizeLessThan("Studio", searchForm.getPrize() + 1);
+		} else {
+			results = adDao.findByRoomTypeAndPrizeLessThan("House", searchForm.getPrize() + 1);
 		}
 
-		// filter out zipcode
+		// filter out zipcodez
 		String city = searchForm.getCity().substring(7);
 
 		// get the location that the user searched for and take the one with the

@@ -1,0 +1,77 @@
+/*
+ * Neat
+ */
+$max-width: 1200px !global;
+$grid-columns: 12 !global; // @Jerome: only use mod(2) = 0 values !!!
+//$gutter: 1.618em !global;
+//$column: 4.2358em !global;
+$base-duration: 350ms !global;
+
+
+
+/*
+ * Colors
+ */
+$white: #fefefe;
+$black: #121212;
+
+$is-this-even-gray: lighten($black, 96%);
+$whiff-of-gray: lighten($black, 88%);
+$slight-gray: lighten($black, 80%);
+$bright-gray: lighten($black, 64%);
+$light-gray: lighten($black, 32%);
+$gray: lighten($black, 16%);
+$dark-gray: lighten($black, 8%);
+
+$base-color: dodgerblue;
+$base-color-opposite: tomato;
+
+$base-color-bright: lighten($base-color, 32%);
+$base-color-light: lighten($base-color, 16%);
+$base-color-dark: darken($base-color, 8%);
+
+$base-color-opposite-bright: lighten($base-color-opposite, 32%);
+$base-color-opposite-light: lighten($base-color-opposite, 16%);
+$base-color-opposite-dark: darken($base-color-opposite, 6%);
+
+$action-color: $base-color;
+$action-color-hover: $base-color-dark;
+
+$action-medium-color: $base-color-opposite;
+$action-medium-color-hover: $base-color-opposite-dark;
+
+
+
+/*
+ * Pixel sizes
+ */
+$atom:                 4px;
+$small:                8px;
+$medium:              16px;
+$large:               32px;
+$huge:                64px;
+$giant:              128px;
+$astro:              256px;
+
+
+
+/*
+ * Breakpoint sizes
+ */
+$bq-medium:           400px;
+$bq-large:            800px;
+$bq-huge:            1200px;
+
+
+
+/*
+ * Font sizes
+ */
+$f-atom:                0.8em;
+$f-tiny:                1.2em;
+$f-small:               1.6em;
+$f-medium:              2.4em;
+$f-large:               3.2em;
+$f-huge:                4.0em;
+$f-giant:               4.8em;
+$f-astro:               5.6em;
