@@ -11,10 +11,6 @@
     left $base-duration $base-timing,
     width $base-duration $base-timing;
 
-  &.js-show {
-    left: 0;
-  }
-
   [view].headerPrimaryIn &,
   [view].headerPrimaryOpen & {
     left: 0;
@@ -44,5 +40,15 @@
     > a {
       background-color: $whiff-of-gray;
     }
+  }
+}
+
+
+
+.action-menu-primary {
+  right: -116px;
+
+  span {
+    margin-right: 16px;
   }
 }

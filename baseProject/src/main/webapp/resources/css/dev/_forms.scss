@@ -1,6 +1,7 @@
 .form {
 
-  input {
+  input,
+  textarea {
     margin: 0;
     background-color: $white;
     border: none;
@@ -21,7 +22,9 @@
     &:hover {
       border-color: $whiff-of-gray;
     }
+  }
 
+  input {
     /*
      * @Jerome
      * Regarding [type=number], this a workaround for a ff bug which is
@@ -67,7 +70,8 @@
 
   button {
     &[type=submit],
-    &[type=reset] {
+    &[type=reset],
+    &[type=button] {
       display: block;
       width: 100%;
       background-color: $whiff-of-gray;
@@ -97,8 +101,8 @@
 
 // @Jerome
 // TODO: Calculate slip heights by variable client values if possible.
-$slip-height-small: 56px;
-$slip-height-medium: 72px;
+$slip-height-small: 57px;
+$slip-height-medium: 73px;
 
 .header-primary .form-search {
   height: $slip-height-small;
@@ -109,15 +113,6 @@ $slip-height-medium: 72px;
     height: $slip-height-medium;
   }
 
-
-  &.js-show {
-    height: 286px;
-
-    @include media($bq-medium) {
-      height: 366px;
-    }
-  }
-
   [view].headerPrimarySearchIn &,
   [view].headerPrimarySearchOpen & {
     height: 286px;
@@ -125,6 +120,24 @@ $slip-height-medium: 72px;
     @include media($bq-medium) {
       height: 366px;
     }
+  }
+}
+
+
+
+.sidebar .form-message {
+  height: 0;
+  overflow: hidden;
+  transition: height $base-duration $base-timing;
+
+  [view].sidebarMessageIn &,
+  [view].sidebarMessageOpen & {
+    height: 292px;
+  }
+
+  textarea {
+    height: 145px;
+    resize: none;
   }
 }
 

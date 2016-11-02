@@ -13,7 +13,7 @@
 	<div class="container container-pad">
 		<div class="row">
 			<div class="tile-full brand brand-primary">
-				<h1>flatfindr</h1>
+				<h1><span class="base-color-opposite">flat</span><span class="base-color">findr</span></h1>
 			</div>
 		</div>
 	</div>
@@ -88,7 +88,7 @@
 							<c:otherwise>
 
 								<li class="slide" style="background-image: url(${advertisement.pictures[0].filePath})">
-									<a class="slide-caption" href="<c:url value='/ad?id=${advertisement.id}' />">
+									<a class="slide-caption" href="<c:url value='/~ad?id=${advertisement.id}' />">
 										<span>${advertisement.city}</span>
 										<span>${advertisement.title}</span>
 									</a>
@@ -110,4 +110,6 @@
 </main>
 
 <c:import url="template/~footer.jsp" />
-<c:import url="template/~bottom.jsp" />
+<c:import url="template/~bottom.jsp">
+	<c:param name="js" value="index" />
+</c:import>

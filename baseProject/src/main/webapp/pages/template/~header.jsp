@@ -8,14 +8,19 @@
 <%-- check if user is logged in --%>
 <security:authorize var="loggedIn" url="/profile" />
 
+
 <header class="container header-primary">
   <div class="row">
     <div class="tile tile-full">
-
-			<div class="action action-icon action-menu-primary">
+      <div class="action action-icon action-menu-primary">
 				<span id="js-menu-icon" class="fa fa-bars fa-2x"></span>
 				<span id="js-menu-form-search-icon" class="fa fa-search fa-2x"></span>
 			</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="tile tile-full">
 
 			<div class="form form-search">
 				<form:form
@@ -93,26 +98,22 @@
     </div>
   </div>
 
-  <div class="row">
-    <c:choose>
-      <c:when test="${loggedIn}">
-        <div class="tile tile-half action">
-          <a href="/logout">Sign out</a>
-        </div>
-        <div class="tile tile-half">
 
-        </div>
-      </c:when>
-      <c:otherwise>
+  <c:choose>
+    <c:when test="${loggedIn}">
+
+    </c:when>
+    <c:otherwise>
+      <div class="row">
         <div class="tile tile-half action action-tile action-medium">
           <a href="/login">Sign in</a>
         </div>
         <div class="tile tile-half action action-tile">
           <a href="/signup">Sign up</a>
         </div>
-      </c:otherwise>
-    </c:choose>
-  </div>
+      </div>
+    </c:otherwise>
+  </c:choose>
 
   <div class="row">
     <nav class="tile-full nav-primary">
@@ -126,6 +127,19 @@
       </ul>
     </nav>
   </div>
+
+  <c:choose>
+    <c:when test="${loggedIn}">
+      <div class="row">
+        <div class="tile tile-full action action-tile">
+          <a href="/logout">Sign out</a>
+        </div>
+      </div>    
+    </c:when>
+    <c:otherwise>
+
+    </c:otherwise>
+  </c:choose>
 
   <div class="row">
     <div class="tile-full">

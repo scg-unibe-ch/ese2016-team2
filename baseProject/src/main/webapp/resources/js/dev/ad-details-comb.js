@@ -2,6 +2,10 @@
 
 // @codekit-prepend "../../components/flexslider/jquery.flexslider.js"
 
+// @codekit-prepend "_sidebar.js"
+
 // @codekit-prepend "_slider-blender.js"
 
-// @codekit-prepend "_index.js"
+// @codekit-prepend "dep/adDescription.js"
+
+// @codekit-prepend "_ad-details.js"

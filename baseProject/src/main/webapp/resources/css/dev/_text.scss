@@ -1,0 +1,20 @@
+body {
+  color: $light-gray;
+}
+
+h2, h3 {
+  font-weight: 300;
+  color: $light-gray;
+}
+
+p {
+  font-weight: 200;
+}
+
+.base-color {
+  color: $base-color;
+}
+
+.base-color-opposite {
+  color: $base-color-opposite;
+}

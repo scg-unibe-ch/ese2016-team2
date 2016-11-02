@@ -3,7 +3,7 @@
     cursor: pointer;
   }
 
-  a {
+  a, button {
     appearance: none;
     background-color: $action-color;
     border: 0;
@@ -65,24 +65,36 @@
 
 
 
-.action-tile a {
-  display: block;
-  border-radius: 0;
-  transition: all $base-duration $base-timing;
+.action-tile {
+  a, button {
+    display: block;
+    width: 100%;
+    border-radius: 0;
+    transition: all $base-duration $base-timing;
+  }
 
-  @include sidebar-button-pad;
+  a {
+    @include sidebar-button-pad;
+  }
+
+  button {
+    @include sidebar-button-pad-reduc;
+  }
 }
 
 
 
-.action-menu-primary {
-  position: absolute;
-  right: -116px;
 
+.action-menu-primary,
+.action-sidebar {
+  position: absolute;
   @include sidebar-icon-pad;
 
   span {
-    color: $white;
-    margin-right: 16px;
+    color: $base-color-opposite;
+
+    [logged] & {
+      color: $base-color;
+    }
   }
 }

@@ -1,7 +1,7 @@
 .brand-primary {
   position: relative;
   z-index: 1;
-  height: 33.33333vh;
+  height: 45vh;
 
   > h1 {
     position: absolute;
@@ -11,7 +11,7 @@
 
     text-align: center;
     line-height: 1;
-    font-size: $f-giant;
+    font-size: $f-astro;
     color: $white;
     text-shadow: 0 0 64px $white;
   }

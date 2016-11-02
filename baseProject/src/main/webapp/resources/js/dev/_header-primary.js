@@ -20,17 +20,6 @@
 
 
 
-    /**
-     * A opinionated minium in ms which is used when setTimeout functions should
-     * be triggered as soon as possible. It s*cks, might remove it and do it
-     * differently.
-     *
-     * @type {Number}
-     */
-    DURATION_MIN = 10,
-
-
-
 
     $view = $('[view]'),
     $js_menu_icon = $('#js-menu-icon'),
@@ -41,43 +30,6 @@
     $header_primary_form_search = $header_primary.find('.form-search'),
     $first_form_input = $header_primary_form_search.find('input').first();
 
-
-
-  /**
-   * Handles classname replacement for css transitioning when a element should
-   * be hidden. It adds/removes useful classes based on the state of the object
-   * over time.
-   *
-   * @param  {string} prefix  the classname prefix to be combined with the state
-   * @param  {integer} duration   the delay duration in ms
-   * @return {object}          the jquery object with the delayed function
-   */
-  $.fn.unearth = function(prefix, duration) {
-    var $this = $(this);
-    $this.toggleClass(prefix +'Closed '+ prefix +'In');
-    setTimeout(function () {
-      return $this.toggleClass(prefix +'In '+ prefix +'Open');
-    }, duration);
-  };
-
-
-
-  /**
-   * Handles classname replacement for css transitioning when a element should
-   * be shown. It adds/removes useful classes based on the state of the object
-   * over time.
-   *
-   * @param  {string} prefix  the classname prefix to be combined with the state
-   * @param  {integer} duration   the delay duration in ms
-   * @return {object}          the jquery object with the delayed function
-   */
-  $.fn.bury = function(prefix, duration) {
-    var $this = $(this);
-    $this.toggleClass(prefix +'Open '+ prefix +'Out');
-    setTimeout(function () {
-      return $this.toggleClass(prefix +'Out '+ prefix +'Closed');
-    }, duration);
-  };
 
 
 
@@ -103,6 +55,9 @@
             $this.trigger('search.toggle')
           }, duration);
       }
+
+      if ($this.is('.sidebarOpen'))
+        $this.trigger('sidebar.toggle');
 
       $js_menu_icon.trigger('headerToggle');
     })
