@@ -120,7 +120,7 @@ public class EditAuctionController {
 	 * the ad, but not from the server.
 	 */
 	@RequestMapping(value = "/profile/editAuction/deletePictureFromAuction", method = RequestMethod.POST)
-	public @ResponseBody void deletePictureFromAd(@RequestParam long auctionId,
+	public @ResponseBody void deletePictureFromAuction(@RequestParam long auctionId,
 			@RequestParam long pictureId) {
 		editAuctionService.deletePictureFromAuction(auctionId, pictureId);
 	}

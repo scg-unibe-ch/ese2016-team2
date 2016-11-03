@@ -18,6 +18,7 @@ import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
 import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.AdPicture;
 import ch.unibe.ese.team1.model.Auction;
+import ch.unibe.ese.team1.model.AuctionPicture;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.Visit;
 import ch.unibe.ese.team1.model.dao.AdDao;
@@ -124,14 +125,14 @@ public class EditAuctionService {
 		 * Save the paths to the picture files, the pictures are assumed to be
 		 * uploaded at this point!
 		 */
-		List<AdPicture> pictures = new ArrayList<>();
+		List<AuctionPicture> pictures = new ArrayList<>();
 		for (String filePath : filePaths) {
-			AdPicture picture = new AdPicture();
+			AuctionPicture picture = new AuctionPicture();
 			picture.setFilePath(filePath);
 			pictures.add(picture);
 		}
 		// add existing pictures
-		for (AdPicture picture : auction.getPictures()) {
+		for (AuctionPicture picture : auction.getPictures()) {
 			pictures.add(picture);
 		}
 		auction.setPictures(pictures);
@@ -183,7 +184,7 @@ public class EditAuctionService {
 	@Transactional
 	public void deletePictureFromAuction(long auctionId, long pictureId) {
 		Auction auction = auctionService.getAuctionById(auctionId);
-		List<AdPicture> pictures = auction.getPictures();
+		List<AuctionPicture> pictures = auction.getPictures();
 		AdPicture picture = adPictureDao.findOne(pictureId);
 		pictures.remove(picture);
 		auction.setPictures(pictures);

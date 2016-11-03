@@ -381,7 +381,7 @@
 					<div>
 					<img src="${picture.filePath}" />
 					</div>
-					<button type="button" data-ad-id="${auction.id }" data-picture-id="${picture.id }">Delete</button>
+					<button type="button" data-auction-id="${auction.id }" data-picture-id="${picture.id }">Delete</button>
 				</div>
 			</c:forEach>
 		</div>

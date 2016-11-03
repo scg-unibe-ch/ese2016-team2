@@ -43,7 +43,7 @@ import ch.unibe.ese.team1.model.User;
 @Controller
 public class PlaceAuctionController {
 	
-	public static final String IMAGE_DIRECTORY = "/img/ads";
+	public static final String IMAGE_DIRECTORY = "/img/auctions";
 
 	/** Used for generating a JSON representation of a given object. */
 	private ObjectMapper objectMapper;
@@ -82,6 +82,11 @@ public class PlaceAuctionController {
 	@RequestMapping(value = "/profile/placeAuction", method = RequestMethod.GET)
 	public ModelAndView placeAd() throws IOException {
 		ModelAndView model = new ModelAndView("placeAuction");
+		
+		String realPath = servletContext.getRealPath(IMAGE_DIRECTORY);
+		if (pictureUploader == null) {
+			pictureUploader = new PictureUploader(realPath, IMAGE_DIRECTORY);
+		}
 		
 		return model;
 	}

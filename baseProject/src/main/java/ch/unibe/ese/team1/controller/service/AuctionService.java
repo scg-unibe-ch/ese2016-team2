@@ -21,6 +21,7 @@ import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceBidForm;
 import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team1.model.Auction;
+import ch.unibe.ese.team1.model.AuctionPicture;
 import ch.unibe.ese.team1.model.AdPicture;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.Location;
@@ -130,9 +131,9 @@ public class AuctionService {
 		auction.setGarage(placeAuctionForm.getGarage());
 		auction.setInternet(placeAuctionForm.getInternet());
 		
-		List<AdPicture> pictures = new ArrayList<>();
+		List<AuctionPicture> pictures = new ArrayList<>();
 		for (String filePath : filePaths) {
-			AdPicture picture = new AdPicture();
+			AuctionPicture picture = new AuctionPicture();
 			picture.setFilePath(filePath);
 			pictures.add(picture);
 		}
@@ -229,30 +230,6 @@ public class AuctionService {
 	/** Returns all ads that were placed by the given user. */
 	public Iterable<Auction> getAuctionsByUser(User user) {
 		return auctionDao.findByUser(user);
-	}
-	
-	/**
-	 * Checks if the email of a user is already contained in the given string.
-	 * 
-	 * @param email
-	 *            the email string to search for
-	 * @param alreadyAdded
-	 *            the string of already added emails, which should be searched
-	 *            in
-	 * 
-	 * @return true if the email has been added already, false otherwise
-	 */
-	public Boolean checkIfAlreadyAdded(String email, String alreadyAdded) {
-		email = email.toLowerCase();
-		alreadyAdded = alreadyAdded.replaceAll("\\s+", "").toLowerCase();
-		String delimiter = "[:;]+";
-		String[] toBeTested = alreadyAdded.split(delimiter);
-		for (int i = 0; i < toBeTested.length; i++) {
-			if (email.equals(toBeTested[i])) {
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	/**
