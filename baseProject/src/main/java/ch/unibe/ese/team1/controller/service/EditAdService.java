@@ -164,6 +164,7 @@ public class EditAdService {
 		}
 
 		ad.setUser(user);
+		ad.setBuyable(placeAdForm.getBuyable());
 
 		adDao.save(ad);
 
