@@ -20,6 +20,7 @@ import ch.unibe.ese.team1.controller.pojos.forms.RegisterForm;
 import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team1.controller.pojos.forms.SignupForm;
 import ch.unibe.ese.team1.controller.service.AdService;
+import ch.unibe.ese.team1.controller.service.AuctionService;
 import ch.unibe.ese.team1.controller.service.RegisterService;
 import ch.unibe.ese.team1.controller.service.SignupService;
 import ch.unibe.ese.team1.controller.service.UserService;
@@ -27,6 +28,7 @@ import ch.unibe.ese.team1.controller.service.UserUpdateService;
 import ch.unibe.ese.team1.controller.service.VisitService;
 import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Advertisement;
+import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.Visit;
 
@@ -38,7 +40,7 @@ public class ProfileController {
 
 	@Autowired
 	private SignupService signupService;
-	
+
 	@Autowired
 	private RegisterService registerService;
 
@@ -54,6 +56,9 @@ public class ProfileController {
 	@Autowired
 	private AdService adService;
 
+	@Autowired
+	private AuctionService auctionService;
+
 	/** Returns the login page. */
 	@RequestMapping(value = "/login")
 	public ModelAndView loginPage() {
@@ -68,7 +73,7 @@ public class ProfileController {
 		model.addObject("signupForm", new SignupForm());
 		return model;
 	}
-	
+
 	/** Returns the register page. */
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView registerPage(Principal principal) {
@@ -80,18 +85,17 @@ public class ProfileController {
 		model.addObject("currentUser", user);
 		return model;
 	}
-	
+
 	/** Returns the register page. */
 	@RequestMapping(value = "/profile/registerProfile", method = RequestMethod.GET)
 	public ModelAndView registerProfilePage() {
 		ModelAndView model = new ModelAndView("register");
 		return model;
 	}
-	
+
 	/** Validates the signup form and on success persists the new user. */
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public ModelAndView signupResultPage(@Valid SignupForm signupForm,
-			BindingResult bindingResult) {
+	public ModelAndView signupResultPage(@Valid SignupForm signupForm, BindingResult bindingResult) {
 		ModelAndView model;
 		if (!bindingResult.hasErrors()) {
 			signupService.saveFrom(signupForm);
@@ -104,7 +108,9 @@ public class ProfileController {
 		return model;
 	}
 
-	/** Checks and returns whether a user with the given email already exists. */
+	/**
+	 * Checks and returns whether a user with the given email already exists.
+	 */
 	@RequestMapping(value = "/signup/doesEmailExist", method = RequestMethod.POST)
 	public @ResponseBody boolean doesEmailExist(@RequestParam String email) {
 		return signupService.doesUserWithUsernameExist(email);
@@ -120,12 +126,11 @@ public class ProfileController {
 		model.addObject("currentUser", user);
 		return model;
 	}
-	
+
 	/** Handles the request for editing the user profile. */
 	@RequestMapping(value = "/profile/editProfile", method = RequestMethod.POST)
-	public ModelAndView editProfileResultPage(
-			@Valid EditProfileForm editProfileForm,
-			BindingResult bindingResult, Principal principal) {
+	public ModelAndView editProfileResultPage(@Valid EditProfileForm editProfileForm, BindingResult bindingResult,
+			Principal principal) {
 		ModelAndView model;
 		String username = principal.getName();
 		User user = userService.findUserByUsername(username);
@@ -137,17 +142,15 @@ public class ProfileController {
 			return model;
 		} else {
 			model = new ModelAndView("updatedProfile");
-			model.addObject("message",
-					"Something went wrong, please contact the WebAdmin if the problem persists!");
+			model.addObject("message", "Something went wrong, please contact the WebAdmin if the problem persists!");
 			return model;
 		}
 	}
-	
+
 	/** Handles the request for editing the user profile. */
 	@RequestMapping(value = "/profile/registerProfile", method = RequestMethod.POST)
-	public ModelAndView registerProfileResultPage(
-			@Valid RegisterForm registerForm,
-			BindingResult bindingResult, Principal principal) {
+	public ModelAndView registerProfileResultPage(@Valid RegisterForm registerForm, BindingResult bindingResult,
+			Principal principal) {
 		ModelAndView model;
 		String username = principal.getName();
 		User user = userService.findUserByUsername(username);
@@ -190,12 +193,20 @@ public class ProfileController {
 
 		// presentations, i.e. when the user presents a property
 		Iterable<Ad> usersAds = adService.getAdsByUser(user);
+		Iterable<Auction> usersAuctions = auctionService.getAuctionsByUser(user);
 		ArrayList<Visit> usersPresentations = new ArrayList<Visit>();
 
 		for (Ad ad : usersAds) {
 			try {
 				usersPresentations.addAll((ArrayList<Visit>) visitService
 						.getVisitsByAd(ad));
+			} catch (Exception e) {
+			}
+		}
+		for (Auction auction: usersAuctions) {
+			try {
+				usersPresentations.addAll((ArrayList<Visit>) 
+						visitService.getVisitsByAuction(auction));
 			} catch (Exception e) {
 			}
 		}
@@ -213,8 +224,11 @@ public class ProfileController {
 
 		model.addObject("visitors", visitors);
 
+		Auction auction = visit.getAuction();
 		Ad ad = visit.getAd();
+		
 		model.addObject("ad", ad);
+		model.addObject("auction", auction);
 		return model;
 	}
 }

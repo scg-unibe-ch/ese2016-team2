@@ -24,6 +24,7 @@ import ch.unibe.ese.team1.model.Visit;
 import ch.unibe.ese.team1.model.dao.AdDao;
 import ch.unibe.ese.team1.model.dao.AdPictureDao;
 import ch.unibe.ese.team1.model.dao.AuctionDao;
+import ch.unibe.ese.team1.model.dao.AuctionPictureDao;
 
 @Service
 public class EditAuctionService {
@@ -35,7 +36,7 @@ public class EditAuctionService {
 	private AuctionDao auctionDao;
 
 	@Autowired
-	private AdPictureDao adPictureDao;
+	private AuctionPictureDao auctionPictureDao;
 
 	@Autowired
 	private UserService userService;
@@ -185,7 +186,7 @@ public class EditAuctionService {
 	public void deletePictureFromAuction(long auctionId, long pictureId) {
 		Auction auction = auctionService.getAuctionById(auctionId);
 		List<AuctionPicture> pictures = auction.getPictures();
-		AdPicture picture = adPictureDao.findOne(pictureId);
+		AuctionPicture picture = auctionPictureDao.findOne(pictureId);
 		pictures.remove(picture);
 		auction.setPictures(pictures);
 		auctionDao.save(auction);

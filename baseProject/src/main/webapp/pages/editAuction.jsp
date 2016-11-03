@@ -14,8 +14,6 @@
 
 <script src="/js/pictureUploadEditAuction.js"></script>
 
-<script src="/js/editAuction.js"></script>
-
 
 <script>
 	$(document).ready(function() {		
@@ -71,6 +69,19 @@
 			
 			$("#addedVisits").append(label + input);
 		});
+			
+		$(".pictureThumbnail button").click(function (){
+			var auctionId = $(this).attr("data-auction-id");
+			var pictureId = $(this).attr("data-picture-id");
+			
+			$.post("/profile/editAuction/deletePictureFromAuction", {auctionId:auctionId, pictureId:pictureId}, function(){
+				var button = $(".pictureThumbnail button[data-auction-id='" + auctionId + "'][data-picture-id='" + pictureId + "']");			
+				var div = $(button).parent();
+				$(div).children().animate({opacity: 0}, 300, function(){
+					$(div).remove();
+				});
+			});
+		});
 	});
 </script>
 
@@ -87,10 +98,10 @@
 <hr />
 
 <form:form method="post" modelAttribute="placeAuctionForm"
-	action="/profile/editAuction" id="placeAuctionForm" autocomplete="off"
+	action="/profile/editAuction" id="placeAdForm" autocomplete="off"
 	enctype="multipart/form-data">
 
-<input type="hidden" name="adId" value="${auction.id }" />
+<input type="hidden" name="auctionId" value="${auction.id }" />
 
 	<fieldset>
 		<legend>Change General info</legend>

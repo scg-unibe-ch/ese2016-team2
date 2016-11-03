@@ -5,17 +5,61 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 
 <!-- check if user is logged in -->
 <security:authorize var="loggedIn" url="/profile" />
 
 <c:import url="template/header.jsp" />
 
+
 <pre><a href="/">Home</a>   &gt;   <a href="/profile/myRooms">My Rooms</a>   &gt;   Auction Description</pre>
 
 <script src="/js/image_slider.js"></script>
 <script src="/js/adDescription.js"></script>
+
+<script>
+	$(document).ready(function() {
+		$("#newMsg").click(function() {
+			$("#content").children().animate({
+				opacity : 0.4
+			}, 300, function() {
+				$("#msgDiv").css("display", "block");
+				$("#msgDiv").css("opacity", "1");
+			});
+		});
+
+		$("#messageCancel").click(function() {
+			$("#msgDiv").css("display", "none");
+			$("#msgDiv").css("opacity", "0");
+			$("#content").children().animate({
+				opacity : 1
+			}, 300);
+		});
+
+		$("#messageSend").click(function() {
+			if ($("#msgSubject").val() != "" && $("#msgTextarea").val() != "") {
+				var subject = $("#msgSubject").val();
+				var text = $("#msgTextarea").val();
+				var recipientEmail = "${shownAuction.user.username}";
+				$.post("profile/messages/sendMessage", {
+					subject : subject,
+					text : text,
+					recipientEmail : recipientEmail
+				}, function() {
+					$("#msgDiv").css("display", "none");
+					$("#msgDiv").css("opacity", "0");
+					$("#msgSubject").val("");
+					$("#msgTextarea").val("");
+					$("#content").children().animate({
+						opacity : 1
+					}, 300);
+				})
+			}
+		});
+	});
+</script>
 
 <!-- format the dates -->
 <fmt:formatDate value="${shownAuction.moveInDate}"
@@ -30,7 +74,8 @@
 	<c:choose>
 		<c:when test="${loggedIn}">
 			<c:if test="${loggedInUserEmail == shownAuction.user.username }">
-				<a href="<c:url value='/profile/editAuction?id=${shownAuction.id}' />">
+				<a
+					href="<c:url value='/profile/editAuction?id=${shownAuction.id}' />">
 					<button type="button">Edit Auction</button>
 				</a>
 			</c:if>
@@ -96,19 +141,19 @@
 					<td>${shownAuction.prize}&#32;CHF</td>
 				</tr>
 				<td><c:choose>
-							<c:when test="${loggedIn}">
-								<c:if test="${loggedInUserEmail != shownAuction.user.username}">
-									<a
-										href="<c:url value='/auction/placeBid?id=${shownAuction.id}' />">
-										<button type="button">Place new bid</button>
-									</a>
-								</c:if>
-							</c:when>
-							<c:otherwise>
-								<a href="/login"><button class="thinInactiveButton"
-										type="button">Login to place new bid</button></a>
-							</c:otherwise>
-						</c:choose></td>
+						<c:when test="${loggedIn}">
+							<c:if test="${loggedInUserEmail != shownAuction.user.username}">
+								<a
+									href="<c:url value='/auction/placeBid?id=${shownAuction.id}' />">
+									<button type="button">Place new bid</button>
+								</a>
+							</c:if>
+						</c:when>
+						<c:otherwise>
+							<a href="/login"><button class="thinInactiveButton"
+									type="button">Login to place new bid</button></a>
+						</c:otherwise>
+					</c:choose></td>
 			</c:when>
 			<c:otherwise>
 				<tr>
@@ -119,13 +164,14 @@
 					<td><c:choose>
 							<c:when test="${loggedIn}">
 								<c:choose>
-								<c:when test="${loggedInUserEmail != shownAuction.user.username}">
-									<a
-										href="<c:url value='/auction/placeBid?id=${shownAuction.id}' />">
-										<button type="button">Place new bid</button>
-									</a>
-								</c:when>
-								<c:otherwise>
+									<c:when
+										test="${loggedInUserEmail != shownAuction.user.username}">
+										<a
+											href="<c:url value='/auction/placeBid?id=${shownAuction.id}' />">
+											<button type="button">Place new bid</button>
+										</a>
+									</c:when>
+									<c:otherwise>
 									By: ${shownAuction.bidderName}
 								</c:otherwise>
 								</c:choose>
@@ -156,18 +202,15 @@
 			<p>${shownAuction.preferences}</p>
 		</div>
 		<br />
-		<!-- <div id="visitList" class="adDescDiv">
+		<div id="visitList" class="adDescDiv">
 			<h2>Visiting times</h2>
 			<table>
 				<c:forEach items="${visits }" var="visit">
 					<tr>
-						<td>
-							<fmt:formatDate value="${visit.startTimestamp}" pattern="dd-MM-yyyy " />
-							&nbsp; from
-							<fmt:formatDate value="${visit.startTimestamp}" pattern=" HH:mm " />
-							until
-							<fmt:formatDate value="${visit.endTimestamp}" pattern=" HH:mm" />
-						</td>
+						<td><fmt:formatDate value="${visit.startTimestamp}"
+								pattern="dd-MM-yyyy " /> &nbsp; from <fmt:formatDate
+								value="${visit.startTimestamp}" pattern=" HH:mm " /> until <fmt:formatDate
+								value="${visit.endTimestamp}" pattern=" HH:mm" /></td>
 						<td><c:choose>
 								<c:when test="${loggedIn}">
 									<c:if test="${loggedInUserEmail != shownAuction.user.username}">
@@ -176,18 +219,19 @@
 									</c:if>
 								</c:when>
 								<c:otherwise>
-									<a href="/login"><button class="thinInactiveButton" type="button"
-										data-id="${visit.id}">Login to send enquiries</button></a>
+									<a href="/login"><button class="thinInactiveButton"
+											type="button" data-id="${visit.id}">Login to send
+											enquiries</button></a>
 								</c:otherwise>
 							</c:choose></td>
 					</tr>
 				</c:forEach>
 			</table>
 		</div>
-		<br /> -->
+		<br />
 	</div>
-	
-	
+
+
 
 	<table id="checkBoxTable" class="adDescDiv">
 		<tr>
@@ -306,8 +350,7 @@
 
 <table id="advertiserTable" class="adDescDiv">
 	<tr>
-		<td><h2>Advertiser</h2>
-			<br /></td>
+		<td><h2>Advertiser</h2> <br /></td>
 	</tr>
 
 	<tr>
@@ -332,14 +375,45 @@
 							type="button">Login to visit profile</button></a>
 				</c:otherwise>
 			</c:choose>
+			
+			<td>
+			<form>
+				<c:choose>
+					<c:when test="${loggedIn}">
+						<c:if test="${loggedInUserEmail != shownAd.user.username }">
+							<button id="newMsg" type="button">Contact Advertiser</button>
+						</c:if>
+					</c:when>
+					<c:otherwise>
+						<a href="/login"><button class="thinInactiveButton" type="button">Login to contact advertiser</button></a>
+					</c:otherwise>
+				</c:choose>
+			</form>
+		</td>
 	</tr>
 </table>
 
+<div id="msgDiv">
+<form class="msgForm">
+	<h2>Contact the advertiser</h2>
+	<br>
+	<br>
+	<label>Subject: <span>*</span></label>
+	<input  class="msgInput" type="text" id="msgSubject" placeholder="Subject" />
+	<br><br>
+	<label>Message: </label>
+	<textarea id="msgTextarea" placeholder="Message" ></textarea>
+	<br/>
+	<button type="button" id="messageSend">Send</button>
+	<button type="button" id="messageCancel">Cancel</button>
+	</form>
+</div>
+
 <div id="confirmationDialog">
 	<form>
-	<p>Send enquiry to advertiser?</p>
-	<button type="button" id="confirmationDialogSend">Send</button>
-	<button type="button" id="confirmationDialogCancel">Cancel</button>
+		<p>Send enquiry to advertiser?</p>
+		<button type="button" id="confirmationDialogSend">Send</button>
+		<button type="button" id="confirmationDialogCancel">Cancel</button>
 	</form>
 </div>
 

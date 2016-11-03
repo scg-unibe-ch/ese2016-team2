@@ -87,7 +87,7 @@
 	<table class="styledTable">
 		<tr>
 			<th>Sender</th>
-			<th>Ad</th>
+			<th>Advertisement</th>
 			<th>Date of the visit</th>
 			<th>Date sent</th>
 			<th>Actions</th>
@@ -104,8 +104,16 @@
 
 			<tr>
 				<td><a href="/user?id=${enquiry.sender.id}">${enquiry.sender.email}</a></td>
+				<c:choose>
+				<c:when test="${not empty enquiry.visit.ad}">
 				<td><a href="/ad?id=${enquiry.visit.ad.id }">${enquiry.visit.ad.street },
 						${enquiry.visit.ad.zipcode } ${enquiry.visit.ad.city }</a></td>
+				</c:when>
+				<c:otherwise>
+				<td><a href="/auction?id=${enquiry.visit.auction.id }">${enquiry.visit.auction.street },
+						${enquiry.visit.auction.zipcode } ${enquiry.visit.auction.city }</a></td>
+				</c:otherwise>
+				</c:choose>
 				<td>${date},&#32;${startTime}&#32;to&#32;${endTime }</td>
 				<td>${singleFormattedDateSent}</td>
 				<td><c:choose>

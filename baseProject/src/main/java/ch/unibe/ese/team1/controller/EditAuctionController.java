@@ -88,7 +88,7 @@ public class EditAuctionController {
 	@RequestMapping(value = "/profile/editAuction", method = RequestMethod.POST)
 	public ModelAndView editAdPageWithForm(@Valid PlaceAuctionForm placeAuctionForm,
 			BindingResult result, Principal principal,
-			RedirectAttributes redirectAttributes, @RequestParam long adId) {
+			RedirectAttributes redirectAttributes, @RequestParam long auctionId) {
 		ModelAndView model = new ModelAndView("placeAuction");
 		if (!result.hasErrors()) {
 			String username = principal.getName();
@@ -99,7 +99,7 @@ public class EditAuctionController {
 				pictureUploader = new PictureUploader(realPath, IMAGE_DIRECTORY);
 			}
 			List<String> fileNames = pictureUploader.getFileNames();
-			Auction auction = editAuctionService.saveFrom(placeAuctionForm, fileNames, user, adId);
+			Auction auction = editAuctionService.saveFrom(placeAuctionForm, fileNames, user, auctionId);
 
 			// triggers all alerts that match the placed ad
 			alertService.triggerAlerts(auction);
