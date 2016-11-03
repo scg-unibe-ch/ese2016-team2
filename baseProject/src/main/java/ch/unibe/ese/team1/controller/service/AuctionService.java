@@ -22,32 +22,16 @@ import ch.unibe.ese.team1.controller.pojos.forms.PlaceBidForm;
 import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.AdPicture;
-import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.Location;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.Visit;
-import ch.unibe.ese.team1.model.dao.AlertDao;
 import ch.unibe.ese.team1.model.dao.AuctionDao;
-import ch.unibe.ese.team1.model.dao.MessageDao;
-import ch.unibe.ese.team1.model.dao.UserDao;
 
 @Service
 public class AuctionService {
 
 	@Autowired
 	private AuctionDao auctionDao;
-
-	@Autowired
-	private UserDao userDao;
-
-	@Autowired
-	private AlertDao alertDao;
-
-	@Autowired
-	private MessageDao messageDao;
-
-	@Autowired
-	private UserService userService;
 
 	@Autowired
 	private GeoDataService geoDataService;

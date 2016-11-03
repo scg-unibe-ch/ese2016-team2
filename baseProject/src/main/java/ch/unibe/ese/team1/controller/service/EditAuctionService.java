@@ -1,26 +1,19 @@
 package ch.unibe.ese.team1.controller.service;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.unibe.ese.team1.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
-import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.AdPicture;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.User;
-import ch.unibe.ese.team1.model.Visit;
-import ch.unibe.ese.team1.model.dao.AdDao;
 import ch.unibe.ese.team1.model.dao.AdPictureDao;
 import ch.unibe.ese.team1.model.dao.AuctionDao;
 
@@ -35,9 +28,6 @@ public class EditAuctionService {
 
 	@Autowired
 	private AdPictureDao adPictureDao;
-
-	@Autowired
-	private UserService userService;
 
 	/**
 	 * Handles persisting an edited auction to the database.

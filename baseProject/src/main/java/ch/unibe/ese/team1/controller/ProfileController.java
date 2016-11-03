@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import ch.unibe.ese.team1.controller.pojos.forms.EditProfileForm;
 import ch.unibe.ese.team1.controller.pojos.forms.MessageForm;
 import ch.unibe.ese.team1.controller.pojos.forms.RegisterForm;
-import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team1.controller.pojos.forms.SignupForm;
 import ch.unibe.ese.team1.controller.service.AdService;
 import ch.unibe.ese.team1.controller.service.RegisterService;
@@ -26,7 +25,6 @@ import ch.unibe.ese.team1.controller.service.UserService;
 import ch.unibe.ese.team1.controller.service.UserUpdateService;
 import ch.unibe.ese.team1.controller.service.VisitService;
 import ch.unibe.ese.team1.model.Ad;
-import ch.unibe.ese.team1.model.Advertisement;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.Visit;
 
@@ -78,13 +76,6 @@ public class ProfileController {
 		User user = userService.findUserByUsername(username);
 		model.addObject("editProfileForm", new EditProfileForm());
 		model.addObject("currentUser", user);
-		return model;
-	}
-	
-	/** Returns the register page. */
-	@RequestMapping(value = "/profile/registerProfile", method = RequestMethod.GET)
-	public ModelAndView registerProfilePage() {
-		ModelAndView model = new ModelAndView("register");
 		return model;
 	}
 	
@@ -142,8 +133,15 @@ public class ProfileController {
 			return model;
 		}
 	}
+
+	/** Returns the register page for upgrading the user account to a premium account. */
+	@RequestMapping(value = "/profile/registerProfile", method = RequestMethod.GET)
+	public ModelAndView registerProfilePage() {
+		ModelAndView model = new ModelAndView("register");
+		return model;
+	}
 	
-	/** Handles the request for editing the user profile. */
+	/** Handles the request for register the user account as premium account. */
 	@RequestMapping(value = "/profile/registerProfile", method = RequestMethod.POST)
 	public ModelAndView registerProfileResultPage(
 			@Valid RegisterForm registerForm,

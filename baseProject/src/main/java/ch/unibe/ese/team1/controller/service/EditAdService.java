@@ -34,9 +34,6 @@ public class EditAdService {
 	@Autowired
 	private AdPictureDao adPictureDao;
 
-	@Autowired
-	private UserService userService;
-
 	/**
 	 * Handles persisting an edited ad to the database.
 	 * 

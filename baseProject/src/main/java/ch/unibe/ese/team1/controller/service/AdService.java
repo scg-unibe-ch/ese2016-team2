@@ -27,10 +27,7 @@ import ch.unibe.ese.team1.model.Location;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.Visit;
 import ch.unibe.ese.team1.model.dao.AdDao;
-import ch.unibe.ese.team1.model.dao.AlertDao;
 import ch.unibe.ese.team1.model.dao.AuctionDao;
-import ch.unibe.ese.team1.model.dao.MessageDao;
-import ch.unibe.ese.team1.model.dao.UserDao;
 
 /** Handles all persistence operations concerning ad placement and retrieval. */
 @Service
@@ -43,56 +40,39 @@ public class AdService {
 	private AuctionDao auctionDao;
 
 	@Autowired
-	private UserDao userDao;
-
-	@Autowired
-	private AlertDao alertDao;
-
-	@Autowired
-	private MessageDao messageDao;
-
-	@Autowired
-	private UserService userService;
-
-	@Autowired
 	private GeoDataService geoDataService;
 
 	/**
 	 * Handles persisting a new ad to the database.
 	 * 
-	 * @param placeAdForm
-	 *            the form to take the data from
-	 * @param a
-	 *            list of the file paths the pictures are saved under
-	 * @param the
-	 *            currently logged in user
+	 * @param 	placeAdForm		the form to take the data from
+	 * @param 	filepaths		list of the file paths the pictures are saved under
+	 * @param 	user			the currently logged in user
+	 * @return	ad				new ad reference
 	 */
 	@Transactional
-	public Ad saveFrom(PlaceAdForm placeAdForm, List<String> filePaths,
-			User user) {
+	public Ad saveFrom(PlaceAdForm placeAdForm, List<String> filePaths, User user) {
 		
 		Ad ad = new Ad();
-
-		Date now = new Date();
+		Date now = new Date();	
 		ad.setCreationDate(now);
-
+		
+		/** general info values */
 		ad.setTitle(placeAdForm.getTitle());
-
 		ad.setStreet(placeAdForm.getStreet());
-
 		ad.setStudio(placeAdForm.getStudio());
-		
 		ad.setRoomType(placeAdForm.getRoomType());
-		
+		ad.setPrize(placeAdForm.getPrize());
+		ad.setSquareFootage(placeAdForm.getSquareFootage());
 
 		// take the zipcode - first four digits
 		String zip = placeAdForm.getCity().substring(0, 4);
 		ad.setZipcode(Integer.parseInt(zip));
 		ad.setCity(placeAdForm.getCity().substring(7));
 		
-		Calendar calendar = Calendar.getInstance();
 		// java.util.Calendar uses a month range of 0-11 instead of the
 		// XMLGregorianCalendar which uses 1-12
+		Calendar calendar = Calendar.getInstance();
 		try {
 			if (placeAdForm.getMoveInDate().length() >= 1) {
 				int dayMoveIn = Integer.parseInt(placeAdForm.getMoveInDate()
@@ -118,13 +98,7 @@ public class AdService {
 		} catch (NumberFormatException e) {
 		}
 
-		ad.setPrize(placeAdForm.getPrize());
-		ad.setSquareFootage(placeAdForm.getSquareFootage());
-
-		ad.setRoomDescription(placeAdForm.getRoomDescription());
-		ad.setPreferences(placeAdForm.getPreferences());
-
-		// ad description values
+		/** ad description values */
 		ad.setSmokers(placeAdForm.isSmokers());
 		ad.setAnimals(placeAdForm.isAnimals());
 		ad.setGarden(placeAdForm.getGarden());
@@ -134,10 +108,14 @@ public class AdService {
 		ad.setCable(placeAdForm.getCable());
 		ad.setGarage(placeAdForm.getGarage());
 		ad.setInternet(placeAdForm.getInternet());
+		ad.setRoomDescription(placeAdForm.getRoomDescription());
 		
-		/*
-		 * Save the paths to the picture files, the pictures are assumed to be
-		 * uploaded at this point!
+		/** preferences value */
+		ad.setPreferences(placeAdForm.getPreferences());
+		
+		/**
+		 *  Save the paths to the picture files, the pictures are assumed to be
+		 *  uploaded at this point!
 		 */
 		List<AdPicture> pictures = new ArrayList<>();
 		for (String filePath : filePaths) {
@@ -147,7 +125,7 @@ public class AdService {
 		}
 		ad.setPictures(pictures);
 
-		// visits
+		/** visits list */
 		List<Visit> visits = new LinkedList<>();
 		List<String> visitStrings = placeAdForm.getVisits();
 		if (visitStrings != null) {
@@ -178,7 +156,6 @@ public class AdService {
 		ad.setAuction(false);
 		ad.setBuyable(false);
 		ad.setUser(user);
-		
 		adDao.save(ad);
 
 		return ad;
@@ -187,9 +164,8 @@ public class AdService {
 	/**
 	 * Gets the ad that has the given id.
 	 * 
-	 * @param id
-	 *            the id that should be searched for
-	 * @return the found ad or null, if no ad with this id exists
+	 * @param 	id		the id that should be searched for
+	 * @return 	ad		the found ad or null, if no ad with this id exists
 	 */
 	@Transactional
 	public Ad getAdById(long id) {
@@ -230,9 +206,8 @@ public class AdService {
 	 * Returns all ads that match the parameters given by the form. This list
 	 * can possibly be empty.
 	 * 
-	 * @param searchForm
-	 *            the form to take the search parameters from
-	 * @return an Iterable of all search results
+	 * @param 	searchForm		the form to take the search parameters from
+	 * @return 	locatedResults	an Iterable of all search results
 	 */
 	@Transactional
 	public Iterable<Ad> queryResults(SearchForm searchForm) {
@@ -282,10 +257,10 @@ public class AdService {
 				.getLatitude()));
 		double radLong = Math.toRadians(searchedLocation.getLongitude());
 
-		/*
-		 * calculate the distances (Java 8) and collect all matching zipcodes.
-		 * The distance is calculated using the law of cosines.
-		 * http://www.movable-type.co.uk/scripts/latlong.html
+		/**
+		 *   calculate the distances (Java 8) and collect all matching zipcodes.
+		 *   The distance is calculated using the law of cosines.
+		 *   http://www.movable-type.co.uk/scripts/latlong.html
 		 */
 		List<Integer> zipcodes = locations
 				.parallelStream()
@@ -436,7 +411,16 @@ public class AdService {
 		}
 		return locatedResults;
 	}
-
+	
+	/**
+	 * Validates given dates for search.
+	 * 
+	 * @param 	ads				list of ads for validation
+	 * @param 	inOrOut			in or out date of current ad
+	 * @param	earliestDate	given earliest date in search
+	 * @param	latestDate		given latest date in search
+	 * @return 	ads				true if the email has been added already, false otherwise
+	 */
 	private List<Ad> validateDate(List<Ad> ads, boolean inOrOut,
 			Date earliestDate, Date latestDate) {
 		if (ads.size() > 0) {
@@ -485,13 +469,10 @@ public class AdService {
 	/**
 	 * Checks if the email of a user is already contained in the given string.
 	 * 
-	 * @param email
-	 *            the email string to search for
-	 * @param alreadyAdded
-	 *            the string of already added emails, which should be searched
-	 *            in
-	 * 
-	 * @return true if the email has been added already, false otherwise
+	 * @param 	email			the email string to search for
+	 * @param 	alreadyAdded	the string of already added emails,
+	 * 							which should be searched in
+	 * @return 	[boolean]		true if the email has been added already, false otherwise
 	 */
 	public Boolean checkIfAlreadyAdded(String email, String alreadyAdded) {
 		email = email.toLowerCase();

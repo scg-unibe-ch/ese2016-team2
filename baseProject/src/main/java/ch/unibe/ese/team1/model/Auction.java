@@ -1,12 +1,7 @@
 package ch.unibe.ese.team1.model;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /** Describes an advertisement that users can place and search for. */
 @Entity

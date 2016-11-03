@@ -14,13 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceBidForm;
 import ch.unibe.ese.team1.controller.service.AuctionService;
-import ch.unibe.ese.team1.controller.service.BookmarkService;
 import ch.unibe.ese.team1.controller.service.MessageService;
 import ch.unibe.ese.team1.controller.service.UserService;
-import ch.unibe.ese.team1.controller.service.VisitService;
 import ch.unibe.ese.team1.model.Auction;
 
 @Controller
@@ -40,13 +37,7 @@ public class PlaceBidController {
 	private UserService userService;
 
 	@Autowired
-	private BookmarkService bookmarkService;
-
-	@Autowired
 	private MessageService messageService;
-
-	@Autowired
-	private VisitService visitService;
 
 	/** Shows the place new bid form. */
 	@RequestMapping(value = "/auction/placeBid", method = RequestMethod.GET)
