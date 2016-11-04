@@ -171,7 +171,6 @@ public class AlertService {
 		final int earthRadiusKm = 6380;
 		Location adLocation = geoDataService.getLocationsByCity(ad.getCity())
 				.get(0);
-		String city = alert.getCity();
 		Location alertLocation = geoDataService.getLocationsByCity(
 				alert.getCity()).get(0);
 

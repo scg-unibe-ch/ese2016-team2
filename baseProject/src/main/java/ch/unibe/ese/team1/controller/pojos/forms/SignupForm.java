@@ -31,7 +31,10 @@ public class SignupForm {
 	@NotNull
 	private String account;
 
-
+	/**
+	* 	Getter and setter methods of
+	* 	the signup form.
+	*/
 	public String getEmail() {
 		return email;
 	}
