@@ -145,6 +145,7 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adBern2, "/img/test/ad2_2.jpg"));
 		pictures.add(createPicture(adBern2, "/img/test/ad2_3.jpg"));
 		adBern2.setPictures(pictures);
+		adBern2.setBuyable(true);
 		adDao.save(adBern2);
 
 		String studioDescription3 = " In the center of Gundeli (5 Min. away from the"

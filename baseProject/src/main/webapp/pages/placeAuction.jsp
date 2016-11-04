@@ -81,7 +81,7 @@
 <hr />
 
 <form:form method="post" modelAttribute="placeAuctionForm"
-	action="/profile/placeAuction" id="placeAuctionForm" autocomplete="off"
+	action="/profile/placeAuction" id="placeAdForm" autocomplete="off"
 	enctype="multipart/form-data">
 	
 	<fieldset>
@@ -206,7 +206,7 @@
 		<br>
 	</fieldset>
 	
-	<!-- <fieldset>
+	<fieldset>
 		<legend>Visiting times (optional)</legend>
 
 		<table>
@@ -256,7 +256,7 @@
 
 		</table>
 		<br>
-	</fieldset> -->
+	</fieldset>
 	
 	<br />
 	<div>

@@ -72,15 +72,20 @@ public class PlaceBidController {
 				return model;
 			} else {
 				String bidderName = principal.getName();
+				String formerBidderName = auction.getBidderName();
 
 				auction = auctionService.saveBidPrize(placeBidForm, placeBidForm.getId(), bidderName);
 
 				// reset the place bid form
 				this.placeBidForm = null;
-
 				messageService.sendMessage(userService.findUserByUsername("System"), auction.getUser(), "New bid",
 						"Someone placed a new bid in your auction for " + auction.getTitle() + ". Bid placed by "
 								+ auction.getBidderName());
+				if (formerBidderName != bidderName) {
+					messageService.sendMessage(userService.findUserByUsername("System"),
+							userService.findUserByUsername(formerBidderName), "Higher bid!",
+							"Someone placed a higher bid in the auction \"" + auction.getTitle() + "\".");
+				}
 
 				model = new ModelAndView("redirect:/auction?id=" + auction.getId());
 				redirectAttributes.addFlashAttribute("confirmationMessage", "Bid placed successfully.");

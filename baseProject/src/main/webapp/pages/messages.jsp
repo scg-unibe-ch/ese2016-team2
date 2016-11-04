@@ -27,6 +27,7 @@
 	<h2 id="sent">Sent</h2>
 </div>
 <div id="messageList">
+	<c:choose><c:when test="${not empty messages}">
 	<table class="styledTable">
 		<tr>
 			<th id="subjectColumn">Subject</th>
@@ -62,6 +63,13 @@
 		<br />
 		<p>${messages[0].text }</p>
 	</div>
+	</c:when>
+	<c:otherwise>
+	<table class="styledTable">
+	<tr><td>You have no messages on your inbox</td></tr>
+	</table>
+	</c:otherwise>
+	</c:choose>
 </div>
 
 <c:import url="getMessageForm.jsp" />

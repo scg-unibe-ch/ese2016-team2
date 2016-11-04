@@ -26,7 +26,7 @@ public class UserTestDataSaver {
 	public void saveTestData() throws Exception {
 		// system account
 		User system = createUser("System", "1234", "FlatFindr", "Admin",
-				"/img/test/portrait.jpg", Gender.ADMIN, "Normal");
+				"/img/test/system.jpg", Gender.ADMIN, "Normal");
 		system.setAboutMe("We keep you off the streets.");
 		userDao.save(system);
 
@@ -38,7 +38,7 @@ public class UserTestDataSaver {
 
 		// Searcher
 		User janeDoe = createUser("jane@doe.com", "password", "Jane", "Doe",
-				"/img/test/portrait.jpg", Gender.FEMALE, "Normal");
+				"/img/test/avatar.jpg", Gender.FEMALE, "Normal");
 		janeDoe.setAboutMe(getDummyText());
 		userDao.save(janeDoe);
 

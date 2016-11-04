@@ -47,7 +47,13 @@ function rate(id, rating) {
 
 <h2>Visitors for your property</h2>
 
-<p>Information about the property: <a href="/ad?id=${ad.id }">${ad.street }, ${ad.zipcode } ${ad.city }</a></p>
+<p>Information about the property: 
+<c:choose><c:when test="${not empty ad}">
+	<a href="/ad?id=${ad.id }">${ad.street }, ${ad.zipcode } ${ad.city }</a>
+	</c:when><c:otherwise>
+	<a href="/auction?id=${auction.id }">${auction.street }, ${auction.zipcode } ${auction.city }</a>
+	</c:otherwise>
+</c:choose></p>
 
 <div id="visitorsDiv">
 <c:choose>
