@@ -1,15 +1,10 @@
 package ch.unibe.ese.team1.controller.pojos.forms;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 import org.hibernate.validator.constraints.NotBlank;
 
-import ch.unibe.ese.team1.model.Gender;
-
-/** This form is used when a user want to sign up for an account. */
+/** This form is used when a user want to register a premium account. */
 public class RegisterForm {
 	
 	@NotBlank(message = "Required")
@@ -24,6 +19,10 @@ public class RegisterForm {
 	@NotNull(message = "Required")
 	private String account;
 
+	/**
+	* 	Getter and setter methods of
+	* 	the attributes of premium account.
+	*/
 	public String getStreet() {
 		return street;
 	}
@@ -55,5 +54,4 @@ public class RegisterForm {
 	public void setAccount(String account) {
 		this.account = "Premium";
 	}
-	
 }

@@ -2,7 +2,6 @@ package ch.unibe.ese.team1.controller;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,10 +26,7 @@ import ch.unibe.ese.team1.controller.pojos.PictureUploader;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team1.controller.service.AdService;
 import ch.unibe.ese.team1.controller.service.AlertService;
-import ch.unibe.ese.team1.controller.service.BookmarkService;
-import ch.unibe.ese.team1.controller.service.MessageService;
 import ch.unibe.ese.team1.controller.service.UserService;
-import ch.unibe.ese.team1.controller.service.VisitService;
 import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.PictureMeta;
 import ch.unibe.ese.team1.model.User;
@@ -69,15 +65,6 @@ public class PlaceAdController {
 
 	@Autowired
 	private ServletContext servletContext;
-
-	@Autowired
-	private MessageService messageService;
-
-	@Autowired
-	private VisitService visitService;
-
-	@Autowired
-	private BookmarkService bookmarkService;
 
 	@Autowired
 	private UserService userService;

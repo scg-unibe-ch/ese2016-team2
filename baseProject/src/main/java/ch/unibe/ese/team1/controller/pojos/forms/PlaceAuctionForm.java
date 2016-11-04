@@ -1,6 +1,5 @@
 package ch.unibe.ese.team1.controller.pojos.forms;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.Min;

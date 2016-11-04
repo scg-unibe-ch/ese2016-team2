@@ -19,6 +19,10 @@ public class EditProfileForm {
 	
 	private String aboutMe;
 
+	/**
+	* 	Getter and setter methods of
+	* 	the attributes of a user.
+	*/
 	public String getPassword() {
 		return password;
 	}
