@@ -1,4 +1,4 @@
-package ch.unibe.ese.team1.controller.service;
+package ch.unibe.ese.team1.test.controller.service;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,6 +15,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import ch.unibe.ese.team1.controller.service.EnquiryService;
+import ch.unibe.ese.team1.controller.service.VisitService;
 import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Gender;
 import ch.unibe.ese.team1.model.User;
