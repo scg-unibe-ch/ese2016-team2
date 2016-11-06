@@ -105,14 +105,14 @@
 	</div> --%>
 
 	<div class="row">
+		<div class="tile tile-three-quarter">
+			<h2>${shownAd.title}</h2>
+		</div>
 		<div class="tile tile-quarter action action-tile action-icon">
-			<a class="action" id="bookmarkButton">
-				<span class="fa fa-bookmark fa-2x"></span>
-			</a>
 			<c:choose>
 				<c:when test="${loggedIn}">
-					<a class="right" id="bookmarkButton">
-						<span class="fa fa-bookmark"></span>
+					<a class="right" id="bookmarkButton" title="Bookmark property">
+						<span class="fa fa-bookmark fa-2x action-inactive-color"></span>
 					</a>
 				</c:when>
 			</c:choose>
@@ -283,7 +283,7 @@
 						<c:choose>
 							<c:when test="${loggedIn}">
 								<c:if test="${loggedInUserEmail != shownAd.user.username}">
-									<c:forEach items="${visits }" var="visit">
+									<c:forEach items="${visits}" var="visit">
 										<button type="button" data-id="${visit.id}">
 											<fmt:formatDate value="${visit.startTimestamp}" pattern="dd-MM-yyyy " />
 											&nbsp; from
