@@ -5,17 +5,33 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.validator.constraints.NotBlank;
-
-/** This form is used for searching for an ad. */
+/** This form is used for searching and filter for an ad. */
 public class SearchForm {
 
+	/** Properties for search and filter */
 	private boolean filtered;
-
+	private boolean buyable;
 	private boolean studio;
 	private boolean room;
 	private boolean house;
-	private String roomType;
+
+	private boolean smokers;
+	private boolean animals;
+	private boolean garden;
+	private boolean balcony;
+	private boolean cellar;
+	private boolean furnished;
+	private boolean cable;
+	private boolean garage;
+	private boolean internet;
+	
+	private String earliestMoveInDate;
+	private String latestMoveInDate;
+	private String earliestMoveOutDate;
+	private String latestMoveOutDate;
+
+	@AssertFalse(message = "Please select a sale type")
+	private boolean buyableNotFilled;
 	
 	@Pattern(regexp = "^[0-9]{4} - [-\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
 	private String city;
@@ -28,10 +44,21 @@ public class SearchForm {
 	@Min(value = 0, message = "In your dreams.")
 	private Integer prize;
 
-	@AssertFalse(message = "Please select either or both types")
-	private boolean noRoomNoStudio;
-
-	private boolean bothRoomAndStudio;
+	@AssertFalse(message = "Please select at least a type")
+	private boolean neither;
+	
+	/**
+	* 	Getter and setter methods of
+	* 	the attributes of a search
+	*   and filter.
+	*/
+	public boolean getBuyable() {
+		return buyable;
+	}
+	
+	public void setBuyable(boolean buyable) {
+		this.buyable = buyable;
+	}
 
 	public String getCity() {
 		return city;
@@ -80,35 +107,23 @@ public class SearchForm {
 	public void setHouse(boolean house) {
 		this.house = house;
 	}
-	
-	public String getRoomType() {
-		return roomType;
+
+	public boolean getNeither() {
+		return neither;
+	}
+
+	public void setNeither(boolean neither) {
+		this.neither = neither;
 	}
 	
-	public void setRoomType(String roomType) {
-		this.roomType = roomType;
+	public boolean getBuyableNotFilled() {
+		return buyableNotFilled;
 	}
-
-	public boolean getNoRoomNoStudio() {
-		return noRoomNoStudio;
+	
+	public void setBuyableNotFilled(boolean buyableNotFilled) {
+		this.buyableNotFilled = buyableNotFilled;
 	}
-
-	public void setNoRoomNoStudio(boolean noRoomNoStudio) {
-		this.noRoomNoStudio = noRoomNoStudio;
-	}
-
-	public boolean getBothRoomAndStudio() {
-		return bothRoomAndStudio;
-	}
-
-	public void setBothRoomAndStudio(boolean bothRoomAndStudio) {
-		this.bothRoomAndStudio = bothRoomAndStudio;
-	}
-
-	// //////////////////
-	// Filtered results//
-	// //////////////////
-
+	
 	public boolean getFiltered() {
 		return filtered;
 	}
@@ -116,26 +131,6 @@ public class SearchForm {
 	public void setFiltered(boolean filtered) {
 		this.filtered = filtered;
 	}
-
-	private String earliestMoveInDate;
-	private String latestMoveInDate;
-	private String earliestMoveOutDate;
-	private String latestMoveOutDate;
-
-	private boolean smokers;
-	private boolean animals;
-	private boolean garden;
-	private boolean balcony;
-	private boolean cellar;
-	private boolean furnished;
-	private boolean cable;
-	private boolean garage;
-	private boolean internet;
-
-	private boolean roomHelper;
-
-	// the ugly stuff
-	private boolean studioHelper;
 
 	public boolean getSmokers() {
 		return smokers;
@@ -239,21 +234,5 @@ public class SearchForm {
 
 	public void setLatestMoveOutDate(String latestMoveOutDate) {
 		this.latestMoveOutDate = latestMoveOutDate;
-	}
-
-	public boolean getStudioHelper() {
-		return studioHelper;
-	}
-
-	public void setStudioHelper(boolean helper) {
-		this.studioHelper = helper;
-	}
-
-	public boolean getRoomHelper() {
-		return roomHelper;
-	}
-
-	public void setRoomHelper(boolean helper) {
-		this.roomHelper = helper;
 	}
 }

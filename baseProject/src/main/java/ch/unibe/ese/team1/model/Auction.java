@@ -1,12 +1,15 @@
 package ch.unibe.ese.team1.model;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /** Describes an advertisement that users can place and search for. */
 @Entity
@@ -20,6 +23,10 @@ public class Auction extends Advertisement{
 	
 	@Column
 	private String bidderName;
+	
+	@Fetch(FetchMode.SELECT)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<AuctionPicture> pictures;
 
 	public String getEndTime() {
 		return endTime;
@@ -43,6 +50,14 @@ public class Auction extends Advertisement{
 	
 	public void setAuctionEnded(boolean auctionEnded) {
 		this.auctionEnded = auctionEnded;
+	}
+	
+	public List<AuctionPicture> getPictures() {
+		return pictures;
+	}
+
+	public void setPictures(List<AuctionPicture> pictures) {
+		this.pictures = pictures;
 	}
 
 }

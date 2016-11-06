@@ -3,7 +3,6 @@ package ch.unibe.ese.team1.test.testData;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +30,6 @@ public class AdTestDataSaver {
 		User ese = userDao.findByUsername("ese@unibe.ch");
 		User oprah = userDao.findByUsername("oprah@winfrey.com");
 		User jane = userDao.findByUsername("jane@doe.com");
-		User hans = userDao.findByUsername("hans@unibe.ch");
-		User mathilda = userDao.findByUsername("mathilda@unibe.ch");
 
 		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -145,6 +142,7 @@ public class AdTestDataSaver {
 		pictures.add(createPicture(adBern2, "/img/test/ad2_2.jpg"));
 		pictures.add(createPicture(adBern2, "/img/test/ad2_3.jpg"));
 		adBern2.setPictures(pictures);
+		adBern2.setBuyable(true);
 		adDao.save(adBern2);
 
 		String studioDescription3 = " In the center of Gundeli (5 Min. away from the"

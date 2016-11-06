@@ -1,5 +1,8 @@
 package ch.unibe.ese.team1.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +15,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team1.controller.service.AdService;
-import ch.unibe.ese.team1.controller.service.UserService;
+import ch.unibe.ese.team1.controller.service.AuctionService;
+import ch.unibe.ese.team1.model.Ad;
+import ch.unibe.ese.team1.model.Advertisement;
+import ch.unibe.ese.team1.model.Auction;
+
 
 /** Handles all requests concerning the search for ads. */
 @Controller
@@ -22,7 +29,7 @@ public class SearchController {
 	private AdService adService;
 
 	@Autowired
-	private UserService userService;
+	private AuctionService auctionService;
 
 	/**
 	 * The search form that is used for searching. It is saved between request
@@ -42,11 +49,25 @@ public class SearchController {
 	 * in the search form.
 	 */
 	@RequestMapping(value = "/results", method = RequestMethod.POST)
-	public ModelAndView results(@Valid SearchForm searchForm,
-			BindingResult result) {
+	public ModelAndView results(@Valid SearchForm searchForm, BindingResult result) {
 		if (!result.hasErrors()) {
 			ModelAndView model = new ModelAndView("results");
-			model.addObject("results", adService.queryResults(searchForm));
+
+			List<Advertisement> results = new ArrayList<Advertisement>();
+			Iterable<Ad> matchingAds = adService.queryResults(searchForm);
+			Iterable<Auction> matchingAuctions;
+			if (searchForm.getBuyable()) {
+				matchingAuctions = auctionService.queryResults(searchForm);
+				for (Auction auction : matchingAuctions) {
+					results.add(auction);
+				}
+			}
+
+			for (Ad ad : matchingAds) {
+				results.add(ad);
+			}
+
+			model.addObject("results", results);
 			return model;
 		} else {
 			// go back

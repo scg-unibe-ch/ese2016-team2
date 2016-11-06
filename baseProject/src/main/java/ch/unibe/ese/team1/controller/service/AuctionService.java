@@ -8,8 +8,10 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,32 +19,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceBidForm;
-import ch.unibe.ese.team1.model.AdPicture;
+import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team1.model.Auction;
+import ch.unibe.ese.team1.model.AuctionPicture;
+import ch.unibe.ese.team1.model.Location;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.Visit;
-import ch.unibe.ese.team1.model.dao.AlertDao;
 import ch.unibe.ese.team1.model.dao.AuctionDao;
-import ch.unibe.ese.team1.model.dao.MessageDao;
-import ch.unibe.ese.team1.model.dao.UserDao;
 
 @Service
 public class AuctionService {
 
 	@Autowired
 	private AuctionDao auctionDao;
-
-	@Autowired
-	private UserDao userDao;
-
-	@Autowired
-	private AlertDao alertDao;
-
-	@Autowired
-	private MessageDao messageDao;
-
-	@Autowired
-	private UserService userService;
 
 	@Autowired
 	private GeoDataService geoDataService;
@@ -125,9 +114,9 @@ public class AuctionService {
 		auction.setGarage(placeAuctionForm.getGarage());
 		auction.setInternet(placeAuctionForm.getInternet());
 		
-		List<AdPicture> pictures = new ArrayList<>();
+		List<AuctionPicture> pictures = new ArrayList<>();
 		for (String filePath : filePaths) {
-			AdPicture picture = new AdPicture();
+			AuctionPicture picture = new AuctionPicture();
 			picture.setFilePath(filePath);
 			pictures.add(picture);
 		}
@@ -227,26 +216,253 @@ public class AuctionService {
 	}
 	
 	/**
-	 * Checks if the email of a user is already contained in the given string.
+	 * Returns all ads that match the parameters given by the form. This list
+	 * can possibly be empty.
 	 * 
-	 * @param email
-	 *            the email string to search for
-	 * @param alreadyAdded
-	 *            the string of already added emails, which should be searched
-	 *            in
-	 * 
-	 * @return true if the email has been added already, false otherwise
+	 * @param searchForm
+	 *            the form to take the search parameters from
+	 * @return an Iterable of all search results
 	 */
-	public Boolean checkIfAlreadyAdded(String email, String alreadyAdded) {
-		email = email.toLowerCase();
-		alreadyAdded = alreadyAdded.replaceAll("\\s+", "").toLowerCase();
-		String delimiter = "[:;]+";
-		String[] toBeTested = alreadyAdded.split(delimiter);
-		for (int i = 0; i < toBeTested.length; i++) {
-			if (email.equals(toBeTested[i])) {
-				return true;
+	@Transactional
+	public Iterable<Auction> queryResults(SearchForm searchForm) {
+		Iterable<Auction> results = null;	
+		// we use this method if we are looking for rooms AND studios AND houses
+		if (searchForm.getRoom() && searchForm.getStudio() && searchForm.getHouse()) {
+			results = auctionDao.findByPrizeLessThan(searchForm.getPrize() + 1);
+		} else if (searchForm.getRoom() && searchForm.getHouse()) {
+			List<Auction> temp = auctionDao.findByRoomTypeAndPrizeLessThan("Room", searchForm.getPrize() + 1);
+			temp.addAll(auctionDao.findByRoomTypeAndPrizeLessThan("House", searchForm.getPrize() + 1));
+			results = temp;
+		} else if (searchForm.getRoom() && searchForm.getStudio()) {
+			List<Auction> temp = auctionDao.findByRoomTypeAndPrizeLessThan("Room", searchForm.getPrize() + 1);
+			temp.addAll(auctionDao.findByRoomTypeAndPrizeLessThan("Studio", searchForm.getPrize() + 1));
+			results = temp;
+		} else if (searchForm.getStudio() && searchForm.getHouse()) {
+			List<Auction> temp = auctionDao.findByRoomTypeAndPrizeLessThan("Studio", searchForm.getPrize() + 1);
+			temp.addAll(auctionDao.findByRoomTypeAndPrizeLessThan("House", searchForm.getPrize() + 1));
+			results = temp;
+		} else if (searchForm.getRoom()) {
+			results = auctionDao.findByRoomTypeAndPrizeLessThan("Room", searchForm.getPrize() + 1);
+		} else if (searchForm.getStudio()) {
+			results = auctionDao.findByRoomTypeAndPrizeLessThan("Studio", searchForm.getPrize() + 1);
+		} else {
+			results = auctionDao.findByRoomTypeAndPrizeLessThan("House", searchForm.getPrize() + 1);
+		}
+
+		// filter out zipcodez
+		String city = searchForm.getCity().substring(7);
+
+		// get the location that the user searched for and take the one with the
+		// lowest zip code
+		Location searchedLocation = geoDataService.getLocationsByCity(city)
+				.get(0);
+
+		// create a list of the results and of their locations
+		List<Auction> locatedResults = new ArrayList<>();
+		for (Auction ad : results) {
+			locatedResults.add(ad);
+		}
+
+		final int earthRadiusKm = 6380;
+		List<Location> locations = geoDataService.getAllLocations();
+		double radSinLat = Math.sin(Math.toRadians(searchedLocation
+				.getLatitude()));
+		double radCosLat = Math.cos(Math.toRadians(searchedLocation
+				.getLatitude()));
+		double radLong = Math.toRadians(searchedLocation.getLongitude());
+
+		/*
+		 * calculate the distances (Java 8) and collect all matching zipcodes.
+		 * The distance is calculated using the law of cosines.
+		 * http://www.movable-type.co.uk/scripts/latlong.html
+		 */
+		List<Integer> zipcodes = locations
+				.parallelStream()
+				.filter(location -> {
+					double radLongitude = Math.toRadians(location
+							.getLongitude());
+					double radLatitude = Math.toRadians(location.getLatitude());
+					double distance = Math.acos(radSinLat
+							* Math.sin(radLatitude) + radCosLat
+							* Math.cos(radLatitude)
+							* Math.cos(radLong - radLongitude))
+							* earthRadiusKm;
+					return distance < searchForm.getRadius();
+				}).map(location -> location.getZip())
+				.collect(Collectors.toList());
+
+		locatedResults = locatedResults.stream()
+				.filter(ad -> zipcodes.contains(ad.getZipcode()))
+				.collect(Collectors.toList());
+
+		// filter for additional criteria
+		if (searchForm.getFiltered()) {
+			// prepare date filtering - by far the most difficult filter
+			Date earliestInDate = null;
+			Date latestInDate = null;
+			Date earliestOutDate = null;
+			Date latestOutDate = null;
+
+			// parse move-in and move-out dates
+			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+			try {
+				earliestInDate = formatter.parse(searchForm
+						.getEarliestMoveInDate());
+			} catch (Exception e) {
+			}
+			try {
+				latestInDate = formatter
+						.parse(searchForm.getLatestMoveInDate());
+			} catch (Exception e) {
+			}
+			try {
+				earliestOutDate = formatter.parse(searchForm
+						.getEarliestMoveOutDate());
+			} catch (Exception e) {
+			}
+			try {
+				latestOutDate = formatter.parse(searchForm
+						.getLatestMoveOutDate());
+			} catch (Exception e) {
+			}
+
+			// filtering by dates
+			locatedResults = validateDate(locatedResults, true, earliestInDate,
+					latestInDate);
+			locatedResults = validateDate(locatedResults, false,
+					earliestOutDate, latestOutDate);
+
+			// filtering for the rest
+			// smokers
+			if (searchForm.getSmokers()) {
+				Iterator<Auction> iterator = locatedResults.iterator();
+				while (iterator.hasNext()) {
+					Auction ad = iterator.next();
+					if (!ad.getSmokers())
+						iterator.remove();
+				}
+			}
+
+			// animals
+			if (searchForm.getAnimals()) {
+				Iterator<Auction> iterator = locatedResults.iterator();
+				while (iterator.hasNext()) {
+					Auction ad = iterator.next();
+					if (!ad.getAnimals())
+						iterator.remove();
+				}
+			}
+
+			// garden
+			if (searchForm.getGarden()) {
+				Iterator<Auction> iterator = locatedResults.iterator();
+				while (iterator.hasNext()) {
+					Auction ad = iterator.next();
+					if (!ad.getGarden())
+						iterator.remove();
+				}
+			}
+
+			// balcony
+			if (searchForm.getBalcony()) {
+				Iterator<Auction> iterator = locatedResults.iterator();
+				while (iterator.hasNext()) {
+					Auction ad = iterator.next();
+					if (!ad.getBalcony())
+						iterator.remove();
+				}
+			}
+
+			// cellar
+			if (searchForm.getCellar()) {
+				Iterator<Auction> iterator = locatedResults.iterator();
+				while (iterator.hasNext()) {
+					Auction ad = iterator.next();
+					if (!ad.getCellar())
+						iterator.remove();
+				}
+			}
+
+			// furnished
+			if (searchForm.getFurnished()) {
+				Iterator<Auction> iterator = locatedResults.iterator();
+				while (iterator.hasNext()) {
+					Auction ad = iterator.next();
+					if (!ad.getFurnished())
+						iterator.remove();
+				}
+			}
+
+			// cable
+			if (searchForm.getCable()) {
+				Iterator<Auction> iterator = locatedResults.iterator();
+				while (iterator.hasNext()) {
+					Auction ad = iterator.next();
+					if (!ad.getCable())
+						iterator.remove();
+				}
+			}
+
+			// garage
+			if (searchForm.getGarage()) {
+				Iterator<Auction> iterator = locatedResults.iterator();
+				while (iterator.hasNext()) {
+					Auction ad = iterator.next();
+					if (!ad.getGarage())
+						iterator.remove();
+				}
+			}
+
+			// internet
+			if (searchForm.getInternet()) {
+				Iterator<Auction> iterator = locatedResults.iterator();
+				while (iterator.hasNext()) {
+					Auction ad = iterator.next();
+					if (!ad.getInternet())
+						iterator.remove();
+				}
 			}
 		}
-		return false;
+		return locatedResults;
+	}
+
+	private List<Auction> validateDate(List<Auction> ads, boolean inOrOut,
+			Date earliestDate, Date latestDate) {
+		if (ads.size() > 0) {
+			// Move-in dates
+			// Both an earliest AND a latest date to compare to
+			if (earliestDate != null) {
+				if (latestDate != null) {
+					Iterator<Auction> iterator = ads.iterator();
+					while (iterator.hasNext()) {
+						Auction ad = iterator.next();
+						if (ad.getDate(inOrOut).compareTo(earliestDate) < 0
+								|| ad.getDate(inOrOut).compareTo(latestDate) > 0) {
+							iterator.remove();
+						}
+					}
+				}
+				// only an earliest date
+				else {
+					Iterator<Auction> iterator = ads.iterator();
+					while (iterator.hasNext()) {
+						Auction ad = iterator.next();
+						if (ad.getDate(inOrOut).compareTo(earliestDate) < 0)
+							iterator.remove();
+					}
+				}
+			}
+			// only a latest date
+			else if (latestDate != null && earliestDate == null) {
+				Iterator<Auction> iterator = ads.iterator();
+				while (iterator.hasNext()) {
+					Auction ad = iterator.next();
+					if (ad.getDate(inOrOut).compareTo(latestDate) > 0)
+						iterator.remove();
+				}
+			} else {
+			}
+		}
+		return ads;
 	}
 }

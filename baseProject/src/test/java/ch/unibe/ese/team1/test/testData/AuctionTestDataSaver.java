@@ -9,9 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.unibe.ese.team1.model.Ad;
-import ch.unibe.ese.team1.model.AdPicture;
 import ch.unibe.ese.team1.model.Auction;
+import ch.unibe.ese.team1.model.AuctionPicture;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.dao.AuctionDao;
 import ch.unibe.ese.team1.model.dao.UserDao;
@@ -81,7 +80,7 @@ public class AuctionTestDataSaver {
 		auctionBern.setCable(true);
 		auctionBern.setGarage(true);
 		auctionBern.setInternet(true);
-		List<AdPicture> pictures = new ArrayList<>();
+		List<AuctionPicture> pictures = new ArrayList<>();
 		pictures.add(createPicture(auctionBern, "/img/test/ad1_1.jpg"));
 		pictures.add(createPicture(auctionBern, "/img/test/ad1_2.jpg"));
 		pictures.add(createPicture(auctionBern, "/img/test/ad1_3.jpg"));
@@ -129,7 +128,7 @@ public class AuctionTestDataSaver {
 		auctionBern2.setCable(false);
 		auctionBern2.setGarage(false);
 		auctionBern2.setInternet(true);
-		List<AdPicture> picturesBern2 = new ArrayList<>();
+		List<AuctionPicture> picturesBern2 = new ArrayList<>();
 		picturesBern2.add(createPicture(auctionBern, "/img/test/ad1_1.jpg"));
 		picturesBern2.add(createPicture(auctionBern, "/img/test/ad1_2.jpg"));
 		picturesBern2.add(createPicture(auctionBern, "/img/test/ad1_3.jpg"));
@@ -139,8 +138,8 @@ public class AuctionTestDataSaver {
 		auctionDao.save(auctionBern2);
 	}
 	
-	private AdPicture createPicture(Auction auction, String filePath) {
-		AdPicture picture = new AdPicture();
+	private AuctionPicture createPicture(Auction auction, String filePath) {
+		AuctionPicture picture = new AuctionPicture();
 		picture.setFilePath(filePath);
 		return picture;
 	}

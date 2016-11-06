@@ -14,23 +14,13 @@ function validateType(form)
 {
 	var room = document.getElementById('room');
 	var studio = document.getElementById('studio');
+	var house = document.getElementById('house');
 	var neither = document.getElementById('neither');
-	var both = document.getElementById('both');
-	var type = document.getElementById('type');
 	var filtered = document.getElementById('filtered');
-
-	if(room.checked && studio.checked) {
-		both.checked = true;
-		neither.checked = false;
-	}
-	else if(!room.checked && !studio.checked) {
-		both.checked = false;
+	
+	neither.checked = false;
+	if(!room.checked && !studio.checked && !house.checked) {
 		neither.checked = true;
-	}
-	else {
-		both.checked = false;
-		neither.checked = false;
-		type.checked = studio.checked;
 	}
 	filtered.checked = true;
 }
@@ -141,33 +131,61 @@ function sort_div_attribute() {
 	<c:otherwise>
 		<div id="resultsDiv" class="resultsDiv">
 			<c:forEach var="ad" items="${results}">
-				<div class="resultAd" data-price="${ad.prize}"
-								data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">
-					<div class="resultLeft">
-						<a href="<c:url value='/ad?id=${ad.id}' />"><img
-							src="${ad.pictures[0].filePath}" /></a>
-						<h2>
-							<a class="link" href="<c:url value='/ad?id=${ad.id}' />">${ad.title }</a>
-						</h2>
-						<p>${ad.street}, ${ad.zipcode} ${ad.city}</p>
-						<br />
-						<p>
-							<i><c:choose>
-									<c:when test="${ad.studio}">Studio</c:when>
-									<c:otherwise>Room</c:otherwise>
-								</c:choose></i>
-						</p>
-					</div>
-					<div class="resultRight">
-						<h2>CHF ${ad.prize}</h2>
-						<br /> <br />
+				<c:choose>
+				<c:when test="${!ad.auction}" >
+						<div class="resultAd" data-price="${ad.prize}"
+							data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">
+							<div class="resultLeft">
+								<a href="<c:url value='/ad?id=${ad.id}' />"><img
+									src="${ad.pictures[0].filePath}" /></a>
+								<h2>
+									<a class="link" href="<c:url value='/ad?id=${ad.id}' />">${ad.title }</a>
+								</h2>
+								<p>${ad.street},${ad.zipcode} ${ad.city}</p>
+								<br />
+								<p>
+									<i>${ad.roomType}</i>
+								</p>
+							</div>
+							<div class="resultRight">
+								<h2>CHF ${ad.prize}</h2>
+								<br /> <br />
 
-						<fmt:formatDate value="${ad.moveInDate}" var="formattedMoveInDate"
-							type="date" pattern="dd.MM.yyyy" />
+								<fmt:formatDate value="${ad.moveInDate}"
+									var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
 
-						<p>Move-in date: ${formattedMoveInDate }</p>
-					</div>
-				</div>
+								<p>Move-in date: ${formattedMoveInDate }</p>
+							</div>
+						</div>
+					</c:when>
+				<c:otherwise>
+						<div class="resultAd" data-price="${ad.prize}"
+							data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">
+							<div class="resultLeft">
+								<a href="<c:url value='/ad?id=${ad.id}' />"><img
+									src="${ad.pictures[0].filePath}" /></a>
+								<h2>
+									<a class="link" href="<c:url value='/auction?id=${ad.id}' />">${ad.title }</a>
+								</h2>
+								<p>${ad.street},${ad.zipcode} ${ad.city}</p>
+								<br />
+								<p>
+									<i>${ad.roomType}</i>
+								</p>
+							</div>
+							<div class="resultRight">
+								<h2>CHF ${ad.prize}</h2>
+
+								<fmt:formatDate value="${ad.moveInDate}"
+									var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
+
+								<p>Move-in date: ${formattedMoveInDate }</p>
+								
+								<p>Auction end-date: ${ad.endTime}</p>
+							</div>
+						</div>
+				</c:otherwise>
+				</c:choose>
 			</c:forEach>
 		</div>
 	</c:otherwise>
@@ -178,19 +196,16 @@ function sort_div_attribute() {
 
 	<div id="filterDiv">
 		<h2>Filter results:</h2>
+		<form:radiobutton name="buyable" id="buyable" path="buyable" value="0" /><label>Rent</label>
+		<form:radiobutton name="buyable" id="buyable" path="buyable" value="1" /><label>Buy</label>
+		<br />
+		
 		<form:checkbox name="room" id="room" path="room" /><label>Room</label>
 		<form:checkbox name="studio" id="studio" path="studio" /><label>Studio</label>
 		<form:checkbox name="house" id="house" path="house" /><label>House</label>
 		
-		<form:checkbox style="display:none" name="neither" id="neither" path="noRoomNoStudio" />
-		<form:checkbox style="display:none" name="r" id="r" path="roomType" value="Room" />
-		<form:checkbox style="display:none" name="s" id="s" path="roomType" value="Studio" />
-		<form:checkbox style="display:none" name="h" id="h" path="roomType" value="House" />
-		<form:checkbox style="display:none" name="ras" id="ras" path="roomType" value="Room and Studio" />
-		<form:checkbox style="display:none" name="rah" id="rah" path="roomType" value="Room and House" />
-		<form:checkbox style="display:none" name="sah" id="sah" path="roomType" value="Studio and House" />
-		<form:checkbox style="display:none" name="all" id="all" path="roomType" value="All" />
-		<form:errors path="noRoomNoStudio" cssClass="validationErrorText" /><br />
+		<form:checkbox style="display:none" name="neither" id="neither" path="neither" />
+		<form:errors path="neither" cssClass="validationErrorText" /><br />
 
 		<label for="city">City / zip code:</label>
 		<form:input type="text" name="city" id="city" path="city"
