@@ -13,26 +13,93 @@ var flatfindr = flatfindr || {};
  */
 flatfindr.search = function (window, document, $) {
 
-  var $container_scroll = $('.container-scroll');
+  var
+    /**
+     * The base duration in ms that corresponds to the one set in _vars.scss
+     *
+     * @type {Number}
+     * @constant
+     */
+    BASE_DURATION = 350,
 
-  $('.form-search .container-scroll input').focus(alignTop);
-  $('.form-search .container-scroll label').click(alignTop);
+
+
+    /**
+     * An opinionated bit of an extra delay. (usability specific)
+     *
+     * @type {Number}
+     * @constant
+     */
+    DURATION_BUFFER = 50,
+
+
+    /**
+     * The scrollable container.
+     *
+     * @type {object}
+     */
+    $container_scroll = $('.container-scroll');
+
+
 
   /**
-   * [alignTop description]
-   * @return {[type]} [description]
+   * All input fields within the search form scrollable container.
+   */
+  $('.form-search .container-scroll input')
+    .focus(alignInputToTop);
+
+
+
+  /**
+   * All checkboxes within the search form scrollable container.
+   */
+  $('.form-search .container-scroll label')
+    .on('click', alignInputToTop);
+
+
+
+  /**
+   * The clear button.
+   */
+  $('button[type=reset]')
+    .on('click', alignTop);
+
+
+
+  /**
+   * Align the focused or cliced element to top of the visible part of the
+   * scrollable $container_scroll.
+   * @param  {object} e the event object click or touch.
+   */
+  function alignInputToTop() {
+    animateScrollTop(
+      $container_scroll.scrollTop() + $(this).position().top
+    );
+  }
+
+
+
+  /**
+   * Align $container_scroll to top, so scrollTop position is 0.
+   * @param  {object} e the event object click or touch.
    */
   function alignTop() {
-    var
-      $this = $(this),
-      $parent = $container_scroll,
-      scrollTop = $parent.scrollTop() + $this.position().top;
+    animateScrollTop(0);
+  }
 
-      $parent
-        .delay(50)
-        .animate({scrollTop: scrollTop}, 300);
-  };
-  
+
+
+  /**
+   * Animate the change of the scrollTop position of the scrollable
+   * element $container_scroll.
+   * @param  {number} scrollTop the new scroll position to be animated to.
+   */
+  function animateScrollTop(scrollTop) {
+    $container_scroll
+      .delay(DURATION_BUFFER)
+      .animate({scrollTop: scrollTop}, BASE_DURATION);
+  }
+
 };
 
 flatfindr.search(window, document, jQuery);
