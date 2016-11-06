@@ -1,4 +1,4 @@
-package ch.unibe.ese.team1.controller.service;
+package ch.unibe.ese.team1.test.controller.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -22,6 +22,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team1.controller.pojos.forms.RegisterForm;
+import ch.unibe.ese.team1.controller.service.RegisterService;
+import ch.unibe.ese.team1.controller.service.UserService;
 import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Gender;
 import ch.unibe.ese.team1.model.User;
@@ -53,13 +55,13 @@ public class RegisterServiceTest {
 	public void upgradeToPremiumAccount() throws ParseException {
 		//Preparation
 		
-		User hans = createUser("hans@kanns.ch", "password", "Hans", "Kanns",
+		User testPersonRegister1 = createUser("testPersonRegister@1.ch", "password", "testPerson", "Register1",
 				Gender.MALE, "Premium");
-		hans.setAboutMe("Hansi Hinterseer");
-		userDao.save(hans);
+		testPersonRegister1.setAboutMe("TestPersonRegister1");
+		userDao.save(testPersonRegister1);
 		
 		RegisterForm registerForm = new RegisterForm();
-		registerForm.setUsername("hans@kanns.ch");
+		registerForm.setUsername("testPersonRegister@1.ch");
 		registerForm.setStreet("Schanzeneckstrasse 2");
 		registerForm.setCity("3012 - Bern");
 		registerForm.setAccount("Premium");

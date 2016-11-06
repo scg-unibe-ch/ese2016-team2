@@ -50,15 +50,15 @@ public class AlertServiceTest {
 	public void createAlerts() {
 		ArrayList<Alert> alertList = new ArrayList<Alert>();
 		
-		// Create user Adolf Ogi
-		User adolfOgi = createUser("adolf@ogi.ch", "password", "Adolf", "Ogi",
-				Gender.MALE);
-		adolfOgi.setAboutMe("Wallis rocks");
-		userDao.save(adolfOgi);
+		// Create user testPersonAlert1
+		User testPersonAlert1 = createUser("testPersonAlert@1.ch", "password", "testPerson", "Alert1",
+				Gender.MALE, "Normal");
+		testPersonAlert1.setAboutMe("Wallis rocks");
+		userDao.save(testPersonAlert1);
 		
-		// Create 2 alerts for Adolf Ogi
+		// Create 2 alerts for first test Person
 		Alert alert = new Alert();
-		alert.setUser(adolfOgi);
+		alert.setUser(testPersonAlert1);
 		alert.setAlertType("Studio");
 		alert.setRoom(false);
 		alert.setStudio(true);
@@ -70,7 +70,7 @@ public class AlertServiceTest {
 		alertDao.save(alert);
 		
 		alert = new Alert();
-		alert.setUser(adolfOgi);
+		alert.setUser(testPersonAlert1);
 		alert.setAlertType("Room and Studio");
 		alert.setRoom(true);
 		alert.setStudio(true);
@@ -82,13 +82,13 @@ public class AlertServiceTest {
 		alertDao.save(alert);
 		
 		//copy alerts to a list
-		Iterable<Alert> alerts = alertService.getAlertsByUser(adolfOgi);
+		Iterable<Alert> alerts = alertService.getAlertsByUser(testPersonAlert1);
 		for(Alert returnedAlert: alerts)
 			alertList.add(returnedAlert);
 		
 		//begin the actual testing
 		assertEquals(2, alertList.size());
-		assertEquals(adolfOgi, alertList.get(0).getUser());
+		assertEquals(testPersonAlert1, alertList.get(0).getUser());
 		assertEquals("Bern", alertList.get(1).getCity());
 		assertTrue(alertList.get(0).getRadius() > alertList.get(1).getRadius());
 	}
@@ -97,14 +97,14 @@ public class AlertServiceTest {
 	public void mismatchChecks() {
 		ArrayList<Alert> alertList = new ArrayList<Alert>();
 		
-		User thomyF = createUser("thomy@f.ch", "password", "Thomy", "F",
-				Gender.MALE);
-		thomyF.setAboutMe("Supreme hustler");
-		userDao.save(thomyF);
+		User testPersonAlert2 = createUser("testPersonAlert@2.ch", "password", "testPerson", "Alert2",
+				Gender.MALE, "Premium");
+		testPersonAlert2.setAboutMe("Supreme hustler");
+		userDao.save(testPersonAlert2);
 		
-		// Create 2 alerts for Thomy F
+		// Create 2 alerts for second test person
 		Alert alert = new Alert();
-		alert.setUser(thomyF);
+		alert.setUser(testPersonAlert2);
 		alert.setAlertType("Studio");
 		alert.setRoom(false);
 		alert.setStudio(true);
@@ -116,7 +116,7 @@ public class AlertServiceTest {
 		alertDao.save(alert);
 		
 		alert = new Alert();
-		alert.setUser(thomyF);
+		alert.setUser(testPersonAlert2);
 		alert.setAlertType("Room and Studio");
 		alert.setRoom(true);
 		alert.setStudio(true);
@@ -127,7 +127,7 @@ public class AlertServiceTest {
 		alert.setRadius(5);
 		alertDao.save(alert);
 		
-		Iterable<Alert> alerts = alertService.getAlertsByUser(userDao.findByUsername("thomy@f.ch"));
+		Iterable<Alert> alerts = alertService.getAlertsByUser(userDao.findByUsername("testPersonAlert@2.ch"));
 		for(Alert returnedAlert: alerts)
 			alertList.add(returnedAlert);
 		
@@ -139,12 +139,12 @@ public class AlertServiceTest {
 		oltenResidence.setCreationDate(date);
 		oltenResidence.setPrize(1200);
 		oltenResidence.setSquareFootage(42);
-		oltenResidence.setStudio(false);
+		oltenResidence.setRoomType("Room");
 		oltenResidence.setSmokers(true);
 		oltenResidence.setAnimals(false);
 		oltenResidence.setRoomDescription("blah");
 		oltenResidence.setPreferences("blah");
-		oltenResidence.setUser(thomyF);
+		oltenResidence.setUser(testPersonAlert2);
 		oltenResidence.setTitle("Olten Residence");
 		oltenResidence.setStreet("Florastr. 100");
 		oltenResidence.setCity("Olten");
@@ -165,7 +165,7 @@ public class AlertServiceTest {
 	
 	//Lean user creating method
 	User createUser(String email, String password, String firstName,
-			String lastName, Gender gender) {
+			String lastName, Gender gender, String account) {
 		User user = new User();
 		user.setUsername(email);
 		user.setPassword(password);
@@ -174,6 +174,7 @@ public class AlertServiceTest {
 		user.setLastName(lastName);
 		user.setEnabled(true);
 		user.setGender(gender);
+		user.setAccount(account);
 		Set<UserRole> userRoles = new HashSet<>();
 		UserRole role = new UserRole();
 		role.setRole("ROLE_USER");

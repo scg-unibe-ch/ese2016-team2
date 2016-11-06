@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,43 +21,33 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import ch.unibe.ese.team1.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
-import ch.unibe.ese.team1.controller.service.AdService;
 import ch.unibe.ese.team1.controller.service.AuctionService;
-import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.Gender;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.UserRole;
 import ch.unibe.ese.team1.model.dao.UserDao;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {
-		"file:src/main/webapp/WEB-INF/config/springMVC.xml",
+@ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/config/springMVC.xml",
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
-		"file:src/main/webapp/WEB-INF/config/springSecurity.xml"})
+		"file:src/main/webapp/WEB-INF/config/springSecurity.xml" })
 @WebAppConfiguration
 public class AuctionServiceTest {
 
 	@Autowired
 	private AuctionService auctionService;
-	
+
 	@Autowired
 	private UserDao userDao;
+	
+	private PlaceAuctionForm placeAuctionForm = new PlaceAuctionForm();
+	private ArrayList<String> filePaths = new ArrayList<String>();
 
-	/**
-	 * In order to test the saved ad, I need to get it back from the DB again, so these
-	 * two methods need to be tested together, normally we want to test things isolated of
-	 * course. Testing just the returned ad from saveFrom() wouldn't answer the question 
-	 * whether the ad has been saved correctly to the db.
-	 * @throws ParseException 
-	 */
-	@Test
-	public void saveFromAndGetById() throws ParseException {
-		//Preparation
-		PlaceAuctionForm placeAuctionForm = new PlaceAuctionForm();
+	@Before
+	public void placeAuctionInDataBase() {
+		// Preparation
 		placeAuctionForm.setCity("3018 - Bern");
 		placeAuctionForm.setPreferences("Test preferences");
 		placeAuctionForm.setRoomDescription("Test Room description");
@@ -68,7 +59,7 @@ public class AuctionServiceTest {
 		placeAuctionForm.setMoveInDate("27-02-2015");
 		placeAuctionForm.setEndDate("12-12-2014");
 		placeAuctionForm.setEndTime("12:00");
-		
+
 		placeAuctionForm.setSmokers(true);
 		placeAuctionForm.setAnimals(false);
 		placeAuctionForm.setGarden(true);
@@ -79,25 +70,35 @@ public class AuctionServiceTest {
 		placeAuctionForm.setGarage(true);
 		placeAuctionForm.setInternet(false);
 		
-		ArrayList<String> filePaths = new ArrayList<>();
 		filePaths.add("/img/test/ad1_1.jpg");
-		
-		User hans = createUser("hans@kanns.ch", "password", "Hans", "Kanns",
-				Gender.MALE, "Normal");
-		hans.setAboutMe("Hansi Hinterseer");
-		userDao.save(hans);
-		
-		auctionService.saveFrom(placeAuctionForm, filePaths, hans);
+	}
+
+	/**
+	 * In order to test the saved auction, I need to get it back from the DB
+	 * again, so these two methods need to be tested together, normally we want
+	 * to test things isolated of course. Testing just the returned auction from
+	 * saveFrom() wouldn't answer the question whether the auction has been
+	 * saved correctly to the db.
+	 * 
+	 * @throws ParseException
+	 */
+	@Test
+	public void saveFromAndGetById() throws ParseException {
+		User testPersonAuction1 = createUser("testPersonAuction@1.ch", "password", "testPerson", "Auction1", Gender.MALE, "Normal");
+		testPersonAuction1.setAboutMe("TestPersonAuction1");
+		userDao.save(testPersonAuction1);
+
+		auctionService.saveFrom(placeAuctionForm, filePaths, testPersonAuction1);
 		
 		Auction auction = new Auction();
 		Iterable<Auction> ads = auctionService.getAllAds();
 		Iterator<Auction> iterator = ads.iterator();
-		
+
 		while (iterator.hasNext()) {
 			auction = iterator.next();
 		}
-		
-		//Testing
+
+		// Testing
 		assertTrue(auction.getSmokers());
 		assertFalse(auction.getAnimals());
 		assertEquals("Bern", auction.getCity());
@@ -110,15 +111,16 @@ public class AuctionServiceTest {
 		assertEquals("Hauptstrasse 13", auction.getStreet());
 		assertEquals("Studio", auction.getRoomType());
 		assertEquals("12:00, 12.12.2014", auction.getEndTime());
-		
+
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	    Date result =  df.parse("2015-02-27");
-		
+		Date result = df.parse("2015-02-27");
+
 		assertEquals(0, result.compareTo(auction.getMoveInDate()));
 	}
 	
-	private User createUser(String email, String password, String firstName,
-			String lastName, Gender gender, String account) {
+
+	private User createUser(String email, String password, String firstName, String lastName, Gender gender,
+			String account) {
 		User user = new User();
 		user.setUsername(email);
 		user.setPassword(password);
@@ -136,6 +138,5 @@ public class AuctionServiceTest {
 		user.setAccount(account);
 		return user;
 	}
-	
-}
 
+}
