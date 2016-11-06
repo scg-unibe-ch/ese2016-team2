@@ -53,8 +53,15 @@
   margin: 0;
 }
 
+
+// @Jerome
+// TODO: Remove the tile prefix, its useless.
 .tile-full {
   width: 100%;
+}
+
+.tile-three-quarter {
+  width: 75%;
 }
 
 .tile-half {
@@ -63,4 +70,8 @@
 
 .tile-third {
   width: 33.33333%;
+}
+
+.tile-quarter {
+  width: 25%;
 }

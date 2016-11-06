@@ -4,7 +4,7 @@
 resources/components
 node_modules/
 
-**/prod/*.*
+# **/prod/*.*
 !**/prod/.keep
 
 config.codekit

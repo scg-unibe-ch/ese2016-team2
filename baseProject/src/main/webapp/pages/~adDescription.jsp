@@ -105,8 +105,17 @@
 	</div> --%>
 
 	<div class="row">
-		<div class="tile tile-full">
-			<h2>${shownAd.title}</h2>
+		<div class="tile tile-quarter action action-tile action-icon">
+			<a class="action" id="bookmarkButton">
+				<span class="fa fa-bookmark fa-2x"></span>
+			</a>
+			<c:choose>
+				<c:when test="${loggedIn}">
+					<a class="right" id="bookmarkButton">
+						<span class="fa fa-bookmark"></span>
+					</a>
+				</c:when>
+			</c:choose>
 		</div>
 	</div>
 
@@ -114,7 +123,7 @@
 
 		<div class="row">
 			<div class="tile tile-full">
-				<table id="adDescTable" class="adDescDiv">
+				<table>
 					<tr>
 						<td>Type</td>
 						<td>${shownAd.roomType}</td>
@@ -151,6 +160,99 @@
 						<td>Ad created on</td>
 						<td>${formattedCreationDate}</td>
 					</tr>
+				<%-- </table>
+
+				<table> --%>
+					<tr>
+						<td>Smoking inside allowed</td>
+						<td>
+							<c:choose>
+								<c:when test="${shownAd.smokers}"><span class="fa fa-plus base-color"></span></c:when>
+								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Animals allowed</td>
+						<td>
+							<c:choose>
+								<c:when test="${shownAd.animals}"><span class="fa fa-plus base-color"></span></c:when>
+								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Furnished Room</td>
+						<td>
+							<c:choose>
+								<c:when test="${shownAd.furnished}"><span class="fa fa-plus base-color"></span></c:when>
+								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+
+					<tr>
+						<td>WiFi available</td>
+						<td>
+							<c:choose>
+								<c:when test="${shownAd.internet}"><span class="fa fa-plus base-color"></span></c:when>
+								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Cable TV</td>
+						<td>
+							<c:choose>
+								<c:when test="${shownAd.cable}"><span class="fa fa-plus base-color"></span></c:when>
+								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Garage</td>
+						<td>
+							<c:choose>
+								<c:when test="${shownAd.garage}"><span class="fa fa-plus base-color"></span></c:when>
+								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Cellar</td>
+						<td>
+							<c:choose>
+								<c:when test="${shownAd.cellar}"><span class="fa fa-plus base-color"></span></c:when>
+								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Balcony</td>
+						<td>
+							<c:choose>
+								<c:when test="${shownAd.balcony}"><span class="fa fa-plus base-color"></span></c:when>
+								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Garden</td>
+						<td>
+							<c:choose>
+								<c:when test="${shownAd.garden}"><span class="fa fa-plus base-color"></span></c:when>
+								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+
 				</table>
 
 			</div>
@@ -173,17 +275,15 @@
 		<div class="row">
 			<div class="tile tile-full">
 
-				<h3 class="row-h3">Visiting times</h3>
+				<h3 class="row-h3">Viewing times</h3>
 
-				<c:forEach items="${visits }" var="visit">
+				<div class="row viewing-times">
+					<div class="tile tile-full action action-tile">
 
-					<div class="row">
-						<div class="tile tile-full action action-tile">
-
-							<c:choose>
-								<c:when test="${loggedIn}">
-									<c:if test="${loggedInUserEmail != shownAd.user.username}">
-
+						<c:choose>
+							<c:when test="${loggedIn}">
+								<c:if test="${loggedInUserEmail != shownAd.user.username}">
+									<c:forEach items="${visits }" var="visit">
 										<button type="button" data-id="${visit.id}">
 											<fmt:formatDate value="${visit.startTimestamp}" pattern="dd-MM-yyyy " />
 											&nbsp; from
@@ -191,20 +291,19 @@
 											until
 											<fmt:formatDate value="${visit.endTimestamp}" pattern=" HH:mm" />
 										</button>
+									</c:forEach>
+								</c:if>
+							</c:when>
+							<c:otherwise>
 
-									</c:if>
-								</c:when>
-								<c:otherwise>
+								<a href="/login" data-id="${visit.id}">Sign in to see viewing times</a>
 
-									<a href="/login" data-id="${visit.id}">Login to send enquiries</a>
+							</c:otherwise>
+						</c:choose>
 
-								</c:otherwise>
-							</c:choose>
-
-						</div>
 					</div>
+				</div>
 
-				</c:forEach>
 			</div>
 		</div>
 
@@ -241,115 +340,6 @@
 
 
 <%--
-
-
-
-	<c:choose>
-		<c:when test="${loggedIn}">
-			<a class="right" id="bookmarkButton">Bookmark Ad</a>
-		</c:when>
-	</c:choose>
-
-
-<hr class="clearBoth" />
-
-<section>
-	<table id="checkBoxTable" class="adDescDiv">
-		<tr>
-			<td><h2>Smoking inside allowed</h2></td>
-			<td>
-				<c:choose>
-					<c:when test="${shownAd.smokers}"><img src="/img/check-mark.png"></c:when>
-					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
-
-		<tr>
-			<td><h2>Animals allowed</h2></td>
-			<td>
-				<c:choose>
-					<c:when test="${shownAd.animals}"><img src="/img/check-mark.png"></c:when>
-					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
-
-		<tr>
-			<td><h2>Furnished Room</h2></td>
-			<td>
-				<c:choose>
-					<c:when test="${shownAd.furnished}"><img src="/img/check-mark.png"></c:when>
-					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
-
-		<tr>
-			<td><h2>WiFi available</h2></td>
-			<td>
-				<c:choose>
-					<c:when test="${shownAd.internet}"><img src="/img/check-mark.png"></c:when>
-					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
-
-		<tr>
-			<td><h2>Cable TV</h2></td>
-			<td>
-				<c:choose>
-					<c:when test="${shownAd.cable}"><img src="/img/check-mark.png"></c:when>
-					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
-
-		<tr>
-			<td><h2>Garage</h2></td>
-			<td>
-				<c:choose>
-					<c:when test="${shownAd.garage}"><img src="/img/check-mark.png"></c:when>
-					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
-
-		<tr>
-			<td><h2>Cellar</h2></td>
-			<td>
-				<c:choose>
-					<c:when test="${shownAd.cellar}"><img src="/img/check-mark.png"></c:when>
-					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
-
-		<tr>
-			<td><h2>Balcony</h2></td>
-			<td>
-				<c:choose>
-					<c:when test="${shownAd.balcony}"><img src="/img/check-mark.png"></c:when>
-					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
-
-		<tr>
-			<td><h2>Garden</h2></td>
-			<td>
-				<c:choose>
-					<c:when test="${shownAd.garden}"><img src="/img/check-mark.png"></c:when>
-					<c:otherwise><img src="/img/check-mark-negative.png"></c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
-
-	</table>
-</section>
-
-<div class="clearBoth"></div>
-<br>
 
 <table id="advertiserTable" class="adDescDiv">
 	<tr>
