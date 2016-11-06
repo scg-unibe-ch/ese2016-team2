@@ -30,7 +30,7 @@ public class RegisterService {
 	 * @param	registerForm	reference of the current register form
 	 */
 	@Transactional
-	public void updateFrom(RegisterForm registerForm) {
+	public void updateForm(RegisterForm registerForm) {
 		
 		User currentUser = userService.findUserByUsername(registerForm.getUsername());
 		

@@ -1,8 +1,10 @@
+ch\unibe\ese\team1\model\dao\AuctionPictureDao.class
 ch\unibe\ese\team1\controller\service\AdService$1.class
 ch\unibe\ese\team1\model\Picture.class
 ch\unibe\ese\team1\controller\pojos\PictureUploader.class
 ch\unibe\ese\team1\model\PictureMeta.class
 ch\unibe\ese\team1\controller\service\MessageService$1.class
+ch\unibe\ese\team1\model\AuctionPicture.class
 ch\unibe\ese\team1\controller\pojos\forms\EditProfileForm.class
 ch\unibe\ese\team1\model\Location.class
 ch\unibe\ese\team1\model\VisitEnquiryState.class

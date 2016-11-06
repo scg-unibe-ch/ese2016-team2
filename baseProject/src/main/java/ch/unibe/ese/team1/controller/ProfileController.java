@@ -126,7 +126,7 @@ public class ProfileController {
 		String username = principal.getName();
 		User user = userService.findUserByUsername(username);
 		if (!bindingResult.hasErrors()) {
-			userUpdateService.updateFrom(editProfileForm);
+			userUpdateService.updateForm(editProfileForm);
 			model = new ModelAndView("updatedProfile");
 			model.addObject("message", "Your Profile has been updated!");
 			model.addObject("currentUser", user);
@@ -153,7 +153,7 @@ public class ProfileController {
 		String username = principal.getName();
 		User user = userService.findUserByUsername(username);
 		if (!bindingResult.hasErrors()) {
-			registerService.updateFrom(registerForm);
+			registerService.updateForm(registerForm);
 			model = new ModelAndView("updatedProfile");
 			model.addObject("message", "Your Profile has been updated!");
 			model.addObject("currentUser", user);
