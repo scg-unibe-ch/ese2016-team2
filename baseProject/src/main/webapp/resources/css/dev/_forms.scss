@@ -40,7 +40,8 @@
       }
     }
 
-    &[type=checkbox] {
+    &[type=checkbox],
+    &[type=radio] {
       display: none;
 
       ~ label {
@@ -91,7 +92,7 @@
   .checkboxes {
     border-bottom: 1px solid $whiff-of-gray;
 
-    :last-child label {
+    :last-child:not(:only-of-type) label {
       border-right: none;
     }
   }
@@ -109,16 +110,24 @@ $slip-height-medium: 73px;
   overflow: hidden;
   transition: height $base-duration $base-timing;
 
+  .container-scroll {
+    height: (4 * $slip-height-small);
+  }
+
   @include media($bq-medium) {
     height: $slip-height-medium;
+
+    .container-scroll {
+      height: (4 * $slip-height-medium);
+    }
   }
 
   [view].headerPrimarySearchIn &,
   [view].headerPrimarySearchOpen & {
-    height: 286px;
+    height: (6 * $slip-height-small);
 
     @include media($bq-medium) {
-      height: 366px;
+      height: (6 * $slip-height-medium);
     }
   }
 }
@@ -148,7 +157,7 @@ $slip-height-medium: 73px;
   z-index: 3;
   top: $slip-height-small + 1 !important;
   width: 100% !important;
-  height: (4 * ($slip-height-small + 1));
+  height: (5 * $slip-height-small) - 1;
   overflow: scroll;
   background-color: $white;
   transition:
@@ -158,7 +167,7 @@ $slip-height-medium: 73px;
 
   @include media($bq-medium) {
     top: $slip-height-medium + 1 !important;
-    height: (4 * ($slip-height-medium + 1));
+    height: (5 * $slip-height-medium) - 1;
   }
 
   li {

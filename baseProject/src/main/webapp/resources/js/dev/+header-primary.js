@@ -279,6 +279,3 @@ flatfindr.header = function (window, document, $) {
 };
 
 flatfindr.header(window, document, jQuery);
-
-
-console.log(window);
