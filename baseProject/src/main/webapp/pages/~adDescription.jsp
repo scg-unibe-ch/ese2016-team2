@@ -289,15 +289,25 @@
 							<c:when test="${loggedIn}">
 								<c:if test="${loggedInUserEmail != shownAd.user.username}">
 									<c:forEach items="${visits}" var="visit">
-										<button class="enquiry" type="button" data-id="${visit.id}">
-											<fmt:formatDate value="${visit.startTimestamp}" pattern="dd-MM-yyyy " />
-											&nbsp; from
-											<fmt:formatDate value="${visit.startTimestamp}" pattern=" HH:mm " />
-											until
-											<fmt:formatDate value="${visit.endTimestamp}" pattern=" HH:mm" />
-											<span class="action-confirm">Confirm</span>
-											<span class="action-cancel">Cancel</span>
-										</button>
+										<div class="row">
+											<div class="tile tile-full">
+												<button class="enquiry" type="button" data-id="${visit.id}">
+													<fmt:formatDate value="${visit.startTimestamp}" pattern="dd-MM-yyyy " />
+													&nbsp; from
+													<fmt:formatDate value="${visit.startTimestamp}" pattern=" HH:mm " />
+													until
+													<fmt:formatDate value="${visit.endTimestamp}" pattern=" HH:mm" />
+												</button>
+												<div class="row enquiry-confirm">
+													<div class="tile tile-half">
+														<button class="action-confirm">Confirm</button>
+													</div>
+													<div class="tile tile-half">
+														<button class="action-cancel">Cancel</button>
+													</div>
+												</div>
+											</div>
+										</div>
 									</c:forEach>
 								</c:if>
 							</c:when>

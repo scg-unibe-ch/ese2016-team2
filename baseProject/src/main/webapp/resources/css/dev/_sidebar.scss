@@ -69,6 +69,16 @@
 
 
 
+.enquiry-confirm {
+  height: 0;
+  overflow: hidden;
+  transition: height $base-duration $base-timing;
+
+  .enquiry.js-confirm + & {
+    height: 72px;
+  }
+}
+
 
 // .menu-primary li {
 //   border-bottom: 1px solid $whiff-of-gray;
