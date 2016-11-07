@@ -100,6 +100,58 @@
 
 
 
+.submit-after {
+  transition: none;
+}
+
+.submit-after {
+  opacity: 0;
+  font-size: 0;
+}
+
+.submit-before {
+  opacity: 1;
+  font-size: inherit;
+  transition:
+    opacity ($base-duration / 2) $base-timing,
+    font-size $base-duration $base-timing;
+}
+
+.submitting {
+  opacity: 0;
+  font-size: 0;
+}
+
+.submit-state-before {}
+
+.submit-state-after {
+  .submit-before {
+    opacity: 0;
+    font-size: 0;
+  }
+  .submit-after {
+    opacity: 1;
+    font-size: inherit;
+    transition:
+      opacity ($base-duration / 2) $base-timing,
+      font-size $base-duration $base-timing;
+  }
+}
+
+.submit-state-submitting {
+  .submit-before {
+    opacity: 0;
+    font-size: 0;
+    transition: none;
+  }
+  .submitting {
+    opacity: 1;
+    font-size: inherit;
+  }
+}
+
+
+
 // @Jerome
 // TODO: Calculate slip heights by variable client values if possible.
 $slip-height-small: 57px;

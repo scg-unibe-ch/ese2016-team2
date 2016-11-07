@@ -8,7 +8,7 @@ var flatfindr = flatfindr || {};
  * @param  {object} window
  * @param  {object} document the document element
  * @param  {object} $        jQuery
- * @param  {object} jsp  jsp passed by jsp
+ * @param  {object} jsp      global object properties passed by jsp
  * @namespace
  * @memberOf flatfindr
  */

@@ -83,7 +83,12 @@
 
 				<div class="row">
 					<div class="tile tile-half">
-						<button type="button" id="messageSend">Send</button>
+						<button class="submit-state-before" type="button" id="messageSend">
+							<span class="submit-before">Send</span>
+							<span class="submit-after">Delivered</span>
+							<span class="fa fa-circle-o-notch fa-spin fa-fw submitting"></span>
+							<span class="sr-only">Sending...</span>
+						</button>
 					</div>
 					<div class="tile tile-half">
 						<button type="button" id="messageCancel">Cancel</button>

@@ -34,6 +34,10 @@
 
   h2 {
     @include sidebar-slip-pad;
+
+    &:first-of-type {
+      margin-bottom: 0;
+    }
   }
 
   h3, p, td {

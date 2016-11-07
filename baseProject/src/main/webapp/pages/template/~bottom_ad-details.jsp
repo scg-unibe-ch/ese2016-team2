@@ -27,44 +27,17 @@
 
 
 
-		var shownAdvertisementID = "${shownAd.id}";
-		var shownAdvertisement = "${shownAd}";
-
-
 		flatfindr.bookmark(
-			window, document, jQuery, {
+			window, document, $, {
 				shownAdvertisementID: "${shownAd.id}",
 				shownAdvertisement: "${shownAd}"
 			});
 
+		flatfindr.message(
+			window, document, $, {
+				shownAdUsername: "${shownAd.user.username}"
+			});
 
-		// $("#newMsg").click(function(){
-		// 	$("#content").children().animate({opacity: 0.4}, 300, function(){
-		// 		$("#msgDiv").css("display", "block");
-		// 		$("#msgDiv").css("opacity", "1");
-		// 	});
-		// });
-		//
-		// $("#messageCancel").click(function(){
-		// 	$("#msgDiv").css("display", "none");
-		// 	$("#msgDiv").css("opacity", "0");
-		// 	$("#content").children().animate({opacity: 1}, 300);
-		// });
-
-		$("#messageSend").click(function (){
-			if($("#msgSubject").val() != "" && $("#msgTextarea").val() != ""){
-				var subject = $("#msgSubject").val();
-				var text = $("#msgTextarea").val();
-				var recipientEmail = "${shownAd.user.username}";
-				$.post("profile/messages/sendMessage", {subject : subject, text: text, recipientEmail : recipientEmail}, function(){
-					// $("#msgDiv").css("display", "none");
-					// $("#msgDiv").css("opacity", "0");
-					$("#msgSubject").val("");
-					$("#msgTextarea").val("");
-					// $("#content").children().animate({opacity: 1}, 300);
-				})
-			}
-		});
   }(window, document, jQuery);
 </script>
 

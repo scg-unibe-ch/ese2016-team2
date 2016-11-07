@@ -128,7 +128,7 @@ flatfindr.sidebar = function (window, document, $) {
    * @param  {object} e the click or touch event
    */
   function viewDoToggleSidebar(e) {
-    e.preventDefault();
+    e && e.preventDefault();
     $view.trigger('sidebar.toggle');
   }
 
@@ -152,6 +152,18 @@ flatfindr.sidebar = function (window, document, $) {
     e.preventDefault();
     $view.trigger('message.toggle');
   }
+
+
+
+  /**
+   * Open sidebar on page load with a slight delay, so user might better
+   * understand that the sidebar can be toggled.
+   */
+  (function () {
+    setTimeout(function () {
+      $view.trigger('sidebar.toggle');
+    }, BASE_DURATION);
+  })();
 
 };
 
