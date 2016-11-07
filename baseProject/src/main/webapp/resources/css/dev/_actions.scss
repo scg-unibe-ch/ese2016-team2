@@ -120,3 +120,21 @@
     }
   }
 }
+
+
+
+.action-confirm,
+.action-cancel {
+  display: inline-block;
+  margin-left: 16px;
+  font-size: 0;
+  text-decoration: underline;
+  transition:
+    background-color $base-duration $base-timing,
+    font-size $base-duration $base-timing;
+
+  .js-confirm & {
+    //background-color: $base-color;
+    font-size: inherit;
+  }
+}

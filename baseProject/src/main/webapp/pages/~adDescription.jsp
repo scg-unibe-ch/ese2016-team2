@@ -289,19 +289,21 @@
 							<c:when test="${loggedIn}">
 								<c:if test="${loggedInUserEmail != shownAd.user.username}">
 									<c:forEach items="${visits}" var="visit">
-										<button type="button" data-id="${visit.id}">
+										<button class="enquiry" type="button" data-id="${visit.id}">
 											<fmt:formatDate value="${visit.startTimestamp}" pattern="dd-MM-yyyy " />
 											&nbsp; from
 											<fmt:formatDate value="${visit.startTimestamp}" pattern=" HH:mm " />
 											until
 											<fmt:formatDate value="${visit.endTimestamp}" pattern=" HH:mm" />
+											<span class="action-confirm">Confirm</span>
+											<span class="action-cancel">Cancel</span>
 										</button>
 									</c:forEach>
 								</c:if>
 							</c:when>
 							<c:otherwise>
 
-								<a href="/login" data-id="${visit.id}">Sign in to see viewing times</a>
+								<a href="/login">Sign in to see viewing times</a>
 
 							</c:otherwise>
 						</c:choose>
