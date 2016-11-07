@@ -1,0 +1,132 @@
+package ch.unibe.ese.team1.test.controller.service;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Set;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+
+import ch.unibe.ese.team1.controller.pojos.forms.PlaceAdForm;
+import ch.unibe.ese.team1.controller.service.AdService;
+import ch.unibe.ese.team1.controller.service.BookmarkService;
+import ch.unibe.ese.team1.model.Ad;
+import ch.unibe.ese.team1.model.Gender;
+import ch.unibe.ese.team1.model.User;
+import ch.unibe.ese.team1.model.UserRole;
+import ch.unibe.ese.team1.model.dao.UserDao;
+
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {
+		"file:src/main/webapp/WEB-INF/config/springMVC.xml",
+		"file:src/main/webapp/WEB-INF/config/springData.xml",
+		"file:src/main/webapp/WEB-INF/config/springSecurity.xml"})
+@WebAppConfiguration
+public class BookmarkServiceTest {
+
+	@Autowired
+	private BookmarkService bookmarkService;
+	
+	@Autowired
+	private UserDao userDao;
+	
+	@Autowired
+	private AdService adService;
+	
+	private ArrayList<String> filePaths = new ArrayList<>();
+	private LinkedList<Ad> bookmarkedAds = new LinkedList<>();
+	private User user = new User();
+	private Ad ad = new Ad();
+	private Boolean bookmarked = null;
+
+	@Before
+	public void createAdAndUser() throws ParseException {
+		//Preparation
+		PlaceAdForm placeAdForm = new PlaceAdForm();
+		placeAdForm.setCity("3018 - Bern");
+		placeAdForm.setPreferences("Test preferences");
+		placeAdForm.setRoomDescription("Test Room description");
+		placeAdForm.setPrize(600);
+		placeAdForm.setSquareFootage(50);
+		placeAdForm.setTitle("title");
+		placeAdForm.setStreet("Hauptstrasse 13");
+		placeAdForm.setRoomType("Studio");
+		placeAdForm.setMoveInDate("27-02-2015");
+		placeAdForm.setMoveOutDate("27-04-2015");
+				
+		placeAdForm.setSmokers(true);
+		placeAdForm.setAnimals(false);
+		placeAdForm.setGarden(true);
+		placeAdForm.setBalcony(false);
+		placeAdForm.setCellar(true);
+		placeAdForm.setFurnished(false);
+		placeAdForm.setCable(false);
+		placeAdForm.setGarage(true);
+		placeAdForm.setInternet(false);
+				
+		filePaths.add("/img/test/ad1_1.jpg");
+				
+		user = createUser("hans@muster.ch", "password", "Hans", "Muser",
+				Gender.MALE, "Premium");
+		user.setAboutMe("Hans Muser");
+		userDao.save(user);
+				
+		adService.saveFrom(placeAdForm, filePaths, user);
+		Iterable<Ad> ads = adService.getAllAds();
+		Iterator<Ad> iterator = ads.iterator();
+		
+		while (iterator.hasNext()) {
+			ad = iterator.next();
+		}
+	
+		bookmarkedAds.add(ad);	
+		user.setBookmarkedAds(bookmarkedAds);
+		userDao.save(user);
+
+	}
+	
+	@Test
+	public void checkBookmarkStatus(){		
+		bookmarked = true;
+		assertEquals(2, bookmarkService.getBookmarkStatus(ad, bookmarked, user));
+		
+		bookmarked = false;
+		assertEquals(3, bookmarkService.getBookmarkStatus(ad, bookmarked, user));
+	}
+	
+	private User createUser(String email, String password, String firstName,
+			String lastName, Gender gender, String account) {
+		User user = new User();
+		user.setUsername(email);
+		user.setPassword(password);
+		user.setEmail(email);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		user.setEnabled(true);
+		user.setGender(gender);
+		user.setAccount(account);
+		Set<UserRole> userRoles = new HashSet<>();
+		UserRole role = new UserRole();
+		role.setRole("ROLE_USER");
+		role.setUser(user);
+		userRoles.add(role);
+		user.setUserRoles(userRoles);
+		return user;
+	}
+}
