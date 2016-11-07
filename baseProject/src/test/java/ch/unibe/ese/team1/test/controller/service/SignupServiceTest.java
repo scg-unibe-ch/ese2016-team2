@@ -1,12 +1,9 @@
 package ch.unibe.ese.team1.test.controller.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +17,6 @@ import ch.unibe.ese.team1.controller.service.SignupService;
 import ch.unibe.ese.team1.controller.service.UserService;
 import ch.unibe.ese.team1.model.Gender;
 import ch.unibe.ese.team1.model.User;
-import ch.unibe.ese.team1.model.UserRole;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
