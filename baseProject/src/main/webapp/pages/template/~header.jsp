@@ -284,7 +284,7 @@
     <nav class="tile-full nav-primary">
       <ul class="menu-primary">
         <li>
-          <a href="/~">Home</a>
+          <a href="/">Home</a>
         </li>
         <li>
           <a href="/about">About us</a>

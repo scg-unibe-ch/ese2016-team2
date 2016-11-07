@@ -1,24 +1,217 @@
 <%@page import="ch.unibe.ese.team1.model.Ad"%>
-<%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8"%>
+<%@ page language="java" pageEncoding="UTF-8"
+	contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 
-
-<%-- check if user is logged in --%>
+<!-- check if user is logged in -->
 <security:authorize var="loggedIn" url="/profile" />
 
+<c:import url="template/header.jsp" />
 
-<c:import url="template/~top.jsp" />
-<c:import url="template/~header.jsp" />
+<pre>
+	<a href="/">Home</a>   &gt;   <a href="/profile/myRooms">My Rooms</a>   &gt;   Ad Description</pre>
+
+<script src="/js/image_slider.js"></script>
+<script src="/js/adDescription.js"></script>
+
+<script>
+	var shownAdvertisementID = "${shownAd.id}";
+	var shownAdvertisement = "${shownAd}";
+
+	function attachBookmarkClickHandler() {
+		$("#bookmarkButton")
+				.click(
+						function() {
+
+							$
+									.post(
+											"/bookmark",
+											{
+												id : shownAdvertisementID,
+												screening : false,
+												bookmarked : false
+											},
+											function(data) {
+												$('#bookmarkButton')
+														.replaceWith(
+																$('<a class="right" id="bookmarkedButton">'
+																		+ "Bookmarked"
+																		+ '</a>'));
+												switch (data) {
+												case 0:
+													alert("You must be logged in to bookmark ads.");
+													break;
+												case 1:
+													// Something went wrong with the principal object
+													alert("Return value 1. Please contact the WebAdmin.");
+													break;
+												case 3:
+													$('#bookmarkButton')
+															.replaceWith(
+																	$('<a class="right" id="bookmarkedButton">'
+																			+ "Bookmarked"
+																			+ '</a>'));
+													break;
+												default:
+													alert("Default error. Please contact the WebAdmin.");
+												}
+
+												attachBookmarkedClickHandler();
+											});
+						});
+	}
+
+	function attachBookmarkedClickHandler() {
+		$("#bookmarkedButton")
+				.click(
+						function() {
+							$
+									.post(
+											"/bookmark",
+											{
+												id : shownAdvertisementID,
+												screening : false,
+												bookmarked : true
+											},
+											function(data) {
+												$('#bookmarkedButton')
+														.replaceWith(
+																$('<a class="right" id="bookmarkButton">'
+																		+ "Bookmark Ad"
+																		+ '</a>'));
+												switch (data) {
+												case 0:
+													alert("You must be logged in to bookmark ads.");
+													break;
+												case 1:
+													// Something went wrong with the principal object
+													alert("Return value 1. Please contact the WebAdmin.");
+													break;
+												case 2:
+													$('#bookmarkedButton')
+															.replaceWith(
+																	$('<a class="right" id="bookmarkButton">'
+																			+ "Bookmark Ad"
+																			+ '</a>'));
+													break;
+												default:
+													alert("Default error. Please contact the WebAdmin.");
+
+												}
+												attachBookmarkClickHandler();
+											});
+						});
+	}
+
+	$(document)
+			.ready(
+					function() {
+						attachBookmarkClickHandler();
+						attachBookmarkedClickHandler();
+
+						$
+								.post(
+										"/bookmark",
+										{
+											id : shownAdvertisementID,
+											screening : true,
+											bookmarked : true
+										},
+										function(data) {
+											if (data == 3) {
+												$('#bookmarkButton')
+														.replaceWith(
+																$('<a class="right" id="bookmarkedButton">'
+																		+ "Bookmarked"
+																		+ '</a>'));
+												attachBookmarkedClickHandler();
+											}
+											if (data == 4) {
+												$('#shownAdTitle')
+														.replaceWith(
+																$('<h1>'
+																		+ "${shownAd.title}"
+																		+ '</h1>'));
+											}
+										});
+
+						$("#newMsg").click(function() {
+							$("#content").children().animate({
+								opacity : 0.4
+							}, 300, function() {
+								$("#msgDiv").css("display", "block");
+								$("#msgDiv").css("opacity", "1");
+							});
+						});
+
+						$("#messageCancel").click(function() {
+							$("#msgDiv").css("display", "none");
+							$("#msgDiv").css("opacity", "0");
+							$("#content").children().animate({
+								opacity : 1
+							}, 300);
+						});
+
+						$("#messageSend")
+								.click(
+										function() {
+											if ($("#msgSubject").val() != ""
+													&& $("#msgTextarea").val() != "") {
+												var subject = $("#msgSubject")
+														.val();
+												var text = $("#msgTextarea")
+														.val();
+												var recipientEmail = "${shownAd.user.username}";
+												$
+														.post(
+																"profile/messages/sendMessage",
+																{
+																	subject : subject,
+																	text : text,
+																	recipientEmail : recipientEmail
+																},
+																function() {
+																	$("#msgDiv")
+																			.css(
+																					"display",
+																					"none");
+																	$("#msgDiv")
+																			.css(
+																					"opacity",
+																					"0");
+																	$(
+																			"#msgSubject")
+																			.val(
+																					"");
+																	$(
+																			"#msgTextarea")
+																			.val(
+																					"");
+																	$(
+																			"#content")
+																			.children()
+																			.animate(
+																					{
+																						opacity : 1
+																					},
+																					300);
+																})
+											}
+										});
+					});
+</script>
+
 
 <!-- format the dates -->
 <fmt:formatDate value="${shownAd.moveInDate}" var="formattedMoveInDate"
 	type="date" pattern="dd.MM.yyyy" />
-<fmt:formatDate value="${shownAd.creationDate}" var="formattedCreationDate"
-	type="date" pattern="dd.MM.yyyy" />
+<fmt:formatDate value="${shownAd.creationDate}"
+	var="formattedCreationDate" type="date" pattern="dd.MM.yyyy" />
 <c:choose>
 	<c:when test="${empty shownAd.moveOutDate }">
 		<c:set var="formattedMoveOutDate" value="unlimited" />
@@ -30,337 +223,275 @@
 </c:choose>
 
 
-<div class="container sidebar">
-	<div class="row">
-		<div class="tile tile-full">
+<h1 id="shownAdTitle">${shownAd.title}
+	<c:choose>
+		<c:when test="${loggedIn}">
+			<a class="right" id="bookmarkButton">Bookmark Ad</a>
+		</c:when>
+	</c:choose>
+</h1>
 
-			<div class="action action-icon action-sidebar">
-				<span id="js-sidebar-icon" class="fa fa-info fa-2x"></span>
-			</div>
 
-		</div>
-	</div>
+<hr />
 
-	<div class="row">
+<section>
+	<c:choose>
+		<c:when test="${loggedIn}">
+			<c:if test="${loggedInUserEmail == shownAd.user.username }">
+				<a href="<c:url value='/profile/editAd?id=${shownAd.id}' />">
+					<button type="button">Edit Ad</button>
+				</a>
+			</c:if>
+		</c:when>
+	</c:choose>
+	<br> <br>
 
-		<c:choose>
-			<c:when test="${loggedIn}">
+	<table id="adDescTable" class="adDescDiv">
+		<tr>
+			<td><h2>Type</h2></td>
+			<td>${shownAd.roomType}</td>
+		</tr>
 
-				<div class="tile tile-half action action-tile">
-					<a href="/user?id=${shownAd.user.id}">Visit profile</a>
-				</div>
+		<tr>
+			<td><h2>Address</h2></td>
+			<td><a class="link"
+				href="http://maps.google.com/?q=${shownAd.street}, ${shownAd.zipcode}, ${shownAd.city}">${shownAd.street},
+					${shownAd.zipcode} ${shownAd.city}</a></td>
+		</tr>
 
-				<div class="tile tile-half action action-tile">
-					<c:if test="${loggedInUserEmail != shownAd.user.username }">
-						<button id="newMsg" type="button">Contact Advertiser</button>
-					</c:if>
-					<c:if test="${loggedInUserEmail == shownAd.user.username }">
-						<a href="<c:url value='/profile/editAd?id=${shownAd.id}' />">Edit ad</a>
-					</c:if>
-				</div>
+		<tr>
+			<td><h2>Available from</h2></td>
+			<td>${formattedMoveInDate}</td>
+		</tr>
 
-			</c:when>
-			<c:otherwise>
+		<c:if test="${!shownAd.buyable}">
+			<tr>
+				<td><h2>Move-out Date</h2></td>
+				<td>${formattedMoveOutDate}</td>
+			</tr>
+		</c:if>
 
-				<div class="tile tile-half action action-tile action-medium">
-					<a href="/login">Sign in to see profile</a>
-				</div>
-
-				<div class="tile tile-half action action-tile action-medium">
-					<a href="/login">Sign in to reach vendor</a>
-				</div>
-
-			</c:otherwise>
-		</c:choose>
-
-	</div>
-
-	<div class="row">
-		<div class="tile tile-full">
-			<form class="form form-message">
-				<input type="text" id="msgSubject" placeholder="Subject *" />
-				<textarea id="msgTextarea" placeholder="Message"></textarea>
-
-				<div class="row">
-					<div class="tile tile-half">
-						<button class="submit-state-before" type="button" id="messageSend">
-							<span class="submit-before">Send</span>
-							<span class="submit-after">Delivered</span>
-							<span class="fa fa-circle-o-notch fa-spin fa-fw submitting"></span>
-							<span class="sr-only">Sending...</span>
-						</button>
-					</div>
-					<div class="tile tile-half">
-						<button type="button" id="messageCancel">Cancel</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-
-	<%--
-	@Jerome
-	TODO: Ask if needed.
-	<div id="confirmationDialog">
-		<form>
-		<p>Send enquiry to advertiser?</p>
-		<button type="button" id="confirmationDialogSend">Send</button>
-		<button type="button" id="confirmationDialogCancel">Cancel</button>
-		</form>
-	</div> --%>
-
-	<div class="row">
-		<div class="tile tile-three-quarter">
-			<h2>${shownAd.title}</h2>
-		</div>
-		<div class="tile tile-quarter action action-tile action-icon">
+		<tr>
 			<c:choose>
-				<c:when test="${loggedIn}">
-					<a class="right" id="bookmarkButton" title="Bookmark property">
-						<span class="fa fa-bookmark fa-2x action-inactive-color"></span>
-					</a>
+				<c:when test="${!shownAd.buyable}">
+					<td><h2>Monthly Rent</h2></td>
 				</c:when>
+				<c:otherwise>
+					<td><h2>Buying prize:</h2></td>
+				</c:otherwise>
 			</c:choose>
-		</div>
-	</div>
+			<td>${shownAd.prize}&#32;CHF</td>
+		</tr>
 
-	<div class="container-scroll">
+		<tr>
+			<td><h2>Square Meters</h2></td>
+			<td>${shownAd.squareFootage}&#32;m²</td>
+		</tr>
+		<tr>
+			<td><h2>Ad created on</h2></td>
+			<td>${formattedCreationDate}</td>
+		</tr>
 
-		<div class="row">
-			<div class="tile tile-full">
-				<table>
-					<tr>
-						<td>Type</td>
-						<td>${shownAd.roomType}</td>
-					</tr>
-
-					<tr>
-						<td>Address</td>
-						<td>
-							<a target="_blank" href="http://maps.google.com/?q=${shownAd.street}, ${shownAd.zipcode}, ${shownAd.city}">${shownAd.street},
-									${shownAd.zipcode} ${shownAd.city}</a>
-						</td>
-					</tr>
-
-					<tr>
-						<td>Available from</td>
-						<td>${formattedMoveInDate}</td>
-					</tr>
-
-					<tr>
-						<td>Move-out Date</td>
-						<td>${formattedMoveOutDate}</td>
-					</tr>
-
-					<tr>
-						<td>Monthly Rent</td>
-						<td>${shownAd.prize}&#32;CHF</td>
-					</tr>
-
-					<tr>
-						<td>Square Meters</td>
-						<td>${shownAd.squareFootage}&#32;m²</td>
-					</tr>
-					<tr>
-						<td>Ad created on</td>
-						<td>${formattedCreationDate}</td>
-					</tr>
-				<%-- </table>
-
-				<table> --%>
-					<tr>
-						<td>Smoking inside allowed</td>
-						<td>
-							<c:choose>
-								<c:when test="${shownAd.smokers}"><span class="fa fa-plus base-color"></span></c:when>
-								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
-							</c:choose>
-						</td>
-					</tr>
-
-					<tr>
-						<td>Animals allowed</td>
-						<td>
-							<c:choose>
-								<c:when test="${shownAd.animals}"><span class="fa fa-plus base-color"></span></c:when>
-								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
-							</c:choose>
-						</td>
-					</tr>
-
-					<tr>
-						<td>Furnished Room</td>
-						<td>
-							<c:choose>
-								<c:when test="${shownAd.furnished}"><span class="fa fa-plus base-color"></span></c:when>
-								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
-							</c:choose>
-						</td>
-					</tr>
-
-					<tr>
-						<td>WiFi available</td>
-						<td>
-							<c:choose>
-								<c:when test="${shownAd.internet}"><span class="fa fa-plus base-color"></span></c:when>
-								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
-							</c:choose>
-						</td>
-					</tr>
-
-					<tr>
-						<td>Cable TV</td>
-						<td>
-							<c:choose>
-								<c:when test="${shownAd.cable}"><span class="fa fa-plus base-color"></span></c:when>
-								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
-							</c:choose>
-						</td>
-					</tr>
-
-					<tr>
-						<td>Garage</td>
-						<td>
-							<c:choose>
-								<c:when test="${shownAd.garage}"><span class="fa fa-plus base-color"></span></c:when>
-								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
-							</c:choose>
-						</td>
-					</tr>
-
-					<tr>
-						<td>Cellar</td>
-						<td>
-							<c:choose>
-								<c:when test="${shownAd.cellar}"><span class="fa fa-plus base-color"></span></c:when>
-								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
-							</c:choose>
-						</td>
-					</tr>
-
-					<tr>
-						<td>Balcony</td>
-						<td>
-							<c:choose>
-								<c:when test="${shownAd.balcony}"><span class="fa fa-plus base-color"></span></c:when>
-								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
-							</c:choose>
-						</td>
-					</tr>
-
-					<tr>
-						<td>Garden</td>
-						<td>
-							<c:choose>
-								<c:when test="${shownAd.garden}"><span class="fa fa-plus base-color"></span></c:when>
-								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
-							</c:choose>
-						</td>
-					</tr>
-
-				</table>
-
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="tile tile-full">
-				<h3>Description</h3>
-				<p>${shownAd.roomDescription}</p>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="tile tile-full">
-				<h3>Preferences</h3>
-				<p>${shownAd.preferences}</p>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="tile tile-full">
-
-				<h3 class="row-h3">Viewing times</h3>
-
-				<div class="row viewing-times">
-					<div class="tile tile-full action action-tile">
-
+		<c:if test="${shownAd.buyable}">
+			<tr>
+				<td>
+					<form>
 						<c:choose>
 							<c:when test="${loggedIn}">
-								<c:if test="${loggedInUserEmail != shownAd.user.username}">
-									<c:forEach items="${visits}" var="visit">
-										<div class="row">
-											<div class="tile tile-full">
-												<button class="enquiry" type="button" data-id="${visit.id}">
-													<fmt:formatDate value="${visit.startTimestamp}" pattern="dd-MM-yyyy " />
-													&nbsp; from
-													<fmt:formatDate value="${visit.startTimestamp}" pattern=" HH:mm " />
-													until
-													<fmt:formatDate value="${visit.endTimestamp}" pattern=" HH:mm" />
-												</button>
-												<div class="row enquiry-confirm">
-													<div class="tile tile-half">
-														<button class="action-confirm">Confirm</button>
-													</div>
-													<div class="tile tile-half">
-														<button class="action-cancel">Cancel</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</c:forEach>
+								<c:if test="${loggedInUserEmail != shownAd.user.username }">
+									<button id="newMsg" type="button">Contact Advertiser
+										to buy estate</button>
 								</c:if>
 							</c:when>
 							<c:otherwise>
-
-								<a href="/login">Sign in to see viewing times</a>
-
+								<a href="/login"><button class="thinInactiveButton"
+										type="button">Login to contact advertiser</button></a>
 							</c:otherwise>
 						</c:choose>
+					</form>
+				</td>
+			</tr>
+		</c:if>
+	</table>
+</section>
 
-					</div>
-				</div>
-
-			</div>
-		</div>
-
-	</div> <%-- .container-scroll END --%>
-
+<div id="image-slider">
+	<div id="left-arrow">
+		<img src="/img/left-arrow.png" />
+	</div>
+	<div id="images">
+		<c:forEach items="${shownAd.pictures}" var="picture">
+			<img src="${picture.filePath}" />
+		</c:forEach>
+	</div>
+	<div id="right-arrow">
+		<img src="/img/right-arrow.png" />
+	</div>
 </div>
 
-<main role="main">
+<hr class="clearBoth" />
 
-	<%--
-		@Jerome
-		For the outer div slider or blender may be chosen as class. It then does
-		what it says.
-	 --%>
-	<div class="slider slider-blender-full">
-		<ul class="slides">
+<section>
+	<div id="descriptionTexts">
+		<div class="adDescDiv">
+			<h2>Room Description</h2>
+			<p>${shownAd.roomDescription}</p>
+		</div>
+		<br />
+		<div class="adDescDiv">
+			<h2>Preferences</h2>
+			<p>${shownAd.preferences}</p>
+		</div>
+		<br />
 
-			<c:forEach items="${shownAd.pictures}" var="picture">
+		<div id="visitList" class="adDescDiv">
+			<h2>Visiting times</h2>
+			<table>
+				<c:forEach items="${visits }" var="visit">
+					<tr>
+						<td><fmt:formatDate value="${visit.startTimestamp}"
+								pattern="dd-MM-yyyy " /> &nbsp; from <fmt:formatDate
+								value="${visit.startTimestamp}" pattern=" HH:mm " /> until <fmt:formatDate
+								value="${visit.endTimestamp}" pattern=" HH:mm" /></td>
+						<td><c:choose>
+								<c:when test="${loggedIn}">
+									<c:if test="${loggedInUserEmail != shownAd.user.username}">
+										<button class="thinButton" type="button" data-id="${visit.id}">Send
+											enquiry to advertiser</button>
+									</c:if>
+								</c:when>
+								<c:otherwise>
+									<a href="/login"><button class="thinInactiveButton"
+											type="button" data-id="${visit.id}">Login to send
+											enquiries</button></a>
+								</c:otherwise>
+							</c:choose></td>
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
 
-				<li class="slide" style="background-image: url(${picture.filePath})"></li>
+	</div>
 
-			</c:forEach>
+	<table id="checkBoxTable" class="adDescDiv">
+		<tr>
+			<td><h2>Smoking inside allowed</h2></td>
+			<td><c:choose>
+					<c:when test="${shownAd.smokers}">
+						<img src="/img/check-mark.png">
+					</c:when>
+					<c:otherwise>
+						<img src="/img/check-mark-negative.png">
+					</c:otherwise>
+				</c:choose></td>
+		</tr>
 
-		</ul> <%-- .slides END --%>
-	</div> <%-- .[slider|blender] END --%>
+		<tr>
+			<td><h2>Animals allowed</h2></td>
+			<td><c:choose>
+					<c:when test="${shownAd.animals}">
+						<img src="/img/check-mark.png">
+					</c:when>
+					<c:otherwise>
+						<img src="/img/check-mark-negative.png">
+					</c:otherwise>
+				</c:choose></td>
+		</tr>
 
-</main>
+		<tr>
+			<td><h2>Furnished Room</h2></td>
+			<td><c:choose>
+					<c:when test="${shownAd.furnished}">
+						<img src="/img/check-mark.png">
+					</c:when>
+					<c:otherwise>
+						<img src="/img/check-mark-negative.png">
+					</c:otherwise>
+				</c:choose></td>
+		</tr>
 
-<c:import url="template/~footer.jsp" />
-<c:import url="template/~bottom_ad-details.jsp">
-	<c:param name="js" value="ad-details" />
-</c:import>
+		<tr>
+			<td><h2>WiFi available</h2></td>
+			<td><c:choose>
+					<c:when test="${shownAd.internet}">
+						<img src="/img/check-mark.png">
+					</c:when>
+					<c:otherwise>
+						<img src="/img/check-mark-negative.png">
+					</c:otherwise>
+				</c:choose></td>
+		</tr>
 
+		<tr>
+			<td><h2>Cable TV</h2></td>
+			<td><c:choose>
+					<c:when test="${shownAd.cable}">
+						<img src="/img/check-mark.png">
+					</c:when>
+					<c:otherwise>
+						<img src="/img/check-mark-negative.png">
+					</c:otherwise>
+				</c:choose></td>
+		</tr>
 
+		<tr>
+			<td><h2>Garage</h2></td>
+			<td><c:choose>
+					<c:when test="${shownAd.garage}">
+						<img src="/img/check-mark.png">
+					</c:when>
+					<c:otherwise>
+						<img src="/img/check-mark-negative.png">
+					</c:otherwise>
+				</c:choose></td>
+		</tr>
 
-<%--
+		<tr>
+			<td><h2>Cellar</h2></td>
+			<td><c:choose>
+					<c:when test="${shownAd.cellar}">
+						<img src="/img/check-mark.png">
+					</c:when>
+					<c:otherwise>
+						<img src="/img/check-mark-negative.png">
+					</c:otherwise>
+				</c:choose></td>
+		</tr>
+
+		<tr>
+			<td><h2>Balcony</h2></td>
+			<td><c:choose>
+					<c:when test="${shownAd.balcony}">
+						<img src="/img/check-mark.png">
+					</c:when>
+					<c:otherwise>
+						<img src="/img/check-mark-negative.png">
+					</c:otherwise>
+				</c:choose></td>
+		</tr>
+
+		<tr>
+			<td><h2>Garden</h2></td>
+			<td><c:choose>
+					<c:when test="${shownAd.garden}">
+						<img src="/img/check-mark.png">
+					</c:when>
+					<c:otherwise>
+						<img src="/img/check-mark-negative.png">
+					</c:otherwise>
+				</c:choose></td>
+		</tr>
+
+	</table>
+</section>
+
+<div class="clearBoth"></div>
+<br>
 
 <table id="advertiserTable" class="adDescDiv">
 	<tr>
-	<td><h2>Advertiser</h2><br /></td>
+		<td><h2>Advertiser</h2>
+			<br /></td>
 	</tr>
 
 	<tr>
@@ -375,6 +506,54 @@
 
 		<td>${shownAd.user.username}</td>
 
+		<td id="advertiserEmail"><c:choose>
+				<c:when test="${loggedIn}">
+					<a href="/user?id=${shownAd.user.id}"><button type="button">Visit
+							profile</button></a>
+				</c:when>
+				<c:otherwise>
+					<a href="/login"><button class="thinInactiveButton"
+							type="button">Login to visit profile</button></a>
+				</c:otherwise>
+			</c:choose>
+		<td>
+			<form>
+				<c:choose>
+					<c:when test="${loggedIn}">
+						<c:if test="${loggedInUserEmail != shownAd.user.username }">
+							<button id="newMsg" type="button">Contact Advertiser</button>
+						</c:if>
+					</c:when>
+					<c:otherwise>
+						<a href="/login"><button class="thinInactiveButton"
+								type="button">Login to contact advertiser</button></a>
+					</c:otherwise>
+				</c:choose>
+			</form>
+		</td>
 	</tr>
 </table>
---%>
+
+<div id="msgDiv">
+	<form class="msgForm">
+		<h2>Contact the advertiser</h2>
+		<br> <br> <label>Subject: <span>*</span></label> <input
+			class="msgInput" type="text" id="msgSubject" placeholder="Subject" />
+		<br>
+		<br> <label>Message: </label>
+		<textarea id="msgTextarea" placeholder="Message"></textarea>
+		<br />
+		<button type="button" id="messageSend">Send</button>
+		<button type="button" id="messageCancel">Cancel</button>
+	</form>
+</div>
+
+<div id="confirmationDialog">
+	<form>
+		<p>Send enquiry to advertiser?</p>
+		<button type="button" id="confirmationDialogSend">Send</button>
+		<button type="button" id="confirmationDialogCancel">Cancel</button>
+	</form>
+</div>
+
+<c:import url="template/footer.jsp" />
