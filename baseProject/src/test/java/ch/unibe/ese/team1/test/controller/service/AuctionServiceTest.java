@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
+import ch.unibe.ese.team1.controller.pojos.forms.PlaceBidForm;
 import ch.unibe.ese.team1.controller.service.AuctionService;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.Gender;
@@ -90,32 +91,63 @@ public class AuctionServiceTest {
 
 		auctionService.saveFrom(placeAuctionForm, filePaths, testPersonAuction1);
 		
-		Auction auction = new Auction();
+		Auction auction1 = new Auction();
 		Iterable<Auction> ads = auctionService.getAllAds();
 		Iterator<Auction> iterator = ads.iterator();
 
 		while (iterator.hasNext()) {
-			auction = iterator.next();
+			auction1 = iterator.next();
 		}
 
 		// Testing
-		assertTrue(auction.getSmokers());
-		assertFalse(auction.getAnimals());
-		assertEquals("Bern", auction.getCity());
-		assertEquals(3018, auction.getZipcode());
-		assertEquals("Test preferences", auction.getPreferences());
-		assertEquals("Test Room description", auction.getRoomDescription());
-		assertEquals(600, auction.getPrize());
-		assertEquals(50, auction.getSquareFootage());
-		assertEquals("title", auction.getTitle());
-		assertEquals("Hauptstrasse 13", auction.getStreet());
-		assertEquals("Studio", auction.getRoomType());
-		assertEquals("12:00, 12.12.2014", auction.getEndTime());
+		assertTrue(auction1.getSmokers());
+		assertFalse(auction1.getAnimals());
+		assertEquals("Bern", auction1.getCity());
+		assertEquals(3018, auction1.getZipcode());
+		assertEquals("Test preferences", auction1.getPreferences());
+		assertEquals("Test Room description", auction1.getRoomDescription());
+		assertEquals(600, auction1.getPrize());
+		assertEquals(50, auction1.getSquareFootage());
+		assertEquals("title", auction1.getTitle());
+		assertEquals("Hauptstrasse 13", auction1.getStreet());
+		assertEquals("Studio", auction1.getRoomType());
+		assertEquals("12:00, 12.12.2014", auction1.getEndTime());
 
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date result = df.parse("2015-02-27");
 
-		assertEquals(0, result.compareTo(auction.getMoveInDate()));
+		assertEquals(0, result.compareTo(auction1.getMoveInDate()));
+	}
+	
+	@Test 
+	public void testPlaceNewBid() {
+		User testPersonAuction2 = createUser("testPersonAuction@2.ch", "password", "testPerson", "Auction2", Gender.MALE, "Normal");
+		testPersonAuction2.setAboutMe("TestPersonAuction2");
+		userDao.save(testPersonAuction2);
+
+		auctionService.saveFrom(placeAuctionForm, filePaths, testPersonAuction2);
+		
+		Auction auction2 = new Auction();
+		Iterable<Auction> ads = auctionService.getAllAds();
+		Iterator<Auction> iterator = ads.iterator();
+
+		while (iterator.hasNext()) {
+			auction2 = iterator.next();
+		}
+		
+		PlaceBidForm placeBidForm = new PlaceBidForm();
+		int newPrize = 700;
+		placeBidForm.setPrize(newPrize);
+		
+		String bidderName = "Test bidder";
+		
+		Auction auctionAfterNewBid = auctionService.saveBidPrize(placeBidForm, auction2.getId(), bidderName);
+		
+		assertEquals(newPrize, auctionAfterNewBid.getPrize());
+		assertEquals(bidderName, auctionAfterNewBid.getBidderName());
+		assertEquals(auction2.getId(), auctionAfterNewBid.getId());
+		
+		
 	}
 	
 
