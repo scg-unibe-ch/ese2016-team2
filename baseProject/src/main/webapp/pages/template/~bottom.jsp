@@ -24,6 +24,24 @@
     //   price.value = "500";
     // if(radius.value == null || radius.value == "" || radius.value == "0")
     //   radius.value = "5";
+
+
+		$("#earliestMoveInDate").datepicker({
+			altField: '#field-earliestMoveInDate',
+			dateFormat : 'dd-mm-yy'
+		});
+		$("#latestMoveInDate").datepicker({
+			altField: '#field-latestMoveInDate',
+			dateFormat : 'dd-mm-yy'
+		});
+		$("#earliestMoveOutDate").datepicker({
+			altField: '#field-earliestMoveOutDate',
+			dateFormat : 'dd-mm-yy'
+		});
+		$("#latestMoveOutDate").datepicker({
+			altField: '#field-latestMoveOutDate',
+			dateFormat : 'dd-mm-yy'
+		});
   }(window, document, jQuery);
 </script>
 </body>

@@ -99,6 +99,37 @@
 }
 
 
+.dates {
+  border-bottom: 1px solid $whiff-of-gray;
+
+  input {
+    border: none;
+  }
+
+  label {
+    @include sidebar-slip-pad-label;
+    margin-bottom: 0;
+    font-weight: normal;
+    color: $bright-gray;
+    cursor: pointer;
+  }
+
+  .datepicker {
+    @include sidebar-slip-pad-half-vert;
+    font-size: $f-atom;
+
+    .ui-corner-all {
+      margin-right: 16px;
+      cursor: pointer;
+    }
+
+    th, td {
+      padding: 0.21em 0;
+    }
+  }
+}
+
+
 
 .submit-after {
   transition: none;

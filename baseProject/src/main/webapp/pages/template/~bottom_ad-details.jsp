@@ -27,6 +27,25 @@
 
 
 
+		$("#earliestMoveInDate").datepicker({
+			altField: '#field-earliestMoveInDate',
+			dateFormat : 'dd-mm-yy'
+		});
+		$("#latestMoveInDate").datepicker({
+			altField: '#field-latestMoveInDate',
+			dateFormat : 'dd-mm-yy'
+		});
+		$("#earliestMoveOutDate").datepicker({
+			altField: '#field-earliestMoveOutDate',
+			dateFormat : 'dd-mm-yy'
+		});
+		$("#latestMoveOutDate").datepicker({
+			altField: '#field-latestMoveOutDate',
+			dateFormat : 'dd-mm-yy'
+		});
+
+
+
 		flatfindr.bookmark(
 			window, document, $, {
 				shownAdvertisementID: "${shownAd.id}",

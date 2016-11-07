@@ -33,7 +33,10 @@ flatfindr.enquiry = function (window, document, $) {
 
 
 
-
+  /**
+   * 
+   * @param  {object} e  the click/touch event
+   */
   function handleEnquiry(e) {
     e.preventDefault();
 

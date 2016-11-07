@@ -97,20 +97,101 @@
   					<form:errors path="prize" cssClass="validationErrorText" />
 
 
-            <%-- <label for="earliestMoveInDate">Earliest move-in date</label>
-            <label for="earliestMoveOutDate">Earliest move-out date</label>
+            <div class="row dates">
+              <div class="tile tile-half">
+                <div class="row">
+                  <div class="tile tile-full">
+                    <label>Earliest Move-in</label>
+                  </div>
+                  <div class="tile tile-full">
+                    <form:input
+                      class="js-has-label"
+                      type="text"
+                      id="field-earliestMoveInDate"
+                      path="earliestMoveInDate"
+                      tabindex="4"
+                      placeholder="Earliest Move-in" />
+                  </div>
+                </div>
+              </div>
+              <div class="tile tile-half">
+                <div class="datepicker" id="earliestMoveInDate">
 
-            <form:input type="text" id="field-earliestMoveInDate" path="earliestMoveInDate" />
-            <form:input type="text" id="field-earliestMoveOutDate" path="earliestMoveOutDate" />
+                </div>
+              </div>
+            </div>
 
+            <div class="row dates">
+              <div class="tile tile-half">
+                <div class="row">
+                  <div class="tile tile-full">
+                    <label>Earliest Move-out</label>
+                  </div>
+                  <div class="tile tile-full">
+                    <form:input
+                      class="js-has-label"
+                      type="text"
+                      id="field-earliestMoveOutDate"
+                      path="earliestMoveOutDate"
+                      tabindex="5"
+                      placeholder="Earliest Move-out" />
+                  </div>
+                </div>
+              </div>
+              <div class="tile tile-half">
+                <div class="datepicker" id="earliestMoveOutDate">
 
-            <label for="latestMoveInDate">Latest move-in date</label>
-            <label for="latestMoveOutDate">Latest move-out date</label>
+                </div>
+              </div>
+            </div>
 
+            <div class="row dates">
+              <div class="tile tile-half">
+                <div class="row">
+                  <div class="tile tile-full">
+                    <label>Latest Move-in</label>
+                  </div>
+                  <div class="tile tile-full">
+                    <form:input
+                      class="js-has-label"
+                      type="text"
+                      id="field-latestMoveInDate"
+                      path="latestMoveInDate"
+                      tabindex="6"
+                      placeholder="Latest Move-in" />
+                  </div>
+                </div>
+              </div>
+              <div class="tile tile-half">
+                <div class="datepicker" id="latestMoveInDate">
 
-            <form:input type="text" id="field-latestMoveInDate" path="latestMoveInDate" />
-            <form:input type="text" id="field-latestMoveOutDate" path="latestMoveOutDate" />
-             --%>
+                </div>
+              </div>
+            </div>
+
+            <div class="row dates">
+              <div class="tile tile-half">
+                <div class="row">
+                  <div class="tile tile-full">
+                    <label>Latest Move-out</label>
+                  </div>
+                  <div class="tile tile-full">
+                    <form:input
+                      class="js-has-label"
+                      type="text"
+                      id="field-latestMoveOutDate"
+                      path="latestMoveOutDate"
+                      tabindex="7"
+                      placeholder="Latest Move-out" />
+                  </div>
+                </div>
+              </div>
+              <div class="tile tile-half">
+                <div class="datepicker" id="latestMoveOutDate">
+
+                </div>
+              </div>
+            </div>
 
 
 
@@ -169,10 +250,10 @@
 
           <div class="row">
             <div class="tile tile-half">
-              <button type="submit" tabindex="4">Find</button>
+              <button type="submit" tabindex="8">Find</button>
             </div>
             <div class="tile tile-half">
-    					<button type="reset" tabindex="5">Clear</button>
+    					<button type="reset">Clear</button>
             </div>
           </div>
 

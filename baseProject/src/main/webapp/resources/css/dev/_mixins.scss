@@ -32,6 +32,40 @@
 }
 
 
+@mixin sidebar-slip-pad-half-vert {
+  @include pad($medium $small);
+
+  @include media($bq-medium) {
+    @include pad(($large - $small) ($medium / 2));
+  }
+
+  @include media($bq-large) {
+    @include pad(($large - $small) ($large / 2));
+  }
+
+  @include media($bq-huge) {
+    @include pad(($large - $small) ($huge / 2));
+  }
+}
+
+
+@mixin sidebar-slip-pad-label {
+  @include pad($medium $small 0);
+
+  @include media($bq-medium) {
+    @include pad(($large - $small) $medium 0);
+  }
+
+  @include media($bq-large) {
+    @include pad(($large - $small) $large 0);
+  }
+
+  @include media($bq-huge) {
+    @include pad(($large - $small) $huge 0);
+  }
+}
+
+
 
 @mixin sidebar-icon-pad {
   @include pad(($medium - 3px) 0);

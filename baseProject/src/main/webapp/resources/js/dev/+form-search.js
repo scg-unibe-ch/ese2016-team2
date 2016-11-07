@@ -72,8 +72,21 @@ flatfindr.search = function (window, document, $) {
    * @param  {object} e the event object click or touch.
    */
   function alignInputToTop() {
+    var
+      $this = $(this),
+      offset_mod = 0;
+
+    if ($this.is('.js-has-label')) {
+      offset_mod =
+        $this
+          .parents('.row')
+          .first()
+          .find('label')
+          .outerHeight();
+    }
+
     animateScrollTop(
-      $container_scroll.scrollTop() + $(this).position().top
+      $container_scroll.scrollTop() + $(this).position().top - offset_mod
     );
   }
 
