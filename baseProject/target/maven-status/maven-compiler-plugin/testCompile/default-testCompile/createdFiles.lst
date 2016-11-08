@@ -1,11 +1,7 @@
-ch\unibe\ese\team1\controller\service\EnquiryServiceTest.class
 ch\unibe\ese\team1\test\testData\VisitTestDataSaver.class
-ch\unibe\ese\team1\controller\service\GeoDataServiceTest.class
-ch\unibe\ese\team1\controller\service\AlertServiceTest.class
 ch\unibe\ese\team1\test\testData\AlertTestDataSaver.class
-ch\unibe\ese\team1\test\testData\BookmarkTestDataSaver.class
 ch\unibe\ese\team1\test\testData\VisitEnquiryTestDataSaver.class
 ch\unibe\ese\team1\test\testData\UserTestDataSaver.class
-ch\unibe\ese\team1\controller\service\AdServiceTest.class
 ch\unibe\ese\team1\test\testData\RatingTestDataSaver.class
 ch\unibe\ese\team1\test\testData\MessageTestDataSaver.class
+ch\unibe\ese\team1\test\testData\BookmarkTestDataSaver.class
