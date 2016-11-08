@@ -129,15 +129,16 @@ public class AlertService {
 	 * ad.
 	 */
 	private String getAlertText(Advertisement ad) {
-		return "Dear user,<br>good news. A new ad matching one of your alerts has been "
-				+ "entered into our system. You can visit it here:<br><br>"
-				+ "<a class=\"link\" href=/ad?id="
-				+ ad.getId()
-				+ ">"
+		String text = "Dear user,<br>good news. A new ad matching one of your alerts has been "
+				+ "entered into our system. You can visit it here:<br><br>";
+				if(!ad.getAuction()) text += "<a class=\"link\" href=/ad?id=";
+				else text += "<a class=\"link\" href=/auction?id=";
+				text += ad.getId() + ">"
 				+ ad.getTitle()
 				+ "</a><br><br>"
 				+ "Good luck and enjoy,<br>"
 				+ "Your FlatFindr crew";
+		return text;
 	}
 
 	/** Checks if an ad is conforming to the criteria in an alert. */
