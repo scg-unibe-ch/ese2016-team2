@@ -16,6 +16,5 @@ public interface AdDao extends CrudRepository<Ad, Long> {
 	public Iterable<Ad> findByUser(User user);
 
 	/** this will be used if one type is searched */
-	public List<Ad> findByRoomTypeAndPrizeLessThan(String roomType, 
-			int i);
+	public List<Ad> findByRoomTypeAndPrizeLessThan(String roomType, int i);
 }		

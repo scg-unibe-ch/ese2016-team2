@@ -3,11 +3,11 @@
     cursor: pointer;
   }
 
-  a {
+  a, button, select {
     appearance: none;
     background-color: $action-color;
     border: 0;
-    border-radius: $base-border-radius;
+    border-radius: 0; //$base-border-radius;
     color: $white;
     display: inline-block;
     font-family: $base-font-family;
@@ -65,24 +65,72 @@
 
 
 
-.action-tile a {
-  display: block;
-  border-radius: 0;
-  transition: all $base-duration $base-timing;
+.action-tile {
+  a, button {
+    display: block;
+    width: 100%;
+    border-radius: 0;
+    transition: all $base-duration $base-timing;
+  }
 
-  @include sidebar-button-pad;
+  a {
+    @include sidebar-button-pad;
+  }
+
+  button {
+    @include sidebar-button-pad-reduc;
+  }
 }
 
 
 
-.action-menu-primary {
-  position: absolute;
-  right: -116px;
+.action-icon a {
+  background-color: transparent;
+  color: $base-color;
 
+  &:hover,
+  &:focus {
+    background-color: inherit;
+    color: $base-color;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+
+    &:hover {
+      background-color: inherit;
+    }
+  }
+}
+
+
+
+
+.action-menu-primary,
+.action-sidebar {
+  position: absolute;
   @include sidebar-icon-pad;
 
   span {
-    color: $white;
-    margin-right: 16px;
+    color: $base-color-opposite;
+
+    [logged] & {
+      color: $base-color;
+    }
+  }
+}
+
+
+
+button.action-cancel,
+button.action-confirm {
+  background-color: $whiff-of-gray;
+  color: $light-gray;
+  transition: all $base-duration $base-timing;
+
+  &:hover {
+    color: $light-gray;
+    background-color: $slight-gray;
   }
 }

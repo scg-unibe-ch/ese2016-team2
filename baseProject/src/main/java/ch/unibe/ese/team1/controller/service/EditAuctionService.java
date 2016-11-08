@@ -1,28 +1,21 @@
 package ch.unibe.ese.team1.controller.service;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.unibe.ese.team1.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
-import ch.unibe.ese.team1.model.Ad;
-import ch.unibe.ese.team1.model.AdPicture;
 import ch.unibe.ese.team1.model.Auction;
+import ch.unibe.ese.team1.model.AuctionPicture;
 import ch.unibe.ese.team1.model.User;
-import ch.unibe.ese.team1.model.Visit;
-import ch.unibe.ese.team1.model.dao.AdDao;
-import ch.unibe.ese.team1.model.dao.AdPictureDao;
 import ch.unibe.ese.team1.model.dao.AuctionDao;
+import ch.unibe.ese.team1.model.dao.AuctionPictureDao;
 
 @Service
 public class EditAuctionService {
@@ -34,10 +27,7 @@ public class EditAuctionService {
 	private AuctionDao auctionDao;
 
 	@Autowired
-	private AdPictureDao adPictureDao;
-
-	@Autowired
-	private UserService userService;
+	private AuctionPictureDao auctionPictureDao;
 
 	/**
 	 * Handles persisting an edited auction to the database.
@@ -61,8 +51,6 @@ public class EditAuctionService {
 		auction.setTitle(placeAuctionForm.getTitle());
 
 		auction.setStreet(placeAuctionForm.getStreet());
-
-		auction.setStudio(placeAuctionForm.getStudio());
 		
 		auction.setRoomType(placeAuctionForm.getRoomType());
 
@@ -124,14 +112,14 @@ public class EditAuctionService {
 		 * Save the paths to the picture files, the pictures are assumed to be
 		 * uploaded at this point!
 		 */
-		List<AdPicture> pictures = new ArrayList<>();
+		List<AuctionPicture> pictures = new ArrayList<>();
 		for (String filePath : filePaths) {
-			AdPicture picture = new AdPicture();
+			AuctionPicture picture = new AuctionPicture();
 			picture.setFilePath(filePath);
 			pictures.add(picture);
 		}
 		// add existing pictures
-		for (AdPicture picture : auction.getPictures()) {
+		for (AuctionPicture picture : auction.getPictures()) {
 			pictures.add(picture);
 		}
 		auction.setPictures(pictures);
@@ -183,8 +171,8 @@ public class EditAuctionService {
 	@Transactional
 	public void deletePictureFromAuction(long auctionId, long pictureId) {
 		Auction auction = auctionService.getAuctionById(auctionId);
-		List<AdPicture> pictures = auction.getPictures();
-		AdPicture picture = adPictureDao.findOne(pictureId);
+		List<AuctionPicture> pictures = auction.getPictures();
+		AuctionPicture picture = auctionPictureDao.findOne(pictureId);
 		pictures.remove(picture);
 		auction.setPictures(pictures);
 		auctionDao.save(auction);

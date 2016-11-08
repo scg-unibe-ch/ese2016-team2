@@ -1,6 +1,5 @@
 package ch.unibe.ese.team1.controller.pojos.forms;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.Min;
@@ -36,13 +35,7 @@ public class PlaceAuctionForm {
 
 	private String preferences;
 	
-	// optional for input
-	private String roomFriends;
-	
 	private String roomType;	
-	
-	//true if studio, false if room
-	private boolean studio;
 	
 	private boolean smokers;
 	private boolean animals;
@@ -61,7 +54,7 @@ public class PlaceAuctionForm {
 	@NotBlank(message = "Required")
 	private String endDate;
 	
-	@NotBlank(message = "Required")
+	@NotBlank(message = "Required, time format is: HH:mm")
 	private String endTime;
 
 	public String getCity() {
@@ -206,22 +199,6 @@ public class PlaceAuctionForm {
 
 	public void setStreet(String street) {
 		this.street = street;
-	}
-
-	public String getRoomFriends() {
-		return roomFriends;
-	}
-
-	public void setRoomFriends(String roomFriends) {
-		this.roomFriends = roomFriends;
-	}
-	
-	public boolean getStudio() {
-		return studio;
-	}
-	
-	public void setStudio(boolean studio) {
-		this.studio = studio;
 	}
 	
 	public String getRoomType() {

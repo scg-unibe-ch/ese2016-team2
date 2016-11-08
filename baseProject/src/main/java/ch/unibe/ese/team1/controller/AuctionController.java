@@ -1,34 +1,22 @@
 package ch.unibe.ese.team1.controller;
 
-import java.io.IOException;
 import java.security.Principal;
-import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ch.unibe.ese.team1.controller.pojos.PictureUploader;
 import ch.unibe.ese.team1.controller.pojos.forms.MessageForm;
-import ch.unibe.ese.team1.controller.pojos.forms.PlaceAdForm;
-import ch.unibe.ese.team1.controller.pojos.forms.PlaceBidForm;
-import ch.unibe.ese.team1.controller.service.AdService;
 import ch.unibe.ese.team1.controller.service.AuctionService;
-import ch.unibe.ese.team1.controller.service.BookmarkService;
 import ch.unibe.ese.team1.controller.service.MessageService;
-import ch.unibe.ese.team1.controller.service.UserService;
 import ch.unibe.ese.team1.controller.service.VisitService;
-import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Auction;
-import ch.unibe.ese.team1.model.User;
 
 @Controller
 public class AuctionController {
@@ -38,16 +26,9 @@ public class AuctionController {
 	 * user only has to enter the data once. If an ad is placed, this form is
 	 * reset.
 	 */
-	private PlaceBidForm placeBidForm;
 
 	@Autowired
 	private AuctionService auctionService;
-
-	@Autowired
-	private UserService userService;
-
-	@Autowired
-	private BookmarkService bookmarkService;
 
 	@Autowired
 	private MessageService messageService;

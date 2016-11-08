@@ -23,13 +23,19 @@
 				<th>Address</th>
 				<th>Date</th>
 				<th>Time</th>
-				<th>Visit Ad</th>
+				<th>Visit Advertisement</th>
 				<th>Visitors</th>
 			</tr>
 			</thead>
 		<c:forEach var="presentation" items="${presentations}">
-			<tr>
+			<tr><c:choose>
+				<c:when test="${not empty presentation.ad}">
 				<td>${presentation.ad.street}, ${presentation.ad.zipcode} ${presentation.ad.city}</td>
+				</c:when>
+				<c:otherwise>
+				<td>${presentation.auction.street}, ${presentation.auction.zipcode} ${presentation.auction.city}</td>
+				</c:otherwise>
+				</c:choose>
 				<td>
 					<fmt:formatDate value="${presentation.startTimestamp}" var="formattedVisitDay"
 						type="date" pattern="dd.MM.yyyy" />
@@ -42,7 +48,12 @@
 						type="date" pattern="hh.mm" />
 					${formattedStartTime} - ${formattedEndTime}
 				</td>
-				<td><a href="/ad?id=${presentation.ad.id}"><button>Visit</button></a></td>
+				<td><c:choose><c:when test="${not empty presentation.ad}">
+				<a href="/ad?id=${presentation.ad.id}"><button>Visit</button></a>
+				</c:when><c:otherwise>
+				<a href="/auction?id=${presentation.auction.id}"><button>Visit</button></a>
+				</c:otherwise></c:choose></td>
+				
 				<td><a href="/profile/visitors?visit=${presentation.id}"><button>See List</button></a></td>
 			</tr>
 		</c:forEach>
@@ -65,12 +76,16 @@
 				<th>Address</th>
 				<th>Date</th>
 				<th>Time</th>
-				<th>Visit Ad</th>
+				<th>Visit Advertisement</th>
 			</tr>
 			</thead>
 		<c:forEach var="visit" items="${visits}">
 			<tr>
-				<td>${visit.ad.street}, ${visit.ad.zipcode} ${visit.ad.city}</td>
+				<td>
+				<c:choose><c:when test="${not empty visit.ad}">
+				${visit.ad.street}, ${visit.ad.zipcode} ${visit.ad.city}</c:when>
+				<c:otherwise>
+				${visit.auction.street}, ${visit.auction.zipcode} ${visit.auction.city}</c:otherwise></c:choose></td>
 				<td>
 					<fmt:formatDate value="${visit.startTimestamp}" var="formattedVisitDay"
 						type="date" pattern="dd.MM.yyyy" />
@@ -83,7 +98,11 @@
 						type="date" pattern="hh.mm" />
 					${formattedStartTime} - ${formattedEndTime}
 				</td>
-				<td><a href="/ad?id=${visit.ad.id}"><button>Visit</button></a></td>
+				<td><c:choose><c:when test="${not empty visit.ad}">
+				<a href="/ad?id=${visit.ad.id}"><button>Visit</button></a>
+				</c:when><c:otherwise>
+				<a href="/auction?id=${visit.auction.id}"><button>Visit</button></a>
+				</c:otherwise></c:choose></td>
 			</tr>
 		</c:forEach>
 		</table>

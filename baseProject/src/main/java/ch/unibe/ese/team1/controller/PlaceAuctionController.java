@@ -26,16 +26,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ch.unibe.ese.team1.controller.pojos.PictureUploader;
-import ch.unibe.ese.team1.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
-import ch.unibe.ese.team1.controller.service.AdService;
 import ch.unibe.ese.team1.controller.service.AlertService;
 import ch.unibe.ese.team1.controller.service.AuctionService;
-import ch.unibe.ese.team1.controller.service.BookmarkService;
-import ch.unibe.ese.team1.controller.service.MessageService;
 import ch.unibe.ese.team1.controller.service.UserService;
-import ch.unibe.ese.team1.controller.service.VisitService;
-import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.PictureMeta;
 import ch.unibe.ese.team1.model.User;
@@ -43,7 +37,7 @@ import ch.unibe.ese.team1.model.User;
 @Controller
 public class PlaceAuctionController {
 	
-	public static final String IMAGE_DIRECTORY = "/img/ads";
+	public static final String IMAGE_DIRECTORY = "/img/auctions";
 
 	/** Used for generating a JSON representation of a given object. */
 	private ObjectMapper objectMapper;
@@ -64,15 +58,6 @@ public class PlaceAuctionController {
 	private ServletContext servletContext;
 
 	@Autowired
-	private MessageService messageService;
-
-	@Autowired
-	private VisitService visitService;
-
-	@Autowired
-	private BookmarkService bookmarkService;
-
-	@Autowired
 	private UserService userService;
 
 	@Autowired
@@ -82,6 +67,11 @@ public class PlaceAuctionController {
 	@RequestMapping(value = "/profile/placeAuction", method = RequestMethod.GET)
 	public ModelAndView placeAd() throws IOException {
 		ModelAndView model = new ModelAndView("placeAuction");
+		
+		String realPath = servletContext.getRealPath(IMAGE_DIRECTORY);
+		if (pictureUploader == null) {
+			pictureUploader = new PictureUploader(realPath, IMAGE_DIRECTORY);
+		}
 		
 		return model;
 	}

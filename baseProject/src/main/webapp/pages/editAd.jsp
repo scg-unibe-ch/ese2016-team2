@@ -108,6 +108,21 @@
 		<legend>Change General info</legend>
 		<table class="placeAdTable">
 			<tr>
+				<td><label for="field-buyable">Rentable or Buyable:</label></td>
+			</tr>
+			<tr>
+				<td><c:choose>
+					<c:when test="${!ad.buyable}">
+					<form:radiobutton id="field-buyable" path="buyable" value="0" checked="checked" />Rentable
+					<form:radiobutton id="field-buyable" path="buyable" value="1" />Buyalbe
+					</c:when>
+					<c:otherwise>
+					<form:radiobutton id="field-buyable" path="buyable" value="0"  />Rentable
+					<form:radiobutton id="field-buyable" path="buyable" value="1" checked="checked" />Buyalbe
+					</c:otherwise>
+					</c:choose></td>
+			</tr>
+			<tr>
 				<td><label for="field-title">Ad Title</label></td>
 				<td><label for="type-room">Type:</label></td>
 			</tr>

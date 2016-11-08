@@ -104,6 +104,13 @@
 		<legend>General info</legend>
 		<table class="placeAdTable">
 			<tr>
+				<td><label for="field-buyable">Rentable or Buyable:</label></td>
+			</tr>
+			<tr>
+				<td><form:radiobutton id="field-buyable" path="buyable" value="0" checked="checked" />Rentable
+					<form:radiobutton id="field-buyable" path="buyable" value="1" />Buyalbe</td>
+			</tr>
+			<tr>
 				<td><label for="field-title">Ad Title</label></td>
 				<td><label for="type-room">Type:</label></td>
 			</tr>
@@ -130,7 +137,7 @@
 
 			<tr>
 				<td><label for="moveInDate">Move-in date</label></td>
-				<td><label for="moveOutDate">Move-out date (optional)</label></td>
+				<td><label for="moveOutDate">Move-out date (optional, not needed for a buyable estate)</label></td>
 			</tr>
 			<tr>
 				<td><form:input type="text" id="field-moveInDate"
@@ -140,7 +147,7 @@
 			</tr>
 
 			<tr>
-				<td><label for="field-Prize">Prize per month</label></td>
+				<td><label for="field-Prize">Prize per month/Selling prize</label></td>
 				<td><label for="field-SquareFootage">Square Meters</label></td>
 			</tr>
 			<tr>

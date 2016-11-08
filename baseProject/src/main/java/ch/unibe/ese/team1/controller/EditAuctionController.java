@@ -24,15 +24,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ch.unibe.ese.team1.controller.pojos.PictureUploader;
-import ch.unibe.ese.team1.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
-import ch.unibe.ese.team1.controller.service.AdService;
 import ch.unibe.ese.team1.controller.service.AlertService;
 import ch.unibe.ese.team1.controller.service.AuctionService;
-import ch.unibe.ese.team1.controller.service.EditAdService;
 import ch.unibe.ese.team1.controller.service.EditAuctionService;
 import ch.unibe.ese.team1.controller.service.UserService;
-import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.PictureMeta;
 import ch.unibe.ese.team1.model.User;
@@ -88,7 +84,7 @@ public class EditAuctionController {
 	@RequestMapping(value = "/profile/editAuction", method = RequestMethod.POST)
 	public ModelAndView editAdPageWithForm(@Valid PlaceAuctionForm placeAuctionForm,
 			BindingResult result, Principal principal,
-			RedirectAttributes redirectAttributes, @RequestParam long adId) {
+			RedirectAttributes redirectAttributes, @RequestParam long auctionId) {
 		ModelAndView model = new ModelAndView("placeAuction");
 		if (!result.hasErrors()) {
 			String username = principal.getName();
@@ -99,7 +95,7 @@ public class EditAuctionController {
 				pictureUploader = new PictureUploader(realPath, IMAGE_DIRECTORY);
 			}
 			List<String> fileNames = pictureUploader.getFileNames();
-			Auction auction = editAuctionService.saveFrom(placeAuctionForm, fileNames, user, adId);
+			Auction auction = editAuctionService.saveFrom(placeAuctionForm, fileNames, user, auctionId);
 
 			// triggers all alerts that match the placed ad
 			alertService.triggerAlerts(auction);
@@ -120,7 +116,7 @@ public class EditAuctionController {
 	 * the ad, but not from the server.
 	 */
 	@RequestMapping(value = "/profile/editAuction/deletePictureFromAuction", method = RequestMethod.POST)
-	public @ResponseBody void deletePictureFromAd(@RequestParam long auctionId,
+	public @ResponseBody void deletePictureFromAuction(@RequestParam long auctionId,
 			@RequestParam long pictureId) {
 		editAuctionService.deletePictureFromAuction(auctionId, pictureId);
 	}

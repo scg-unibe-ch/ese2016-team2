@@ -9,15 +9,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 /** Describes an advertisement that users can place and search for. */
 @MappedSuperclass
@@ -106,10 +102,6 @@ public abstract class Advertisement {
 	
 	@Column(nullable = false)
 	private String roomType = "";
-
-	@Fetch(FetchMode.SELECT)
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<AdPicture> pictures;
 
 	@ManyToOne(optional = false)
 	private User user;
@@ -293,14 +285,6 @@ public abstract class Advertisement {
 
 	public void setPreferences(String preferences) {
 		this.preferences = preferences;
-	}
-
-	public List<AdPicture> getPictures() {
-		return pictures;
-	}
-
-	public void setPictures(List<AdPicture> pictures) {
-		this.pictures = pictures;
 	}
 
 	public Date getMoveOutDate() {

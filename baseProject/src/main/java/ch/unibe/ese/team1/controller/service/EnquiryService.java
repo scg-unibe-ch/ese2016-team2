@@ -45,11 +45,11 @@ public class EnquiryService {
 	public Iterable<VisitEnquiry> getEnquiriesByRecipient(User recipient) {
 		List<VisitEnquiry> enquiries = new LinkedList<VisitEnquiry>();
 		for (VisitEnquiry enquiry : enquiryDao.findAll()) {
-			if (enquiry.getVisit().getAd().getUser().getId() == recipient
+			if (enquiry.getVisit().getAd() != null && enquiry.getVisit().getAd().getUser().getId() == recipient
 					.getId()) {
 				enquiries.add(enquiry);
 			}
-			if (enquiry.getVisit().getAuction().getUser().getId() == recipient
+			if (enquiry.getVisit().getAuction() != null && enquiry.getVisit().getAuction().getUser().getId() == recipient
 					.getId()) {
 				enquiries.add(enquiry);
 			}
@@ -84,7 +84,7 @@ public class EnquiryService {
 
 		// create a non-initialized rating
 		User ratee = enquiry.getSender();
-		User rater = visit.getAd().getUser();
+		User rater = visit.getAd().getUser(); 
 		Rating rating = new Rating();
 		rating.setRater(rater);
 		rating.setRatee(ratee);

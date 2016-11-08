@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ch.unibe.ese.team1.model.Ad;
-import ch.unibe.ese.team1.model.Advertisement;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.Visit;
