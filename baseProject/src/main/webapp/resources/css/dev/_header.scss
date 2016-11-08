@@ -1,3 +1,26 @@
+// @Jerome
+// from _forms.scss
+// $slip-height-small: 57px;
+// $slip-height-medium: 73px;
+
+
+.menu-max-height {
+  height: calc(100vh - 6 * #{$slip-height-small - 1});
+
+  @include media($bq-medium) {
+    height: calc(100vh - 6 * #{$slip-height-medium - 1});
+  }
+
+  .headerPrimarySearchClosed & {
+    height: calc(100vh - 1 * #{$slip-height-small - 1});
+
+    @include media($bq-medium) {
+      height: calc(100vh - 1 * #{$slip-height-medium - 1});
+    }
+  }
+}
+
+
 .header-primary {
   position: fixed;
   top: 0;
