@@ -37,7 +37,7 @@ public class AuctionController {
 	private VisitService visitService;
 
 	/** Gets the auction description page for the auction with the given id. */
-	@RequestMapping(value = "/auction/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/auction", method = RequestMethod.GET)
 	public ModelAndView auction(@RequestParam("id") long id, Principal principal) {
 		ModelAndView model = new ModelAndView("auctionDescription");
 		Auction auction = auctionService.getAuctionById(id);
