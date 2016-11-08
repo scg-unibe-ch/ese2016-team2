@@ -1,4 +1,4 @@
-package ch.unibe.ese.team1.controller.service;
+package ch.unibe.ese.team1.test.controller.service;
 
 import static org.junit.Assert.*;
 
@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import ch.unibe.ese.team1.controller.service.GeoDataService;
 import ch.unibe.ese.team1.model.Location;
 
 @RunWith(SpringJUnit4ClassRunner.class)

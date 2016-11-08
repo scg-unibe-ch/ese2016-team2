@@ -1,4 +1,4 @@
-package ch.unibe.ese.team1.controller.service;
+package ch.unibe.ese.team1.test.controller.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Set;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAdForm;
+import ch.unibe.ese.team1.controller.service.AdService;
+import ch.unibe.ese.team1.controller.service.BookmarkService;
 import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Gender;
 import ch.unibe.ese.team1.model.User;
@@ -34,23 +38,25 @@ import ch.unibe.ese.team1.model.dao.UserDao;
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
 		"file:src/main/webapp/WEB-INF/config/springSecurity.xml"})
 @WebAppConfiguration
-public class AdServiceTest {
+public class BookmarkServiceTest {
 
 	@Autowired
-	private AdService adService;
+	private BookmarkService bookmarkService;
 	
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private AdService adService;
+	
+	private ArrayList<String> filePaths = new ArrayList<>();
+	private LinkedList<Ad> bookmarkedAds = new LinkedList<>();
+	private User user = new User();
+	private Ad ad = new Ad();
+	private Boolean bookmarked = null;
 
-	/**
-	 * In order to test the saved ad, I need to get it back from the DB again, so these
-	 * two methods need to be tested together, normally we want to test things isolated of
-	 * course. Testing just the returned ad from saveFrom() wouldn't answer the question 
-	 * whether the ad has been saved correctly to the db.
-	 * @throws ParseException 
-	 */
-	@Test
-	public void saveFromAndGetById() throws ParseException {
+	@Before
+	public void createAdAndUser() throws ParseException {
 		//Preparation
 		PlaceAdForm placeAdForm = new PlaceAdForm();
 		placeAdForm.setCity("3018 - Bern");
@@ -63,7 +69,7 @@ public class AdServiceTest {
 		placeAdForm.setRoomType("Studio");
 		placeAdForm.setMoveInDate("27-02-2015");
 		placeAdForm.setMoveOutDate("27-04-2015");
-		
+				
 		placeAdForm.setSmokers(true);
 		placeAdForm.setAnimals(false);
 		placeAdForm.setGarden(true);
@@ -73,46 +79,39 @@ public class AdServiceTest {
 		placeAdForm.setCable(false);
 		placeAdForm.setGarage(true);
 		placeAdForm.setInternet(false);
-		
-		ArrayList<String> filePaths = new ArrayList<>();
+				
 		filePaths.add("/img/test/ad1_1.jpg");
-		
-		User hans = createUser("hans@kanns.ch", "password", "Hans", "Kanns",
-				Gender.MALE);
-		hans.setAboutMe("Hansi Hinterseer");
-		userDao.save(hans);
-		
-		adService.saveFrom(placeAdForm, filePaths, hans);
-		
-		Ad ad = new Ad();
+				
+		user = createUser("hans@muster.ch", "password", "Hans", "Muser",
+				Gender.MALE, "Premium");
+		user.setAboutMe("Hans Muser");
+		userDao.save(user);
+				
+		adService.saveFrom(placeAdForm, filePaths, user);
 		Iterable<Ad> ads = adService.getAllAds();
 		Iterator<Ad> iterator = ads.iterator();
 		
 		while (iterator.hasNext()) {
 			ad = iterator.next();
 		}
+	
+		bookmarkedAds.add(ad);	
+		user.setBookmarkedAds(bookmarkedAds);
+		userDao.save(user);
+
+	}
+	
+	@Test
+	public void checkBookmarkStatus(){		
+		bookmarked = true;
+		assertEquals(2, bookmarkService.getBookmarkStatus(ad, bookmarked, user));
 		
-		//Testing
-		assertTrue(ad.getSmokers());
-		assertFalse(ad.getAnimals());
-		assertEquals("Bern", ad.getCity());
-		assertEquals(3018, ad.getZipcode());
-		assertEquals("Test preferences", ad.getPreferences());
-		assertEquals("Test Room description", ad.getRoomDescription());
-		assertEquals(600, ad.getPrize());
-		assertEquals(50, ad.getSquareFootage());
-		assertEquals("title", ad.getTitle());
-		assertEquals("Hauptstrasse 13", ad.getStreet());
-		assertEquals("Studio", ad.getRoomType());
-		
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	    Date result =  df.parse("2015-02-27");
-		
-		assertEquals(0, result.compareTo(ad.getMoveInDate()));
+		bookmarked = false;
+		assertEquals(3, bookmarkService.getBookmarkStatus(ad, bookmarked, user));
 	}
 	
 	private User createUser(String email, String password, String firstName,
-			String lastName, Gender gender) {
+			String lastName, Gender gender, String account) {
 		User user = new User();
 		user.setUsername(email);
 		user.setPassword(password);
@@ -121,6 +120,7 @@ public class AdServiceTest {
 		user.setLastName(lastName);
 		user.setEnabled(true);
 		user.setGender(gender);
+		user.setAccount(account);
 		Set<UserRole> userRoles = new HashSet<>();
 		UserRole role = new UserRole();
 		role.setRole("ROLE_USER");
@@ -129,5 +129,4 @@ public class AdServiceTest {
 		user.setUserRoles(userRoles);
 		return user;
 	}
-	
 }
