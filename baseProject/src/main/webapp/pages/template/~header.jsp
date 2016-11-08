@@ -68,7 +68,7 @@
 
             <div class="row checkboxes">
               <div class="tile tile-third">
-                <form:checkbox name="room" id="room" path="room" />
+                <form:checkbox name="room" id="room" path="room" checked="checked" />
                 <label for="room">Room</label>
               </div>
               <div class="tile tile-third">

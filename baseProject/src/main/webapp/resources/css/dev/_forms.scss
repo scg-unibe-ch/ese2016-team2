@@ -217,10 +217,10 @@ $slip-height-medium: 73px;
 
   [view].headerPrimarySearchIn &,
   [view].headerPrimarySearchOpen & {
-    height: (6 * $slip-height-small);
+    height: (6 * $slip-height-small - 1);
 
     @include media($bq-medium) {
-      height: (6 * $slip-height-medium);
+      height: (6 * $slip-height-medium - 1);
     }
   }
 }
@@ -258,9 +258,19 @@ $slip-height-medium: 73px;
     height $base-duration $base-timing,
     width $base-duration $base-timing;
 
+  // could be .wo-search +
+  .results &, .searchAd & {
+    top: 2 * $slip-height-small + 1 !important;
+  }
+
   @include media($bq-medium) {
     top: $slip-height-medium + 1 !important;
     height: (5 * $slip-height-medium) - 1;
+
+    // could be .wo-search +
+    .results &, .searchAd & {
+      top: 2 * $slip-height-medium + 1 !important;
+    }
   }
 
   li {
