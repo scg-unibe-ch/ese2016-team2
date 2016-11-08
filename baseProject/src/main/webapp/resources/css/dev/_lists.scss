@@ -1,0 +1,52 @@
+// from _forms.scss
+// $slip-height-small: 57px;
+// $slip-height-medium: 73px;
+
+.list-max-height {
+  height: calc(100vh - 2 * #{$slip-height-small});
+
+  @include media($bq-medium) {
+    height: calc(100vh - 2 * #{$slip-height-medium});
+  }
+}
+
+
+select.list-sort {
+  margin-bottom: 0;
+  @include sidebar-select-pad;
+
+  background-color: $whiff-of-gray;
+  color: $light-gray;
+
+  &:hover,
+  &:focus {
+    background-color: $whiff-of-gray;
+    color: $light-gray;
+  }
+}
+
+
+.list-image-link {
+  display: block;
+  width: 100%;
+  height: 5 * $slip-height-small;
+  background-position: center center;
+  background-repeat: none;
+  background-size: cover;
+
+  @include media($bq-medium) {
+    height: 5 * $slip-height-medium;
+  }
+}
+
+
+.resultAd-text {
+  @include sidebar-slip-pad;
+  border-bottom: 1px solid $whiff-of-gray;
+  margin-bottom: $slip-height-small;
+  background-color: $is-this-even-gray;
+
+  @include media($bq-medium) {
+    margin-bottom: $slip-height-medium;
+  }
+}

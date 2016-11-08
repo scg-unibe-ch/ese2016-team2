@@ -1,3 +1,30 @@
+// @Jerome
+// from _forms.scss
+// $slip-height-small: 57px;
+// $slip-height-medium: 73px;
+
+
+.menu-max-height {
+  height: calc(100vh - 6 * #{$slip-height-small - 1});
+
+  @include media($bq-medium) {
+    height: calc(100vh - 6 * #{$slip-height-medium - 1});
+  }
+
+  .wo-search & {
+    height: 100vh !important;
+  }
+
+  .headerPrimarySearchClosed & {
+    height: calc(100vh - 1 * #{$slip-height-small - 1});
+
+    @include media($bq-medium) {
+      height: calc(100vh - 1 * #{$slip-height-medium - 1});
+    }
+  }
+}
+
+
 .header-primary {
   position: fixed;
   top: 0;
@@ -10,10 +37,6 @@
   transition:
     left $base-duration $base-timing,
     width $base-duration $base-timing;
-
-  &.js-show {
-    left: 0;
-  }
 
   [view].headerPrimaryIn &,
   [view].headerPrimaryOpen & {
@@ -44,5 +67,20 @@
     > a {
       background-color: $whiff-of-gray;
     }
+  }
+}
+
+
+
+.action-menu-primary {
+  right: -116px;
+
+  span {
+    margin-top: 2px;
+    margin-right: 16px;
+  }
+
+  .wo-search & {
+    right: -64px;
   }
 }
