@@ -110,7 +110,7 @@
                       id="field-earliestMoveInDate"
                       path="earliestMoveInDate"
                       tabindex="4"
-                      placeholder="Earliest Move-in" />
+                      placeholder="Choose from datepicker..." />
                   </div>
                 </div>
               </div>
@@ -134,7 +134,7 @@
                       id="field-earliestMoveOutDate"
                       path="earliestMoveOutDate"
                       tabindex="5"
-                      placeholder="Earliest Move-out" />
+                      placeholder="Choose from datepicker..." />
                   </div>
                 </div>
               </div>
@@ -158,7 +158,7 @@
                       id="field-latestMoveInDate"
                       path="latestMoveInDate"
                       tabindex="6"
-                      placeholder="Latest Move-in" />
+                      placeholder="Choose from datepicker..." />
                   </div>
                 </div>
               </div>
@@ -182,7 +182,7 @@
                       id="field-latestMoveOutDate"
                       path="latestMoveOutDate"
                       tabindex="7"
-                      placeholder="Latest Move-out" />
+                      placeholder="Choose from datepicker..." />
                   </div>
                 </div>
               </div>
@@ -253,7 +253,7 @@
               <button type="submit" tabindex="8">Find</button>
             </div>
             <div class="tile tile-half">
-    					<button type="reset">Clear</button>
+    					<button form="searchForm" type="reset">Clear</button>
             </div>
           </div>
 

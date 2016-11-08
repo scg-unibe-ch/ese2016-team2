@@ -7,21 +7,11 @@
 <script>
   +function (window, document, $) {
 
-		flatfindr.search(window, document, $, {
+		flatfindr.filter(window, document, $, {
 			zipcodes: <c:import url="getzipcodes.jsp" />
-		});
-
-		flatfindr.bookmark(window, document, $, {
-			shownAdvertisementID: "${shownAd.id}",
-			shownAdvertisement: "${shownAd}"
-		});
-
-		flatfindr.message(window, document, $, {
-			shownAdUsername: "${shownAd.user.username}"
 		});
 
   }(window, document, jQuery);
 </script>
-
 </body>
 </html>

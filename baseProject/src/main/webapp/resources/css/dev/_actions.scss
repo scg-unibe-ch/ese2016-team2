@@ -3,11 +3,11 @@
     cursor: pointer;
   }
 
-  a, button {
+  a, button, select {
     appearance: none;
     background-color: $action-color;
     border: 0;
-    border-radius: $base-border-radius;
+    border-radius: 0; //$base-border-radius;
     color: $white;
     display: inline-block;
     font-family: $base-font-family;

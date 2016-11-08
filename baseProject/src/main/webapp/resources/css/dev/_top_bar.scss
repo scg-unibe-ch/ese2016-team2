@@ -1,0 +1,27 @@
+// from _forms.scss
+// $slip-height-small: 57px;
+// $slip-height-medium: 73px;
+
+
+.top-bar {
+  height: $slip-height-small;
+  border-bottom: 1px solid $whiff-of-gray;
+
+  @include media($bq-medium) {
+    height: $slip-height-medium;
+  }
+
+  h2 {
+    margin-bottom: 0;
+    @include sidebar-slip-pad;
+    text-align: center;
+    opacity: 0;
+    transition: opacity $base-duration $base-timing;
+  }
+
+  .headerPrimaryClosed & {
+    h2 {
+      opacity: 1;
+    }
+  }
+}

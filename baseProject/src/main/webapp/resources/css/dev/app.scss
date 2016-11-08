@@ -41,10 +41,12 @@
 
 @import 'text';
 @import 'actions';
-@import 'forms';
+@import 'forms'; // @Jerome: has to be before lists and top-bar for now
 @import 'tables';
+@import 'lists';
 
 @import 'header';
+@import 'top_bar';
 @import 'sidebar';
 @import 'main';
 @import 'footer';

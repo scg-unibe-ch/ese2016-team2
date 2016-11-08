@@ -15,6 +15,23 @@
 }
 
 
+@mixin sidebar-select-pad {
+  @include pad(($medium + 2) $small);
+
+  @include media($bq-medium) {
+    @include pad(($large - $small + 2) $medium);
+  }
+
+  @include media($bq-large) {
+    @include pad(($large - $small + 2) $large);
+  }
+
+  @include media($bq-huge) {
+    @include pad(($large - $small + 2) $huge);
+  }
+}
+
+
 @mixin sidebar-slip-pad-half {
   @include pad(($medium / 2) $small);
 
