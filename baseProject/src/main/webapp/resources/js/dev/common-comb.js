@@ -5,4 +5,7 @@
 // to work properly. Or.. i just got tired of trying.
 // @codekit-prepend "../../components/jquery-ui/jquery-ui.js"
 
-// @codekit-prepend "_header-primary.js"
+// @codekit-prepend "+bury-unearth.js"
+
+// @codekit-prepend "+header-primary.js"
+// @codekit-prepend "+form-search.js"

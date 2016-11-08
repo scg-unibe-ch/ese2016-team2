@@ -5,280 +5,389 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<c:import url="template/~top.jsp" />
+<c:import url="template/~header_wo_search.jsp" />
 
-<c:import url="template/header.jsp" />
-<pre><a href="/">Home</a>   &gt;   <a href="/searchAd/">Search</a>   &gt;   Results</pre>
+<main role="main">
+	<c:import url="template/~top_bar.jsp">
+		<c:param name="instr" value="Filter finds..." />
+	</c:import>
 
-<script>
-function validateType(form)
-{
-	var room = document.getElementById('room');
-	var studio = document.getElementById('studio');
-	var house = document.getElementById('house');
-	var neither = document.getElementById('neither');
-	var filtered = document.getElementById('filtered');
-	
-	neither.checked = false;
-	if(!room.checked && !studio.checked && !house.checked) {
-		neither.checked = true;
-	}
-	filtered.checked = true;
-}
-</script>
+	<div class="container">
 
-<script>
-/*
- * This script takes all the resultAd divs and sorts them by a parameter specified by the user.
- * No arguments need to be passed, since the function simply looks up the dropdown selection.
- */
-function sort_div_attribute() {
-    //determine sort modus (by which attribute, asc/desc)
-    var sortmode = $('#modus').find(":selected").val();
+		<div class="row">
 
-    //only start the process if a modus has been selected
-    if(sortmode.length > 0) {
-    	var attname;
+			<div class="span-half">
+				<div class="form form-search form-filter form-max-height">
+					<div class="container-scroll">
 
-    	//determine which variable we pass to the sort function
-		if(sortmode == "price_asc" || sortmode == "price_desc")
-			attname = 'data-price';
-	    else if(sortmode == "moveIn_asc" || sortmode == "moveIn_desc")
-			attname = 'data-moveIn';
-	    else
-			attname = 'data-age';
+						<form:form
+							method="post"
+							modelAttribute="searchForm"
+							action="/results"
+							id="filterForm"
+							autocomplete="off">
 
-		//copying divs into an array which we're going to sort
-	    var divsbucket = new Array();
-	    var divslist = $('div.resultAd');
-	    var divlength = divslist.length;
-	    for (a = 0; a < divlength; a++) {
-			divsbucket[a] = new Array();
-			divsbucket[a][0] = divslist[a].getAttribute(attname);
-			divsbucket[a][1] = divslist[a];
-			divslist[a].remove();
-	    }
+							<form:input
+								type="text"
+								name="city"
+								id="city"
+								path="city"
+								placeholder="Find..."
+								tabindex="1" />
+							<form:errors path="city" cssClass="validationErrorText" />
 
-	    //sort the array
-		divsbucket.sort(function(a, b) {
-	    if (a[0] == b[0])
-			return 0;
-	    else if (a[0] > b[0])
-			return 1;
-        else
-			return -1;
-		});
-
-	    //invert sorted array for certain sort options
-		if(sortmode == "price_desc" || sortmode == "moveIn_asc" || sortmode == "dateAge_asc")
-			divsbucket.reverse();
-
-	    //insert sorted divs into document again
-		for(a = 0; a < divlength; a++)
-        	$("#resultsDiv").append($(divsbucket[a][1]));
-	}
-}
-</script>
-
-<script>
-	$(document).ready(function() {
-		$("#city").autocomplete({
-			minLength : 2
-		});
-		$("#city").autocomplete({
-			source : <c:import url="getzipcodes.jsp" />
-		});
-		$("#city").autocomplete("option", {
-			enabled : true,
-			autoFocus : true
-		});
-
-		$("#field-earliestMoveInDate").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		$("#field-latestMoveInDate").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		$("#field-earliestMoveOutDate").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		$("#field-latestMoveOutDate").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-	});
-</script>
-
-<h1>Search results:</h1>
-
-<hr />
-
-<div>
-<select id="modus">
-    <option value="">Sort by:</option>
-    <option value="price_asc">Price (ascending)</option>
-    <option value="price_desc">Price (descending)</option>
-    <option value="moveIn_desc">Move-in date (earliest to latest)</option>
-    <option value="moveIn_asc">Move-in date (latest to earliest)</option>
-    <option value="dateAge_asc">Date created (youngest to oldest)</option>
-    <option value="dateAge_desc">Date created (oldest to youngest)</option>
-</select>
-
-<button onClick="sort_div_attribute()">Sort</button>
-</div>
-<c:choose>
-	<c:when test="${empty results}">
-		<p>No results found!
-	</c:when>
-	<c:otherwise>
-		<div id="resultsDiv" class="resultsDiv">
-			<c:forEach var="ad" items="${results}">
-				<c:choose>
-				<c:when test="${!ad.auction}" >
-						<div class="resultAd" data-price="${ad.prize}"
-							data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">
-							<div class="resultLeft">
-								<a href="<c:url value='/ad?id=${ad.id}' />"><img
-									src="${ad.pictures[0].filePath}" /></a>
-								<h2>
-									<a class="link" href="<c:url value='/ad?id=${ad.id}' />">${ad.title }</a>
-								</h2>
-								<p>${ad.street},${ad.zipcode} ${ad.city}</p>
-								<br />
-								<p>
-									<i>${ad.roomType}</i>
-								</p>
+							<div class="row checkboxes">
+								<div class="tile tile-half">
+									<form:radiobutton name="buyable" id="rent" path="buyable" value="0" />
+									<label for="rent">Rent</label>
+								</div>
+								<div class="tile tile-half">
+									<form:radiobutton name="buyable" id="buy" path="buyable" value="1" />
+									<label for="buy">Buy</label>
+								</div>
 							</div>
-							<div class="resultRight">
-								<h2>CHF ${ad.prize}</h2>
-								<br /> <br />
 
-								<fmt:formatDate value="${ad.moveInDate}"
-									var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
 
-								<p>Move-in date: ${formattedMoveInDate }</p>
+							<form:input
+								id="radiusInput"
+								type="number"
+								path="radius"
+								placeholder="Radius in km (5, 10, 15,... , 500)"
+								tabindex="2"
+								step="5"
+								min="5"
+								max="500" />
+							<form:errors path="radius" cssClass="validationErrorText" />
+
+
+							<div class="row checkboxes">
+								<div class="tile tile-third">
+									<form:checkbox name="room" id="room" path="room" />
+									<label for="room">Room</label>
+								</div>
+								<div class="tile tile-third">
+									<form:checkbox name="studio" id="studio" path="studio" />
+									<label for="studio">Studio</label>
+								</div>
+								<div class="tile tile-third">
+									<form:checkbox name="house" id="house" path="house" />
+									<label for="house">House</label>
+								</div>
 							</div>
-						</div>
-					</c:when>
-				<c:otherwise>
-						<div class="resultAd" data-price="${ad.prize}"
-							data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">
-							<div class="resultLeft">
-								<a href="<c:url value='/ad?id=${ad.id}' />"><img
-									src="${ad.pictures[0].filePath}" /></a>
-								<h2>
-									<a class="link" href="<c:url value='/auction?id=${ad.id}' />">${ad.title }</a>
-								</h2>
-								<p>${ad.street},${ad.zipcode} ${ad.city}</p>
-								<br />
-								<p>
-									<i>${ad.roomType}</i>
-								</p>
-							</div>
-							<div class="resultRight">
-								<h2>CHF ${ad.prize}</h2>
-
-								<fmt:formatDate value="${ad.moveInDate}"
-									var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
-
-								<p>Move-in date: ${formattedMoveInDate }</p>
-								
-								<p>Auction end-date: ${ad.endTime}</p>
-							</div>
-						</div>
-				</c:otherwise>
-				</c:choose>
-			</c:forEach>
-		</div>
-	</c:otherwise>
-</c:choose>
-
-<form:form method="post" modelAttribute="searchForm" action="/results"
-	id="filterForm" autocomplete="off">
-
-	<div id="filterDiv">
-		<h2>Filter results:</h2>
-		<form:radiobutton name="buyable" id="buyable" path="buyable" value="0" /><label>Rent</label>
-		<form:radiobutton name="buyable" id="buyable" path="buyable" value="1" /><label>Buy</label>
-		<br />
-		
-		<form:checkbox name="room" id="room" path="room" /><label>Room</label>
-		<form:checkbox name="studio" id="studio" path="studio" /><label>Studio</label>
-		<form:checkbox name="house" id="house" path="house" /><label>House</label>
-		
-		<form:checkbox style="display:none" name="neither" id="neither" path="neither" />
-		<form:errors path="neither" cssClass="validationErrorText" /><br />
-
-		<label for="city">City / zip code:</label>
-		<form:input type="text" name="city" id="city" path="city"
-			placeholder="e.g. Bern" tabindex="3" />
-		<form:errors path="city" cssClass="validationErrorText" /><br />
-
-		<label for="radius">Within radius of (max.):</label>
-		<form:input id="radiusInput" type="number" path="radius"
-			placeholder="e.g. 5" step="5" />
-		km
-		<form:errors path="radius" cssClass="validationErrorText" />
-		<br /> <label for="prize">Price (max.):</label>
-		<form:input id="prizeInput" type="number" path="prize"
-			placeholder="e.g. 5" step="50" />
-		CHF
-		<form:errors path="prize" cssClass="validationErrorText" /><br />
-
-		<hr class="slim">
-
-		<table style="width: 80%">
-			<tr>
-				<td><label for="earliestMoveInDate">Earliest move-in date</label></td>
-				<td><label for="earliestMoveOutDate">Earliest move-out date (optional)</label></td>
-			</tr>
-			<tr>
-				<td><form:input type="text" id="field-earliestMoveInDate"
-						path="earliestMoveInDate" /></td>
-				<td><form:input type="text" id="field-earliestMoveOutDate"
-						path="earliestMoveOutDate" /></td>
-			</tr>
-			<tr>
-				<td><label for="latestMoveInDate">Latest move-in date</label></td>
-				<td><label for="latestMoveOutDate">Latest move-out date (optional)</label></td>
-			</tr>
-			<tr>
-				<td><form:input type="text" id="field-latestMoveInDate"
-						path="latestMoveInDate" /></td>
-				<td><form:input type="text" id="field-latestMoveOutDate"
-						path="latestMoveOutDate" /></td>
-			</tr>
-			<tr>
-				<td><form:checkbox id="field-smoker" path="smokers" value="1" /><label>Smoking inside
-						allowed</label></td>
-				<td><form:checkbox id="field-animals" path="animals" value="1" /><label>Animals
-						inside allowed</label></td>
-			</tr>
-			<tr>
-				<td><form:checkbox id="field-garden" path="garden" value="1" /><label>Garden
-						(co-use)</label></td>
-				<td><form:checkbox id="field-balcony" path="balcony" value="1" /><label>Balcony
-						or Patio</label></td>
-			</tr>
-			<tr>
-				<td><form:checkbox id="field-cellar" path="cellar" value="1" /><label>Cellar
-						or Attic</label></td>
-				<td><form:checkbox id="field-furnished" path="furnished"
-						value="1" /><label>Furnished</label></td>
-			</tr>
-			<tr>
-				<td><form:checkbox id="field-cable" path="cable" value="1" /><label>Cable
-						TV</label></td>
-				<td><form:checkbox id="field-garage" path="garage" value="1" /><label>Garage</label>
-				</td>
-			</tr>
-			<tr>
-				<td><form:checkbox id="field-internet" path="internet" value="1" /><label>WiFi</label></td>
-			</tr>
-		</table>
 
 
-		<button type="submit" onClick="validateType(this.form)">Filter</button>
-		<button form="filterForm" type="reset" tabindex="8">Cancel</button>
-	</div>
-</form:form>
+							<form:checkbox style="display:none" name="neither" id="neither" path="neither" />
+							<form:errors path="neither" cssClass="validationErrorText" />
 
-<c:import url="template/footer.jsp" />
+
+							<form:input
+								id="prizeInput"
+								type="number"
+								path="prize"
+								placeholder="Maximum Price in CHF"
+								step="50"
+								tabindex="3"
+								min="50" />
+							<form:errors path="prize" cssClass="validationErrorText" />
+
+
+							<div class="row dates">
+	              <div class="tile tile-half">
+	                <div class="row">
+	                  <div class="tile tile-full">
+	                    <label>Earliest Move-in</label>
+	                  </div>
+	                  <div class="tile tile-full">
+	                    <form:input
+	                      class="js-has-label"
+	                      type="text"
+	                      id="field-earliestMoveInDate"
+	                      path="earliestMoveInDate"
+	                      tabindex="4"
+	                      placeholder="Choose from datepicker..." />
+	                  </div>
+	                </div>
+	              </div>
+	              <div class="tile tile-half">
+	                <div class="datepicker" id="earliestMoveInDate">
+
+	                </div>
+	              </div>
+	            </div>
+
+	            <div class="row dates">
+	              <div class="tile tile-half">
+	                <div class="row">
+	                  <div class="tile tile-full">
+	                    <label>Earliest Move-out</label>
+	                  </div>
+	                  <div class="tile tile-full">
+	                    <form:input
+												style="display: none"
+	                      class="js-has-label"
+	                      type="text"
+	                      id="field-earliestMoveOutDate"
+	                      path="earliestMoveOutDate"
+	                      tabindex="5"
+	                      placeholder="Choose from datepicker..." />
+	                  </div>
+	                </div>
+	              </div>
+	              <div class="tile tile-half">
+	                <div class="datepicker" id="earliestMoveOutDate">
+
+	                </div>
+	              </div>
+	            </div>
+
+	            <div class="row dates">
+	              <div class="tile tile-half">
+	                <div class="row">
+	                  <div class="tile tile-full">
+	                    <label>Latest Move-in</label>
+	                  </div>
+	                  <div class="tile tile-full">
+	                    <form:input
+	                      class="js-has-label"
+	                      type="text"
+	                      id="field-latestMoveInDate"
+	                      path="latestMoveInDate"
+	                      tabindex="6"
+	                      placeholder="Choose from datepicker..." />
+	                  </div>
+	                </div>
+	              </div>
+	              <div class="tile tile-half">
+	                <div class="datepicker" id="latestMoveInDate">
+
+	                </div>
+	              </div>
+	            </div>
+
+	            <div class="row dates">
+	              <div class="tile tile-half">
+	                <div class="row">
+	                  <div class="tile tile-full">
+	                    <label>Latest Move-out</label>
+	                  </div>
+	                  <div class="tile tile-full">
+	                    <form:input
+	                      class="js-has-label"
+	                      type="text"
+	                      id="field-latestMoveOutDate"
+	                      path="latestMoveOutDate"
+	                      tabindex="7"
+	                      placeholder="Choose from datepicker..." />
+	                  </div>
+	                </div>
+	              </div>
+	              <div class="tile tile-half">
+	                <div class="datepicker" id="latestMoveOutDate">
+
+	                </div>
+	              </div>
+	            </div>
+
+
+
+	            <div class="row checkboxes">
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-smoker" path="smokers" value="1" />
+	                <label for="field-smoker">Smoking allowed</label>
+	              </div>
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-animals" path="animals" value="1" />
+	                <label for="field-animals">Animals allowed</label>
+	              </div>
+	            </div>
+
+	            <div class="row checkboxes">
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-balcony" path="balcony" value="1" />
+	                <label for="field-balcony">Balcony or Patio</label>
+	              </div>
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-garden" path="garden" value="1" />
+	                <label for="field-garden">Garden (co-use)</label>
+	              </div>
+	            </div>
+
+	            <div class="row checkboxes">
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-cellar" path="cellar" value="1" />
+	                <label for="field-cellar">Cellar or Attic</label>
+	              </div>
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-furnished" path="furnished" value="1" />
+	                <label for="field-furnished">Furnished</label>
+	              </div>
+	            </div>
+
+	            <div class="row checkboxes">
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-cable" path="cable" value="1" />
+	                <label for="field-cable">Cable TV</label>
+	              </div>
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-garage" path="garage" value="1" />
+	                <label for="field-garage">Garage</label>
+	              </div>
+	            </div>
+
+	            <div class="row checkboxes">
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-internet" path="internet" value="1" />
+	                <label for="field-internet">WiFi</label>
+	              </div>
+	            </div>
+
+						</div> <%-- .container-scroll END --%>
+
+	          <div class="row">
+	            <div class="tile tile-third">
+	              <button type="submit" tabindex="8">Find</button>
+	            </div>
+	            <div class="tile tile-third">
+	    					<button form="filterForm" type="reset">Clear Filters</button>
+	            </div>
+							<div class="tile tile-third action action-tile">
+	    					<a href="/searchAd">Clear Everything</a>
+	            </div>
+	          </div>
+
+					</form:form>
+
+				</div> <%-- .form.form-filter END --%>
+			</div> <%-- .span-half END --%>
+
+			<div class="span-half list-max-height">
+
+				<div class="row">
+					<div class="tile tile-full action action-tile">
+						<select class="list-sort" id="modus">
+						    <option value="">Sort by:</option>
+						    <option value="price_asc">Price (ascending)</option>
+						    <option value="price_desc">Price (descending)</option>
+						    <option value="moveIn_desc">Move-in date (earliest to latest)</option>
+						    <option value="moveIn_asc">Move-in date (latest to earliest)</option>
+						    <option value="dateAge_asc">Date created (youngest to oldest)</option>
+						    <option value="dateAge_desc">Date created (oldest to youngest)</option>
+						</select>
+					</div>
+				</div>
+
+
+				<div class="container-scroll">
+
+
+					<c:choose>
+
+						<c:when test="${empty results}">
+							<p>No results found!
+						</c:when>
+
+						<c:otherwise>
+
+							<ul id="resultsDiv" class="resultsDiv">
+
+								<c:forEach var="ad" items="${results}">
+
+									<c:choose>
+										<c:when test="${!ad.auction}" >
+
+											<li
+												class="resultAd"
+												data-price="${ad.prize}"
+												data-moveIn="${ad.moveInDate}"
+												data-age="${ad.moveInDate}">
+
+												<a
+													class="list-image-link"
+													href="<c:url value='/ad?id=${ad.id}' />"
+													style="background-image: url(${ad.pictures[0].filePath})">
+												</a>
+
+												<div class="resultAd-text">
+
+													<h2>
+														<a class="link" href="<c:url value='/ad?id=${ad.id}' />">
+															${ad.title }
+														</a>
+													</h2>
+
+													<p>${ad.street},${ad.zipcode} ${ad.city}</p>
+													<p>${ad.roomType}</p>
+
+
+													<h3>CHF ${ad.prize}</h3>
+
+													<fmt:formatDate value="${ad.moveInDate}"
+														var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
+
+													<p>Move-in date: ${formattedMoveInDate }</p>
+
+												</div>
+
+											</li>
+										</c:when>
+
+										<c:otherwise>
+											<li
+												class="resultAd"
+												data-price="${ad.prize}"
+												data-moveIn="${ad.moveInDate}"
+												data-age="${ad.moveInDate}">
+
+												<a
+													class="list-image-link"
+													href="<c:url value='/ad?id=${ad.id}' />"
+													style="background-image: url(${ad.pictures[0].filePath})">
+												</a>
+
+												<div class="resultAd-text">
+													<h2>
+														<a class="link" href="<c:url value='/auction?id=${ad.id}' />">
+															${ad.title }
+														</a>
+													</h2>
+
+													<p>${ad.street},${ad.zipcode} ${ad.city}</p>
+													<p>${ad.roomType}</p>
+
+
+													<h3>CHF ${ad.prize}</h3>
+
+													<fmt:formatDate value="${ad.moveInDate}"
+														var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
+
+													<p>Move-in date: ${formattedMoveInDate }</p>
+													<p>Auction end-date: ${ad.endTime}</p>
+												</div>
+
+											</li>
+										</c:otherwise>
+
+									</c:choose>
+								</c:forEach>
+
+							</ul>
+
+						</c:otherwise>
+					</c:choose>
+
+				</div> <%-- .container-scroll END --%>
+
+			</div> <%-- .span-half END --%>
+
+		</div> <%-- .row END --%>
+	</div> <%-- .container.container-pad END --%>
+
+</main>
+
+
+
+<%-- <c:import url="template/~footer.jsp" /> --%>
+<c:import url="template/~bottom_results.jsp">
+	<c:param name="js" value="results" />
+</c:import>
