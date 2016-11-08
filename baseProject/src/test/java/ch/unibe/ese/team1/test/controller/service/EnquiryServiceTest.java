@@ -1,4 +1,4 @@
-package ch.unibe.ese.team1.controller.service;
+package ch.unibe.ese.team1.test.controller.service;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,6 +15,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import ch.unibe.ese.team1.controller.service.EnquiryService;
+import ch.unibe.ese.team1.controller.service.VisitService;
 import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Gender;
 import ch.unibe.ese.team1.model.User;
@@ -63,7 +65,7 @@ public class EnquiryServiceTest {
 	public void createVisits() throws Exception {		
 		//create user
 		User thomyF = createUser("thomy@f.ch", "password", "Thomy", "F",
-				Gender.MALE);
+				Gender.MALE, "Normal");
 		thomyF.setAboutMe("Supreme hustler");
 		userDao.save(thomyF);
 		
@@ -120,11 +122,11 @@ public class EnquiryServiceTest {
 	public void enquireAndAccept() throws Exception {		
 		//create two users
 		User adolfOgi = createUser("adolf@ogi.ch", "password", "Adolf", "Ogi",
-				Gender.MALE);
+				Gender.MALE, "Premium");
 		adolfOgi.setAboutMe("Wallis rocks");
 		userDao.save(adolfOgi);
 		
-		User blocher = createUser("christoph@blocher.eu", "svp", "Christoph", "Blocher", Gender.MALE);
+		User blocher = createUser("christoph@blocher.eu", "svp", "Christoph", "Blocher", Gender.MALE, "Normal");
 		blocher.setAboutMe("I own you");
 		userDao.save(blocher);
 		
@@ -190,7 +192,7 @@ public class EnquiryServiceTest {
 	
 	//Lean user creating method
 	User createUser(String email, String password, String firstName,
-			String lastName, Gender gender) {
+			String lastName, Gender gender, String account) {
 		User user = new User();
 		user.setUsername(email);
 		user.setPassword(password);
@@ -199,6 +201,7 @@ public class EnquiryServiceTest {
 		user.setLastName(lastName);
 		user.setEnabled(true);
 		user.setGender(gender);
+		user.setAccount(account);
 		Set<UserRole> userRoles = new HashSet<>();
 		UserRole role = new UserRole();
 		role.setRole("ROLE_USER");

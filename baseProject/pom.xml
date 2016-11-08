@@ -11,6 +11,11 @@
 			<version>4.1.1.RELEASE</version>
 		</dependency>
 		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.8.4</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
 			<version>3.2.5.RELEASE</version>
@@ -114,9 +119,9 @@
 							<stopPort>9999</stopPort>
 							<useTestClasspath>true</useTestClasspath>
 							<contextPath>/</contextPath>
-						<webApp>
-							<tempDirectory>${basedir}/temp</tempDirectory>
-						</webApp>
+							<webApp>
+								<tempDirectory>${basedir}/temp</tempDirectory>
+							</webApp>
 						</configuration>
 						<executions>
 							<execution>
@@ -213,21 +218,12 @@
 							</execution>
 						</executions>
 					</plugin>
-					<!-- <plugin>
-				    <groupId>org.apache.maven.plugins</groupId>
-				    <artifactId>maven-resources-plugin</artifactId>
-				    <version>2.7</version>
-				    <configuration>
-				      <nonFilteredFileExtensions>
-				        <nonFilteredFileExtension>woff</nonFilteredFileExtension>
-				        <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
-				        <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
-				        <nonFilteredFileExtension>eot</nonFilteredFileExtension>
-				        <nonFilteredFileExtension>swf</nonFilteredFileExtension>
-				        <nonFilteredFileExtension>ico</nonFilteredFileExtension>
-				      </nonFilteredFileExtensions>
-				    </configuration>
-				  </plugin> -->
+					<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-resources-plugin</artifactId> 
+						<version>2.7</version> <configuration> <nonFilteredFileExtensions> <nonFilteredFileExtension>woff</nonFilteredFileExtension> 
+						<nonFilteredFileExtension>ttf</nonFilteredFileExtension> <nonFilteredFileExtension>woff2</nonFilteredFileExtension> 
+						<nonFilteredFileExtension>eot</nonFilteredFileExtension> <nonFilteredFileExtension>swf</nonFilteredFileExtension> 
+						<nonFilteredFileExtension>ico</nonFilteredFileExtension> </nonFilteredFileExtensions> 
+						</configuration> </plugin> -->
 				</plugins>
 			</build>
 		</profile>
@@ -236,7 +232,7 @@
 	<build>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
 					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>

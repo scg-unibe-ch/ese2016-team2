@@ -51,8 +51,6 @@ public class EditAuctionService {
 		auction.setTitle(placeAuctionForm.getTitle());
 
 		auction.setStreet(placeAuctionForm.getStreet());
-
-		auction.setStudio(placeAuctionForm.getStudio());
 		
 		auction.setRoomType(placeAuctionForm.getRoomType());
 

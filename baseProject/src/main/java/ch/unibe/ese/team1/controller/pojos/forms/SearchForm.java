@@ -9,7 +9,6 @@ import javax.validation.constraints.Pattern;
 public class SearchForm {
 
 	/** Properties for search and filter */
-	private boolean filtered;
 	private boolean buyable;
 	private boolean studio;
 	private boolean room;
@@ -122,14 +121,6 @@ public class SearchForm {
 	
 	public void setBuyableNotFilled(boolean buyableNotFilled) {
 		this.buyableNotFilled = buyableNotFilled;
-	}
-	
-	public boolean getFiltered() {
-		return filtered;
-	}
-
-	public void setFiltered(boolean filtered) {
-		this.filtered = filtered;
 	}
 
 	public boolean getSmokers() {
