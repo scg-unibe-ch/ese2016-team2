@@ -196,6 +196,11 @@ flatfindr.filter = function (window, document, $, jsp) {
   }
 
 
+  $('[type=submit]').click(function () {
+    validateType_FilterForm($(this)[0]);
+  });
+
+
 
   $('#modus').on('change', sort_div_attribute);
 

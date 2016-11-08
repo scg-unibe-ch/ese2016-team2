@@ -16,3 +16,15 @@
     text-shadow: 0 0 64px $white;
   }
 }
+
+
+.validationErrorText {
+  display: block;
+  color: $base-color-opposite;
+
+  @include sidebar-slip-pad;
+
+  &:before {
+    content: '⇧ ';
+  }
+}

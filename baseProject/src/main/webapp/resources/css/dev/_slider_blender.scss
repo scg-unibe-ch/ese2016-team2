@@ -79,3 +79,25 @@
     //mix-blend-mode: darken;;
   }
 }
+
+
+.slider-direction-nav {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+
+  @include pad($atom $small);
+
+  @include media($bq-medium) {
+    @include pad($small $medium);
+  }
+
+  @include media($bq-large) {
+    @include pad($medium $large);
+  }
+
+  @include media($bq-huge) {
+    @include pad($large $huge);
+  }
+}

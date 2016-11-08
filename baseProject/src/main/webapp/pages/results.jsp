@@ -252,7 +252,7 @@
 	    					<button form="filterForm" type="reset">Clear Filters</button>
 	            </div>
 							<div class="tile tile-third action action-tile">
-	    					<a href="/searchAd">Clear Everything</a>
+	    					<a href="/searchAd">New Search</a>
 	            </div>
 	          </div>
 

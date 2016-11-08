@@ -44,7 +44,10 @@ flatfindr.sliderBlender = function (window, document, $) {
       animationSpeed: 800,
 
       controlNav: false,
-      directionNav: false
+      directionNav: true,
+
+      prevText: "Prev (provi)",
+      nextText: "Next (provi)"
     }
   };
 
