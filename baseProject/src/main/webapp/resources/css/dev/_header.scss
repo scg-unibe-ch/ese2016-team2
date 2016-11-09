@@ -11,6 +11,10 @@
     height: calc(100vh - 6 * #{$slip-height-medium - 1});
   }
 
+  .wo-search & {
+    height: 100vh !important;
+  }
+
   .headerPrimarySearchClosed & {
     height: calc(100vh - 1 * #{$slip-height-small - 1});
 

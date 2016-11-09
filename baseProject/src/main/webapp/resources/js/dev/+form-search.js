@@ -165,6 +165,19 @@ flatfindr.search = function (window, document, $, jsp) {
   	}
   }
 
+  $('[type=submit]').click(function () {
+    validateType($(this)[0]);
+  });
+
+  // @jerome
+  // TODO: yes, this is insane. do this with a proper redirect, not js.
+  //(function clearEverything() {
+    // $('.form-search input:not([type=radio], [name=_room], #room, [name=_studio], #studio, [name=_house], #house)').val(null);
+    // $('#room').attr('checked', 'checked');
+
+    //$('#city').focus().attr('placeholder', 'City / ZIP');
+  //})();
+
   // ==========================================================================
 
 };

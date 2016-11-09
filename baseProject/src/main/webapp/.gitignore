@@ -1,7 +1,7 @@
 # webapp dir specific
 
 .sass-cache/
-resources/components
+# resources/components
 node_modules/
 
 # **/prod/*.*

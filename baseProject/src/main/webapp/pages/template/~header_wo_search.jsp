@@ -35,31 +35,58 @@
     </c:otherwise>
   </c:choose>
 
-  <div class="row">
-    <nav class="tile-full nav-primary">
-      <ul class="menu-primary">
-        <li>
-          <a href="/">Home</a>
-        </li>
-        <li>
-          <a href="/about">About us</a>
-        </li>
-      </ul>
-    </nav>
-  </div>
 
-  <c:choose>
-    <c:when test="${loggedIn}">
-      <div class="row">
-        <div class="tile tile-full action action-tile">
-          <a href="/logout">Sign out</a>
+  <div class="container-scroll menu-max-height">
+
+    <div class="row">
+      <nav class="tile-full nav-primary">
+        <ul class="menu-primary">
+          <li>
+            <a href="/">Home</a>
+          </li>
+
+          <c:choose>
+            <c:when test="${loggedIn}">
+              <%@include file='/pages/getUserPicture.jsp' %>
+              <li><a href="/profile/placeAdvertisement">Place an ad</a></li>
+              <li><a href="/profile/myRooms">My rooms</a></li>
+              <li><a id="messageLink" href="/profile/messages">Messages</a></li>
+              <li><a href="/profile/enquiries">Enquiries</a></li>
+              <li><a href="/profile/schedule">Schedule</a></li>
+              <li><a href="/profile/alerts">Alerts</a></li>
+              <li>
+              <% out.print("<a href=\"/user?id=" + realUser.getId() + "\">Public Profile</a>"); %>
+              </li>
+              <li><a href="/register">Premium Account</a></li>
+
+            </c:when>
+            <c:otherwise>
+
+            </c:otherwise>
+          </c:choose>
+
+
+          <li>
+            <a href="/about">About us</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <c:choose>
+      <c:when test="${loggedIn}">
+        <div class="row">
+          <div class="tile tile-full action action-tile">
+            <a href="/logout">Sign out</a>
+          </div>
         </div>
-      </div>
-    </c:when>
-    <c:otherwise>
+      </c:when>
+      <c:otherwise>
 
-    </c:otherwise>
-  </c:choose>
+      </c:otherwise>
+    </c:choose>
+
+  </div>
 
   <div class="row">
     <div class="tile-full">

@@ -125,7 +125,6 @@
 	                  </div>
 	                  <div class="tile tile-full">
 	                    <form:input
-												style="display: none"
 	                      class="js-has-label"
 	                      type="text"
 	                      id="field-earliestMoveOutDate"
