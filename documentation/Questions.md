@@ -1,7 +1,7 @@
 ##Questions for meeting 09-11-2016
 ##Requirements
 
-### Verification of Sprint 2 and 3
+### Verification of Sprint 4
 - #R19 - #4 - Send message when someone places a higher bid. Add visitis to auctions.
 - #R4 - #4 - Ads are rentable and buyable.
 - #R4 - #4 - Ads are rentable and buyable.
