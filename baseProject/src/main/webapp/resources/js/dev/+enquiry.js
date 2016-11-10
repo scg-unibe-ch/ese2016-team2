@@ -1,72 +1,74 @@
-// Should already exist.
-var flatfindr = flatfindr || {};
-
-
-
 /**
- * pseudo namespace for docs
- * @param  {object} window
- * @param  {object} document the document element
- * @param  {object} $        jQuery
- * @param  {object} jsp      global object properties passed by jsp
- * @namespace
- * @memberOf flatfindr
+ *
+ * @name enquiry
+ * @memberof jQuery.flatfindr
+ * @namespace jQuery.flatfindr.enquiry
  */
-flatfindr.enquiry = function (window, document, $) {
-
-  var
-    /**
-     * The base duration in ms that corresponds to the one set in _vars.scss
-     *
-     * @type {Number}
-     * @constant
-     */
-    BASE_DURATION = 350,
 
 
 
-    /**
-     * Enquiry button
-     */
-    $enquiries =
-      $('.enquiry').on('click touch', handleEnquiry);
+jQuery.flatfindr.register({
 
+  name: 'enquiry',
 
 
   /**
-   * 
-   * @param  {object} e  the click/touch event
+   * @memberof jQuery.flatfindr.enquiry
+   * @method fn
+   *
+   * @protected
+   * @param  {Object}   window   the window as you know it
+   * @param  {Object}   document the document element
+   * @param  {Object}   $        jQuery
+   * @param  {jQuery}   $view    the default or custom view if set
+   * @param  {Object}   option   what ever object param if passed
+   * @return {Function}          method that sets up simple dom manipulations
    */
-  function handleEnquiry(e) {
-    e.preventDefault();
+  fn: function (window, document, $, $view, option) {
+
 
     var
-      $this = $(this),
-      $parent = $this.parent(),
-      $confirm = $parent.find('.action-confirm'),
-      $cancel = $parent.find('.action-cancel'),
-      id = $this.attr('data-id');
+      /**
+       * Enquiry button
+       */
+      $enquiries =
+        $('.enquiry').on('click touch', handleEnquiry);
 
-    $this.toggleClass('js-confirm');
 
-    $confirm.on('click touch', function(e) {
+
+    /**
+     *
+     * @private
+     * @param  {object} e  the click/touch event
+     */
+    function handleEnquiry(e) {
       e.preventDefault();
-      $this.attr('disabled', 'disabled');
-      $.get("/profile/enquiries/sendEnquiryForVisit?id=" + id);
-      setTimeout(function() {
-        $this.toggleClass('js-confirm');
-      }, BASE_DURATION);
-    });
 
-    $cancel.on('click touch', function(e) {
-      e.preventDefault();
-      $confirm.off('click touch');
-      $cancel.off('click touch');
+      var
+        $this = $(this),
+        $parent = $this.parent(),
+        $confirm = $parent.find('.action-confirm'),
+        $cancel = $parent.find('.action-cancel'),
+        id = $this.attr('data-id');
+
       $this.toggleClass('js-confirm');
-    });
+
+      $confirm.on('click touch', function(e) {
+        e.preventDefault();
+        $this.attr('disabled', 'disabled');
+        $.get("/profile/enquiries/sendEnquiryForVisit?id=" + id);
+        setTimeout(function() {
+          $this.toggleClass('js-confirm');
+        }, $.flatfindr.BASE_DURATION);
+      });
+
+      $cancel.on('click touch', function(e) {
+        e.preventDefault();
+        $confirm.off('click touch');
+        $cancel.off('click touch');
+        $this.toggleClass('js-confirm');
+      });
+    }
   }
 
-};
-
-
-flatfindr.enquiry(window, document, jQuery);
+});
