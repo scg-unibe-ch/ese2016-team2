@@ -139,7 +139,7 @@ jQuery.flatfindr.register({
     function animateScrollTop(scrollTop) {
       $container_scroll
         .delay(DURATION_BUFFER)
-        .animate({scrollTop: scrollTop}, BASE_DURATION);
+        .animate({scrollTop: scrollTop}, $.flatfindr.BASE_DURATION);
     }
 
 
@@ -151,7 +151,7 @@ jQuery.flatfindr.register({
       minLength : 2,
       enabled : true,
       autoFocus : true,
-      source : jsp.zipcodes
+      source : $.flatfindr.ZIP_CODES
     });
 
     // @Jerome
@@ -190,18 +190,19 @@ jQuery.flatfindr.register({
     	var studio = document.getElementById('studio');
     	var house = document.getElementById('house');
     	var neither = document.getElementById('neither');
-    	var filtered = document.getElementById('filtered');
+      // @jerome: existiert nirgends, wtf?
+    	// var filtered = document.getElementById('filtered');
 
     	neither.checked = false;
     	if(!room.checked && !studio.checked && !house.checked) {
     		neither.checked = true;
     	}
-    	filtered.checked = true;
+    	//filtered.checked = true;
     }
 
 
     $('[type=submit]').click(function () {
-      validateType_FilterForm($(this)[0]);
+      validateType_FilterForm($('.form-filter form')[0]);
     });
 
 
@@ -265,8 +266,8 @@ jQuery.flatfindr.register({
      */
     setTimeout(function() {
       $form_filter[0].reset();
-      $('.js-has-label').fadeIn(BASE_DURATION);
-    }, BASE_DURATION);
+      $('.js-has-label').fadeIn($.flatfindr.BASE_DURATION);
+    }, $.flatfindr.BASE_DURATION);
 
 
     // ==========================================================================

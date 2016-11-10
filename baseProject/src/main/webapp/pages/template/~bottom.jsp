@@ -21,6 +21,18 @@
 					'sliderBlender',
 					'sliderBlenderCaption'
 				]);
+			},
+
+			searchAd: function () {
+				return $.flatfindr.add([
+					'search'
+				]);
+			},
+
+			results: function () {
+				return $.flatfindr.add([
+					'filter'
+				]);
 			}
 		};
 
