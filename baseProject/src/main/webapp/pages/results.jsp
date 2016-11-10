@@ -388,6 +388,6 @@
 
 
 <%-- <c:import url="template/~footer.jsp" /> --%>
-<c:import url="template/~bottom_results.jsp">
+<c:import url="template/~bottom.jsp">
 	<c:param name="js" value="results" />
 </c:import>

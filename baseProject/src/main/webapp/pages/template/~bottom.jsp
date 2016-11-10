@@ -9,20 +9,26 @@
 	(function ($, pagename) {
 
 		var js = {
-			index: function () {
+			common: function () {
 				return $.flatfindr
 					.with({ ZIP_CODES: <c:import url="getzipcodes.jsp" /> })
-					.add(['header', 'search']);
+					.add(['header']);
 			},
 
-			adDescreption: function () {
-				return;
+			index: function () {
+				return $.flatfindr.add([
+					'search',
+					'sliderBlender',
+					'sliderBlenderCaption'
+				]);
 			}
-		}
+		};
 
+		js.common();
 		pagename in js && js[pagename]();
 
 	})(jQuery, '${param.js}');
+
 
 </script>
 </body>

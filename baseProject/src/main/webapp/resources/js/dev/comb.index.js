@@ -16,4 +16,5 @@
  * Page specific
  */
 
+// @codekit-prepend "+slider-blender.js"
 // @codekit-prepend "+slider-blender-caption.js"
