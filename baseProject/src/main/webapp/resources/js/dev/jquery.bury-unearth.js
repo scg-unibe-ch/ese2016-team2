@@ -9,7 +9,7 @@
 /**
  * @name fn
  * @namespace
- * @memberOf jQuery
+ * @memberof jQuery
  */
 
 
@@ -22,7 +22,7 @@
  * @param  {string} prefix  the classname prefix to be combined with the state
  * @param  {integer} duration   the delay duration in ms
  * @return {object}          the jquery object with the delayed function
- * @memberOf jQuery.fn
+ * @memberof jQuery.fn
  */
 jQuery.fn.unearth = function(prefix, duration) {
   var $this = jQuery(this);
@@ -42,7 +42,7 @@ jQuery.fn.unearth = function(prefix, duration) {
  * @param  {string} prefix  the classname prefix to be combined with the state
  * @param  {integer} duration   the delay duration in ms
  * @return {object}          the jquery object with the delayed function
- * @memberOf jQuery.fn
+ * @memberof jQuery.fn
  */
 jQuery.fn.bury = function(prefix, duration) {
   var $this = jQuery(this);

@@ -1,3 +1,7 @@
+/**
+ * jQuery 3rdp components
+ */
+
 // @codekit-prepend "../../components/jquery/dist/jquery.js"
 
 // @Jerome
@@ -5,7 +9,18 @@
 // to work properly. Or.. i just got tired of trying.
 // @codekit-prepend "../../components/jquery-ui/jquery-ui.js"
 
-// @codekit-prepend "+bury-unearth.js"
+
+/**
+ * jQuery flatfindr components
+ */
+
+// @codekit-prepend "jquery.bury-unearth.js"
+// @codekit-prepend "jquery.flatfindr.js"
+
+
+/**
+ * flatfindr shtiy wannabe 'modules'
+ */
 
 // @codekit-prepend "+header-primary.js"
 // @codekit-prepend "+form-search.js"

@@ -1,71 +1,85 @@
-// Should already exist.
-var flatfindr = flatfindr || {};
-
-
-
 /**
- * pseudo namespace for docs
- * @param  {object} window
- * @param  {object} document the document element
- * @param  {object} $        jQuery
- * @namespace
- * @memberOf flatfindr
+ *
+ * @name sliderBlender
+ * @memberof jQuery.flatfindr
+ * @namespace jQuery.flatfindr.sliderBlender
  */
-flatfindr.sliderBlender = function (window, document, $) {
 
-  /**
-   * Configurations for the flexslider plugin
-   * @type {Object}
-   */
-  var config = {
+
+jQuery.flatfindr.register({
+
+
+    name: 'sliderBlender',
+
+
     /**
-     * Blender configurations
-     * @type {Object}
+     * @memberof jQuery.flatfindr.sliderBlender
+     * @method fn
+     *
+     * @protected
+     * @param  {Object}   window   the window as you know it
+     * @param  {Object}   document the document element
+     * @param  {Object}   $        jQuery
+     * @param  {jQuery}   $view    the default or custom view if set
+     * @param  {Object}   option   what ever object param if passed
+     * @return {Function}          method that sets up simple dom manipulations
      */
-    blender: {
-      namespace: 'blender-',
+    fn: function (window, document, $, $view, option) {
 
-      animation: 'fade',
-      slideshowSpeed: 6400,
-      animationSpeed: 1600,
 
-      controlNav: false,
-      directionNav: false
-    },
-    /**
-     * Slider Configurations
-     * @type {Object}
-     */
-    slider: {
-      namespace: 'slider-',
+      /**
+       * Configurations for the flexslider plugin
+       * @type {Object}
+       */
+      var config = {
+        /**
+         * Blender configurations
+         * @type {Object}
+         */
+        blender: {
+          namespace: 'blender-',
 
-      animation: 'slide',
-      slideshow: false,
-      animationSpeed: 800,
+          animation: 'fade',
+          slideshowSpeed: 6400,
+          animationSpeed: 1600,
 
-      controlNav: false,
-      directionNav: true,
+          controlNav: false,
+          directionNav: false
+        },
+        /**
+         * Slider Configurations
+         * @type {Object}
+         */
+        slider: {
+          namespace: 'slider-',
 
-      prevText: "Prev (provi)",
-      nextText: "Next (provi)"
+          animation: 'slide',
+          slideshow: false,
+          animationSpeed: 800,
+
+          controlNav: false,
+          directionNav: true,
+
+          prevText: "Prev (provi)",
+          nextText: "Next (provi)"
+        }
+      };
+
+
+
+      /**
+       * .blender / .slider
+       *
+       * Adjust .blender or .slider behavior (and html output [navigation]). The
+       * slideshow property is true by default, meaning it blends or slides the
+       * images automatically.
+       *
+       * Check out all properties here:
+       * https://github.com/woocommerce/FlexSlider/wiki/FlexSlider-Properties
+       */
+      $('.blender').flexslider(config.blender);
+      $('.slider').flexslider(config.slider);
+
     }
-  };
 
-
-
-  /**
-   * .blender / .slider
-   *
-   * Adjust .blender or .slider behavior (and html output [navigation]). The
-   * slideshow property is true by default, meaning it blends or slides the
-   * images automatically.
-   *
-   * Check out all properties here:
-   * https://github.com/woocommerce/FlexSlider/wiki/FlexSlider-Properties
-   */
-  $('.blender').flexslider(config.blender);
-  $('.slider').flexslider(config.slider);
-
-};
-
-flatfindr.sliderBlender(window, document, jQuery);
+});
