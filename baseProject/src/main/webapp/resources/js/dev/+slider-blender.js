@@ -6,8 +6,8 @@
  */
 
 
-jQuery.flatfindr.register({
 
+jQuery.flatfindr.register({
 
     name: 'sliderBlender',
 

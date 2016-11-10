@@ -30821,30 +30821,65 @@ jQuery.flatfindr.register({
 })(jQuery);
 
 
-+function(window, document, $) {
+/**
+ *
+ * @name sliderBlenderCaption
+ * @memberof jQuery.flatfindr
+ * @namespace jQuery.flatfindr.sliderBlenderCaption
+ */
+
+
+
+jQuery.flatfindr.register({
+
+  name: 'sliderBlenderCaption',
 
 
   /**
+   * @memberof jQuery.flatfindr.sliderBlenderCaption
+   * @method fn
    *
-   *
-   *
-   *
-   *
+   * @protected
+   * @param  {Object}   window   the window as you know it
+   * @param  {Object}   document the document element
+   * @param  {Object}   $        jQuery
+   * @param  {jQuery}   $view    the default or custom view if set
+   * @param  {Object}   option   what ever object param if passed
+   * @return {Function}          method that sets up simple dom manipulations
    */
-   var $slider_blender_full = $('.slider-blender-full');
+  fn: function (window, document, $, $view, option) {
 
-   $('.slide-caption').hover(
-     function() { $slider_blender_full.addClass('js-show'); },
-     function() { $slider_blender_full.removeClass('js-show'); }
-   );
-
-}(window, document, jQuery);
+    var $slider_blender_full = $('.slider-blender-full');
 
 
-// @codekit-prepend "common-comb.js"
+    $('.slide-caption').hover(
+      function() { $slider_blender_full.addClass('js-show'); },
+      function() { $slider_blender_full.removeClass('js-show'); }
+    );
+
+  }
+
+});
+
+
+/**
+ * Common shti
+ */
+
+// @codekit-prepend "comb.common.js"
+
+
+/**
+ *  jQuery 3rdp components
+ */
 
 // @codekit-prepend "../../components/flexslider/jquery.flexslider.js"
 
-// @codekit-prepend "_index.js"
+
+/**
+ * Page specific
+ */
+
+// @codekit-prepend "+slider-blender-caption.js"
 
 
