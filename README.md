@@ -10,4 +10,4 @@ Additional information about our actual steps you can find under the following l
 https://trello.com/b/JKtlB6xA
 
 jsdoc can be found here (it's rather a showoff... yolo.). Naw, we always wanted to try out jsdoc.:
-http://shtill.com/ese2016_jsdoc/
+https://shtill.com/ese2016_jsdoc/
