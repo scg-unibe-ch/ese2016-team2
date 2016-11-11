@@ -25,6 +25,7 @@ jQuery.flatfindr.register({
    * @return {Function}          method that sets up simple dom manipulations
    */
   fn: function (window, document, $, $view, option) {
+    console.log(window.geoc);
 
     // @Jerome: just testing
     $('#js-map').click(function() {
@@ -119,7 +120,25 @@ jQuery.flatfindr.register({
     	}]
     };
 
+    var geocoder;
     var map;
+    var georesults = [];
+
+    function code(addresses) {
+      geocoder = new google.maps.Geocoder();
+
+      addresses.forEach(function(address) {
+        geocoder.geocode( address, function(results, status) {
+          if (status == 'OK') {
+            console.log(results);
+          } else {
+            console.log('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      });
+    }
+
+
     // @Jerome
     // Has to be global, i guess. That's why window.blah..
     // Well, maybe only because the callback param in the deferred script of
@@ -143,6 +162,9 @@ jQuery.flatfindr.register({
       // json object above.
       script.src = eqfeed_callback(geo);
       document.getElementsByTagName('head')[0].appendChild(script);
+
+      
+      code(window.geoc);
     }
 
     // Loop through the results array and place a marker for each
