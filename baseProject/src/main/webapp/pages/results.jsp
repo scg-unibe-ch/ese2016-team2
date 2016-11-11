@@ -6,7 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:import url="template/~top.jsp" />
-<c:import url="template/~header_wo_search.jsp" />
+<c:import url="template/~header_map.jsp" />
 
 <main role="main">
 	<c:import url="template/~top_bar.jsp">
@@ -15,7 +15,9 @@
 
 	<div class="container">
 		<div class="row map">
-			
+			<div id="map">
+
+			</div>
 		</div>
 	</div>
 
@@ -404,4 +406,5 @@
 <%-- <c:import url="template/~footer.jsp" /> --%>
 <c:import url="template/~bottom.jsp">
 	<c:param name="js" value="results" />
+	<c:param name="map" value="1" />
 </c:import>

@@ -10,3 +10,4 @@
  */
 
 // @codekit-prepend "+form-filter.js"
+// @codekit-prepend "+map.js"

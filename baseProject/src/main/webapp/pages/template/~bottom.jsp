@@ -31,7 +31,8 @@
 
 			results: function () {
 				return $.flatfindr.add([
-					'filter'
+					'filter',
+					'map'
 				]);
 			}
 		};
@@ -40,8 +41,17 @@
 		pagename in js && js[pagename]();
 
 	})(jQuery, '${param.js}');
-
-
 </script>
+<c:choose>
+    <c:when test="${param.map=='1'}">
+			<script
+				async
+				defer
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAh9mJhrCy-xTWy5b3Niop8QilZAdMh1To&callback=initMap">
+			</script>
+    </c:when>
+    <c:otherwise>
+    </c:otherwise>
+</c:choose>
 </body>
 </html>
