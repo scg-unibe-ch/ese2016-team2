@@ -5,13 +5,43 @@
 
 <script src="/resources/js/prod/${param.js}.js"></script>
 <script>
-  +function (window, document, $) {
 
-    flatfindr.search(window, document, $, {
-			zipcodes: <c:import url="getzipcodes.jsp" />
-		});
+	(function ($, pagename) {
 
-  }(window, document, jQuery);
+		var js = {
+			common: function () {
+				return $.flatfindr
+					.with({ ZIP_CODES: <c:import url="getzipcodes.jsp" /> })
+					.add(['header']);
+			},
+
+			index: function () {
+				return $.flatfindr.add([
+					'search',
+					'sliderBlender',
+					'sliderBlenderCaption'
+				]);
+			},
+
+			searchAd: function () {
+				return $.flatfindr.add([
+					'search'
+				]);
+			},
+
+			results: function () {
+				return $.flatfindr.add([
+					'filter'
+				]);
+			}
+		};
+
+		js.common();
+		pagename in js && js[pagename]();
+
+	})(jQuery, '${param.js}');
+
+
 </script>
 </body>
 </html>

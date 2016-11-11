@@ -350,8 +350,8 @@
 </main>
 
 <%-- <c:import url="template/~footer.jsp" /> --%>
-<c:import url="template/~bottom_ad-details.jsp">
-	<c:param name="js" value="ad-details" />
+<c:import url="template/~bottom_shown_ad.jsp">
+	<c:param name="js" value="adDescription" />
 </c:import>
 
 

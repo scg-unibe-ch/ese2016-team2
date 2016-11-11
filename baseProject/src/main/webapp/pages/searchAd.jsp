@@ -265,5 +265,5 @@
 
 <%-- <c:import url="template/~footer.jsp" /> --%>
 <c:import url="template/~bottom.jsp">
-	<c:param name="js" value="search-ad" />
+	<c:param name="js" value="searchAd" />
 </c:import>
