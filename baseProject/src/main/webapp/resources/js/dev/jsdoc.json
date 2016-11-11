@@ -1,0 +1,31 @@
+// Custom jsdoc config file
+
+{
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc","closure"]
+  },
+  "source": {
+    "include": [
+      "jquery.bury-unearth.js",
+      "jquery.flatfindr.js",
+      "+bookmark.js",
+      "+enquiry.js",
+      "+form-filter.js",
+      "+form-search.js",
+      "+header-primary.js",
+      "+message.js",
+      "+sidebar.js",
+      "+slider-blender-caption.js"],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "plugins": [],
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  },
+  "opts": {
+    "destination": "./jsdoc/"
+  }
+}

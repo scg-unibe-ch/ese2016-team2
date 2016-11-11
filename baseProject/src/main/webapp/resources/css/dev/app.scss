@@ -25,14 +25,8 @@
   "../../components/neat/app/assets/stylesheets/neat",
   "../../components/bitters/core/base",
   "../../components/font-awesome/scss/font-awesome";
-  
 
-// @Jerome
-// TODO: Borrow the following from jquery ui:
-//   - Datepicker, n/a in Bourbon, as far as i know
-//   - Form field auto-completion (used for zip codes)
-//
-// NB: There might be more to borrow.
+
 
 @import 'mixins';
 @import 'reset';

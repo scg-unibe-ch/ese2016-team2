@@ -14,6 +14,12 @@
 	</c:import>
 
 	<div class="container">
+		<div class="row map">
+			
+		</div>
+	</div>
+
+	<div class="container">
 
 		<div class="row">
 
@@ -252,7 +258,7 @@
 	    					<button form="filterForm" type="reset">Clear Filters</button>
 	            </div>
 							<div class="tile tile-third action action-tile">
-	    					<a href="/searchAd">New Search</a>
+	    					<a href="/searchAd">Start over...</a>
 	            </div>
 	          </div>
 
@@ -302,31 +308,39 @@
 												data-moveIn="${ad.moveInDate}"
 												data-age="${ad.moveInDate}">
 
-												<a
-													class="list-image-link"
-													href="<c:url value='/ad?id=${ad.id}' />"
-													style="background-image: url(${ad.pictures[0].filePath})">
-												</a>
+												<div class="row">
+													<div class="tile tile-half">
+														<div class="list-image">
+															<a
+																class="list-image-link"
+																href="<c:url value='/ad?id=${ad.id}' />"
+																style="background-image: url(${ad.pictures[0].filePath})">
+															</a>
+														</div>
+													</div>
 
-												<div class="resultAd-text">
+													<div class="tile tile-half">
+														<div class="resultAd-text">
 
-													<h2>
-														<a class="link" href="<c:url value='/ad?id=${ad.id}' />">
-															${ad.title }
-														</a>
-													</h2>
+															<h2>
+																<a class="link" href="<c:url value='/ad?id=${ad.id}' />">
+																	${ad.title }
+																</a>
+															</h2>
 
-													<p>${ad.street},${ad.zipcode} ${ad.city}</p>
-													<p>${ad.roomType}</p>
+															<p>${ad.street},${ad.zipcode} ${ad.city}</p>
+															<p>${ad.roomType}</p>
 
 
-													<h3>CHF ${ad.prize}</h3>
+															<h3>CHF ${ad.prize}</h3>
 
-													<fmt:formatDate value="${ad.moveInDate}"
-														var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
+															<fmt:formatDate value="${ad.moveInDate}"
+																var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
 
-													<p>Move-in date: ${formattedMoveInDate }</p>
+															<p>Move-in date: ${formattedMoveInDate }</p>
 
+														</div>
+													</div>
 												</div>
 
 											</li>
