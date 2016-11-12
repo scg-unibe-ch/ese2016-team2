@@ -55,21 +55,22 @@ public class SearchController {
 			ModelAndView model = new ModelAndView("results");
 
 			List<Advertisement> results = new ArrayList<Advertisement>();
-			Iterable<Ad> matchingAds = adService.queryResults(searchForm);
+			Iterable<Ad> matchingAds;
 			Iterable<Auction> matchingAuctions;
 			if (searchForm.getBuyable()) {
 				matchingAuctions = auctionService.queryResults(searchForm);
 				for (Auction auction : matchingAuctions) {
 					results.add(auction);
 				}
+			}else{
+				matchingAds = adService.queryResults(searchForm);
+				for (Ad ad : matchingAds) {
+					results.add(ad);
+				}
 			}
-
-			for (Ad ad : matchingAds) {
-				results.add(ad);
-			}
-
 			model.addObject("results", results);
 			return model;
+			
 		} else {
 			// go back
 			return searchAd();

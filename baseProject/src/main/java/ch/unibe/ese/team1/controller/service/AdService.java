@@ -395,7 +395,34 @@ public class AdService {
 					iterator.remove();
 			}
 		}
-		return locatedResults;
+		
+		Iterator<Ad> iterator = locatedResults.iterator();
+		List<Ad> premiumResults = new ArrayList<>();
+		List<Ad> normalResults = new ArrayList<>();
+		List<Ad> finalResults = new ArrayList<>();
+		while (iterator.hasNext()) {
+			Ad ad = iterator.next();
+			User user = ad.getUser();
+			if (user.getAccount().equals("Premium")){
+				premiumResults.add(ad);
+			}else{
+				normalResults.add(ad);
+			}
+		}
+		
+		Iterator<Ad> iteratorPremiumResults = premiumResults.iterator();
+		while (iteratorPremiumResults.hasNext()) {
+			Ad ad = iteratorPremiumResults.next();
+			finalResults.add(ad);
+		}
+		
+		Iterator<Ad> iteratorNormalResults = normalResults.iterator();
+		while (iteratorNormalResults.hasNext()) {
+			Ad ad = iteratorNormalResults.next();
+			finalResults.add(ad);
+		}
+		
+		return finalResults;
 	}
 	
 	/**

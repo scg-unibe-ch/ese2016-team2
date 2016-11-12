@@ -289,14 +289,13 @@
 
 					<c:choose>
 
-						<c:when test="${empty results}">
+						<c:when test="${empty results} AND ${empty resultsPremium}">
 							<p>No results found!
 						</c:when>
 
 						<c:otherwise>
 
 							<ul id="resultsDiv" class="resultsDiv">
-
 								<c:forEach var="ad" items="${results}">
 
 									<c:choose>
@@ -325,7 +324,7 @@
 															<h2>
 																<a class="link" href="<c:url value='/ad?id=${ad.id}' />">
 																	${ad.title }
-																</a>
+																</a>	
 															</h2>
 
 															<p>${ad.street},${ad.zipcode} ${ad.city}</p>
