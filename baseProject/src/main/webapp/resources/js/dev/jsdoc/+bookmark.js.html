@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: +bookmark.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: +bookmark.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ *
+ * @name bookmark
+ * @memberof jQuery.flatfindr
+ * @namespace jQuery.flatfindr.bookmark
+ */
+
+
+
+jQuery.flatfindr.register({
+
+  name: 'bookmark',
+
+
+  /**
+   * @memberof jQuery.flatfindr.bookmark
+   * @method fn
+   *
+   * @protected
+   * @param  {Object}   window   the window as you know it
+   * @param  {Object}   document the document element
+   * @param  {Object}   $        jQuery
+   * @param  {jQuery}   $view    the default or custom view if set
+   * @param  {Object}   option   what ever object param if passed
+   * @return {Function}          method that sets up simple dom manipulations
+   */
+  fn: function (window, document, $, $view, option) {
+
+
+
+    /**
+     *
+     *
+     */
+    function attachBookmarkClickHandler() {
+
+      $("#bookmarkButton").click(function() {
+
+        $.post("/bookmark", {
+            id : $.flatfindr.shownAdvertisementID,
+            screening : false,
+            bookmarked : false
+          },
+
+          function(data) {
+            $('#bookmarkButton').replaceWith(
+              $('&lt;a class="right" id="bookmarkedButton" title="Remove bookmark">'
+                  + '&lt;span class="fa fa-bookmark fa-2x base-color-opposite">&lt;/span>'
+                  + '&lt;/a>')
+              );
+
+            switch (data) {
+              case 0:
+                alert("You must be logged in to bookmark ads.");
+                break;
+              case 1:
+                // Something went wrong with the principal object
+                alert("Return value 1. Please contact the WebAdmin.");
+                break;
+              case 3:
+                $('#bookmarkButton')
+                    .replaceWith(
+                        $('&lt;a class="right" id="bookmarkedButton" title="Remove bookmark">'
+                            + '&lt;span class="fa fa-bookmark fa-2x base-color-opposite">&lt;/span>'
+                            + '&lt;/a>'));
+                break;
+              default:
+                alert("Default error. Please contact the WebAdmin.");
+            }
+
+            attachBookmarkedClickHandler();
+          });
+      });
+    }
+
+
+
+    /**
+     *
+     */
+    function attachBookmarkedClickHandler() {
+
+      $("#bookmarkedButton").click(
+        function() {
+          $.post("/bookmark", {
+              id : $.flatfindr.shownAdvertisementID,
+              screening : false,
+              bookmarked : true
+            },
+
+            function(data) {
+              $('#bookmarkedButton').replaceWith(
+                $('&lt;a class="right" id="bookmarkButton" title="Bookmark property">'
+                    + '&lt;span class="fa fa-bookmark fa-2x action-inactive-color">&lt;/span>'
+                    + '&lt;/a>')
+              );
+
+              switch (data) {
+              case 0:
+                alert("You must be logged in to bookmark ads.");
+                break;
+              case 1:
+                // Something went wrong with the principal object
+                alert("Return value 1. Please contact the WebAdmin.");
+                break;
+              case 2:
+                $('#bookmarkedButton').replaceWith(
+                  $('&lt;a class="right" id="bookmarkButton" title="Bookmark property">'
+                      + '&lt;span class="fa fa-bookmark fa-2x base-color-opposite">&lt;/span>'
+                      + '&lt;/a>')
+                );
+                break;
+              default:
+                alert("Default error. Please contact the WebAdmin.");
+              }
+
+              attachBookmarkClickHandler();
+            });
+        });
+    }
+
+
+
+    /**
+     *
+     */
+    (function () {
+      attachBookmarkClickHandler();
+      attachBookmarkedClickHandler();
+
+      $.post("/bookmark", {
+          id : $.flatfindr.shownAdvertisementID,
+          screening : true,
+          bookmarked : true
+        },
+
+        function(data) {
+          if (data == 3) {
+            $('#bookmarkButton').replaceWith(
+              $('&lt;a class="right" id="bookmarkedButton" title="Remove bookmark">'
+                + '&lt;span class="fa fa-bookmark fa-2x base-color-opposite">&lt;/span>'
+                + '&lt;/a>')
+            );
+
+            attachBookmarkedClickHandler();
+          }
+        });
+    })();
+
+  }
+
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="jQuery.html">jQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="jQuery.flatfindr.html">flatfindr</a></li><li><a href="jQuery.flatfindr.bookmark.html">bookmark</a></li><li><a href="jQuery.flatfindr.enquiry.html">enquiry</a></li><li><a href="jQuery.flatfindr.filter.html">filter</a></li><li><a href="jQuery.flatfindr.header.html">header</a></li><li><a href="jQuery.flatfindr.message.html">message</a></li><li><a href="jQuery.flatfindr.search.html">search</a></li><li><a href="jQuery.flatfindr.sidebar.html">sidebar</a></li><li><a href="jQuery.flatfindr.sliderBlenderCaption.html">sliderBlenderCaption</a></li><li><a href="jQuery.fn.html">fn</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Fri Nov 11 2016 03:49:59 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

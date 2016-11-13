@@ -26,27 +26,38 @@ select.list-sort {
 }
 
 
+.resultAd {
+  //margin-bottom: $slip-height-small / 2;
+  border-bottom: 1px solid $whiff-of-gray;
+
+  @include media($bq-medium) {
+    //margin-bottom: $slip-height-medium / 2;
+  }
+}
+
+
+.list-image {
+  @include sidebar-slip-pad;
+  // @jerome: effing lazy i am.
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+
 .list-image-link {
   display: block;
   width: 100%;
-  height: 5 * $slip-height-small;
+  height: 3 * $slip-height-small;
   background-position: center center;
   background-repeat: none;
   background-size: cover;
 
   @include media($bq-medium) {
-    height: 5 * $slip-height-medium;
+    height: 3 * $slip-height-medium;
   }
 }
 
 
 .resultAd-text {
   @include sidebar-slip-pad;
-  border-bottom: 1px solid $whiff-of-gray;
-  margin-bottom: $slip-height-small;
-  background-color: $is-this-even-gray;
-
-  @include media($bq-medium) {
-    margin-bottom: $slip-height-medium;
-  }
 }
