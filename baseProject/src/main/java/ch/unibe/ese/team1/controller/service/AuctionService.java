@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceBidForm;
 import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
+import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.AuctionPicture;
 import ch.unibe.ese.team1.model.Location;
@@ -395,7 +396,34 @@ public class AuctionService {
 					iterator.remove();
 			}
 		}
-		return locatedResults;
+		
+		Iterator<Auction> iterator = locatedResults.iterator();
+		List<Auction> premiumResults = new ArrayList<>();
+		List<Auction> normalResults = new ArrayList<>();
+		List<Auction> finalResults = new ArrayList<>();
+		while (iterator.hasNext()) {
+			Auction auction = iterator.next();
+			User user = auction.getUser();
+			if (user.getAccount().equals("Premium")){
+				premiumResults.add(auction);
+			}else{
+				normalResults.add(auction);
+			}
+		}
+		
+		Iterator<Auction> iteratorPremiumResults = premiumResults.iterator();
+		while (iteratorPremiumResults.hasNext()) {
+			Auction auction = iteratorPremiumResults.next();
+			finalResults.add(auction);
+		}
+		
+		Iterator<Auction> iteratorNormalResults = normalResults.iterator();
+		while (iteratorNormalResults.hasNext()) {
+			Auction auction = iteratorNormalResults.next();
+			finalResults.add(auction);
+		}
+		
+		return finalResults;
 	}
 
 	private List<Auction> validateDate(List<Auction> ads, boolean inOrOut, Date earliestDate, Date latestDate) {
