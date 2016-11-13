@@ -34,6 +34,13 @@
 					'filter',
 					'map'
 				]);
+			},
+
+			placeAd: function () {
+				return $.flatfindr.add([
+					'place',
+					'imageUpload'
+				]);
 			}
 		};
 

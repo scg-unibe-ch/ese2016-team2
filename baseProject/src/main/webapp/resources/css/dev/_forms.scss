@@ -4,7 +4,7 @@ $slip-height-small: 57px;
 $slip-height-medium: 73px;
 
 
-.form-max-height {
+.form-max-height form {
   height: calc(100vh - 2 * #{$slip-height-small - 1});
 
   @include media($bq-medium) {
@@ -84,6 +84,11 @@ $slip-height-medium: 73px;
 
 
 
+  textarea {
+    resize: none;
+  }
+
+
   button {
     &[type=submit],
     &[type=reset],
@@ -109,6 +114,21 @@ $slip-height-medium: 73px;
 
     :last-child:not(:only-of-type) label {
       border-right: none;
+    }
+  }
+}
+
+
+.fields-optional {
+  height: 0;
+  transition: height $base-duration $base-timing;
+  overflow: hidden;
+
+  &.js-show {
+    height: $slip-height-small;
+
+    @include media($bq-medium) {
+      height: $slip-height-medium;
     }
   }
 }
@@ -239,9 +259,41 @@ $slip-height-medium: 73px;
 
   textarea {
     height: 145px;
-    resize: none;
   }
 }
+
+
+
+.image-preview-wrap {
+  position: relative;
+  float: left;
+
+  img {
+    display: inline-block;
+    height: 100%;
+  }
+
+  .action-delete {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    text-align: center;
+    color: $base-color-opposite;
+    background-color: rgba(255,255,255,.32);
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity $base-duration $base-timing;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+
 
 
 

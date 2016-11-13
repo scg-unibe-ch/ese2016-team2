@@ -1,289 +1,318 @@
-<%@ page language="java" pageEncoding="UTF-8"
-	contentType="text/html;charset=utf-8"%>
+<%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<c:import url="template/header.jsp" />
+<c:import url="template/~top.jsp" />
+<c:import url="template/~header_wo_search.jsp" />
 
-<script src="/js/jquery.ui.widget.js"></script>
+<%-- <script src="/js/jquery.ui.widget.js"></script>
 <script src="/js/jquery.iframe-transport.js"></script>
-<script src="/js/jquery.fileupload.js"></script>
+<script src="/js/jquery.fileupload.js"></script> --%>
 
-<script src="/js/pictureUploadAd.js"></script>
-
-
-<script>
-	$(document).ready(function() {
-		
-		// Go to controller take what you need from user
-		// save it to a hidden field
-		// iterate through it
-		// if there is id == x then make "Bookmark Me" to "bookmarked"
-		
-		$("#field-city").autocomplete({
-			minLength : 2
-		});
-		$("#field-city").autocomplete({
-			source : <c:import url="getzipcodes.jsp" />
-		});
-		$("#field-city").autocomplete("option", {
-			enabled : true,
-			autoFocus : true
-		});
-		$("#field-moveInDate").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		$("#field-moveOutDate").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		
-		$("#field-visitDay").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		
-
-		$("#addbutton").click(function() {
-			// Validates the input for Email Syntax
-			function validateForm(text) {
-			    var positionAt = text.indexOf("@");
-			    var positionDot = text.lastIndexOf(".");
-			    if (positionAt< 1 || positionDot<positionAt+2 || positionDot+2>=text.length) {
-			        return false;
-			    } else {
-			    	return true;
-			    }
-			}
-		});
-		
-		$("#addVisitButton").click(function() {
-			var date = $("#field-visitDay").val();
-			if(date == ""){
-				return;
-			}
-			
-			var startHour = $("#startHour").val();
-			var startMinutes = $("#startMinutes").val();
-			var endHour = $("#endHour").val();
-			var endMinutes = $("#endMinutes").val();
-			
-			if (startHour > endHour) {
-				alert("Invalid times. The visit can't end before being started.");
-				return;
-			} else if (startHour == endHour && startMinutes >= endMinutes) {
-				alert("Invalid times. The visit can't end before being started.");
-				return;
-			}
-			
-			var newVisit = date + ";" + startHour + ":" + startMinutes + 
-				";" + endHour + ":" + endMinutes; 
-			var newVisitLabel = date + " " + startHour + ":" + startMinutes + 
-			" to " + endHour + ":" + endMinutes; 
-			
-			var index = $("#addedVisits input").length;
-			
-			var label = "<p>" + newVisitLabel + "</p>";
-			var input = "<input type='hidden' value='" + newVisit + "' name='visits[" + index + "]' />";
-			
-			$("#addedVisits").append(label + input);
-		});
-	});
-</script>
-
-<pre>
-	<a href="/">Home</a>   &gt;   Place ad</pre>
-
-<h1>Place an ad</h1>
-<hr />
-
-<form:form method="post" modelAttribute="placeAdForm"
-	action="/profile/placeAd" id="placeAdForm" autocomplete="off"
-	enctype="multipart/form-data">
-
-	<fieldset>
-		<legend>General info</legend>
-		<table class="placeAdTable">
-			<tr>
-				<td><label for="field-buyable">Rentable or Buyable:</label></td>
-			</tr>
-			<tr>
-				<td><form:radiobutton id="field-buyable" path="buyable" value="0" checked="checked" />Rentable
-					<form:radiobutton id="field-buyable" path="buyable" value="1" />Buyalbe</td>
-			</tr>
-			<tr>
-				<td><label for="field-title">Ad Title</label></td>
-				<td><label for="type-room">Type:</label></td>
-			</tr>
-
-			<tr>
-				<td><form:input id="field-title" path="title"
-						placeholder="Ad Title" /></td>
-				<td><form:radiobutton id="type-room" path="roomType" value="Room" checked="checked" />Room 
-					<form:radiobutton id="type-room" path="roomType" value="Studio"/>Studio 
-					<form:radiobutton id="type-room" path="roomType" value="House"/>House </td>
-			</tr>
-
-			<tr>
-				<td><label for="field-street">Street</label></td>
-				<td><label for="field-city">City / Zip code</label></td>
-			</tr>
-
-			<tr>
-				<td><form:input id="field-street" path="street"
-						placeholder="Street" /></td>
-				<td><form:input id="field-city" path="city" placeholder="City" />
-					<form:errors path="city" cssClass="validationErrorText" /></td>
-			</tr>
-
-			<tr>
-				<td><label for="moveInDate">Move-in date</label></td>
-				<td><label for="moveOutDate">Move-out date (optional, not needed for a buyable estate)</label></td>
-			</tr>
-			<tr>
-				<td><form:input type="text" id="field-moveInDate"
-						path="moveInDate" /></td>
-				<td><form:input type="text" id="field-moveOutDate"
-						path="moveOutDate" /></td>
-			</tr>
-
-			<tr>
-				<td><label for="field-Prize">Prize per month/Selling prize</label></td>
-				<td><label for="field-SquareFootage">Square Meters</label></td>
-			</tr>
-			<tr>
-				<td><form:input id="field-Prize" type="number" path="prize"
-						placeholder="Prize per month" step="50" /> <form:errors
-						path="prize" cssClass="validationErrorText" /></td>
-				<td><form:input id="field-SquareFootage" type="number"
-						path="squareFootage" placeholder="Prize per month" step="5" /> <form:errors
-						path="squareFootage" cssClass="validationErrorText" /></td>
-			</tr>
-		</table>
-	</fieldset>
+<%-- <script src="/js/pictureUploadAd.js"></script> --%>
 
 
-	<br />
-	<fieldset>
-		<legend>Room Description</legend>
+<main role="main">
+	<c:import url="template/~top_bar.jsp">
+		<c:param name="instr" value="Place an ad..." />
+	</c:import>
 
-		<table class="placeAdTable">
-			<tr>
-				<td><form:checkbox id="field-smoker" path="smokers" value="1" /><label>Animals
-						allowed</label></td>
-				<td><form:checkbox id="field-animals" path="animals" value="1" /><label>Smoking
-						inside allowed</label></td>
-			</tr>
-			<tr>
-				<td><form:checkbox id="field-garden" path="garden" value="1" /><label>Garden
-						(co-use)</label></td>
-				<td><form:checkbox id="field-balcony" path="balcony" value="1" /><label>Balcony
-						or Patio</label></td>
-			</tr>
-			<tr>
-				<td><form:checkbox id="field-cellar" path="cellar" value="1" /><label>Cellar
-						or Attic</label></td>
-				<td><form:checkbox id="field-furnished" path="furnished"
-						value="1" /><label>Furnished</label></td>
-			</tr>
-			<tr>
-				<td><form:checkbox id="field-cable" path="cable" value="1" /><label>Cable
-						TV</label></td>
-				<td><form:checkbox id="field-garage" path="garage" value="1" /><label>Garage</label>
-				</td>
-			</tr>
-			<tr>
-				<td><form:checkbox id="field-internet" path="internet"
-						value="1" /><label>WiFi available</label></td>
-			</tr>
+	<div class="container">
 
-		</table>
-		<br />
-		<form:textarea path="roomDescription" rows="10" cols="100"
-			placeholder="Room Description" />
-		<form:errors path="roomDescription" cssClass="validationErrorText" />
-	</fieldset>
+		<div class="row">
 
-	<br />
-	<fieldset>
-		<legend>Preferences (optional)</legend>
-		<form:textarea path="preferences" rows="5" cols="100"
-			placeholder="Preferences"></form:textarea>
-	</fieldset>
+			<div class="span-half">
+				<div class="form form-search form-place form-max-height">
 
-	<fieldset>
-		<legend>Pictures (optional)</legend>
-		<br /> <label for="field-pictures">Pictures</label> <input
-			type="file" id="field-pictures" accept="image/*" multiple="multiple" />
-		<table id="uploaded-pictures" class="styledTable">
-			<tr>
-				<th id="name-column">Uploaded picture</th>
-				<th>Size</th>
-				<th>Delete</th>
-			</tr>
-		</table>
-		<br>
-	</fieldset>
+					<form:form
+						method="post"
+						modelAttribute="placeAdForm"
+						action="/profile/placeAd"
+						id="placeAdForm"
+						autocomplete="off"
+						enctype="multipart/form-data">
 
-	<fieldset>
-		<legend>Visiting times (optional)</legend>
+						<div class="container-scroll">
 
-		<table>
-			<tr>
-				<td><input type="text" id="field-visitDay" /> <select
-					id="startHour">
-						<%
-							for (int i = 0; i < 24; i++) {
-									String hour = String.format("%02d", i);
-									out.print("<option value=\"" + hour + "\">" + hour
-											+ "</option>");
-								}
-						%>
-				</select> <select id="startMinutes">
-						<%
-							for (int i = 0; i < 60; i++) {
-									String minute = String.format("%02d", i);
-									out.print("<option value=\"" + minute + "\">" + minute
-											+ "</option>");
-								}
-						%>
-				</select> <span>to&thinsp; </span> <select id="endHour">
-						<%
-							for (int i = 0; i < 24; i++) {
-									String hour = String.format("%02d", i);
-									out.print("<option value=\"" + hour + "\">" + hour
-											+ "</option>");
-								}
-						%>
-				</select> <select id="endMinutes">
-						<%
-							for (int i = 0; i < 60; i++) {
-									String minute = String.format("%02d", i);
-									out.print("<option value=\"" + minute + "\">" + minute
-											+ "</option>");
-								}
-						%>
-				</select>
+							<div class="row checkboxes">
+								<div class="tile tile-third">
+									<form:radiobutton id="room" path="roomType" value="Room" checked="checked" />
+									<label for="room">Room</label>
+								</div>
+								<div class="tile tile-third">
+									<form:radiobutton id="studio" path="roomType" value="Studio" />
+									<label for="studio">Studio</label>
+								</div>
+								<div class="tile tile-third">
+									<form:radiobutton id="house" path="roomType" value="House" />
+									<label for="house">House</label>
+								</div>
+							</div>
+
+
+							<div class="row checkboxes">
+								<div class="tile tile-half">
+									<form:radiobutton id="rent" path="buyable" value="0" checked="checked" />
+									<label for="rent">Rent</label>
+								</div>
+								<div class="tile tile-half">
+									<form:radiobutton id="buy" path="buyable" value="1" />
+									<label for="buy">Sell</label>
+								</div>
+							</div>
+
+
+							<form:input
+								type="text"
+								id="field-street"
+								path="street"
+								placeholder="Address"
+								tabindex="1" />
+
+
+							<form:input
+								type="text"
+								id="field-city"
+								path="city"
+								placeholder="City"
+								tabindex="2" />
+							<form:errors path="city" cssClass="validationErrorText" />
+
+
+							<form:input
+								type="text"
+								id="field-title"
+								path="title"
+								placeholder="Title"
+								tabindex="3" />
+
+
+								<%-- @Jerome: for some reason it autosets '0' as value. W/A: set
+								to '' by js. --%>
+							<form:input
+								value=""
+								id="field-Prize"
+								type="number"
+								path="prize"
+								placeholder="Rent or Price in CHF"
+								tabindex="4"
+								min="1" />
+							<form:errors path="prize" cssClass="validationErrorText" />
+
+							<form:input
+								value=""
+								id="field-SquareFootage"
+								type="number"
+								path="squareFootage"
+								placeholder="Space in ㎡"
+								tabindex="5"
+								min="5" />
+							<form:errors path="squareFootage" cssClass="validationErrorText" />
+
+
+							<div class="row dates">
+	              <div class="tile tile-half">
+	                <div class="row">
+	                  <div class="tile tile-full">
+	                    <label>Move-in</label>
+	                  </div>
+	                  <div class="tile tile-full">
+	                    <form:input
+	                      class="js-has-label"
+	                      type="text"
+	                      id="field-moveInDate"
+	                      path="moveInDate"
+	                      tabindex="5"
+	                      placeholder="Choose from datepicker..." />
+	                  </div>
+	                </div>
+	              </div>
+	              <div class="tile tile-half">
+	                <div class="datepicker" id="earliestMoveInDate">
+
+	                </div>
+	              </div>
+	            </div>
+
+	            <div class="row dates fields-optional js-show">
+	              <div class="tile tile-half">
+	                <div class="row">
+	                  <div class="tile tile-full">
+	                    <label>Move-out (optional when selling)</label>
+	                  </div>
+	                  <div class="tile tile-full">
+	                    <form:input
+	                      class="js-has-label"
+	                      type="text"
+	                      id="moveOutDate"
+	                      path="moveOutDate"
+	                      tabindex="7"
+	                      placeholder="Choose from datepicker..." />
+	                  </div>
+	                </div>
+	              </div>
+	              <div class="tile tile-half">
+	                <div class="datepicker" id="earliestMoveOutDate">
+
+	                </div>
+	              </div>
+	            </div>
+
+
+							<div class="row checkboxes">
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-smoker" path="smokers" value="1" />
+	                <label for="field-smoker">Smoking allowed</label>
+	              </div>
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-animals" path="animals" value="1" />
+	                <label for="field-animals">Animals allowed</label>
+	              </div>
+	            </div>
+
+	            <div class="row checkboxes">
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-balcony" path="balcony" value="1" />
+	                <label for="field-balcony">Balcony or Patio</label>
+	              </div>
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-garden" path="garden" value="1" />
+	                <label for="field-garden">Garden (co-use)</label>
+	              </div>
+	            </div>
+
+	            <div class="row checkboxes">
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-cellar" path="cellar" value="1" />
+	                <label for="field-cellar">Cellar or Attic</label>
+	              </div>
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-furnished" path="furnished" value="1" />
+	                <label for="field-furnished">Furnished</label>
+	              </div>
+	            </div>
+
+	            <div class="row checkboxes">
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-cable" path="cable" value="1" />
+	                <label for="field-cable">Cable TV</label>
+	              </div>
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-garage" path="garage" value="1" />
+	                <label for="field-garage">Garage</label>
+	              </div>
+	            </div>
+
+	            <div class="row checkboxes">
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-internet" path="internet" value="1" />
+	                <label for="field-internet">WiFi</label>
+	              </div>
+	            </div>
+
+							<form:textarea
+								path="roomDescription"
+								rows="10"
+								placeholder="Room Description" />
+							<form:errors path="roomDescription" cssClass="validationErrorText" />
+
+
+							<form:textarea
+								path="preferences"
+								rows="5"
+								placeholder="Preferences" />
 
 
 
-					<div id="addVisitButton" class="smallPlusButton">+</div>
+							<fieldset>
+								<label for="field-pictures">Pictures</label> <input
+									type="file" id="field-pictures" accept="image/*" multiple="multiple" />
+								<table id="uploaded-pictures" class="styledTable">
+									<tr>
+										<th id="name-column">Uploaded picture</th>
+										<th>Size</th>
+										<th>Delete</th>
+									</tr>
+								</table>
+								<br>
+							</fieldset>
 
-					<div id="addedVisits"></div></td>
+							<fieldset>
+								<legend>Visiting times (optional)</legend>
 
-			</tr>
+								<table>
+									<tr>
+										<td><input type="text" id="field-visitDay" /> <select
+											id="startHour">
+												<%
+													for (int i = 0; i < 24; i++) {
+															String hour = String.format("%02d", i);
+															out.print("<option value=\"" + hour + "\">" + hour
+																	+ "</option>");
+														}
+												%>
+										</select> <select id="startMinutes">
+												<%
+													for (int i = 0; i < 60; i++) {
+															String minute = String.format("%02d", i);
+															out.print("<option value=\"" + minute + "\">" + minute
+																	+ "</option>");
+														}
+												%>
+										</select> <span>to&thinsp; </span> <select id="endHour">
+												<%
+													for (int i = 0; i < 24; i++) {
+															String hour = String.format("%02d", i);
+															out.print("<option value=\"" + hour + "\">" + hour
+																	+ "</option>");
+														}
+												%>
+										</select> <select id="endMinutes">
+												<%
+													for (int i = 0; i < 60; i++) {
+															String minute = String.format("%02d", i);
+															out.print("<option value=\"" + minute + "\">" + minute
+																	+ "</option>");
+														}
+												%>
+										</select>
 
-		</table>
-		<br>
-	</fieldset>
 
 
+											<div id="addVisitButton" class="smallPlusButton">+</div>
 
-	<br />
-	<div>
-		<button type="submit">Submit</button>
-		<a href="/"><button type="button">Cancel</button></a>
-	</div>
+											<div id="addedVisits"></div></td>
 
-</form:form>
+									</tr>
 
-<c:import url="template/footer.jsp" />
+								</table>
+								<br>
+							</fieldset>
+
+						</div> <%-- .container-scroll END --%>
+
+						<div>
+							<button type="submit">Submit</button>
+							<a href="/"><button type="button">Cancel</button></a>
+						</div>
+
+					</form:form>
+
+				</div> <%-- .form.form-search END --%>
+			</div> <%-- .span-half END --%>
+
+			<div class="span-half">
+				<div id="image-preview" class="row">
+
+				</div>
+			</div>
+
+		</div> <%-- .row END --%>
+	</div> <%-- .container END --%>
+
+</main>
+
+<c:import url="template/~bottom.jsp">
+	<c:param name="js" value="placeAd" />
+</c:import>

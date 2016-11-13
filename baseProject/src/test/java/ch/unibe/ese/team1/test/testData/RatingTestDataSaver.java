@@ -17,75 +17,75 @@ public class RatingTestDataSaver {
 
 	@Autowired
 	RatingDao ratingDao;
-	
+
 	@Autowired
 	UserDao userDao;
-	
+
 	@Transactional
-	public void saveTestData() throws Exception {		
-		
+	public void saveTestData() throws Exception {
+
 		User ese = userDao.findByUsername("ese@unibe.ch");
 		User jane = userDao.findByUsername("jane@doe.com");
 		User oprah = userDao.findByUsername("oprah@winfrey.com");
 		User berner = userDao.findByUsername("user@bern.com");
-		
+
 		//Ese's ratings
 		Rating rating = new Rating();
 		rating.setRater(ese);
 		rating.setRatee(berner);
 		rating.setRating(3);
 		ratingDao.save(rating);
-		
+
 		rating = new Rating();
 		rating.setRater(ese);
 		rating.setRatee(oprah);
 		rating.setRating(4);
 		ratingDao.save(rating);
-		
+
 		rating = new Rating();
 		rating.setRater(ese);
 		rating.setRatee(jane);
 		rating.setRating(5);
 		ratingDao.save(rating);
-		
-		//Berner Bär doesn't rate anyone
+
+		//Berner BÃ¤r doesn't rate anyone
 		rating = new Rating();
 		rating.setRater(berner);
 		rating.setRatee(ese);
 		rating.setRating(0);
 		ratingDao.save(rating);
-		
+
 		rating = new Rating();
 		rating.setRater(berner);
 		rating.setRatee(oprah);
 		rating.setRating(0);
 		ratingDao.save(rating);
-		
+
 		rating = new Rating();
 		rating.setRater(berner);
 		rating.setRatee(jane);
 		rating.setRating(0);
 		ratingDao.save(rating);
-		
+
 		//Oprah loves everyone
 		rating = new Rating();
 		rating.setRater(oprah);
 		rating.setRatee(jane);
 		rating.setRating(5);
 		ratingDao.save(rating);
-		
+
 		rating = new Rating();
 		rating.setRater(oprah);
 		rating.setRatee(berner);
 		rating.setRating(5);
 		ratingDao.save(rating);
-		
+
 		rating = new Rating();
 		rating.setRater(oprah);
 		rating.setRatee(ese);
 		rating.setRating(5);
 		ratingDao.save(rating);
-		
+
 		//Jane hasn't invited many people
 		rating = new Rating();
 		rating.setRater(jane);

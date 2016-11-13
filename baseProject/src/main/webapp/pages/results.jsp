@@ -6,7 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:import url="template/~top.jsp" />
-<c:import url="template/~header_map.jsp" />
+<c:import url="template/~header_w_map_wo_search.jsp" />
 
 <main role="main">
 	<c:import url="template/~top_bar.jsp">

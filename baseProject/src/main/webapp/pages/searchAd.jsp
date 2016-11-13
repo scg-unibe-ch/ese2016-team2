@@ -18,14 +18,15 @@
 
 			<div class="span-half">
 				<div class="form form-search form-max-height">
-					<div class="container-scroll">
 
-						<form:form
-							method="post"
-							id="searchForm"
-							modelAttribute="searchForm"
-							action="/results"
-							autocomplete="off">
+					<form:form
+						method="post"
+						id="searchForm"
+						modelAttribute="searchForm"
+						action="/results"
+						autocomplete="off">
+
+						<div class="container-scroll">
 
 							<form:input
 								type="text"
@@ -259,7 +260,7 @@
 			</div> <%-- .span-half END --%>
 
 		</div> <%-- .row END --%>
-	</div> <%-- .container.container-pad END --%>
+	</div> <%-- .container END --%>
 
 </main>
 
