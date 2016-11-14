@@ -39,16 +39,16 @@ public class AdServiceTest {
 
 	@Autowired
 	private AdService adService;
-	
+
 	@Autowired
 	private UserDao userDao;
 
 	/**
 	 * In order to test the saved ad, I need to get it back from the DB again, so these
 	 * two methods need to be tested together, normally we want to test things isolated of
-	 * course. Testing just the returned ad from saveFrom() wouldn't answer the question 
+	 * course. Testing just the returned ad from saveFrom() wouldn't answer the question
 	 * whether the ad has been saved correctly to the db.
-	 * @throws ParseException 
+	 * @throws ParseException
 	 */
 	@Test
 	public void saveFromAndGetById() throws ParseException {
@@ -64,7 +64,7 @@ public class AdServiceTest {
 		placeAdForm.setRoomType("Studio");
 		placeAdForm.setMoveInDate("27-02-2015");
 		placeAdForm.setMoveOutDate("27-04-2015");
-		
+
 		placeAdForm.setSmokers(true);
 		placeAdForm.setAnimals(false);
 		placeAdForm.setGarden(true);
@@ -74,25 +74,25 @@ public class AdServiceTest {
 		placeAdForm.setCable(false);
 		placeAdForm.setGarage(true);
 		placeAdForm.setInternet(false);
-		
+
 		ArrayList<String> filePaths = new ArrayList<>();
 		filePaths.add("/img/test/ad1_1.jpg");
-		
+
 		User hans = createUser("hans@kanns.ch", "password", "Hans", "Kanns",
 				Gender.MALE, "Premium");
 		hans.setAboutMe("Hansi Hinterseer");
 		userDao.save(hans);
-		
+
 		adService.saveFrom(placeAdForm, filePaths, hans);
-		
+
 		Ad ad = new Ad();
 		Iterable<Ad> ads = adService.getAllAds();
 		Iterator<Ad> iterator = ads.iterator();
-		
+
 		while (iterator.hasNext()) {
 			ad = iterator.next();
 		}
-		
+
 		//Testing
 		assertTrue(ad.getSmokers());
 		assertFalse(ad.getAnimals());
@@ -105,15 +105,89 @@ public class AdServiceTest {
 		assertEquals("title", ad.getTitle());
 		assertEquals("Hauptstrasse 13", ad.getStreet());
 		assertEquals("Studio", ad.getRoomType());
-		
+
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	    Date result =  df.parse("2015-02-27");
-		
+
 		assertEquals(0, result.compareTo(ad.getMoveInDate()));
 	}
-	
-	private User createUser(String email, String password, String firstName,
-			String lastName, Gender gender, String account) {
+
+	/**
+	 * The method is called issue3 as it is referencing it as is from the numeric
+	 * description of the issues of team8.
+	 * TODO: change name.
+	 *
+	 * This test demonstrates that **NO EXCEPTION** is thrown when setting the move-out
+	 * date earlier than the move-in date which equals to a logical inconsitency.
+	 *
+	 * NOTICE: As it is not known which Exception should be thrown when above inconsitency
+	 * occurs, we expect the mother of all Exceptions.
+	 * @throws ParseException
+	 *
+	 */
+	@Test(expected = Exception.class)
+	public void issue3()
+	{
+		//Preparation
+		PlaceAdForm placeAdForm = new PlaceAdForm();
+		placeAdForm.setCity("3018 - Bern");
+		placeAdForm.setPreferences("Test preferences");
+		placeAdForm.setRoomDescription("Test Room description");
+		placeAdForm.setPrize(600);
+		placeAdForm.setSquareFootage(50);
+		placeAdForm.setTitle("title");
+		placeAdForm.setStreet("Hauptstrasse 13");
+		placeAdForm.setRoomType("Studio");
+		placeAdForm.setMoveInDate("27-02-2015");
+		placeAdForm.setMoveOutDate("27-01-2015"); // Remark move-out date is month before move-in date.
+
+		placeAdForm.setSmokers(true);
+		placeAdForm.setAnimals(false);
+		placeAdForm.setGarden(true);
+		placeAdForm.setBalcony(false);
+		placeAdForm.setCellar(true);
+		placeAdForm.setFurnished(false);
+		placeAdForm.setCable(false);
+		placeAdForm.setGarage(true);
+		placeAdForm.setInternet(false);
+
+		ArrayList<String> filePaths = new ArrayList<>();
+		filePaths.add("/img/test/ad1_1.jpg");
+
+		User hans = createUser("hans-ueli@kanns.ch", "password", "Hans", "Kanns",
+				Gender.MALE, "Premium");
+		hans.setAboutMe("Hansi Hinterseer");
+		userDao.save(hans);
+
+		adService.saveFrom(placeAdForm, filePaths, hans);
+
+		Ad ad = new Ad();
+		Iterable<Ad> ads = adService.getAllAds();
+		Iterator<Ad> iterator = ads.iterator();
+
+		while (iterator.hasNext()) { ad = iterator.next(); }
+
+		//Testing
+		assertTrue(ad.getSmokers());
+		assertFalse(ad.getAnimals());
+		assertEquals("Bern", ad.getCity());
+		assertEquals(3018, ad.getZipcode());
+		assertEquals("Test preferences", ad.getPreferences());
+		assertEquals("Test Room description", ad.getRoomDescription());
+		assertEquals(600, ad.getPrize());
+		assertEquals(50, ad.getSquareFootage());
+		assertEquals("title", ad.getTitle());
+		assertEquals("Hauptstrasse 13", ad.getStreet());
+		assertEquals("Studio", ad.getRoomType());
+		String moveInDate = "2015-02-27";
+		String moveOutDate = "2015-01-27";
+
+		assertEquals(0, moveInDate.compareTo(ad.getMoveInDate().toString()));
+		assertEquals(0, moveOutDate.compareTo(ad.getMoveOutDate().toString()));
+	}
+
+	private User createUser(final String email, final String password, final String firstName,
+			final String lastName, final Gender gender, final String account) {
 		User user = new User();
 		user.setUsername(email);
 		user.setPassword(password);
@@ -131,5 +205,5 @@ public class AdServiceTest {
 		user.setUserRoles(userRoles);
 		return user;
 	}
-	
+
 }
