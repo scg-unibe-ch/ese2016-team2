@@ -216,7 +216,7 @@ public class AuctionService {
 	 * @return an Iterable of all search results
 	 */
 	@Transactional
-	public Iterable<Auction> queryResults(SearchForm searchForm) {
+	public Iterable<Auction> queryResults(SearchForm searchForm, boolean premium) {
 		Iterable<Auction> results = null;
 		// we use this method if we are looking for rooms AND studios AND houses
 		if (searchForm.getRoom() && searchForm.getStudio() && searchForm.getHouse()) {
@@ -398,29 +398,13 @@ public class AuctionService {
 		}
 		
 		Iterator<Auction> iterator = locatedResults.iterator();
-		List<Auction> premiumResults = new ArrayList<>();
-		List<Auction> normalResults = new ArrayList<>();
 		List<Auction> finalResults = new ArrayList<>();
 		while (iterator.hasNext()) {
-			Auction auction = iterator.next();
-			User user = auction.getUser();
-			if (user.getAccount().equals("Premium")){
-				premiumResults.add(auction);
-			}else{
-				normalResults.add(auction);
+			Auction ad = iterator.next();
+			User user = ad.getUser();
+			if (user.getAccount().equals("Premium") == premium){
+				finalResults.add(ad); 
 			}
-		}
-		
-		Iterator<Auction> iteratorPremiumResults = premiumResults.iterator();
-		while (iteratorPremiumResults.hasNext()) {
-			Auction auction = iteratorPremiumResults.next();
-			finalResults.add(auction);
-		}
-		
-		Iterator<Auction> iteratorNormalResults = normalResults.iterator();
-		while (iteratorNormalResults.hasNext()) {
-			Auction auction = iteratorNormalResults.next();
-			finalResults.add(auction);
 		}
 		
 		return finalResults;

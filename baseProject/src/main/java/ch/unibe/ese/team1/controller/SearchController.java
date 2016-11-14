@@ -20,7 +20,6 @@ import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Advertisement;
 import ch.unibe.ese.team1.model.Auction;
 
-
 /** Handles all requests concerning the search for ads. */
 @Controller
 public class SearchController {
@@ -36,7 +35,6 @@ public class SearchController {
 	 * so that users don't have to enter their search parameters multiple times.
 	 */
 	private SearchForm searchForm;
-
 
 	/** Shows the search ad page. */
 	@RequestMapping(value = "/searchAd", method = RequestMethod.GET)
@@ -55,23 +53,34 @@ public class SearchController {
 			ModelAndView model = new ModelAndView("results");
 
 			List<Advertisement> results = new ArrayList<Advertisement>();
+			List<Advertisement> premiumResults = new ArrayList<Advertisement>();
 			Iterable<Ad> matchingAds;
 			Iterable<Auction> matchingAuctions;
 			if (searchForm.getBuyable()) {
-				matchingAuctions = auctionService.queryResults(searchForm);
+				matchingAuctions = auctionService.queryResults(searchForm, false);
 				for (Auction auction : matchingAuctions) {
 					results.add(auction);
 				}
-			}else{
-				matchingAds = adService.queryResults(searchForm);
-				for (Ad ad : matchingAds) {
-					results.add(ad);
+				matchingAuctions = auctionService.queryResults(searchForm, true);
+				for (Auction auction : matchingAuctions) {
+					premiumResults.add(auction);
 				}
 			}
+			matchingAds = adService.queryResults(searchForm, false);
+			for (Ad ad : matchingAds) {
+				results.add(ad);
+			}
+			matchingAds = adService.queryResults(searchForm, true);
+			for (Ad ad : matchingAds) {
+				premiumResults.add(ad);
+			}
 			model.addObject("results", results);
+			model.addObject("premiumResults", premiumResults);
 			return model;
-			
-		} else {
+
+		} else
+
+		{
 			// go back
 			return searchAd();
 		}
