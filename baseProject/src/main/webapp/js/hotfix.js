@@ -6,7 +6,7 @@
 	// Example on sort function.. just override existing func.
 	// Not ultimately sure if it's working.
 
-	$('#modus').off('change', sort_div_attribute).on(
+	$('#modus').off('change').on(
 			'change',
 			function() {
 				// determine sort modus (by which attribute, asc/desc)
@@ -34,14 +34,19 @@
 					var divlengthPremium = divslistPremium.length;
 					for (a = 0; a < divlength; a++) {
 						divsbucket[a] = new Array();
-						divsbucket[a][0] = divslist[a].getAttribute(attname);
+						divsbucket[a][0] =
+							attname.match('price') ?
+							parseInt(divslist[a].getAttribute(attname), 10) :
+							divslist[a].getAttribute(attname);
 						divsbucket[a][1] = divslist[a];
 						divslist[a].remove();
 					}
 					for (b = 0; b < divlengthPremium; b++) {
 						divsbucketPremium[b] = new Array();
-						divsbucketPremium[b][0] = divslistPremium
-								.getAttribute(attname);
+						divsbucketPremium[b][0] =
+							attname.match('price') ?
+							parseInt(divslistPremium[b].getAttribute(attname), 10) :
+							divslistPremium[b].getAttribute(attname);
 						divsbucketPremium[b][1] = divslistPremium[b];
 						divslistPremium[b].remove();
 					}
@@ -74,11 +79,10 @@
 					}
 
 					// insert sorted divs into document again
+					for (b = 0; b < divlengthPremium; b++)
+						$("#resultsDiv").append($(divsbucketPremium[b][1]));
 					for (a = 0; a < divlength; a++)
 						$("#resultsDiv").append($(divsbucket[a][1]));
-					for (b = 0; b < divlengthPremium; b++)
-						$("#resultsPremiuDiv").append(
-								$(divsbucketPremium[b][1]));
 				}
 
 			});
