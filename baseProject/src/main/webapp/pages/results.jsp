@@ -294,15 +294,15 @@
 						</c:when>
 
 						<c:otherwise>
-
-							<ul id="resultsDiv" class="resultsDiv">
-								<c:forEach var="ad" items="${premiumResults}">
+							<ul id="resultsPremiumDiv" class="resultsDiv">
+							
+							<c:forEach var="ad" items="${premiumResults}">
 
 									<c:choose>
 										<c:when test="${!ad.auction}" >
 
 											<li
-												class="resultAd"
+												class="resultPremiumAd"
 												data-price="${ad.prize}"
 												data-moveIn="${ad.moveInDate}"
 												data-age="${ad.moveInDate}">
@@ -347,7 +347,7 @@
 
 										<c:otherwise>
 											<li
-												class="resultAd"
+												class="resultPremiumAd"
 												data-price="${ad.prize}"
 												data-moveIn="${ad.moveInDate}"
 												data-age="${ad.moveInDate}">
@@ -383,6 +383,10 @@
 
 									</c:choose>
 								</c:forEach>
+							
+							</ul>							
+							<ul id="resultsDiv" class="resultsDiv">
+								
 								<c:forEach var="ad" items="${results}">
 
 									<c:choose>
