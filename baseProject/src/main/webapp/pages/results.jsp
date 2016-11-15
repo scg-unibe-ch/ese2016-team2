@@ -289,15 +289,14 @@
 
 					<c:choose>
 
-						<c:when test="${empty results}">
+						<c:when test="${empty results} AND ${empty premiumResults}">
 							<p>No results found!
 						</c:when>
 
 						<c:otherwise>
 
 							<ul id="resultsDiv" class="resultsDiv">
-
-								<c:forEach var="ad" items="${results}">
+								<c:forEach var="ad" items="${premiumResults}">
 
 									<c:choose>
 										<c:when test="${!ad.auction}" >
@@ -325,7 +324,7 @@
 															<h2>
 																<a class="link" href="<c:url value='/ad?id=${ad.id}' />">
 																	${ad.title }
-																</a>
+																</a>	
 															</h2>
 
 															<p>${ad.street},${ad.zipcode} ${ad.city}</p>
@@ -355,7 +354,94 @@
 
 												<a
 													class="list-image-link"
-													href="<c:url value='/ad?id=${ad.id}' />"
+													href="<c:url value='/auction?id=${ad.id}' />"
+													style="background-image: url(${ad.pictures[0].filePath})">
+												</a>
+
+												<div class="resultAd-text">
+													<h2>
+														<a class="link" href="<c:url value='/auction?id=${ad.id}' />">
+															${ad.title }
+														</a>
+													</h2>
+
+													<p>${ad.street},${ad.zipcode} ${ad.city}</p>
+													<p>${ad.roomType}</p>
+
+
+													<h3>CHF ${ad.prize}</h3>
+
+													<fmt:formatDate value="${ad.moveInDate}"
+														var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
+
+													<p>Move-in date: ${formattedMoveInDate }</p>
+													<p>Auction end-date: ${ad.endTime}</p>
+												</div>
+
+											</li>
+										</c:otherwise>
+
+									</c:choose>
+								</c:forEach>
+								<c:forEach var="ad" items="${results}">
+
+									<c:choose>
+										<c:when test="${!ad.auction}" >
+
+											<li
+												class="resultAd"
+												data-price="${ad.prize}"
+												data-moveIn="${ad.moveInDate}"
+												data-age="${ad.moveInDate}">
+
+												<div class="row">
+													<div class="tile tile-half">
+														<div class="list-image">
+															<a
+																class="list-image-link"
+																href="<c:url value='/ad?id=${ad.id}' />"
+																style="background-image: url(${ad.pictures[0].filePath})">
+															</a>
+														</div>
+													</div>
+
+													<div class="tile tile-half">
+														<div class="resultAd-text">
+
+															<h2>
+																<a class="link" href="<c:url value='/ad?id=${ad.id}' />">
+																	${ad.title }
+																</a>	
+															</h2>
+
+															<p>${ad.street},${ad.zipcode} ${ad.city}</p>
+															<p>${ad.roomType}</p>
+
+
+															<h3>CHF ${ad.prize}</h3>
+
+															<fmt:formatDate value="${ad.moveInDate}"
+																var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
+
+															<p>Move-in date: ${formattedMoveInDate }</p>
+
+														</div>
+													</div>
+												</div>
+
+											</li>
+										</c:when>
+
+										<c:otherwise>
+											<li
+												class="resultAd"
+												data-price="${ad.prize}"
+												data-moveIn="${ad.moveInDate}"
+												data-age="${ad.moveInDate}">
+
+												<a
+													class="list-image-link"
+													href="<c:url value='/auction?id=${ad.id}' />"
 													style="background-image: url(${ad.pictures[0].filePath})">
 												</a>
 
