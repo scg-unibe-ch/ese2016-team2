@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceBidForm;
 import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
+import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.AuctionPicture;
 import ch.unibe.ese.team1.model.Location;
@@ -215,7 +216,7 @@ public class AuctionService {
 	 * @return an Iterable of all search results
 	 */
 	@Transactional
-	public Iterable<Auction> queryResults(SearchForm searchForm) {
+	public Iterable<Auction> queryResults(SearchForm searchForm, boolean premium) {
 		Iterable<Auction> results = null;
 		// we use this method if we are looking for rooms AND studios AND houses
 		if (searchForm.getRoom() && searchForm.getStudio() && searchForm.getHouse()) {
@@ -395,7 +396,18 @@ public class AuctionService {
 					iterator.remove();
 			}
 		}
-		return locatedResults;
+		
+		Iterator<Auction> iterator = locatedResults.iterator();
+		List<Auction> finalResults = new ArrayList<>();
+		while (iterator.hasNext()) {
+			Auction ad = iterator.next();
+			User user = ad.getUser();
+			if (user.getAccount().equals("Premium") == premium){
+				finalResults.add(ad); 
+			}
+		}
+		
+		return finalResults;
 	}
 
 	private List<Auction> validateDate(List<Auction> ads, boolean inOrOut, Date earliestDate, Date latestDate) {

@@ -207,7 +207,7 @@ public class AdService {
 	 * @return 	locatedResults	an Iterable of all search results
 	 */
 	@Transactional
-	public Iterable<Ad> queryResults(SearchForm searchForm) {
+	public Iterable<Ad> queryResults(SearchForm searchForm, boolean premium) {
 		Iterable<Ad> results = null;
 		// we use this method if we are looking for rooms AND studios AND houses
 		if (searchForm.getRoom() && searchForm.getStudio() && searchForm.getHouse()) {
@@ -395,7 +395,18 @@ public class AdService {
 					iterator.remove();
 			}
 		}
-		return locatedResults;
+		
+		Iterator<Ad> iterator = locatedResults.iterator();
+		List<Ad> finalResults = new ArrayList<>();
+		while (iterator.hasNext()) {
+			Ad ad = iterator.next();
+			User user = ad.getUser();
+			if (user.getAccount().equals("Premium") == premium){
+				finalResults.add(ad); 
+			}
+		}
+		
+		return finalResults;
 	}
 	
 	/**

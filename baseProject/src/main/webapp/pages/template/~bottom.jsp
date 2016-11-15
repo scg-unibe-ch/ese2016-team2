@@ -43,5 +43,6 @@
 
 
 </script>
+<script src="js/hotfix.js"></script>
 </body>
 </html>

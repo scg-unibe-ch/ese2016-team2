@@ -53,6 +53,8 @@ public class AuctionSchedule {
 				} else if (!auction.getAuctionEnded() && timeNow.after(dateAuctionEnd)) {
 					messageService.sendMessage(userService.findUserByUsername("System"), auction.getUser(), 
 							"Auction ended.", "No one has placed a bid.");
+					auction.setAuctionEnded(true);
+					auctionDao.save(auction);
 				}
 			} catch (ParseException e) {
 				e.printStackTrace();
