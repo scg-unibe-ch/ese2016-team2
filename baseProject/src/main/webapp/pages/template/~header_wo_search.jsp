@@ -86,16 +86,16 @@
       </c:otherwise>
     </c:choose>
 
-  </div>
-
-  <div class="row">
-    <div class="tile-full">
-      <%-- <a href="#">
-        <small>Terms of Use</small>
-      </a>
-      <a href="#">
-        <small>Privacy Policy</small>
-      </a> --%>
+    <div class="row">
+      <div class="tile-full">
+        <%-- <a href="#">
+          <small>Terms of Use</small>
+        </a>
+        <a href="#">
+          <small>Privacy Policy</small>
+        </a> --%>
+      </div>
     </div>
+
   </div>
 </header>

@@ -119,21 +119,6 @@ $slip-height-medium: 73px;
 }
 
 
-.fields-optional {
-  height: 0;
-  transition: height $base-duration $base-timing;
-  overflow: hidden;
-
-  &.js-show {
-    height: $slip-height-small;
-
-    @include media($bq-medium) {
-      height: $slip-height-medium;
-    }
-  }
-}
-
-
 .dates {
   border-bottom: 1px solid $whiff-of-gray;
 
@@ -336,7 +321,7 @@ $slip-height-medium: 73px;
     }
   }
 
-  @include media($bq-huge/2) {
+  @include media($bq-huge / 2) {
     width: 50% !important;
   }
 }
@@ -344,4 +329,25 @@ $slip-height-medium: 73px;
 .ui-helper-hidden-accessible {
   display: none !important;
   visibility: hidden !important;
+}
+
+
+
+
+.fields-optional {
+  max-height: 0;
+  border-bottom-color: transparent;
+  transition: max-height $base-duration $base-timing;
+  overflow: hidden;
+
+  &.dates.js-show {
+    // @Jerome
+    // I have a slight feeling that max-height is not a good practice for this.
+    max-height: 4 * $slip-height-small;
+    border-bottom-color: $whiff-of-gray;
+
+    @include media($bq-medium) {
+      max-height: 4 * $slip-height-medium;
+    }
+  }
 }

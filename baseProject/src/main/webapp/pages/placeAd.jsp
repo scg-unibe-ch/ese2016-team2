@@ -129,13 +129,13 @@
 	                </div>
 	              </div>
 	              <div class="tile tile-half">
-	                <div class="datepicker" id="earliestMoveInDate">
+	                <div class="datepicker" id="moveInDate">
 
 	                </div>
 	              </div>
 	            </div>
 
-	            <div class="row dates fields-optional js-show">
+	            <div class="row dates fields-optional fields-optional-sell">
 	              <div class="tile tile-half">
 	                <div class="row">
 	                  <div class="tile tile-full">
@@ -145,7 +145,7 @@
 	                    <form:input
 	                      class="js-has-label"
 	                      type="text"
-	                      id="moveOutDate"
+	                      id="field-moveOutDate"
 	                      path="moveOutDate"
 	                      tabindex="7"
 	                      placeholder="Choose from datepicker..." />
@@ -153,7 +153,7 @@
 	                </div>
 	              </div>
 	              <div class="tile tile-half">
-	                <div class="datepicker" id="earliestMoveOutDate">
+	                <div class="datepicker" id="moveOutDate">
 
 	                </div>
 	              </div>

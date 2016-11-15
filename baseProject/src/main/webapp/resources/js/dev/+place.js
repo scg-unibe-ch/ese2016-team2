@@ -41,16 +41,34 @@ jQuery.flatfindr.register({
       enabled : true,
       autoFocus : true
     });
-    $("#field-moveInDate").datepicker({
-      dateFormat : 'dd-mm-yy'
-    });
-    $("#field-moveOutDate").datepicker({
-      dateFormat : 'dd-mm-yy'
-    });
+
 
     $("#field-visitDay").datepicker({
       dateFormat : 'dd-mm-yy'
     });
+
+
+    $('#buy').on('click', function() {
+      $('.fields-optional-sell').addClass('js-show');
+    });
+
+    $('#rent').on('click', function() {
+      $('.fields-optional-sell').removeClass('js-show');
+    });
+
+    /**
+     * Initiate datepicker with no date set.
+     */
+    $("#moveInDate").datepicker({
+      altField: '#field-moveInDate',
+      dateFormat : 'dd-mm-yy'
+    }).datepicker('setDate', null);
+
+    $("#moveOutDate").datepicker({
+      altField: '#field-moveOutDate',
+      dateFormat : 'dd-mm-yy'
+    }).datepicker('setDate', null);
+
 
 
     $("#addbutton").click(function() {
@@ -104,16 +122,16 @@ jQuery.flatfindr.register({
       if ($(x).val() === '0')
         $(x).val('');
     });
-    //$('form').on('submit', function(e) {
-      // e.preventDefault();
-      // $('input[type=number]').each(function(_, x) {
-      //   var hustensaft = $(x);
-      //   if (hustensaft.val() === '')
-      //     hustensaft.val(0);
-      // });
-      // this.submit();
-      // return false;
-    //});
+    $('form').on('submit', function(e) {
+      e.preventDefault();
+      $('input[type=number]').each(function(_, x) {
+        var hustensaft = $(x);
+        if (hustensaft.val() === '')
+          hustensaft.val(0);
+      });
+      this.submit();
+      return false;
+    });
 
     (function () {
       var error_count = $('form').find('.validationErrorText').length;

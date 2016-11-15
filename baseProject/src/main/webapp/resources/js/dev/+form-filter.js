@@ -214,31 +214,34 @@ jQuery.flatfindr.register({
      * No arguments need to be passed, since the function simply looks up the dropdown selection.
      */
     function sort_div_attribute() {
-        //determine sort modus (by which attribute, asc/desc)
-        var sortmode = $('#modus').find(":selected").val();
+      //determine sort modus (by which attribute, asc/desc)
+      var sortmode = $('#modus').find(":selected").val();
 
-        //only start the process if a modus has been selected
-        if(sortmode.length > 0) {
-        	var attname;
+      //only start the process if a modus has been selected
+      if(sortmode.length > 0) {
+      	var attname;
 
-        	//determine which variable we pass to the sort function
+      	//determine which variable we pass to the sort function
     		if(sortmode == "price_asc" || sortmode == "price_desc")
     			attname = 'data-price';
-    	    else if(sortmode == "moveIn_asc" || sortmode == "moveIn_desc")
-    			attname = 'data-moveIn';
-    	    else
-    			attname = 'data-age';
+  	    else if(sortmode == "moveIn_asc" || sortmode == "moveIn_desc")
+  			  attname = 'data-moveIn';
+  	    else
+  		    attname = 'data-age';
 
     		//copying divs into an array which we're going to sort
-    	    var divsbucket = new Array();
-    	    var divslist = $('li.resultAd');
-    	    var divlength = divslist.length;
-    	    for (a = 0; a < divlength; a++) {
+  	    var divsbucket = new Array();
+  	    var divslist = $('li.resultAd');
+  	    var divlength = divslist.length;
+  	    for (a = 0; a < divlength; a++) {
     			divsbucket[a] = new Array();
-    			divsbucket[a][0] = divslist[a].getAttribute(attname);
+    			divsbucket[a][0] =
+            attname.match('price') ?
+            parseInt(divslist[a].getAttribute(attname), 10) :
+            divslist[a].getAttribute(attname);
     			divsbucket[a][1] = divslist[a];
     			divslist[a].remove();
-    	    }
+  	    }
 
     	    //sort the array
     		divsbucket.sort(function(a, b) {
@@ -257,7 +260,7 @@ jQuery.flatfindr.register({
     	    //insert sorted divs into document again
     		for(a = 0; a < divlength; a++)
           $("#resultsDiv").append($(divsbucket[a][1]));
-    	}
+      }
     }
 
 

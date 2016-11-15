@@ -9,7 +9,7 @@
 <security:authorize var="loggedIn" url="/profile" />
 
 
-<header class="container header-primary map">
+<header class="container header-primary wo-search map">
   <div class="row">
     <div class="tile tile-full">
       <div class="action action-icon action-menu-primary">

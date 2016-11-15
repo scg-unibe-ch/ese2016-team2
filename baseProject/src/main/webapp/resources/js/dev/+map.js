@@ -25,7 +25,7 @@ jQuery.flatfindr.register({
    * @return {Function}          method that sets up simple dom manipulations
    */
   fn: function (window, document, $, $view, option) {
-    console.log(window.geoc);
+
 
     // @Jerome: just testing
     $('#js-map').click(function() {
@@ -130,7 +130,7 @@ jQuery.flatfindr.register({
       addresses.forEach(function(address) {
         geocoder.geocode( address, function(results, status) {
           if (status == 'OK') {
-            console.log(results);
+            //console.log(results);
           } else {
             console.log('Geocode was not successful for the following reason: ' + status);
           }
@@ -163,7 +163,7 @@ jQuery.flatfindr.register({
       script.src = eqfeed_callback(geo);
       document.getElementsByTagName('head')[0].appendChild(script);
 
-      
+
       code(window.geoc);
     }
 

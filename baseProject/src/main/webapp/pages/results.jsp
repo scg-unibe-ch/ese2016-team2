@@ -27,14 +27,15 @@
 
 			<div class="span-half">
 				<div class="form form-search form-filter form-max-height">
-					<div class="container-scroll">
 
-						<form:form
-							method="post"
-							modelAttribute="searchForm"
-							action="/results"
-							id="filterForm"
-							autocomplete="off">
+					<form:form
+						method="post"
+						modelAttribute="searchForm"
+						action="/results"
+						id="filterForm"
+						autocomplete="off">
+
+						<div class="container-scroll">
 
 							<form:input
 								type="text"

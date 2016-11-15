@@ -20,12 +20,11 @@
     "jquery": "^3.1.1",
     "bourbon": "^4.2.7",
     "neat": "^1.8.0",
-    "bitters": "^1.4.0",
     "blueimp-file-upload": "fileupload#^9.12.5",
     "jquery.iframe-transport": "^1.0.0",
     "flexslider": "^2.6.3",
-    "font-awesome": "^4.7.0",
     "jquery-ui": "^1.12.1",
-    "blueimp-load-image": "^2.9.0"
+    "blueimp-load-image": "^2.9.0",
+    "font-awesome": "^4.7.0"
   }
 }
