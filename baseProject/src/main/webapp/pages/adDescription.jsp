@@ -91,7 +91,7 @@
 						</button>
 					</div>
 					<div class="tile tile-half">
-						<button type="button" id="messageCancel">Cancel</button>
+						<button type="reset" id="messageCancel">Cancel</button>
 					</div>
 				</div>
 			</form>

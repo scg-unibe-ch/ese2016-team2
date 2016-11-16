@@ -43,22 +43,23 @@ jQuery.flatfindr.register({
     });
 
 
-    $("#field-visitDay").datepicker({
-      dateFormat : 'dd-mm-yy'
-    });
-
 
     $('#buy').on('click', function() {
-      $('.fields-optional-sell').addClass('js-show');
+      $('.fields-optional-sell').removeClass('js-show');
     });
 
     $('#rent').on('click', function() {
-      $('.fields-optional-sell').removeClass('js-show');
+      $('.fields-optional-sell').addClass('js-show');
     });
 
     /**
      * Initiate datepicker with no date set.
      */
+    $("#visitDay").datepicker({
+     altField: '#field-visitDay',
+     dateFormat : 'dd-mm-yy'
+    }).datepicker('setDate', null);
+
     $("#moveInDate").datepicker({
       altField: '#field-moveInDate',
       dateFormat : 'dd-mm-yy'
@@ -83,6 +84,26 @@ jQuery.flatfindr.register({
           }
       }
     });
+
+
+
+    $('#addedVisits').mole(function($this) {
+      var $throw_off = $this.find('p');
+      $this.remove();
+      return $throw_off;
+    });
+
+    $('#roomDescription')
+      .mole(function($this) {
+        var $throw_off = $this.val();
+        console.log($this);
+        $this.remove();
+        return $throw_off;
+      })
+      .on('focusout', function() {
+        $(this).trigger('mole');
+      });
+
 
     $("#addVisitButton").click(function() {
       var date = $("#field-visitDay").val();
@@ -113,7 +134,9 @@ jQuery.flatfindr.register({
       var label = "<p>" + newVisitLabel + "</p>";
       var input = "<input type='hidden' value='" + newVisit + "' name='visits[" + index + "]' />";
 
-      $("#addedVisits").append(label + input);
+      $("#addedVisits")
+        .append(label + input)
+        .trigger('mole');
     });
 
 

@@ -36,6 +36,15 @@
 
 .row {
   @include row();
+
+  &.fill-parent {
+    display: flex;
+  }
+
+  .fill-parent-child {
+    flex: 1;
+    height: auto;
+  }
 }
 
 

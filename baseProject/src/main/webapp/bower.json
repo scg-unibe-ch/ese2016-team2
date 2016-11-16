@@ -24,7 +24,7 @@
     "jquery.iframe-transport": "^1.0.0",
     "flexslider": "^2.6.3",
     "jquery-ui": "^1.12.1",
-    "blueimp-load-image": "^2.9.0",
-    "font-awesome": "^4.7.0"
+    "font-awesome": "^4.7.0",
+    "blueimp-load-image": "^2.9.0"
   }
 }

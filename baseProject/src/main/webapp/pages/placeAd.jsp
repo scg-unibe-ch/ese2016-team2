@@ -135,7 +135,7 @@
 	              </div>
 	            </div>
 
-	            <div class="row dates fields-optional fields-optional-sell">
+	            <div class="row dates fields-optional fields-optional-sell js-show">
 	              <div class="tile tile-half">
 	                <div class="row">
 	                  <div class="tile tile-full">
@@ -212,6 +212,8 @@
 	            </div>
 
 							<form:textarea
+								id="roomDescription"
+								class="fn-mole"
 								path="roomDescription"
 								rows="10"
 								placeholder="Room Description" />
@@ -224,77 +226,128 @@
 								placeholder="Preferences" />
 
 
+							<input
+								type="hidden"
+								id="field-pictures"
+								accept="image/*"
+								multiple="multiple" />
 
-							<fieldset>
-								<label for="field-pictures">Pictures</label> <input
-									type="file" id="field-pictures" accept="image/*" multiple="multiple" />
-								<table id="uploaded-pictures" class="styledTable">
-									<tr>
-										<th id="name-column">Uploaded picture</th>
-										<th>Size</th>
-										<th>Delete</th>
-									</tr>
-								</table>
-								<br>
-							</fieldset>
 
-							<fieldset>
-								<legend>Visiting times (optional)</legend>
+							<div class="row dates">
+	              <div class="tile tile-half">
+	                <div class="row">
+	                  <div class="tile tile-full">
+	                    <label>Viewing times</label>
+	                  </div>
+	                  <div class="tile tile-full">
+	                    <input
+	                      class="js-has-label"
+	                      type="text"
+	                      id="field-visitDay"
+	                      placeholder="Choose from datepicker..." />
+	                  </div>
+	                </div>
+	              </div>
+	              <div class="tile tile-half">
+	                <div class="datepicker" id="visitDay">
 
-								<table>
-									<tr>
-										<td><input type="text" id="field-visitDay" /> <select
-											id="startHour">
-												<%
-													for (int i = 0; i < 24; i++) {
+	                </div>
+	              </div>
+	            </div>
+
+
+							<div class="row times fill-parent">
+								<div class="tile tile-three-quarter">
+
+									<div class="row">
+										<div class="tile tile-half">
+											<div class="row">
+												<div class="tile tile-full">
+			                    <label>From: Hour</label>
+			                  </div>
+												<div class="tile tile-full action action-tile">
+													<select id="startHour">
+														<% for (int i = 0; i < 24; i++) {
 															String hour = String.format("%02d", i);
-															out.print("<option value=\"" + hour + "\">" + hour
-																	+ "</option>");
-														}
-												%>
-										</select> <select id="startMinutes">
-												<%
-													for (int i = 0; i < 60; i++) {
+															out.print("<option value=\"" + hour + "\">" + hour +"</option>");
+														} %>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="tile tile-half">
+											<div class="row">
+												<div class="tile tile-full">
+			                    <label>Minute</label>
+			                  </div>
+												<div class="tile tile-full action action-tile">
+													<select id="startMinutes">
+														<% for (int i = 0; i < 60; i++) {
 															String minute = String.format("%02d", i);
-															out.print("<option value=\"" + minute + "\">" + minute
-																	+ "</option>");
-														}
-												%>
-										</select> <span>to&thinsp; </span> <select id="endHour">
-												<%
-													for (int i = 0; i < 24; i++) {
+															out.print("<option value=\"" + minute + "\">" + minute +"</option>");
+														} %>
+													</select>
+			                  </div>
+											</div>
+										</div>
+									</div>
+
+
+
+									<div class="row times">
+										<div class="tile tile-half">
+											<div class="row">
+												<div class="tile tile-full">
+			                    <label>To: Hour</label>
+			                  </div>
+												<div class="tile tile-full action action-tile">
+													<select id="endHour">
+														<% for (int i = 0; i < 24; i++) {
 															String hour = String.format("%02d", i);
-															out.print("<option value=\"" + hour + "\">" + hour
-																	+ "</option>");
-														}
-												%>
-										</select> <select id="endMinutes">
-												<%
-													for (int i = 0; i < 60; i++) {
+															out.print("<option value=\"" + hour + "\">" + hour +"</option>");
+														} %>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="tile tile-half">
+											<div class="row">
+												<div class="tile tile-full">
+			                    <label>Minute</label>
+			                  </div>
+												<div class="tile tile-full action action-tile">
+													<select id="endMinutes">
+														<% for (int i = 0; i < 60; i++) {
 															String minute = String.format("%02d", i);
-															out.print("<option value=\"" + minute + "\">" + minute
-																	+ "</option>");
-														}
-												%>
-										</select>
+															out.print("<option value=\"" + minute + "\">" + minute +"</option>");
+														} %>
+													</select>
+			                  </div>
+											</div>
+										</div>
+									</div>
 
-
-
-											<div id="addVisitButton" class="smallPlusButton">+</div>
-
-											<div id="addedVisits"></div></td>
-
-									</tr>
-
-								</table>
-								<br>
-							</fieldset>
+								</div> <%-- .tile-three-quarter END --%>
+								<div class="tile tile-quarter fill-parent-child">
+									<div id="addVisitButton" class="action action-icon action-add">
+										<span class="fa fa-plus-circle fa-3x"></span>
+									</div>
+								</div>
+							</div> <%-- .row.times END --%>
 
 						</div> <%-- .container-scroll END --%>
 
-						<div>
-							<button type="submit">Submit</button>
-							<a href="/"><button type="button">Cancel</button></a>
+
+						<div class="row">
+							<%-- Will be populated with hidden inputs --%>
+							<div style="display: none" id="addedVisits" class="fn-mole"></div>
+
+							<div class="tile tile-half">
+								<button type="submit">Submit</button>
+							</div>
+							<div class="tile tile-half">
+								<a href="/"><button type="button">Cancel</button></a>
+							</div>
 						</div>
 
 					</form:form>
@@ -303,8 +356,20 @@
 			</div> <%-- .span-half END --%>
 
 			<div class="span-half">
-				<div id="image-preview" class="row">
+				<div class="row">
+					<div id="image-preview">
 
+					</div>
+				</div>
+				<div class="row">
+					<div class="tile tile-full fn-molehole-roomDescription">
+
+					</div>				
+				</div>
+				<div class="row">
+					<div class="tile tile-half fn-molehole-addedVisits">
+
+					</div>
 				</div>
 			</div>
 

@@ -118,6 +118,15 @@ $slip-height-medium: 73px;
   }
 }
 
+.dates, .times {
+  label {
+    margin-bottom: 0;
+    font-weight: normal;
+    color: $bright-gray;
+    cursor: pointer;
+  }
+}
+
 
 .dates {
   border-bottom: 1px solid $whiff-of-gray;
@@ -128,10 +137,6 @@ $slip-height-medium: 73px;
 
   label {
     @include sidebar-slip-pad-label;
-    margin-bottom: 0;
-    font-weight: normal;
-    color: $bright-gray;
-    cursor: pointer;
   }
 
   .datepicker {
@@ -145,6 +150,54 @@ $slip-height-medium: 73px;
 
     th, td {
       padding: 0.21em 0;
+    }
+  }
+}
+
+
+.times {
+  display: flex;
+
+  label {
+    @include sidebar-slip-pad;
+    text-align: center;
+  }
+
+  select {
+    margin-bottom: 0;
+    @include sidebar-select-pad;
+    background-color: $whiff-of-gray;
+    border-bottom: 1px solid $white;
+    font-weight: normal;
+    color: $light-gray;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      background-color: $whiff-of-gray;
+      color: $light-gray;
+    }
+  }
+
+  .action-add {
+    display: table;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+
+    span {
+      display: table-cell;
+      vertical-align: middle;
+
+      background-color: transparent;
+      color: $base-color;
+
+      &:hover,
+      &:focus {
+        background-color: inherit;
+        color: $base-color;
+      }
+
     }
   }
 }
