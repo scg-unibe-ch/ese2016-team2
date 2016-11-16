@@ -15,7 +15,7 @@
 
 	<div class="container">
 		<div class="row map">
-			
+
 		</div>
 	</div>
 
@@ -294,15 +294,18 @@
 						</c:when>
 
 						<c:otherwise>
+							<ul id="resultsPremiumDiv" class="resultsDiv">
 
+							</ul>
 							<ul id="resultsDiv" class="resultsDiv">
+
 								<c:forEach var="ad" items="${premiumResults}">
 
 									<c:choose>
 										<c:when test="${!ad.auction}" >
 
 											<li
-												class="resultAd"
+												class="resultPremiumAd"
 												data-price="${ad.prize}"
 												data-moveIn="${ad.moveInDate}"
 												data-age="${ad.moveInDate}">
@@ -324,7 +327,7 @@
 															<h2>
 																<a class="link" href="<c:url value='/ad?id=${ad.id}' />">
 																	${ad.title }
-																</a>	
+																</a>
 															</h2>
 
 															<p>${ad.street},${ad.zipcode} ${ad.city}</p>
@@ -347,7 +350,7 @@
 
 										<c:otherwise>
 											<li
-												class="resultAd"
+												class="resultPremiumAd"
 												data-price="${ad.prize}"
 												data-moveIn="${ad.moveInDate}"
 												data-age="${ad.moveInDate}">
@@ -383,6 +386,8 @@
 
 									</c:choose>
 								</c:forEach>
+
+
 								<c:forEach var="ad" items="${results}">
 
 									<c:choose>
@@ -411,7 +416,7 @@
 															<h2>
 																<a class="link" href="<c:url value='/ad?id=${ad.id}' />">
 																	${ad.title }
-																</a>	
+																</a>
 															</h2>
 
 															<p>${ad.street},${ad.zipcode} ${ad.city}</p>
