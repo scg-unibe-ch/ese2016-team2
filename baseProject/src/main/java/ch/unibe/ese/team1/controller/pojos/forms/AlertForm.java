@@ -33,7 +33,7 @@ public class AlertForm {
 	
 	private int zipCode;
 
-	@AssertFalse(message = "Please select either or both types")
+	@AssertFalse(message = "Please select at least one type")
 	private boolean noRoomNoStudio;
 
 	private boolean bothRoomAndStudio;
