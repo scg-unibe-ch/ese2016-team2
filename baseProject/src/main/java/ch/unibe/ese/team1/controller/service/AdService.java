@@ -60,7 +60,6 @@ public class AdService {
 		/** general info values */
 		ad.setTitle(placeAdForm.getTitle());
 		ad.setStreet(placeAdForm.getStreet());
-		ad.setStudio(placeAdForm.getStudio());
 
 		ad.setRoomType(placeAdForm.getRoomType());
 		ad.setPrize(placeAdForm.getPrize());
