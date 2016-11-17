@@ -47,7 +47,7 @@ public class ParserTest {
 
   @Autowired UserDao userDao;
 
-	  @Test
+  	  @Test(expected = ParseException.class)
 	  public void saveFromAndGetByUser() throws ParseException {
 	    //Preparation
 	    PlaceAdForm placeAdForm = new PlaceAdForm();
