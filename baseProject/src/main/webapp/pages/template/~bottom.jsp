@@ -49,6 +49,7 @@
 
 	})(jQuery, '${param.js}');
 </script>
+
 <c:choose>
     <c:when test="${param.map=='1'}">
 			<script
@@ -60,5 +61,8 @@
     <c:otherwise>
     </c:otherwise>
 </c:choose>
+
+<script src="js/hotfix.js"></script>
+
 </body>
 </html>

@@ -1,13 +1,12 @@
 /**
- *
+ * 
  * @name filter
  * @memberof jQuery.flatfindr
  * @namespace jQuery.flatfindr.filter
  */
 
-
-
 jQuery.flatfindr.register({
+
 
   name: 'filter',
 
@@ -276,4 +275,5 @@ jQuery.flatfindr.register({
     // ==========================================================================
 
   }
+
 });

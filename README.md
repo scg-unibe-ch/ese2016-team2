@@ -8,3 +8,6 @@ Members of the project team:
 
 Additional information about our actual steps you can find under the following link, which passes you to Trello, a web-based project management application:
 https://trello.com/b/JKtlB6xA
+
+jsdoc:
+https://shtill.com/ese2016_jsdoc/
