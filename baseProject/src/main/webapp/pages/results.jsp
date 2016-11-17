@@ -295,11 +295,8 @@
 
 						<c:otherwise>
 							<ul id="resultsPremiumDiv" class="resultsDiv">
-
-							</ul>
-							<ul id="resultsDiv" class="resultsDiv">
-
-								<c:forEach var="ad" items="${premiumResults}">
+									
+									<c:forEach var="ad" items="${premiumResults}">
 
 									<c:choose>
 										<c:when test="${!ad.auction}" >
@@ -386,6 +383,9 @@
 
 									</c:choose>
 								</c:forEach>
+									
+							</ul>
+							<ul id="resultsDiv" class="resultsDiv">
 
 
 								<c:forEach var="ad" items="${results}">
