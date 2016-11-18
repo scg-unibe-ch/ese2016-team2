@@ -397,16 +397,15 @@ public class AuctionService {
 		}
 		
 		Iterator<Auction> iterator = locatedResults.iterator();
-		List<Auction> finalResults = new ArrayList<>();
 		while (iterator.hasNext()) {
 			Auction ad = iterator.next();
 			User user = ad.getUser();
-			if (user.getAccount().equals("Premium") == premium){
-				finalResults.add(ad); 
+			if (user.getAccount().equals("Premium") != premium){
+				iterator.remove(); 
 			}
 		}
 		
-		return finalResults;
+		return locatedResults;
 	}
 
 	private List<Auction> validateDate(List<Auction> ads, boolean inOrOut, Date earliestDate, Date latestDate) {
