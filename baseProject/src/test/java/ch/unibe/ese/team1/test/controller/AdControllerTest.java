@@ -12,8 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import ch.unibe.ese.team1.controller.pojos.forms.MessageForm;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -48,13 +46,9 @@ public class AdControllerTest {
 	
 	@Test
 	public void postAd() throws Exception {
-		MessageForm messageForm = new MessageForm();
-		messageForm.setRecipient("");
-		messageForm.setSubject("");
-		messageForm.setText("");
 		this.mockMvc.perform(post("/ad")
 						.param("id", "1")
-						.requestAttr("messageForm", messageForm))
+						.param("recipient", ""))
 					.andExpect(status().isOk())
 					.andExpect(view().name("adDescription"));
 		
