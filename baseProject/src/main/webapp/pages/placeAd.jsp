@@ -105,7 +105,7 @@
 								id="field-SquareFootage"
 								type="number"
 								path="squareFootage"
-								placeholder="Space in ㎡"
+								placeholder="Space in m²"
 								tabindex="5"
 								min="5" />
 							<form:errors path="squareFootage" cssClass="validationErrorText" />
@@ -364,7 +364,7 @@
 				<div class="row">
 					<div class="tile tile-full fn-molehole-roomDescription">
 
-					</div>				
+					</div>
 				</div>
 				<div class="row">
 					<div class="tile tile-half fn-molehole-addedVisits">
