@@ -241,11 +241,14 @@ public class AdService {
 		}
 
 		// filter out zipcodez
-		String city = searchForm.getCity().substring(7);
+		// @Jerome
+		// Lookup by zip instead of city name
+		//String city = searchForm.getCity().substring(7);
+		String zip = searchForm.getCity().substring(0, 4);
 
 		// get the location that the user searched for and take the one with the
 		// lowest zip code
-		Location searchedLocation = geoDataService.getLocationsByCity(city).get(0);
+		Location searchedLocation = geoDataService.getLocationsByZipcode(Integer.parseInt(zip)).get(0);
 
 		// create a list of the results and of their locations
 		List<Ad> locatedResults = new ArrayList<>();
