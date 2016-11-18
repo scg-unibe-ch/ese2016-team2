@@ -26,7 +26,7 @@ import java.security.Principal;
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
 		"file:src/main/webapp/WEB-INF/config/springSecurity.xml" })
 @WebAppConfiguration
-public class EnquiryControllerTest {
+public class PlaceAdControllerTest {
 
 	@Autowired
 	WebApplicationContext wac;
@@ -41,14 +41,50 @@ public class EnquiryControllerTest {
 	}
 	
 	@Test
-	public void getEnquiry() throws Exception {
+	public void getPlaceAdvertisementPage() throws Exception {
+		this.mockMvc.perform(get("/profile/placeAdvertisement"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("placeAdvertisement"));
+	}
+	
+	@Test 
+	public void getPlaceAdPage() throws Exception {
+		this.mockMvc.perform(get("/profile/placeAd"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("placeAd"));
+	}
+	
+	@Test
+	public void postInvalidPlaceAdForm() throws Exception {	
 		Principal principal = mock(Principal.class);
 		when(principal.getName()).thenReturn("user@bern.com");
 		
-		this.mockMvc.perform(get("/profile/enquiries").principal(principal))
+		this.mockMvc.perform(post("/profile/placeAd")
+						.param("title", "")
+						.principal(principal))
 					.andExpect(status().isOk())
-					.andExpect(view().name("enquiries"))
-					.andExpect(model().attributeExists("enquiries"));
+					.andExpect(view().name("placeAd"));
+	}
+	
+	@Test
+	public void postValidPlaceAdForm() throws Exception {
+		Principal principal = mock(Principal.class);
+		when(principal.getName()).thenReturn("user@bern.com");
+		
+		this.mockMvc.perform(post("/profile/placeAd")
+				.param("title", "Test Title")
+				.param("street", "Test street")
+				.param("city", "3000 - Bern")
+				.param("moveInDate", "21-12-2012")
+				.param("moveOutDate", "")
+				.param("preferences", "")
+				.param("roomType", "House")
+				.param("prize", "500")
+				.param("squareFootage", "50")
+				.param("roomDescription", "Test Description")
+				.param("visits", "28-02-2014;10:02;13:14")
+				.principal(principal))
+			.andExpect(redirectedUrl("/ad?id=13"));
 	}
 	
 }
