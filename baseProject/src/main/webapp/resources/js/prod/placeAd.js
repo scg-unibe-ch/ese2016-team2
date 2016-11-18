@@ -31986,7 +31986,6 @@ jQuery.flatfindr.register({
     $('#roomDescription')
       .mole(function($this) {
         var $throw_off = $this.val();
-        console.log($this);
         $this.remove();
         return $throw_off;
       })
@@ -32045,6 +32044,7 @@ jQuery.flatfindr.register({
       this.submit();
       return false;
     });
+
 
     (function () {
       var error_count = $('form').find('.validationErrorText').length;

@@ -26,12 +26,21 @@ select.list-sort {
 }
 
 
-.resultAd {
+.resultAd,
+.resultPremiumAd {
   //margin-bottom: $slip-height-small / 2;
   border-bottom: 1px solid $whiff-of-gray;
 
   @include media($bq-medium) {
     //margin-bottom: $slip-height-medium / 2;
+  }
+}
+
+
+
+.resultPremiumAd {
+  a span {
+    color: $gold;
   }
 }
 

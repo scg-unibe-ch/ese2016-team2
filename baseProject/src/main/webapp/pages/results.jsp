@@ -328,8 +328,8 @@
 														<div class="resultAd-text">
 
 															<h2>
-																<a class="link" href="<c:url value='/ad?id=${ad.id}' />">
-																	${ad.title }
+																<a title="Premium Offer!" class="link" href="<c:url value='/ad?id=${ad.id}' />">
+																	${ad.title } <span class="fa fa-star" aria-hidden="true"></span>
 																</a>
 															</h2>
 

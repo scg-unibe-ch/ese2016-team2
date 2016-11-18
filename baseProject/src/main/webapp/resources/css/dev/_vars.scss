@@ -44,6 +44,11 @@ $action-inactive-color: $slight-gray;
 
 
 
+
+$gold: #f1b10e;
+$slight-gold: lighten($gold, 24%);
+$dark-gold: darken($gold, 16%);
+
 /*
  * Pixel sizes
  */
