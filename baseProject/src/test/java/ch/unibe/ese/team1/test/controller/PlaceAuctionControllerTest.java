@@ -26,7 +26,7 @@ import java.security.Principal;
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
 		"file:src/main/webapp/WEB-INF/config/springSecurity.xml" })
 @WebAppConfiguration
-public class PlaceAdControllerTest {
+public class PlaceAuctionControllerTest {
 
 	@Autowired
 	WebApplicationContext wac;
@@ -40,30 +40,23 @@ public class PlaceAdControllerTest {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 	}
 	
-	@Test
-	public void getPlaceAdvertisementPage() throws Exception {
-		this.mockMvc.perform(get("/profile/placeAdvertisement"))
-					.andExpect(status().isOk())
-					.andExpect(view().name("placeAdvertisement"));
-	}
-	
 	@Test 
-	public void getPlaceAdPage() throws Exception {
-		this.mockMvc.perform(get("/profile/placeAd"))
+	public void getPlaceAuctionPage() throws Exception {
+		this.mockMvc.perform(get("/profile/placeAuction"))
 					.andExpect(status().isOk())
-					.andExpect(view().name("placeAd"));
+					.andExpect(view().name("placeAuction"));
 	}
 	
 	@Test
-	public void postInvalidPlaceAdForm() throws Exception {	
+	public void postInvalidPlaceAuctionForm() throws Exception {	
 		Principal principal = mock(Principal.class);
 		when(principal.getName()).thenReturn("user@bern.com");
 		
-		this.mockMvc.perform(post("/profile/placeAd")
+		this.mockMvc.perform(post("/profile/placeAuction")
 						.param("title", "")
 						.principal(principal))
 					.andExpect(status().isOk())
-					.andExpect(view().name("placeAd"));
+					.andExpect(view().name("placeAuction"));
 	}
 	
 	@Test
@@ -71,12 +64,14 @@ public class PlaceAdControllerTest {
 		Principal principal = mock(Principal.class);
 		when(principal.getName()).thenReturn("user@bern.com");
 		
-		this.mockMvc.perform(post("/profile/placeAd")
+		this.mockMvc.perform(post("/profile/placeAuction")
 				.param("title", "Test Title")
 				.param("street", "Test street")
 				.param("city", "3000 - Bern")
 				.param("moveInDate", "21-12-2012")
 				.param("moveOutDate", "")
+				.param("endDate", "21.12.2012")
+				.param("endTime", "12:00")
 				.param("preferences", "")
 				.param("roomType", "House")
 				.param("prize", "500")
