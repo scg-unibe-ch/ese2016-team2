@@ -2,7 +2,6 @@ ch/unibe/ese/team1/controller/MyRoomController.class
 ch/unibe/ese/team1/controller/pojos/forms/PlaceAuctionForm.class
 ch/unibe/ese/team1/controller/service/RegisterService.class
 ch/unibe/ese/team1/controller/pojos/forms/EditProfileForm.class
-ch/unibe/ese/team1/controller/EditAuctionController.class
 ch/unibe/ese/team1/controller/service/EditAdService.class
 ch/unibe/ese/team1/model/PictureMeta.class
 ch/unibe/ese/team1/model/VisitEnquiry.class
@@ -38,7 +37,6 @@ ch/unibe/ese/team1/controller/service/UserService.class
 ch/unibe/ese/team1/model/dao/AuctionPictureDao.class
 ch/unibe/ese/team1/model/dao/MessageDao.class
 ch/unibe/ese/team1/model/Message.class
-ch/unibe/ese/team1/controller/service/EditAuctionService.class
 ch/unibe/ese/team1/model/dao/AdPictureDao.class
 ch/unibe/ese/team1/model/dao/RatingDao.class
 ch/unibe/ese/team1/controller/ProfileController.class

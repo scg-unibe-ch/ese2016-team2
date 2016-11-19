@@ -15,6 +15,10 @@
 					.add(['header']);
 			},
 
+			login: function () {
+				return;
+			},
+
 			index: function () {
 				return $.flatfindr.add([
 					'search',

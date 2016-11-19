@@ -9,10 +9,12 @@
 <!-- check if user is logged in -->
 <security:authorize var="loggedIn" url="/profile" />
 
-<c:import url="template/~top.jsp" />
-<c:import url="template/~header.jsp" />
+<c:import url="template/header.jsp" />
 
-<main role="main">
+<pre>
+	<a href="/">Home</a>   &gt;   Login</pre>
+
+<h1>Login</h1>
 
 <c:choose>
 	<c:when test="${loggedIn}">
@@ -45,9 +47,4 @@
 	</c:otherwise>
 </c:choose>
 
-</main>
-
-<c:import url="template/~footer.jsp" />
-<c:import url="template/~bottom.jsp">
-	<c:param name="js" value="login" />
-</c:import>
+<c:import url="template/footer.jsp" />
