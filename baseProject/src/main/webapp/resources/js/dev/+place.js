@@ -31,6 +31,8 @@ jQuery.flatfindr.register({
     // iterate through it
     // if there is id == x then make "Bookmark Me" to "bookmarked"
 
+
+
     $("#field-city").autocomplete({
       minLength : 2
     });
@@ -65,8 +67,13 @@ jQuery.flatfindr.register({
       dateFormat : 'dd-mm-yy'
     }).datepicker('setDate', null);
 
-    $("#moveOutDate").datepicker({
+    $('#moveOutDate').datepicker({
       altField: '#field-moveOutDate',
+      dateFormat : 'dd-mm-yy'
+    }).datepicker('setDate', null);
+
+    $('#dp-endDate').datepicker({
+      altField: '#field-endDate',
       dateFormat : 'dd-mm-yy'
     }).datepicker('setDate', null);
 
@@ -87,21 +94,25 @@ jQuery.flatfindr.register({
 
 
 
-    $('#addedVisits').mole(function($this) {
-      var $throw_off = $this.find('p');
-      $this.remove();
-      return $throw_off;
-    });
+    // $('#addedVisits').mole(function($this) {
+    //   return $this.find('p');
+    // });
 
-    $('#roomDescription')
-      .mole(function($this) {
-        var $throw_off = $this.val();
-        $this.remove();
-        return $throw_off;
-      })
-      .on('focusout', function() {
-        $(this).trigger('mole');
-      });
+    // $('#roomDescription')
+    //   .mole(function($this) {
+    //     var
+    //       lines = $this.val().split('\n'),
+    //       html = '';
+    //
+    //     $.each(lines, function(_, line) {
+    //       if (line) html += line +'<br>';
+    //     });
+    //
+    //     return html;
+    //   })
+    //   .on('focusout', function() {
+    //     $(this).trigger('mole');
+    //   });
 
 
     $("#addVisitButton").click(function() {
@@ -130,12 +141,11 @@ jQuery.flatfindr.register({
 
       var index = $("#addedVisits input").length;
 
-      var label = "<p>" + newVisitLabel + "</p>";
+      var label = createViewingPreviewElement(newVisitLabel, index);
       var input = "<input type='hidden' value='" + newVisit + "' name='visits[" + index + "]' />";
 
-      $("#addedVisits")
-        .append(label + input)
-        .trigger('mole');
+      $("#addedVisits").append(input);
+      $('#viewing-preview').append(label);
     });
 
 
@@ -154,6 +164,43 @@ jQuery.flatfindr.register({
       this.submit();
       return false;
     });
+
+
+
+
+    function createViewingPreviewElement(viewingTime, index) {
+      var
+        $viewing_time =
+          $('<div class="row">' +
+            '<div class="tile tile-three-quarter">' +
+            '<span>'+ viewingTime +'</span>' +
+            '</div>' +
+            '<div class="tile tile-quarter">' +
+            '<span title="Remove viewing time by double clicking me." data-index="visits['+ index +']"' +
+                  'class="fa fa-times fa-2x">' +
+            '</span>' +
+            '</div>' +
+            '</div>');
+
+
+        $viewing_time
+          .find('span[data-index]')
+          .on('dblclick', function() {
+            var
+              $that = $(this),
+              viewing_index = $that.attr('data-index');
+
+              $('input[name="'+ viewing_index +'"]').remove();
+              $viewing_time.remove();
+          })
+          .hover(function() {
+            $viewing_time.find('span').first().css('color', 'tomato');
+          }, function() {
+            $viewing_time.find('span').first().removeAttr('style');
+          });
+
+      return $viewing_time;
+    }
 
 
     (function () {

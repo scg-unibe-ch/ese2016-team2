@@ -28983,14 +28983,6 @@ jQuery.fn.bury = function(prefix, duration) {
 
 
 /**
- * See <a href="http://jquery.com">http://jquery.com</a>.
- * @name jQuery
- * @class
- * See the jQuery Library  (<a href="http://jquery.com">http://jquery.com</a>) for full details.  This just
- * documents the function and classes that are added to jQuery by this plug-in.
- */
-
-/**
  * @name fn
  * @namespace
  * @memberof jQuery
@@ -29000,7 +28992,7 @@ jQuery.fn.bury = function(prefix, duration) {
 
 /**
  *
- * @param  {Function} func  a function form contents well
+ * @param  {Function} func  a function that form contents well
  * @return {jQuery}      this jQuery object
  * @memberof jQuery.fn
  */
@@ -29014,11 +29006,15 @@ jQuery.fn.mole = function(func) {
 
   $this.on('mole', function() {
     var
-      $that = jQuery(this).clone(),
-      $throw_off = func ? func($that) : $that.contents();
+      $that = $this.clone(),
+      $throw_off;
 
-    //console.log($that.val(), $throw_off);
-    //$that.remove();
+    if ('value' in $this[0])
+      $that.val($this.val());
+
+    $throw_off = func ? func($that) : $that.contents();
+    $that.remove();
+
     $moleholes.each(function(_, x) {
       jQuery(x).html($throw_off);
     });
@@ -31921,6 +31917,8 @@ jQuery.flatfindr.register({
     // iterate through it
     // if there is id == x then make "Bookmark Me" to "bookmarked"
 
+
+
     $("#field-city").autocomplete({
       minLength : 2
     });
@@ -31955,8 +31953,13 @@ jQuery.flatfindr.register({
       dateFormat : 'dd-mm-yy'
     }).datepicker('setDate', null);
 
-    $("#moveOutDate").datepicker({
+    $('#moveOutDate').datepicker({
       altField: '#field-moveOutDate',
+      dateFormat : 'dd-mm-yy'
+    }).datepicker('setDate', null);
+
+    $('#dp-endDate').datepicker({
+      altField: '#field-endDate',
       dateFormat : 'dd-mm-yy'
     }).datepicker('setDate', null);
 
@@ -31977,21 +31980,25 @@ jQuery.flatfindr.register({
 
 
 
-    $('#addedVisits').mole(function($this) {
-      var $throw_off = $this.find('p');
-      $this.remove();
-      return $throw_off;
-    });
+    // $('#addedVisits').mole(function($this) {
+    //   return $this.find('p');
+    // });
 
-    $('#roomDescription')
-      .mole(function($this) {
-        var $throw_off = $this.val();
-        $this.remove();
-        return $throw_off;
-      })
-      .on('focusout', function() {
-        $(this).trigger('mole');
-      });
+    // $('#roomDescription')
+    //   .mole(function($this) {
+    //     var
+    //       lines = $this.val().split('\n'),
+    //       html = '';
+    //
+    //     $.each(lines, function(_, line) {
+    //       if (line) html += line +'<br>';
+    //     });
+    //
+    //     return html;
+    //   })
+    //   .on('focusout', function() {
+    //     $(this).trigger('mole');
+    //   });
 
 
     $("#addVisitButton").click(function() {
@@ -32020,12 +32027,11 @@ jQuery.flatfindr.register({
 
       var index = $("#addedVisits input").length;
 
-      var label = "<p>" + newVisitLabel + "</p>";
+      var label = createViewingPreviewElement(newVisitLabel, index);
       var input = "<input type='hidden' value='" + newVisit + "' name='visits[" + index + "]' />";
 
-      $("#addedVisits")
-        .append(label + input)
-        .trigger('mole');
+      $("#addedVisits").append(input);
+      $('#viewing-preview').append(label);
     });
 
 
@@ -32044,6 +32050,43 @@ jQuery.flatfindr.register({
       this.submit();
       return false;
     });
+
+
+
+
+    function createViewingPreviewElement(viewingTime, index) {
+      var
+        $viewing_time =
+          $('<div class="row">' +
+            '<div class="tile tile-three-quarter">' +
+            '<span>'+ viewingTime +'</span>' +
+            '</div>' +
+            '<div class="tile tile-quarter">' +
+            '<span title="Remove viewing time by double clicking me." data-index="visits['+ index +']"' +
+                  'class="fa fa-times fa-2x">' +
+            '</span>' +
+            '</div>' +
+            '</div>');
+
+
+        $viewing_time
+          .find('span[data-index]')
+          .on('dblclick', function() {
+            var
+              $that = $(this),
+              viewing_index = $that.attr('data-index');
+
+              $('input[name="'+ viewing_index +'"]').remove();
+              $viewing_time.remove();
+          })
+          .hover(function() {
+            $viewing_time.find('span').first().css('color', 'tomato');
+          }, function() {
+            $viewing_time.find('span').first().removeAttr('style');
+          });
+
+      return $viewing_time;
+    }
 
 
     (function () {
@@ -32094,8 +32137,6 @@ jQuery.flatfindr.register({
        * @private
        * @type {Number}
        */
-
-
       PREVIEW_WIDTH = 320,
 
 
@@ -32105,6 +32146,13 @@ jQuery.flatfindr.register({
        * @type {Number}
        */
       PREVIEW_HEIGHT = 128,
+
+
+      /**
+       *
+       * @type {String}
+       */
+      PAGE_NAME = $.flatfindr.PAGE_NAME,
 
 
       /**
@@ -32122,7 +32170,7 @@ jQuery.flatfindr.register({
      * @private
      */
     function retrieveImages() {
-      $.post('/profile/placeAd/getUploadedPictures', function(data) {
+      $.post('/profile/'+ PAGE_NAME +'/getUploadedPictures', function(data) {
         $.each(data, function(_, image) {
           $image_preview.prepend(createPreviewElement(image));
         });
@@ -32148,9 +32196,11 @@ jQuery.flatfindr.register({
         $parent = $that.parent(),
         deleteUrl = $parent.attr('data-url');
 
-      $.post('/profile/placeAd/deletePicture', {url : deleteUrl}, function() {
-        $parent.remove();
-      });
+      $.post(
+        '/profile/'+ PAGE_NAME +'/deletePicture',
+        {url : deleteUrl}, function() {
+          $parent.remove();
+        });
     }
 
 
@@ -32173,7 +32223,7 @@ jQuery.flatfindr.register({
       return $('<div data-url="'+ image.url +'"' +
                'style="height:'+ PREVIEW_HEIGHT +'px" ' +
                'class="image-preview-wrap">' +
-               '<span class="fa fa-times fa-4x action-delete"></span></div>')
+               '<span title="Remove image by double clicking it." class="fa fa-times fa-2x action-delete"></span></div>')
                .append(_image);
     }
 
@@ -32187,7 +32237,7 @@ jQuery.flatfindr.register({
     $(function() {
     	$('#field-pictures').fileupload({
 
-    		url: '/profile/placeAd/uploadPictures',
+    		url: '/profile/'+ PAGE_NAME +'/uploadPictures',
     		dataType: 'json',
     		acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
         disableImageResize: true,

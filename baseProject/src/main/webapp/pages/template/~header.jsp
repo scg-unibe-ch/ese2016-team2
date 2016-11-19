@@ -289,7 +289,8 @@
             <c:choose>
               <c:when test="${loggedIn}">
                 <%@include file='/pages/getUserPicture.jsp' %>
-                <li><a href="/profile/placeAdvertisement">Place an ad</a></li>
+                <li><a href="/profile/placeAd">Place an ad</a></li>
+								<li><a href="/profile/placeAuction">Place an auction</a></li>
                 <li><a href="/profile/myRooms">My rooms</a></li>
                 <li><a id="messageLink" href="/profile/messages">Messages</a></li>
                 <li><a href="/profile/enquiries">Enquiries</a></li>

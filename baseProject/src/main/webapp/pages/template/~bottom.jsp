@@ -37,10 +37,16 @@
 			},
 
 			placeAd: function () {
-				return $.flatfindr.add([
-					'place',
-					'imageUpload'
-				]);
+				return $.flatfindr
+					.with({ PAGE_NAME: pagename })
+					.add([
+						'place',
+						'imageUpload'
+					]);
+			},
+
+			placeAuction: function () {
+				return js.placeAd();
 			}
 		};
 

@@ -1,12 +1,4 @@
 /**
- * See <a href="http://jquery.com">http://jquery.com</a>.
- * @name jQuery
- * @class
- * See the jQuery Library  (<a href="http://jquery.com">http://jquery.com</a>) for full details.  This just
- * documents the function and classes that are added to jQuery by this plug-in.
- */
-
-/**
  * @name fn
  * @namespace
  * @memberof jQuery
@@ -16,7 +8,7 @@
 
 /**
  *
- * @param  {Function} func  a function form contents well
+ * @param  {Function} func  a function that form contents well
  * @return {jQuery}      this jQuery object
  * @memberof jQuery.fn
  */
@@ -30,11 +22,15 @@ jQuery.fn.mole = function(func) {
 
   $this.on('mole', function() {
     var
-      $that = jQuery(this).clone(),
-      $throw_off = func ? func($that) : $that.contents();
+      $that = $this.clone(),
+      $throw_off;
 
-    //console.log($that.val(), $throw_off);
-    //$that.remove();
+    if ('value' in $this[0])
+      $that.val($this.val());
+
+    $throw_off = func ? func($that) : $that.contents();
+    $that.remove();
+
     $moleholes.each(function(_, x) {
       jQuery(x).html($throw_off);
     });

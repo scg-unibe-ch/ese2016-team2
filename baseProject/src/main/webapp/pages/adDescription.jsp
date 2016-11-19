@@ -282,7 +282,9 @@
 		<div class="row">
 			<div class="tile tile-full">
 
-				<h3 class="row-h3">Viewing times</h3>
+				<c:if test="${loggedInUserEmail != shownAd.user.username}">
+					<h3 class="row-h3">Viewing times</h3>
+				</c:if>
 
 				<div class="row viewing-times">
 					<div class="tile tile-full action action-tile">

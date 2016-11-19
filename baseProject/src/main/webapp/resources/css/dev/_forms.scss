@@ -131,6 +131,10 @@ $slip-height-medium: 73px;
 .dates {
   border-bottom: 1px solid $whiff-of-gray;
 
+  &.related {
+    border: none;
+  }
+
   input {
     border: none;
   }
@@ -167,7 +171,6 @@ $slip-height-medium: 73px;
     margin-bottom: 0;
     @include sidebar-select-pad;
     background-color: $whiff-of-gray;
-    border-bottom: 1px solid $white;
     font-weight: normal;
     color: $light-gray;
     cursor: pointer;
@@ -183,11 +186,12 @@ $slip-height-medium: 73px;
     display: table;
     width: 100%;
     height: 100%;
-    text-align: center;
+    text-align: right;
 
     span {
       display: table-cell;
-      vertical-align: middle;
+      vertical-align: top;
+      padding-right: 24px;
 
       background-color: transparent;
       color: $base-color;
@@ -316,17 +320,56 @@ $slip-height-medium: 73px;
     position: absolute;
     width: 100%;
     height: 100%;
-    padding-top: 32px;
-    padding-bottom: 32px;
+    padding-top: 48px;
+    padding-bottom: 48px;
     text-align: center;
     color: $base-color-opposite;
-    background-color: rgba(255,255,255,.32);
+    background-color: rgba(255, 99, 71, .38);
     opacity: 0;
     cursor: pointer;
     transition: opacity $base-duration $base-timing;
 
     &:hover {
       opacity: 1;
+    }
+  }
+}
+
+
+.action-dropzone,
+.action-viewing-delete {
+  @include sidebar-slip-pad;
+
+  & > div {
+    padding: $small;
+    border: 1px dotted lighten($base-color, 4%);
+  }
+}
+
+.action-dropzone {
+  & > div  {
+    float: inherit;
+    width: 100%;
+    min-height: 2 * $preview-image-height;
+  }
+}
+
+
+.action-viewing-delete {
+  & > div {
+    margin-bottom: 16px;
+  }
+
+  span {
+    display: block;
+    margin: 5px 0 3px;
+    color: $base-color;
+
+    &.fa {
+      margin: 0;
+      text-align: right;
+      color: $base-color-opposite;
+      cursor: pointer;
     }
   }
 }
@@ -384,6 +427,41 @@ $slip-height-medium: 73px;
   visibility: hidden !important;
 }
 
+
+
+body.placeAd,
+body.placeAuction {
+  .edit-section,
+  .edit-section.js-show {
+    border-bottom: 1px dotted lighten($base-color, 4%);
+  }
+
+  .edit-section-title {
+    @include sidebar-slip-pad;
+    padding-bottom: 11px !important;
+    margin: 0;
+    color: $base-color;
+
+    span {
+      display: block;
+      font-size: 16px;
+      margin-top: 8px;
+    }
+  }
+}
+
+
+#viewing-preview:empty::before {
+  color: $bright-gray;
+  font-weight: lighter;
+  content: "... no viewing time yet.";
+}
+
+#image-preview:empty::before {
+  color: $bright-gray;
+  font-weight: lighter;
+  content: "... no image yet.";
+}
 
 
 

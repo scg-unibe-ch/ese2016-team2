@@ -6,13 +6,6 @@
 <c:import url="template/~top.jsp" />
 <c:import url="template/~header_wo_search.jsp" />
 
-<%-- <script src="/js/jquery.ui.widget.js"></script>
-<script src="/js/jquery.iframe-transport.js"></script>
-<script src="/js/jquery.fileupload.js"></script> --%>
-
-<%-- <script src="/js/pictureUploadAd.js"></script> --%>
-
-
 <main role="main">
 	<c:import url="template/~top_bar.jsp">
 		<c:param name="instr" value="Place an ad..." />
@@ -34,8 +27,7 @@
 						enctype="multipart/form-data">
 
 						<div class="container-scroll">
-
-							<div class="row checkboxes">
+							<div class="row checkboxes edit-section">
 								<div class="tile tile-third">
 									<form:radiobutton id="room" path="roomType" value="Room" checked="checked" />
 									<label for="room">Room</label>
@@ -50,8 +42,7 @@
 								</div>
 							</div>
 
-
-							<div class="row checkboxes">
+							<div class="row checkboxes edit-section">
 								<div class="tile tile-half">
 									<form:radiobutton id="rent" path="buyable" value="0" checked="checked" />
 									<label for="rent">Rent</label>
@@ -72,20 +63,13 @@
 
 
 							<form:input
+								class="edit-section"
 								type="text"
 								id="field-city"
 								path="city"
 								placeholder="City"
 								tabindex="2" />
 							<form:errors path="city" cssClass="validationErrorText" />
-
-
-							<form:input
-								type="text"
-								id="field-title"
-								path="title"
-								placeholder="Title"
-								tabindex="3" />
 
 
 								<%-- @Jerome: for some reason it autosets '0' as value. W/A: set
@@ -96,17 +80,18 @@
 								type="number"
 								path="prize"
 								placeholder="Rent or Price in CHF"
-								tabindex="4"
+								tabindex="3"
 								min="1" />
 							<form:errors path="prize" cssClass="validationErrorText" />
 
 							<form:input
+								class="edit-section"
 								value=""
 								id="field-SquareFootage"
 								type="number"
 								path="squareFootage"
 								placeholder="Space in m²"
-								tabindex="5"
+								tabindex="4"
 								min="5" />
 							<form:errors path="squareFootage" cssClass="validationErrorText" />
 
@@ -135,7 +120,7 @@
 	              </div>
 	            </div>
 
-	            <div class="row dates fields-optional fields-optional-sell js-show">
+	            <div class="row dates fields-optional fields-optional-sell js-show edit-section">
 	              <div class="tile tile-half">
 	                <div class="row">
 	                  <div class="tile tile-full">
@@ -147,7 +132,7 @@
 	                      type="text"
 	                      id="field-moveOutDate"
 	                      path="moveOutDate"
-	                      tabindex="7"
+	                      tabindex="6"
 	                      placeholder="Choose from datepicker..." />
 	                  </div>
 	                </div>
@@ -204,25 +189,36 @@
 	              </div>
 	            </div>
 
-	            <div class="row checkboxes">
+	            <div class="row checkboxes edit-section">
 	              <div class="tile tile-half">
 	                <form:checkbox id="field-internet" path="internet" value="1" />
 	                <label for="field-internet">WiFi</label>
 	              </div>
 	            </div>
 
+
+							<form:input
+								type="text"
+								id="field-title"
+								path="title"
+								placeholder="Title"
+								tabindex="7" />
+
+
 							<form:textarea
 								id="roomDescription"
-								class="fn-mole"
 								path="roomDescription"
 								rows="10"
+								tabindex="8"
 								placeholder="Room Description" />
 							<form:errors path="roomDescription" cssClass="validationErrorText" />
 
 
 							<form:textarea
+								class="edit-section"
 								path="preferences"
 								rows="5"
+								tabindex="9"
 								placeholder="Preferences" />
 
 
@@ -233,14 +229,20 @@
 								multiple="multiple" />
 
 
-							<div class="row dates">
+							<h3 class="edit-section-title">
+								Viewing times
+								<span>
+									Choose a date and a time span, then click the
+									<i class="fa fa-plus-circle" aris-hidden="true"></i> button below.
+									To add another one, just change the values and click the button again.
+								</span>
+							</h3>
+							<div class="row dates related">
 	              <div class="tile tile-half">
 	                <div class="row">
 	                  <div class="tile tile-full">
-	                    <label>Viewing times</label>
-	                  </div>
-	                  <div class="tile tile-full">
 	                    <input
+												tabindex="10"
 	                      class="js-has-label"
 	                      type="text"
 	                      id="field-visitDay"
@@ -256,7 +258,7 @@
 	            </div>
 
 
-							<div class="row times fill-parent">
+							<div class="row times fill-parent edit-section">
 								<div class="tile tile-three-quarter">
 
 									<div class="row">
@@ -330,7 +332,7 @@
 								</div> <%-- .tile-three-quarter END --%>
 								<div class="tile tile-quarter fill-parent-child">
 									<div id="addVisitButton" class="action action-icon action-add">
-										<span class="fa fa-plus-circle fa-3x"></span>
+										<span title="Add viewing time" class="fa fa-plus-circle fa-3x"></span>
 									</div>
 								</div>
 							</div> <%-- .row.times END --%>
@@ -340,7 +342,7 @@
 
 						<div class="row">
 							<%-- Will be populated with hidden inputs --%>
-							<div style="display: none" id="addedVisits" class="fn-mole"></div>
+							<div style="display: none" id="addedVisits"></div>
 
 							<div class="tile tile-half">
 								<button type="submit">Submit</button>
@@ -356,18 +358,33 @@
 			</div> <%-- .span-half END --%>
 
 			<div class="span-half">
+				<h3 class="edit-section-title">
+					Drop images here...
+					<span>
+						Drag and drop images onto the window.<br>
+						You can remove an image by double clicking it.
+					</span>
+				</h3>
 				<div class="row">
-					<div id="image-preview">
+					<div class="tile tile-full action-dropzone">
+						<div id="image-preview"></div>
+					</div>
+				</div>
 
+				<h3 class="edit-section-title">
+					Your viewing times...
+					<span>
+						Add viewing times from the panel to your left at the bottom of the
+						form. You can remove a viewing time by double clicking the corresponding
+						<i class="fa fa-times base-color-opposite"></i>.
+				</h3>
+				<div class="row">
+					<div class="tile tile-full action-viewing-delete">
+						<div id="viewing-preview"></div>
 					</div>
 				</div>
 				<div class="row">
-					<div class="tile tile-full fn-molehole-roomDescription">
-
-					</div>
-				</div>
-				<div class="row">
-					<div class="tile tile-half fn-molehole-addedVisits">
+					<div class="tile tile-half">
 
 					</div>
 				</div>
