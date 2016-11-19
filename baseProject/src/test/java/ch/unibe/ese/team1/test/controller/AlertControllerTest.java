@@ -63,15 +63,13 @@ public class AlertControllerTest {
 		Principal principal = mock(Principal.class);
 		when(principal.getName()).thenReturn("user@bern.ch");
 		
-		AlertForm alertForm = new AlertForm();
-		alertForm.setCity("3000 - Bern");
-		alertForm.setRadius(100);
-		alertForm.setPrice(500);
-		alertForm.setNoRoomNoStudio(false);
-		
 		this.mockMvc.perform(post("/profile/alerts")
 						.principal(principal)
-						.requestAttr("alertForm", alertForm))
+						.param("city", "3000 - Bern")
+						.param("radius", "100")
+						.param("price", "500")
+						.param("noRoomNoStudio", "false")
+						.param("alertType", "House"))
 					.andExpect(status().isOk())
 					.andExpect(view().name("alerts"))
 					.andExpect(model().attributeExists("alertForm"));

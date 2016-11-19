@@ -59,10 +59,7 @@ public class AlertService {
 
 		alert.setPrice(alertForm.getPrice());
 		alert.setRadius(alertForm.getRadius());
-		alert.setRoom(alertForm.getRoom());
-		alert.setStudio(alertForm.getStudio());
 		alert.setAlertType(alertForm.getAlertType());
-		alert.setHouse(alertForm.getHouse());
 		alert.setUser(user);
 		alertDao.save(alert);
 	}

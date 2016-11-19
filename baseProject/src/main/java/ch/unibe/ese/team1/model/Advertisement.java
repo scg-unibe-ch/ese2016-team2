@@ -87,18 +87,6 @@ public abstract class Advertisement {
 
 	@Column(nullable = false)
 	private boolean internet;
-
-	// true if studio, false if room
-	@Column(nullable = false)
-	private boolean studio;
-	
-	// true if studio, false if room
-	@Column(nullable = false)
-	private boolean room;
-	
-	// true if studio, false if room
-	@Column(nullable = false)
-	private boolean house;
 	
 	@Column(nullable = false)
 	private String roomType = "";
@@ -121,30 +109,6 @@ public abstract class Advertisement {
 
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
-	}
-
-	public boolean getStudio() {
-		return studio;
-	}
-
-	public void setStudio(boolean studio) {
-		this.studio = studio;
-	}
-	
-	public boolean getRoom() {
-		return room;
-	}
-
-	public void setRoom(boolean room) {
-		this.room = room;
-	}
-	
-	public boolean getHouse() {
-		return house;
-	}
-
-	public void setHouse(boolean house) {
-		this.house = house;
 	}
 	
 	public String getRoomType() {
