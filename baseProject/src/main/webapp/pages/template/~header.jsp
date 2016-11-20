@@ -263,7 +263,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <%-- <div class="row">
     <div class="tile tile-full">
       <div class="form form-search form-login">
         <form id="login-form" method="post" action="/j_spring_security_check">
@@ -273,8 +273,8 @@
     			<button type="submit">Login</button>
     		</form>
       </div>
-    </div>  
-  </div>
+    </div>
+  </div> --%>
 
 
   <c:choose>
