@@ -118,7 +118,7 @@ $slip-height-medium: 73px;
   }
 }
 
-.dates, .times {
+.dates, .times, .multi-select {
   label {
     margin-bottom: 0;
     font-weight: normal;
@@ -159,9 +159,7 @@ $slip-height-medium: 73px;
 }
 
 
-.times {
-  display: flex;
-
+.times, .multi-select {
   label {
     @include sidebar-slip-pad;
     text-align: center;
@@ -181,6 +179,11 @@ $slip-height-medium: 73px;
       color: $light-gray;
     }
   }
+}
+
+
+.times, .multi-select {
+  display: flex;
 
   .action-add {
     display: table;
@@ -206,6 +209,9 @@ $slip-height-medium: 73px;
   }
 }
 
+.multi-select:last-child {
+  border-bottom: 1px solid $white;
+}
 
 
 .submit-after {

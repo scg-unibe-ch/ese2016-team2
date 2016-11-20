@@ -23,7 +23,7 @@
 
 				<div class="row">
 			    <div class="tile tile-full">
-			      <div class="form form-search form-login">
+			      <div class="form form-search form-login form-max-height">
 							<c:choose>
 
 								<c:when test="${loggedIn}">
@@ -32,37 +32,56 @@
 
 								<c:otherwise>
 
-									<c:if test="${!empty param.error}">
-										<p>Incorrect email or password. Please retry using correct email
-											and password.</p>
-									</c:if>
+									<form
+										id="login-form"
+										method="post"
+										action="/j_spring_security_check">
 
-									<form id="login-form" method="post" action="/j_spring_security_check">
-										<input name="j_username" id="field-email" placeholder="Email" />
-										<input name="j_password" id="field-password" type="password" placeholder="Password" />
+										<div class="container-scroll">
+
+											<input name="j_username" id="field-email" placeholder="Email" />
+											<input name="j_password" id="field-password" type="password" placeholder="Password" />
+
+											<c:if test="${!empty param.error}">
+												<p class="validationErrorText">
+													Incorrect email or password. Please retry using correct email
+													and password.
+												</p>
+											</c:if>
+										</div>
+
 										<button type="submit">Sign in</button>
 									</form>
 
-									<div class="container-pad">
-										<h3>Test users</h3>
-										<ul>
-											<li>Email: <i>ese@unibe.ch</i>, password: <i>ese</i></li>
-											<li>Email: <i>jane@doe.com</i>, password: <i>password</i></li>
-											<li>Email: <i>user@bern.com</i>, password: <i>password</i></li>
-											<li>Email: <i>oprah@winfrey.com</i>, password: <i>password</i></li>
-										</ul>
-										<br>
-										<p>
-											Or <a class="link" href="<c:url value="/signup" />">sign up</a> as a new user.
-										</p>
-									</div>
+
 								</c:otherwise>
 							</c:choose>
-			      </div>
+
+			      </div> <%-- .form END --%>
 			    </div> <%-- .tile.tile-full END --%>
 			  </div> <%-- .row END --%>
 
 			</div> <%-- .span-half END --%>
+
+			<div class="span-half">
+
+				<div class="container-pad">
+					<h3>Test users</h3>
+					<ul>
+						<li>Email: <i>ese@unibe.ch</i>, password: <i>ese</i></li>
+						<li>Email: <i>jane@doe.com</i>, password: <i>password</i></li>
+						<li>Email: <i>user@bern.com</i>, password: <i>password</i></li>
+						<li>Email: <i>oprah@winfrey.com</i>, password: <i>password</i></li>
+					</ul>
+					<br>
+					<p>
+						Or <a class="link" href="<c:url value="/signup" />">sign up</a> as a new user.
+					</p>
+				</div>
+
+			</div> <%-- .span-half END --%>
+
+
 		</div> <%-- .row END --%>
 	</div> <%-- .container END --%>
 

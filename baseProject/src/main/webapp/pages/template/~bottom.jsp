@@ -19,6 +19,12 @@
 				return;
 			},
 
+			signup: function () {
+				return $.flatfindr.add([
+					'signup'
+				]);
+			},
+
 			index: function () {
 				return $.flatfindr.add([
 					'search',
