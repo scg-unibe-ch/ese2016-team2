@@ -65,7 +65,7 @@
 			<img src="/img/avatar.png">
 		</c:otherwise>
 	</c:choose>
-	<c:choose>
+	<c:choose>	
 		<c:when test="${user.account eq 'Premium'}">
 			<img src='/img/crone.png' width ="45" height="35"/>
 		</c:when>

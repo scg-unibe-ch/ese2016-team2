@@ -6,138 +6,249 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<c:import url="template/header.jsp" />
+<c:import url="template/~top.jsp" />
+<c:import url="template/~header.jsp" />
 
-<script>
-	$(document).ready(function() {
-	});
+<main role="main">
+	<c:import url="template/~top_bar.jsp">
+		<c:param name="instr" value="My rooms..." />
+	</c:import>
 
-</script>
+	<div class="container">
+		<div class="row">
 
+			<div class="span-third list-max-height">
 
-<pre><a href="/">Home</a>   &gt;   My Rooms</pre>
+				<h3 class="list-title">Ads</h3>
 
-<c:choose>
-	<c:when test="${empty ownAds}">
-		<h1>My Advertisements</h1>
-		<p>You have not advertised anything yet.</p>
-		<br /><br />
-	</c:when>
-	<c:otherwise>
+				<div class="container-scroll">
 
-		<div id="resultsDiv" class="resultsDiv">
-		<h1>My Advertisements</h1>
-			<c:forEach var="ad" items="${ownAds}">
-				<div class="resultAd" data-price="${ad.prize}"
-								data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">
-					<div class="resultLeft">
-						<a href="<c:url value='/ad?id=${ad.id}' />"><img
-							src="${ad.pictures[0].filePath}" /></a>
-						<h2>
-							<a href="<c:url value='/ad?id=${ad.id}' />">${ad.title }</a>
-						</h2>
-						<p>${ad.street}, ${ad.zipcode} ${ad.city}</p>
-						<br />
-						<p>
-							<i>${ad.roomType}</i>
-						</p>
-					</div>
-					<div class="resultRight">
-						<h2>CHF ${ad.prize}</h2>
-						<br /> <br />
-						<fmt:formatDate value="${ad.moveInDate}" var="formattedMoveInDate"
-							type="date" pattern="dd.MM.yyyy" />
-						<p>Move-in date: ${formattedMoveInDate}</p>
-					</div>
-				</div>
-			</c:forEach>
-			<br /> <br />
-		</div>
-	</c:otherwise>
-</c:choose>
+					<c:choose>
 
-<hr class="clearBoth">
+						<c:when test="${empty ownAds}">
+							<p>You have not advertised anything yet.</p>
+						</c:when>
 
-<c:choose>
+						<c:otherwise>
+							<ul class="resultsDiv resultsDiv-small">
 
-	<c:when test="${empty ownAuctions}">
-		<h1>My Auctions</h1>
-		<p>You have not advertised anything yet.</p>
-		<br /><br />
-	</c:when>
-	<c:otherwise>
-		<div id="resultsDiv" class="resultsDiv">
-		<h1>My Auctions</h1>
-			<c:forEach var="auction" items="${ownAuctions}">
-				<div class="resultAuction" data-price="${auction.prize}"
-								data-moveIn="${auction.moveInDate}" data-age="${auction.moveInDate}">
-					<div class="resultLeft">
-						<!-- <a href="<c:url value='/ad?id=${ad.id}' />"><img src="${ad.pictures[0].filePath}" /></a> -->
-						<h2>
-							<a href="<c:url value='/auction?id=${auction.id}' />">${auction.title}</a>
-						</h2>
-						<p>${auction.street}, ${auction.zipcode} ${auction.city}</p>
-						<br />
-						<p>
-							<i>${auction.roomType}</i>
-						</p>
-					</div>
-					<div class="resultRight">
-						<h2>CHF ${auction.prize}</h2>
-						<fmt:formatDate value="${auction.moveInDate}" var="formattedMoveInDate"
-							type="date" pattern="dd.MM.yyyy" />
-						<p>Move-in date: ${formattedMoveInDate}</p>
+								<c:forEach var="ad" items="${ownAds}">
 
-						<p>Auction end-date: ${auction.endTime}</p>
+											<li
+												class="resultAd"
+												data-price="${ad.prize}"
+												data-moveIn="${ad.moveInDate}"
+												data-age="${ad.moveInDate}">
 
-					</div>
-				</div>
-			</c:forEach>
-			<br /> <br />
-		</div>
-	</c:otherwise>
+												<div class="row">
+													<div class="tile tile-third">
+														<div class="list-image">
+															<a
+																class="list-image-link"
+																href="<c:url value='/ad?id=${ad.id}' />"
+																style="background-image: url(${ad.pictures[0].filePath})">
+															</a>
+														</div>
+													</div>
 
-</c:choose>
+													<div class="tile tile-two-thirds">
+														<div class="resultAd-text resultAd-title">
 
-<hr class="clearBoth">
+															<h2>
+																<a class="link" href="<c:url value='/ad?id=${ad.id}' />">
+																	${ad.title }
+																</a>
+															</h2>
+															<h3>CHF ${ad.prize}</h3>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="tile tile-full">
+														<div class="resultAd-text resultAd-details">
 
-<c:choose>
-	<c:when test="${empty bookmarkedAdvertisements}">
-		<h1>My Bookmarks</h1>
-		<p>You have not bookmarked anything yet.</p><br /><br />
-	</c:when>
-	<c:otherwise>
+															<p>${ad.street},${ad.zipcode} ${ad.city}</p>
+															<p>${ad.roomType}</p>
 
-		<div id="resultsDiv" class="resultsDiv">
-		<h1>My Bookmarks</h1>
-			<c:forEach var="ad" items="${bookmarkedAdvertisements}">
-				<div class="resultAd" data-price="${ad.prize}"
-								data-moveIn="${ad.moveInDate}" data-age="${ad.moveInDate}">
-					<div class="resultLeft">
-						<a href="<c:url value='/ad?id=${ad.id}' />"><img
-							src="${ad.pictures[0].filePath}" /></a>
-						<h2>
-							<a href="<c:url value='/ad?id=${ad.id}' />">${ad.title }</a>
-						</h2>
-						<p>${ad.street}, ${ad.zipcode} ${ad.city}</p>
-						<br />
-						<p>
-							<i>${ad.roomType}</i>
-						</p>
-					</div>
-					<div class="resultRight">
-						<h2>CHF ${ad.prize}</h2>
-						<br /> <br />
-						<fmt:formatDate value="${ad.moveInDate}" var="formattedMoveInDate"
-							type="date" pattern="dd.MM.yyyy" />
-						<p>Move-in date: ${formattedMoveInDate}</p>
-					</div>
-				</div>
-			</c:forEach>
-		</div>
-	</c:otherwise>
+															<fmt:formatDate value="${ad.moveInDate}"
+																var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
 
-</c:choose>
+															<p>Move-in date: ${formattedMoveInDate }</p>
+
+														</div>
+													</div>
+												</div>
+
+											</li>
+								</c:forEach>
+
+							</ul>
+
+						</c:otherwise>
+					</c:choose>
+
+				</div> <%-- .container-scroll END --%>
+			</div> <%-- .span-third END --%>
+
+			<div class="span-third list-max-height">
+
+				<h3 class="list-title">Auctions</h3>
+
+				<div class="container-scroll">
+
+					<c:choose>
+
+						<c:when test="${empty ownAuctions}">
+							<p>You have no auctions set yet.</p>
+						</c:when>
+
+						<c:otherwise>
+							<ul class="resultsDiv resultsDiv-small">
+
+								<c:forEach var="ad" items="${ownAuctions}">
+
+									<li
+										class="resultAd"
+										data-price="${ad.prize}"
+										data-moveIn="${ad.moveInDate}"
+										data-age="${ad.moveInDate}">
+
+										<div class="row">
+											<div class="tile tile-third">
+												<div class="list-image">
+													<a
+														class="list-image-link"
+														href="<c:url value='/auction?id=${ad.id}' />"
+														style="background-image: url(${ad.pictures[0].filePath})">
+													</a>
+												</div>
+											</div>
+
+											<div class="tile tile-two-thirds">
+												<div class="resultAd-text">
+
+													<h2>
+														<a class="link" href="<c:url value='/auction?id=${ad.id}' />">
+															${ad.title }
+														</a>
+													</h2>
+													<h3>CHF ${ad.prize}</h3>
+
+												</div>
+											</div>
+										</div>
 
 
-<c:import url="template/footer.jsp" />
+										<div class="row">
+											<div class="tile tile-full">
+												<div class="resultAd-text resultAd-details">
+
+													<p>${ad.street},${ad.zipcode} ${ad.city}</p>
+													<p>${ad.roomType}</p>
+
+													<fmt:formatDate value="${ad.moveInDate}"
+														var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
+
+													<p>Move-in date: ${formattedMoveInDate }</p>
+													<p>Auction end-date: ${ad.endTime}</p>
+
+												</div>
+											</div>
+										</div>
+
+									</li>
+								</c:forEach>
+
+							</ul>
+
+						</c:otherwise>
+					</c:choose>
+
+				</div> <%-- .container-scroll END --%>
+			</div> <%-- .span-third END --%>
+
+			<div class="span-third list-max-height">
+
+				<h3 class="list-title">Bookmarks</h3>
+
+				<div class="container-scroll">
+
+					<c:choose>
+
+						<c:when test="${empty bookmarkedAdvertisements}">
+							<p>You have not bookmarked anything yet.</p>
+						</c:when>
+
+						<c:otherwise>
+							<ul class="resultsDiv resultsDiv-small">
+
+								<c:forEach var="ad" items="${bookmarkedAdvertisements}">
+
+									<li
+										class="resultAd"
+										data-price="${ad.prize}"
+										data-moveIn="${ad.moveInDate}"
+										data-age="${ad.moveInDate}">
+
+										<div class="row">
+											<div class="tile tile-third">
+												<div class="list-image">
+													<a
+														class="list-image-link"
+														href="<c:url value='/ad?id=${ad.id}' />"
+														style="background-image: url(${ad.pictures[0].filePath})">
+													</a>
+												</div>
+											</div>
+
+											<div class="tile tile-two-thirds">
+												<div class="resultAd-text">
+
+													<h2>
+														<a class="link" href="<c:url value='/ad?id=${ad.id}' />">
+															${ad.title }
+														</a>
+													</h2>
+													<h3>CHF ${ad.prize}</h3>
+
+												</div>
+											</div>
+										</div>
+
+
+										<div class="row">
+											<div class="tile tile-full">
+												<div class="resultAd-text resultAd-details">
+
+													<p>${ad.street},${ad.zipcode} ${ad.city}</p>
+													<p>${ad.roomType}</p>
+
+													<fmt:formatDate value="${ad.moveInDate}"
+														var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
+
+													<p>Move-in date: ${formattedMoveInDate }</p>
+
+												</div>
+											</div>
+										</div>
+
+									</li>
+								</c:forEach>
+
+							</ul>
+
+						</c:otherwise>
+					</c:choose>
+
+
+				</div> <%-- .container-scroll END --%>
+			</div> <%-- .span-third END --%>
+
+		</div> <%-- .row END --%>
+	</div> <%-- .container END --%>
+
+
+<%-- <c:import url="template/~footer.jsp" /> --%>
+<c:import url="template/~bottom.jsp">
+	<c:param name="js" value="myRooms" />
+</c:import>

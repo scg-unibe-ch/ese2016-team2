@@ -15,18 +15,36 @@ import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.User;
 
+
+/**
+ * @Jerome
+ * Add these imports for basic search functionality.
+ */
+import org.springframework.web.bind.annotation.ModelAttribute;
+import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
+
+
+
 @Controller
 public class MyRoomController {
 
 	@Autowired
 	private AdService adService;
-	
-	@Autowired 
+
+	@Autowired
 	private AuctionService auctionService;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
+
+
+	/**
+	 * @Jerome
+	 * Add these properties for basic search functionality.
+	 */
+	private SearchForm searchForm;
+
 	/**
 	 * Fetches information about bookmarked rooms and own ads and attaches this
 	 * information to the myRooms page in order to be displayed.
@@ -53,5 +71,18 @@ public class MyRoomController {
 
 		return model;
 	}
-	
+
+
+	/**
+	 * @Jerome
+	 * Add this attribute for basic search functionality.
+	 */
+	@ModelAttribute
+	public SearchForm getSearchForm() {
+		if (searchForm == null) {
+			searchForm = new SearchForm();
+		}
+		return searchForm;
+	}
+
 }

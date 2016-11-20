@@ -25,6 +25,10 @@
 				]);
 			},
 
+			myRooms: function () {
+				return;
+			},
+
 			index: function () {
 				return $.flatfindr.add([
 					'search',
