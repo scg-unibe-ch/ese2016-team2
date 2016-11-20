@@ -17,9 +17,9 @@
 		adDescription: function () {
 			return $.flatfindr
 				.with({
-					shownAdvertisementID: '${shownAd.id}',
-					shownAdvertisement: '${shownAd}',
-					shownAdUsername: '${shownAd.user.username}'
+					advertisementID: '${shownAd.id}',
+					advertisement: '${shownAd}',
+					username: '${shownAd.user.username}'
 				})
 				.add([
 					'search',

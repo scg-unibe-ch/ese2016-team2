@@ -16,17 +16,31 @@
 			},
 
 			login: function () {
-				return;
+				return $.flatfindr.add([
+					'search'
+				]);
 			},
 
 			signup: function () {
 				return $.flatfindr.add([
+					'search',
 					'signup'
 				]);
 			},
 
 			myRooms: function () {
-				return;
+				return $.flatfindr.add([
+					'search'
+				]);
+			},
+
+			user: function () {
+				return $.flatfindr
+					.with({ username: '${user.username}' })
+					.add([
+						'search',
+						'message'
+					]);
 			},
 
 			index: function () {

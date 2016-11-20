@@ -37,7 +37,7 @@ jQuery.flatfindr.register({
       $("#bookmarkButton").click(function() {
 
         $.post("/bookmark", {
-            id : $.flatfindr.shownAdvertisementID,
+            id : $.flatfindr.advertisementID,
             screening : false,
             bookmarked : false
           },
@@ -83,7 +83,7 @@ jQuery.flatfindr.register({
       $("#bookmarkedButton").click(
         function() {
           $.post("/bookmark", {
-              id : $.flatfindr.shownAdvertisementID,
+              id : $.flatfindr.advertisementID,
               screening : false,
               bookmarked : true
             },
@@ -129,7 +129,7 @@ jQuery.flatfindr.register({
       attachBookmarkedClickHandler();
 
       $.post("/bookmark", {
-          id : $.flatfindr.shownAdvertisementID,
+          id : $.flatfindr.advertisementID,
           screening : true,
           bookmarked : true
         },
