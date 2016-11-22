@@ -50,7 +50,9 @@
   }
 }
 
-
+.span-full {
+  width: 100%;
+}
 
 .span-half {
   @include span-columns($grid-columns);

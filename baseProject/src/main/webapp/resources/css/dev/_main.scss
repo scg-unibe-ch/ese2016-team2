@@ -28,3 +28,10 @@
     content: '⇧ ';
   }
 }
+
+
+img {
+  .span-half &.only-child {
+    padding-right: 16px;
+  }
+}
