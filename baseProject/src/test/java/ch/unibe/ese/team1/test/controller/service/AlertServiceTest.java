@@ -60,9 +60,6 @@ public class AlertServiceTest {
 		Alert alert = new Alert();
 		alert.setUser(testPersonAlert1);
 		alert.setAlertType("Studio");
-		alert.setRoom(false);
-		alert.setStudio(true);
-		alert.setHouse(false);
 		alert.setCity("Bern");
 		alert.setZipcode(3000);
 		alert.setPrice(1500);
@@ -72,9 +69,6 @@ public class AlertServiceTest {
 		alert = new Alert();
 		alert.setUser(testPersonAlert1);
 		alert.setAlertType("Room and Studio");
-		alert.setRoom(true);
-		alert.setStudio(true);
-		alert.setHouse(false);
 		alert.setCity("Bern");
 		alert.setZipcode(3002);
 		alert.setPrice(1000);
@@ -106,9 +100,6 @@ public class AlertServiceTest {
 		Alert alert = new Alert();
 		alert.setUser(testPersonAlert2);
 		alert.setAlertType("Studio");
-		alert.setRoom(false);
-		alert.setStudio(true);
-		alert.setHouse(false);
 		alert.setCity("Bern");
 		alert.setZipcode(3000);
 		alert.setPrice(1500);
@@ -118,9 +109,6 @@ public class AlertServiceTest {
 		alert = new Alert();
 		alert.setUser(testPersonAlert2);
 		alert.setAlertType("Room and Studio");
-		alert.setRoom(true);
-		alert.setStudio(true);
-		alert.setHouse(false);
 		alert.setCity("Bern");
 		alert.setZipcode(3002);
 		alert.setPrice(1000);

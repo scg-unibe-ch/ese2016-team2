@@ -16,10 +16,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/config/springMVC.xml",
+@ContextConfiguration(locations = { 
+		"file:src/main/webapp/WEB-INF/config/springMVC.xml",
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
 		"file:src/main/webapp/WEB-INF/config/springSecurity.xml" })
+@WebAppConfiguration
 public class AuctionControllerTest {
 
 	@Autowired
@@ -30,15 +31,24 @@ public class AuctionControllerTest {
 	private MockMvc mockMvc;
 
 	@Before
-	public void setup() {
+	public void setUp() {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+	}
+
+	@Test
+	public void getAuction() throws Exception {
+		this.mockMvc.perform(get("/auction")
+						.param("id", "1"))
+					.andExpect(status().isOk())
+					.andExpect(model().attributeExists("shownAuction", "messageForm", "loggedInUserEmail", "visits"))
+					.andExpect(view().name("auctionDescription"));	
 	}
 	
 	@Test
-	public void getAuction() throws Exception {
-		this.mockMvc.perform(get("/auction").param("id", "1"))
-			.andExpect(status().isOk())
-			.andExpect(model().attributeExists("shownAuction", "messageForm", "loggedInUserEmail", "visits"))
-			.andExpect(view().name("auctionDescription"));
+	public void postAuction() throws Exception {
+		this.mockMvc.perform(post("/auction").param("id", "1")
+						.param("recipient", ""))
+					.andExpect(status().isOk());
 	}
+
 }

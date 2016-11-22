@@ -35,13 +35,7 @@ public class PlaceAdForm {
 
 	private String preferences;
 	
-	// optional for input
-	private String roomFriends;
-	
 	private String roomType;	
-	
-	//true if studio, false if room
-	private boolean studio;
 	
 	private boolean buyable;
 
@@ -201,22 +195,6 @@ public class PlaceAdForm {
 
 	public void setStreet(String street) {
 		this.street = street;
-	}
-
-	public String getRoomFriends() {
-		return roomFriends;
-	}
-
-	public void setRoomFriends(String roomFriends) {
-		this.roomFriends = roomFriends;
-	}
-	
-	public boolean getStudio() {
-		return studio;
-	}
-	
-	public void setStudio(boolean studio) {
-		this.studio = studio;
 	}
 	
 	public String getRoomType() {

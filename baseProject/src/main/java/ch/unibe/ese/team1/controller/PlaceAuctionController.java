@@ -121,6 +121,11 @@ public class PlaceAuctionController {
 			String username = principal.getName();
 			User user = userService.findUserByUsername(username);
 			
+			String realPath = servletContext.getRealPath(IMAGE_DIRECTORY);
+			if (pictureUploader == null) {
+				pictureUploader = new PictureUploader(realPath, IMAGE_DIRECTORY);
+			}
+			
 			List<String> fileNames = pictureUploader.getFileNames();
 			Auction auction = auctionService.saveFrom(placeAuctionForm, fileNames, user);
 			

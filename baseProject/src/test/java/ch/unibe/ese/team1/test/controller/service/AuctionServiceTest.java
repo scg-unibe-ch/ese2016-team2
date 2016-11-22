@@ -23,7 +23,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceBidForm;
+import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team1.controller.service.AuctionService;
+import ch.unibe.ese.team1.model.Advertisement;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.Gender;
 import ch.unibe.ese.team1.model.User;
@@ -42,14 +44,16 @@ public class AuctionServiceTest {
 
 	@Autowired
 	private UserDao userDao;
-	
+
 	private PlaceAuctionForm placeAuctionForm = new PlaceAuctionForm();
+	private SearchForm searchForm = new SearchForm();
 	private ArrayList<String> filePaths = new ArrayList<String>();
+	private ArrayList<Advertisement> results = new ArrayList<Advertisement>();
 
 	@Before
 	public void placeAuctionInDataBase() {
 		// Preparation
-		placeAuctionForm.setCity("3018 - Bern");
+		placeAuctionForm.setCity("3000 - Bern");
 		placeAuctionForm.setPreferences("Test preferences");
 		placeAuctionForm.setRoomDescription("Test Room description");
 		placeAuctionForm.setPrize(600);
@@ -62,16 +66,32 @@ public class AuctionServiceTest {
 		placeAuctionForm.setEndTime("12:00");
 
 		placeAuctionForm.setSmokers(true);
-		placeAuctionForm.setAnimals(false);
+		placeAuctionForm.setAnimals(true);
 		placeAuctionForm.setGarden(true);
-		placeAuctionForm.setBalcony(false);
+		placeAuctionForm.setBalcony(true);
 		placeAuctionForm.setCellar(true);
-		placeAuctionForm.setFurnished(false);
-		placeAuctionForm.setCable(false);
+		placeAuctionForm.setFurnished(true);
+		placeAuctionForm.setCable(true);
 		placeAuctionForm.setGarage(true);
 		placeAuctionForm.setInternet(false);
-		
+
 		filePaths.add("/img/test/ad1_1.jpg");
+
+		searchForm.setAnimals(false);
+		searchForm.setBalcony(false);
+		searchForm.setCable(false);
+		searchForm.setCellar(false);
+		searchForm.setCity("3000 - Bern");
+		searchForm.setFurnished(false);
+		searchForm.setGarage(false);
+		searchForm.setGarden(false);
+		searchForm.setHouse(true);
+		searchForm.setInternet(false);
+		searchForm.setPrize(1000);
+		searchForm.setRadius(10);
+		searchForm.setRoom(true);
+		searchForm.setSmokers(false);
+		searchForm.setStudio(true);
 	}
 
 	/**
@@ -85,12 +105,13 @@ public class AuctionServiceTest {
 	 */
 	@Test
 	public void saveFromAndGetById() throws ParseException {
-		User testPersonAuction1 = createUser("testPersonAuction@1.ch", "password", "testPerson", "Auction1", Gender.MALE, "Normal");
+		User testPersonAuction1 = createUser("testPersonAuction@1.ch", "password", "testPerson", "Auction1",
+				Gender.MALE, "Normal");
 		testPersonAuction1.setAboutMe("TestPersonAuction1");
 		userDao.save(testPersonAuction1);
 
 		auctionService.saveFrom(placeAuctionForm, filePaths, testPersonAuction1);
-		
+
 		Auction auction1 = new Auction();
 		Iterable<Auction> ads = auctionService.getAllAds();
 		Iterator<Auction> iterator = ads.iterator();
@@ -101,9 +122,8 @@ public class AuctionServiceTest {
 
 		// Testing
 		assertTrue(auction1.getSmokers());
-		assertFalse(auction1.getAnimals());
 		assertEquals("Bern", auction1.getCity());
-		assertEquals(3018, auction1.getZipcode());
+		assertEquals(3000, auction1.getZipcode());
 		assertEquals("Test preferences", auction1.getPreferences());
 		assertEquals("Test Room description", auction1.getRoomDescription());
 		assertEquals(600, auction1.getPrize());
@@ -118,15 +138,16 @@ public class AuctionServiceTest {
 
 		assertEquals(0, result.compareTo(auction1.getMoveInDate()));
 	}
-	
-	@Test 
+
+	@Test
 	public void testPlaceNewBid() {
-		User testPersonAuction2 = createUser("testPersonAuction@2.ch", "password", "testPerson", "Auction2", Gender.MALE, "Normal");
+		User testPersonAuction2 = createUser("testPersonAuction@2.ch", "password", "testPerson", "Auction2",
+				Gender.MALE, "Normal");
 		testPersonAuction2.setAboutMe("TestPersonAuction2");
 		userDao.save(testPersonAuction2);
 
 		auctionService.saveFrom(placeAuctionForm, filePaths, testPersonAuction2);
-		
+
 		Auction auction2 = new Auction();
 		Iterable<Auction> ads = auctionService.getAllAds();
 		Iterator<Auction> iterator = ads.iterator();
@@ -134,22 +155,105 @@ public class AuctionServiceTest {
 		while (iterator.hasNext()) {
 			auction2 = iterator.next();
 		}
-		
+
 		PlaceBidForm placeBidForm = new PlaceBidForm();
 		int newPrize = 700;
 		placeBidForm.setPrize(newPrize);
-		
+
 		String bidderName = "Test bidder";
-		
+
 		Auction auctionAfterNewBid = auctionService.saveBidPrize(placeBidForm, auction2.getId(), bidderName);
-		
+
 		assertEquals(newPrize, auctionAfterNewBid.getPrize());
 		assertEquals(bidderName, auctionAfterNewBid.getBidderName());
 		assertEquals(auction2.getId(), auctionAfterNewBid.getId());
-		
-		
+
 	}
-	
+
+	@Test
+	public void testQueryResults() {
+		User testPersonAuction3 = createUser("testPersonAuction@3.ch", "password", "testPerson", "Auction3",
+				Gender.MALE, "Normal");
+		testPersonAuction3.setAboutMe("TestPersonAuction3");
+		userDao.save(testPersonAuction3);
+
+		auctionService.saveFrom(placeAuctionForm, filePaths, testPersonAuction3);
+		
+		Auction auction3 = new Auction();
+		Iterable<Auction> ads = auctionService.getAllAds();
+		Iterator<Auction> iterator = ads.iterator();
+
+		while (iterator.hasNext()) {
+			auction3 = iterator.next();
+		}
+
+		results = toList(searchForm, false);
+		assertTrue(results.contains(auction3));
+		
+		results = toList(searchForm, true);
+		assertFalse(results.contains(auction3));
+		
+		searchForm.setCity("3315 - Bätterkinden");
+		results = toList(searchForm, false);
+		assertFalse(results.contains(auction3));
+		
+		searchForm.setAnimals(true);
+		searchForm.setBalcony(true);
+		searchForm.setCable(true);
+		searchForm.setCellar(true);
+		searchForm.setCity("3000 - Bern");
+		searchForm.setFurnished(true);
+		searchForm.setGarage(true);
+		searchForm.setGarden(true);
+		searchForm.setSmokers(true);
+		results = toList(searchForm, false);
+		assertTrue(results.contains(auction3));
+		
+		searchForm.setInternet(true);
+		results = toList(searchForm, false);
+		assertFalse(results.contains(auction3));
+		
+		searchForm.setInternet(false);
+		searchForm.setRoom(false);
+		results = toList(searchForm, false);
+		assertTrue(results.contains(auction3));
+		
+		searchForm.setRoom(true);
+		searchForm.setHouse(false);
+		results = toList(searchForm, false);
+		assertTrue(results.contains(auction3));
+		
+		searchForm.setRoom(false);
+		results = toList(searchForm, false);
+		assertTrue(results.contains(auction3));
+		
+		searchForm.setRoom(true);
+		searchForm.setHouse(true);
+		searchForm.setStudio(false);
+		results = toList(searchForm, false);
+		assertFalse(results.contains(auction3));
+		
+		searchForm.setRoom(false);
+		results = toList(searchForm, false);
+		assertFalse(results.contains(auction3));
+		
+		searchForm.setRoom(true);
+		searchForm.setHouse(false);
+		results = toList(searchForm, false);
+		assertFalse(results.contains(auction3));
+	}
+
+	private ArrayList<Advertisement> toList(SearchForm searchForm, boolean premium) {
+		ArrayList<Advertisement> temp = new ArrayList<Advertisement>();
+
+		Iterable<Auction> auctions = auctionService.queryResults(searchForm, premium);
+
+		for (Auction auciton : auctions) {
+			temp.add(auciton);
+		}
+
+		return temp;
+	}
 
 	private User createUser(String email, String password, String firstName, String lastName, Gender gender,
 			String account) {

@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceBidForm;
 import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
-import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.AuctionPicture;
 import ch.unibe.ese.team1.model.Location;
@@ -398,16 +397,15 @@ public class AuctionService {
 		}
 		
 		Iterator<Auction> iterator = locatedResults.iterator();
-		List<Auction> finalResults = new ArrayList<>();
 		while (iterator.hasNext()) {
 			Auction ad = iterator.next();
 			User user = ad.getUser();
-			if (user.getAccount().equals("Premium") == premium){
-				finalResults.add(ad); 
+			if (user.getAccount().equals("Premium") != premium){
+				iterator.remove(); 
 			}
 		}
 		
-		return finalResults;
+		return locatedResults;
 	}
 
 	private List<Auction> validateDate(List<Auction> ads, boolean inOrOut, Date earliestDate, Date latestDate) {

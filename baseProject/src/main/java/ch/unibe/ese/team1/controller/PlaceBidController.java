@@ -24,8 +24,8 @@ import ch.unibe.ese.team1.model.Auction;
 public class PlaceBidController {
 
 	/**
-	 * The place ad form that is shared between several requests, so that the
-	 * user only has to enter the data once. If an ad is placed, this form is
+	 * The place bid form that is shared between several requests, so that the
+	 * user only has to enter the data once. If an bid is placed, this form is
 	 * reset.
 	 */
 	private PlaceBidForm placeBidForm;

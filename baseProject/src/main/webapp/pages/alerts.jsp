@@ -66,17 +66,6 @@ function validateType(form)
 	}
 }
 </script>
-
-<script>
-function typeOfAlert(alert) {
-	if(alert.getBothRoomAndStudio())
-		return "Both"
-	else if(alert.getStudio())
-		return "Studio"
-	else
-		return "Room"
-}	
-</script>
 	
 <script>
 	$(document).ready(function() {

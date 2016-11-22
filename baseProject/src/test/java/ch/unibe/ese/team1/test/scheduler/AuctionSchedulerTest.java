@@ -1,10 +1,8 @@
 package ch.unibe.ese.team1.test.scheduler;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,7 +21,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
 import ch.unibe.ese.team1.controller.service.AuctionService;
-import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.Gender;
 import ch.unibe.ese.team1.model.User;
