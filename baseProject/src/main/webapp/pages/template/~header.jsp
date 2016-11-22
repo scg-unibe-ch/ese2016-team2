@@ -263,6 +263,19 @@
     </div>
   </div>
 
+  <%-- <div class="row">
+    <div class="tile tile-full">
+      <div class="form form-search form-login">
+        <form id="login-form" method="post" action="/j_spring_security_check">
+    			<label for="field-email">Email:</label> <input name="j_username"
+    				id="field-email" /> <label for="field-password">Password:</label> <input
+    				name="j_password" id="field-password" type="password" />
+    			<button type="submit">Login</button>
+    		</form>
+      </div>
+    </div>
+  </div> --%>
+
 
   <c:choose>
     <c:when test="${loggedIn}">
@@ -289,7 +302,8 @@
             <c:choose>
               <c:when test="${loggedIn}">
                 <%@include file='/pages/getUserPicture.jsp' %>
-                <li><a href="/profile/placeAdvertisement">Place an ad</a></li>
+                <li><a href="/profile/placeAd">Place an ad</a></li>
+								<li><a href="/profile/placeAuction">Place an auction</a></li>
                 <li><a href="/profile/myRooms">My rooms</a></li>
                 <li><a id="messageLink" href="/profile/messages">Messages</a></li>
                 <li><a href="/profile/enquiries">Enquiries</a></li>

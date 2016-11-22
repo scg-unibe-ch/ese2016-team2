@@ -30,6 +30,14 @@ import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.Visit;
 
+
+/**
+ * @Jerome
+ * Add these imports for basic search functionality.
+ */
+import org.springframework.web.bind.annotation.ModelAttribute;
+import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
+
 /**
  * Handles all requests concerning user accounts and profiles.
  */
@@ -56,6 +64,15 @@ public class ProfileController {
 
 	@Autowired
 	private AuctionService auctionService;
+
+
+
+	/**
+	 * @Jerome
+	 * Add these properties for basic search functionality.
+	 */
+	private SearchForm searchForm;
+
 
 	/** Returns the login page. */
 	@RequestMapping(value = "/login")
@@ -144,7 +161,7 @@ public class ProfileController {
 		ModelAndView model = new ModelAndView("register");
 		return model;
 	}
-	
+
 	/** Handles the request for register the user account as premium account. */
 	@RequestMapping(value = "/profile/registerProfile", method = RequestMethod.POST)
 	public ModelAndView registerProfileResultPage(@Valid RegisterForm registerForm, BindingResult bindingResult,
@@ -203,7 +220,7 @@ public class ProfileController {
 		}
 		for (Auction auction: usersAuctions) {
 			try {
-				usersPresentations.addAll((ArrayList<Visit>) 
+				usersPresentations.addAll((ArrayList<Visit>)
 						visitService.getVisitsByAuction(auction));
 			} catch (Exception e) {
 			}
@@ -224,9 +241,22 @@ public class ProfileController {
 
 		Auction auction = visit.getAuction();
 		Ad ad = visit.getAd();
-		
+
 		model.addObject("ad", ad);
 		model.addObject("auction", auction);
 		return model;
+	}
+
+
+	/**
+	 * @Jerome
+	 * Add this attribute for basic search functionality.
+	 */
+	@ModelAttribute
+	public SearchForm getSearchForm() {
+		if (searchForm == null) {
+			searchForm = new SearchForm();
+		}
+		return searchForm;
 	}
 }

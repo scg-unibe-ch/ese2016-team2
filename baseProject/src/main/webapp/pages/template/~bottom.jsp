@@ -15,6 +15,34 @@
 					.add(['header']);
 			},
 
+			login: function () {
+				return $.flatfindr.add([
+					'search'
+				]);
+			},
+
+			signup: function () {
+				return $.flatfindr.add([
+					'search',
+					'signup'
+				]);
+			},
+
+			myRooms: function () {
+				return $.flatfindr.add([
+					'search'
+				]);
+			},
+
+			user: function () {
+				return $.flatfindr
+					.with({ username: '${user.username}' })
+					.add([
+						'search',
+						'message'
+					]);
+			},
+
 			index: function () {
 				return $.flatfindr.add([
 					'search',
@@ -31,8 +59,22 @@
 
 			results: function () {
 				return $.flatfindr.add([
-					'filter'
+					'filter',
+					'map'
 				]);
+			},
+
+			placeAd: function () {
+				return $.flatfindr
+					.with({ PAGE_NAME: pagename })
+					.add([
+						'place',
+						'imageUpload'
+					]);
+			},
+
+			placeAuction: function () {
+				return js.placeAd();
 			}
 		};
 
@@ -40,9 +82,21 @@
 		pagename in js && js[pagename]();
 
 	})(jQuery, '${param.js}');
-
-
 </script>
+
+<c:choose>
+    <c:when test="${param.map=='1'}">
+			<script
+				async
+				defer
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAh9mJhrCy-xTWy5b3Niop8QilZAdMh1To&callback=initMap">
+			</script>
+    </c:when>
+    <c:otherwise>
+    </c:otherwise>
+</c:choose>
+
 <script src="js/hotfix.js"></script>
+
 </body>
 </html>

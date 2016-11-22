@@ -91,7 +91,7 @@
 						</button>
 					</div>
 					<div class="tile tile-half">
-						<button type="button" id="messageCancel">Cancel</button>
+						<button type="reset" id="messageCancel">Cancel</button>
 					</div>
 				</div>
 			</form>
@@ -116,9 +116,11 @@
 		<div class="tile tile-quarter action action-tile action-icon">
 			<c:choose>
 				<c:when test="${loggedIn}">
-					<a class="right" id="bookmarkButton" title="Bookmark property">
-						<span class="fa fa-bookmark fa-2x action-inactive-color"></span>
-					</a>
+					<c:if test="${loggedInUserEmail != shownAd.user.username }">
+						<a class="right" id="bookmarkButton" title="Bookmark property">
+							<span class="fa fa-bookmark fa-2x action-inactive-color"></span>
+						</a>
+					</c:if>
 				</c:when>
 			</c:choose>
 		</div>
@@ -280,7 +282,9 @@
 		<div class="row">
 			<div class="tile tile-full">
 
-				<h3 class="row-h3">Viewing times</h3>
+				<c:if test="${loggedInUserEmail != shownAd.user.username}">
+					<h3 class="row-h3">Viewing times</h3>
+				</c:if>
 
 				<div class="row viewing-times">
 					<div class="tile tile-full action action-tile">

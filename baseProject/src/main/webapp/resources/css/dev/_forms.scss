@@ -4,7 +4,7 @@ $slip-height-small: 57px;
 $slip-height-medium: 73px;
 
 
-.form-max-height {
+.form-max-height form {
   height: calc(100vh - 2 * #{$slip-height-small - 1});
 
   @include media($bq-medium) {
@@ -84,6 +84,11 @@ $slip-height-medium: 73px;
 
 
 
+  textarea {
+    resize: none;
+  }
+
+
   button {
     &[type=submit],
     &[type=reset],
@@ -113,9 +118,22 @@ $slip-height-medium: 73px;
   }
 }
 
+.dates, .times, .multi-select {
+  label {
+    margin-bottom: 0;
+    font-weight: normal;
+    color: $bright-gray;
+    cursor: pointer;
+  }
+}
+
 
 .dates {
   border-bottom: 1px solid $whiff-of-gray;
+
+  &.related {
+    border: none;
+  }
 
   input {
     border: none;
@@ -123,10 +141,6 @@ $slip-height-medium: 73px;
 
   label {
     @include sidebar-slip-pad-label;
-    margin-bottom: 0;
-    font-weight: normal;
-    color: $bright-gray;
-    cursor: pointer;
   }
 
   .datepicker {
@@ -144,6 +158,60 @@ $slip-height-medium: 73px;
   }
 }
 
+
+.times, .multi-select {
+  label {
+    @include sidebar-slip-pad;
+    text-align: center;
+  }
+
+  select {
+    margin-bottom: 0;
+    @include sidebar-select-pad;
+    background-color: $whiff-of-gray;
+    font-weight: normal;
+    color: $light-gray;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      background-color: $whiff-of-gray;
+      color: $light-gray;
+    }
+  }
+}
+
+
+.times, .multi-select {
+  display: flex;
+
+  .action-add {
+    display: table;
+    width: 100%;
+    height: 100%;
+    text-align: right;
+
+    span {
+      display: table-cell;
+      vertical-align: top;
+      padding-right: 24px;
+
+      background-color: transparent;
+      color: $base-color;
+
+      &:hover,
+      &:focus {
+        background-color: inherit;
+        color: $base-color;
+      }
+
+    }
+  }
+}
+
+.multi-select:last-child {
+  border-bottom: 1px solid $white;
+}
 
 
 .submit-after {
@@ -239,9 +307,80 @@ $slip-height-medium: 73px;
 
   textarea {
     height: 145px;
-    resize: none;
   }
 }
+
+
+
+.image-preview-wrap {
+  position: relative;
+  float: left;
+
+  img {
+    display: inline-block;
+    height: 100%;
+  }
+
+  .action-delete {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding-top: 48px;
+    padding-bottom: 48px;
+    text-align: center;
+    color: $base-color-opposite;
+    background-color: rgba(255, 99, 71, .38);
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity $base-duration $base-timing;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+
+.action-dropzone,
+.action-viewing-delete {
+  @include sidebar-slip-pad;
+
+  & > div {
+    padding: $small;
+    border: 1px dotted lighten($base-color, 4%);
+  }
+}
+
+.action-dropzone {
+  & > div  {
+    float: inherit;
+    width: 100%;
+    min-height: 2 * $preview-image-height;
+  }
+}
+
+
+.action-viewing-delete {
+  & > div {
+    margin-bottom: 16px;
+  }
+
+  span {
+    display: block;
+    margin: 5px 0 3px;
+    color: $base-color;
+
+    &.fa {
+      margin: 0;
+      text-align: right;
+      color: $base-color-opposite;
+      cursor: pointer;
+    }
+  }
+}
+
+
 
 
 
@@ -284,7 +423,7 @@ $slip-height-medium: 73px;
     }
   }
 
-  @include media($bq-huge/2) {
+  @include media($bq-huge / 2) {
     width: 50% !important;
   }
 }
@@ -292,4 +431,60 @@ $slip-height-medium: 73px;
 .ui-helper-hidden-accessible {
   display: none !important;
   visibility: hidden !important;
+}
+
+
+
+body.placeAd,
+body.placeAuction {
+  .edit-section,
+  .edit-section.js-show {
+    border-bottom: 1px dotted lighten($base-color, 4%);
+  }
+
+  .edit-section-title {
+    @include sidebar-slip-pad;
+    padding-bottom: 11px !important;
+    margin: 0;
+    color: $base-color;
+
+    span {
+      display: block;
+      font-size: 16px;
+      margin-top: 8px;
+    }
+  }
+}
+
+
+#viewing-preview:empty::before {
+  color: $bright-gray;
+  font-weight: lighter;
+  content: "... no viewing time yet.";
+}
+
+#image-preview:empty::before {
+  color: $bright-gray;
+  font-weight: lighter;
+  content: "... no image yet.";
+}
+
+
+
+.fields-optional {
+  max-height: 0;
+  border-bottom-color: transparent;
+  transition: max-height $base-duration $base-timing;
+  overflow: hidden;
+
+  &.dates.js-show {
+    // @Jerome
+    // I have a slight feeling that max-height is not a good practice for this.
+    max-height: 4 * $slip-height-small;
+    border-bottom-color: $whiff-of-gray;
+
+    @include media($bq-medium) {
+      max-height: 4 * $slip-height-medium;
+    }
+  }
 }

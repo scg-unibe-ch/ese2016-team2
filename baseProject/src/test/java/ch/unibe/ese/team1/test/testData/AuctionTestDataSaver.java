@@ -22,28 +22,28 @@ public class AuctionTestDataSaver {
 	private AuctionDao auctionDao;
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Transactional
 	public void saveTestData() throws Exception {
 		User bernerBaer = userDao.findByUsername("user@bern.com");
 		User ese = userDao.findByUsername("ese@unibe.ch");
-		
+
 		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-		
+
 		Date creationDate1 = formatter.parse("03.10.2015");
 		Date creationDate2 = formatter.parse("30.11.2014");
-		
+
 		Date moveInDate1 = formatter.parse("15.12.2017");
 		Date moveInDate2 = formatter.parse("21.12.2017");
-		
+
 		Date moveOutDate1 = formatter.parse("31.03.2018");
 		Date moveOutDate2 = formatter.parse("30.04.2018");
-		
+
 		SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm, dd.MM.yyyy");
-	
+
 		Date endTime1 = timeFormatter.parse("12:00, 14.12.2017");
 		Date endTime2 = timeFormatter.parse("12:00, 20.12.2017");
-		
+
 		String roomDescription1 = "The room is a part of 3.5 rooms apartment completely renovated"
 				+ "in 2010 at Kramgasse, Bern. The apartment is about 50 m2 on 1st floor."
 				+ "Apt is equipped modern kitchen, hall and balcony. Near to shops and public"
@@ -101,7 +101,7 @@ public class AuctionTestDataSaver {
 		String roomPreferences2 = "I would like to have an easy going person who"
 				+ "is trustworthy and can take care of the flat. No animals please."
 				+ "Non smoker preferred.";
-		
+
 		Auction auctionBern2 = new Auction();
 		auctionBern2.setZipcode(3012);
 		auctionBern2.setMoveInDate(moveInDate2);
@@ -117,7 +117,7 @@ public class AuctionTestDataSaver {
 		auctionBern2.setPreferences(roomPreferences2);
 		auctionBern2.setUser(bernerBaer);
 		auctionBern2.setTitle("Cheap studio in Bern!");
-		auctionBern2.setStreet("Längassstr. 40");
+		auctionBern2.setStreet("LÃ¤ngassstr. 40");
 		auctionBern2.setCity("Bern");
 		auctionBern2.setGarden(false);
 		auctionBern2.setBalcony(false);
@@ -135,7 +135,7 @@ public class AuctionTestDataSaver {
 		auctionBern2.setEndTime(timeFormatter.format(endTime2));
 		auctionDao.save(auctionBern2);
 	}
-	
+
 	private AuctionPicture createPicture(Auction auction, String filePath) {
 		AuctionPicture picture = new AuctionPicture();
 		picture.setFilePath(filePath);

@@ -15,6 +15,7 @@
  */
 
 // @codekit-prepend "jquery.bury-unearth.js"
+// @codekit-prepend "jquery.mole.js"
 // @codekit-prepend "jquery.flatfindr.js"
 
 

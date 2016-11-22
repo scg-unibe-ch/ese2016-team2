@@ -6,7 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:import url="template/~top.jsp" />
-<c:import url="template/~header_wo_search.jsp" />
+<c:import url="template/~header_w_map_wo_search.jsp" />
 
 <main role="main">
 	<c:import url="template/~top_bar.jsp">
@@ -15,7 +15,9 @@
 
 	<div class="container">
 		<div class="row map">
+			<div id="map">
 
+			</div>
 		</div>
 	</div>
 
@@ -25,14 +27,15 @@
 
 			<div class="span-half">
 				<div class="form form-search form-filter form-max-height">
-					<div class="container-scroll">
 
-						<form:form
-							method="post"
-							modelAttribute="searchForm"
-							action="/results"
-							id="filterForm"
-							autocomplete="off">
+					<form:form
+						method="post"
+						modelAttribute="searchForm"
+						action="/results"
+						id="filterForm"
+						autocomplete="off">
+
+						<div class="container-scroll">
 
 							<form:input
 								type="text"
@@ -322,8 +325,8 @@
 														<div class="resultAd-text">
 
 															<h2>
-																<a class="link" href="<c:url value='/ad?id=${ad.id}' />">
-																	${ad.title }
+																<a title="Premium Offer!" class="link" href="<c:url value='/ad?id=${ad.id}' />">
+																	${ad.title } <span class="fa fa-star" aria-hidden="true"></span>
 																</a>
 															</h2>
 
@@ -489,10 +492,25 @@
 	</div> <%-- .container.container-pad END --%>
 
 </main>
-
+<script>
+	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+	window.geoc = [
+		<c:forEach var="geo" varStatus="status" items="${results}">
+			<c:choose>
+			  <c:when test="${(fn:length(results)) == status.count}" >
+			    {"address": "${geo.street}, ${geo.zipcode} ${geo.city}"}
+			  </c:when>
+				<c:otherwise>
+					{"address": "${geo.street}, ${geo.zipcode} ${geo.city}"},
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+	];
+</script>
 
 
 <%-- <c:import url="template/~footer.jsp" /> --%>
 <c:import url="template/~bottom.jsp">
 	<c:param name="js" value="results" />
+	<c:param name="map" value="1" />
 </c:import>

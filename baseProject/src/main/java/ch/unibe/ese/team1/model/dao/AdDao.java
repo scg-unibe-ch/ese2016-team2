@@ -12,7 +12,6 @@ public interface AdDao extends CrudRepository<Ad, Long> {
 	/** this will be used if all types are searched */
 	public Iterable<Ad> findByPrizeLessThan (int prize);
 	
-
 	public Iterable<Ad> findByUser(User user);
 
 	/** this will be used if one type is searched */

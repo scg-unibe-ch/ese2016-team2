@@ -9,42 +9,85 @@
 <!-- check if user is logged in -->
 <security:authorize var="loggedIn" url="/profile" />
 
-<c:import url="template/header.jsp" />
+<c:import url="template/~top.jsp" />
+<c:import url="template/~header.jsp" />
 
-<pre>
-	<a href="/">Home</a>   &gt;   Login</pre>
+<main role="main">
+	<c:import url="template/~top_bar.jsp">
+		<c:param name="instr" value="Sign in..." />
+	</c:import>
 
-<h1>Login</h1>
+	<div class="container">
+		<div class="row">
+			<div class="span-half">
 
-<c:choose>
-	<c:when test="${loggedIn}">
-		<p>You are already logged in!</p>
-	</c:when>
-	<c:otherwise>
-		<c:if test="${!empty param.error}">
-			<p>Incorrect email or password. Please retry using correct email
-				and password.</p>
-			<br />
-		</c:if>
-		<form id="login-form" method="post" action="/j_spring_security_check">
-			<label for="field-email">Email:</label> <input name="j_username"
-				id="field-email" /> <label for="field-password">Password:</label> <input
-				name="j_password" id="field-password" type="password" />
-			<button type="submit">Login</button>
-		</form>
-		<br />
-		<h2>Test users</h2>
+				<div class="row">
+			    <div class="tile tile-full">
+			      <div class="form form-search form-login form-max-height">
+							<c:choose>
 
-		<ul class="test-users">
-			<li>Email: <i>ese@unibe.ch</i>, password: <i>ese</i></li>
-			<li>Email: <i>jane@doe.com</i>, password: <i>password</i></li>
-			<li>Email: <i>user@bern.com</i>, password: <i>password</i></li>
-			<li>Email: <i>oprah@winfrey.com</i>, password: <i>password</i></li>
-		</ul>
-		<br />
-			Or <a class="link" href="<c:url value="/signup" />">sign up</a> as a new user.
+								<c:when test="${loggedIn}">
+									<p>You are already logged in!</p>
+								</c:when>
 
-	</c:otherwise>
-</c:choose>
+								<c:otherwise>
 
-<c:import url="template/footer.jsp" />
+									<form
+										id="login-form"
+										method="post"
+										action="/j_spring_security_check">
+
+										<div class="container-scroll">
+
+											<input name="j_username" id="field-email" placeholder="Email" />
+											<input name="j_password" id="field-password" type="password" placeholder="Password" />
+
+											<c:if test="${!empty param.error}">
+												<p class="validationErrorText">
+													Incorrect email or password. Please retry using correct email
+													and password.
+												</p>
+											</c:if>
+										</div>
+
+										<button type="submit">Sign in</button>
+									</form>
+
+
+								</c:otherwise>
+							</c:choose>
+
+			      </div> <%-- .form END --%>
+			    </div> <%-- .tile.tile-full END --%>
+			  </div> <%-- .row END --%>
+
+			</div> <%-- .span-half END --%>
+
+			<div class="span-half">
+
+				<div class="container-pad">
+					<h3>Test users</h3>
+					<ul>
+						<li>Email: <i>ese@unibe.ch</i>, password: <i>ese</i></li>
+						<li>Email: <i>jane@doe.com</i>, password: <i>password</i></li>
+						<li>Email: <i>user@bern.com</i>, password: <i>password</i></li>
+						<li>Email: <i>oprah@winfrey.com</i>, password: <i>password</i></li>
+					</ul>
+					<br>
+					<p>
+						Or <a class="link" href="<c:url value="/signup" />">sign up</a> as a new user.
+					</p>
+				</div>
+
+			</div> <%-- .span-half END --%>
+
+
+		</div> <%-- .row END --%>
+	</div> <%-- .container END --%>
+
+</main>
+
+<%-- <c:import url="template/~footer.jsp" /> --%>
+<c:import url="template/~bottom.jsp">
+	<c:param name="js" value="login" />
+</c:import>

@@ -8,7 +8,7 @@
 jQuery.extend({
 
   /**
-   * Flatfindr provides some convinient methods to setup the current page.
+   * Flatfindr provides some convenient methods to setup the current page.
    * Due to the 'need' of globals (zip codes writtin into js on page request) and
    * having jQuery as global anyway, jQuery is extended with the flatfindr object.
    * @memberof jQuery
@@ -34,7 +34,7 @@ jQuery.extend({
 
 
     /**
-     * A default duration value which corresponds with the $base_duration used
+     * A default duration value which corresponds to the $base_duration used
      * for css trasitions. In js files, this value is used for timeouts to play
      * well with css transitions.
      * @memberof jQuery.flatfindr
@@ -56,6 +56,7 @@ jQuery.extend({
      * @type {String}
      */
     VIEW: 'body[view]',
+
 
 
 
@@ -117,7 +118,7 @@ jQuery.extend({
      * Add reusable value properties to flatfindr.
      *
      * This shti actually led me to introduce flatfindr under jQuery. v1.0 used
-     * lots of unnecassary globals which i wanted to wrap up.
+     * lots of unnecessary globals which i wanted to wrap up.
      * There might be better ways to handle stuff that 'has to be' written into
      * js scripts server-side, but let's go with this.
      * @memberof jQuery.flatfindr

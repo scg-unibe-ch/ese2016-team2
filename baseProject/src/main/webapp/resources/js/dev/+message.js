@@ -53,7 +53,7 @@ jQuery.flatfindr.register({
       var
         subject = $msgSubject.val(),
         text = $msgTextarea.val(),
-        recipientEmail = $.flatfindr.shownAdUsername,
+        recipientEmail = $.flatfindr.username,
         duration = $.flatfindr.BASE_DURATION;
 
       $.post("profile/messages/sendMessage", {
