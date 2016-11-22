@@ -18,15 +18,12 @@ import ch.unibe.ese.team1.controller.service.MessageService;
 import ch.unibe.ese.team1.controller.service.VisitService;
 import ch.unibe.ese.team1.model.Ad;
 
-
 /**
  * @Jerome
  * Add these imports for basic search functionality.
  */
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
-
-
 
 /**
  * This controller handles all requests concerning displaying ads and
@@ -44,14 +41,10 @@ public class AdController {
 	@Autowired
 	private VisitService visitService;
 
-
 	/**
-	 * @Jerome
-	 * Add these properties for basic search functionality.
+	 * @Jerome Add these properties for basic search functionality.
 	 */
 	private SearchForm searchForm;
-
-
 
 	/** Gets the ad description page for the ad with the given id. */
 	@RequestMapping(value = "/ad", method = RequestMethod.GET)
@@ -61,8 +54,7 @@ public class AdController {
 		model.addObject("shownAd", ad);
 		model.addObject("messageForm", new MessageForm());
 
-		String loggedInUserEmail = (principal == null) ? "" : principal
-				.getName();
+		String loggedInUserEmail = (principal == null) ? "" : principal.getName();
 		model.addObject("loggedInUserEmail", loggedInUserEmail);
 
 		model.addObject("visits", visitService.getVisitsByAd(ad));
@@ -75,8 +67,8 @@ public class AdController {
 	 * validates and persists the message passed as post data.
 	 */
 	@RequestMapping(value = "/ad", method = RequestMethod.POST)
-	public ModelAndView messageSent(@RequestParam("id") long id,
-			@Valid MessageForm messageForm, BindingResult bindingResult) {
+	public ModelAndView messageSent(@RequestParam("id") long id, @Valid MessageForm messageForm,
+			BindingResult bindingResult) {
 
 		ModelAndView model = new ModelAndView("adDescription");
 		Ad ad = adService.getAdById(id);
@@ -89,9 +81,17 @@ public class AdController {
 		return model;
 	}
 
+	@RequestMapping(value = "/deleteAd", method = RequestMethod.GET)
+	public ModelAndView deleteAd(@RequestParam("id") long id, Principal principal) {
+		if (adService.getAdById(id).getUser().getUsername().equals(principal.getName())) {
+			adService.delete(id);
+		}
+
+		return new ModelAndView("redirect:/");
+	}
+
 	/**
-	 * @Jerome
-	 * Add this attribute for basic search functionality.
+	 * @Jerome Add this attribute for basic search functionality.
 	 */
 	@ModelAttribute
 	public SearchForm getSearchForm() {
