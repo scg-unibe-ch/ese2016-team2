@@ -63,7 +63,6 @@ public class AuctionTestDataSaver {
 		auctionBern.setPrize(400);
 		auctionBern.setSquareFootage(50);
 		auctionBern.setRoomType("Room");
-		auctionBern.setStudio(false);
 		auctionBern.setSmokers(false);
 		auctionBern.setAnimals(true);
 		auctionBern.setBuyable(true);
@@ -111,7 +110,6 @@ public class AuctionTestDataSaver {
 		auctionBern2.setPrize(700);
 		auctionBern2.setSquareFootage(60);
 		auctionBern2.setRoomType("Studio");
-		auctionBern2.setStudio(true);
 		auctionBern2.setSmokers(false);
 		auctionBern2.setAnimals(true);
 		auctionBern2.setBuyable(true);

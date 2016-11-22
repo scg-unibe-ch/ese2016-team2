@@ -56,8 +56,6 @@ public class EditAdService {
 		ad.setTitle(placeAdForm.getTitle());
 
 		ad.setStreet(placeAdForm.getStreet());
-
-		ad.setStudio(placeAdForm.getStudio());
 		
 		ad.setRoomType(placeAdForm.getRoomType());
 

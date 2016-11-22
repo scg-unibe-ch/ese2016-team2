@@ -41,6 +41,12 @@ public class AdService {
 
 	@Autowired
 	private GeoDataService geoDataService;
+	
+	@Autowired
+	private VisitService visitService;
+	
+	@Autowired
+	private BookmarkService bookmarkService;
 
 	/**
 	 * Handles persisting a new ad to the database.
@@ -60,7 +66,6 @@ public class AdService {
 		/** general info values */
 		ad.setTitle(placeAdForm.getTitle());
 		ad.setStreet(placeAdForm.getStreet());
-		ad.setStudio(placeAdForm.getStudio());
 
 		ad.setRoomType(placeAdForm.getRoomType());
 		ad.setPrize(placeAdForm.getPrize());
@@ -485,5 +490,12 @@ public class AdService {
 			}
 		}
 		return false;
+	}
+
+	public void delete(long adId) {
+		Ad ad = adDao.findOne(adId);
+		visitService.delete(ad);
+		bookmarkService.delete(ad);
+		adDao.delete(ad);
 	}
 }

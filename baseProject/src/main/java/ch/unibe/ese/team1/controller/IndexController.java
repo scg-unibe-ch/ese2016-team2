@@ -51,7 +51,6 @@ public class IndexController {
 		return new ModelAndView("disclaimer");
 	}
 
-
 	/**
 	 * @Jerome
 	 * Add this attribute for basic search functionality.

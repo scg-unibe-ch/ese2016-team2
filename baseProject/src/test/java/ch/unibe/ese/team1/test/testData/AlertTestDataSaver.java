@@ -30,9 +30,7 @@ public class AlertTestDataSaver {
 		// 2 Alerts for the ese test-user
 		Alert alert = new Alert();
 		alert.setUser(ese);
-		alert.setRoom(true);
-		alert.setStudio(true);
-		alert.setHouse(false);
+
 		alert.setAlertType("Room and Studio");
 		alert.setCity("Bern");
 		alert.setZipcode(3000);
@@ -42,9 +40,6 @@ public class AlertTestDataSaver {
 
 		alert = new Alert();
 		alert.setUser(ese);
-		alert.setRoom(true);
-		alert.setStudio(false);
-		alert.setHouse(false);
 		alert.setAlertType("Room");
 		alert.setCity("Zürich");
 		alert.setZipcode(8000);
@@ -56,9 +51,6 @@ public class AlertTestDataSaver {
 		// One alert for Jane Doe
 		alert = new Alert();
 		alert.setUser(jane);
-		alert.setRoom(false);
-		alert.setStudio(true);
-		alert.setHouse(false);
 		alert.setAlertType("Studio");
 		alert.setCity("Luzern");
 		alert.setZipcode(6003);

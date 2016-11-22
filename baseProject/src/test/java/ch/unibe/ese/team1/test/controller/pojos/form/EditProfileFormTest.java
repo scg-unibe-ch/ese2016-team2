@@ -1,10 +1,6 @@
 package ch.unibe.ese.team1.test.controller.pojos.form;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-
-import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
