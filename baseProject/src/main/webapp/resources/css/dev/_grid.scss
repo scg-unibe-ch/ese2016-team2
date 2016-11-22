@@ -31,7 +31,7 @@
   height: 100%;
 
   @include media($bq-large) {
-    overflow-y: auto;
+    overflow-y: scroll;
   }
 }
 
