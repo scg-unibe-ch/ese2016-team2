@@ -31948,20 +31948,37 @@ jQuery.flatfindr.register({
      dateFormat : 'dd-mm-yy'
     }).datepicker('setDate', null);
 
-    $("#moveInDate").datepicker({
-      altField: '#field-moveInDate',
-      dateFormat : 'dd-mm-yy'
-    }).datepicker('setDate', null);
+    if ($.flatfindr.PAGE_NAME === 'editAd') {
+      $("#moveInDate").datepicker({
+        altField: '#field-moveInDate',
+        dateFormat : 'dd-mm-yy'
+      });
 
-    $('#moveOutDate').datepicker({
-      altField: '#field-moveOutDate',
-      dateFormat : 'dd-mm-yy'
-    }).datepicker('setDate', null);
+      $('#moveOutDate').datepicker({
+        altField: '#field-moveOutDate',
+        dateFormat : 'dd-mm-yy'
+      });
 
-    $('#dp-endDate').datepicker({
-      altField: '#field-endDate',
-      dateFormat : 'dd-mm-yy'
-    }).datepicker('setDate', null);
+      $('#dp-endDate').datepicker({
+        altField: '#field-endDate',
+        dateFormat : 'dd-mm-yy'
+      });
+    } else {
+      $("#moveInDate").datepicker({
+        altField: '#field-moveInDate',
+        dateFormat : 'dd-mm-yy'
+      }).datepicker('setDate', null);
+
+      $('#moveOutDate').datepicker({
+        altField: '#field-moveOutDate',
+        dateFormat : 'dd-mm-yy'
+      }).datepicker('setDate', null);
+
+      $('#dp-endDate').datepicker({
+        altField: '#field-endDate',
+        dateFormat : 'dd-mm-yy'
+      }).datepicker('setDate', null);
+    }
 
 
 
@@ -32194,13 +32211,25 @@ jQuery.flatfindr.register({
       var
         $that = $(this),
         $parent = $that.parent(),
-        deleteUrl = $parent.attr('data-url');
+        deleteUrl, adId, pictureId;
 
-      $.post(
-        '/profile/'+ PAGE_NAME +'/deletePicture',
-        {url : deleteUrl}, function() {
-          $parent.remove();
+
+      if (PAGE_NAME === 'editAd') {
+        adId = $parent.attr('data-ad-id');
+        pictureId = $parent.attr('data-picture-id');
+        $.post(
+          "/profile/editAd/deletePictureFromAd",
+          {adId:adId, pictureId:pictureId}, function() {
+    			  $parent.remove();
+    		});
+      } else {
+        deleteUrl = $parent.attr('data-url');
+        $.post(
+          '/profile/'+ PAGE_NAME +'/deletePicture',
+          {url : deleteUrl}, function() {
+            $parent.remove();
         });
+      }
     }
 
 

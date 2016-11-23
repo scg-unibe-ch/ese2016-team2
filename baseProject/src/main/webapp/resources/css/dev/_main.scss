@@ -1,3 +1,11 @@
+.page-max-height {
+  height: calc(100vh - 1 * #{$slip-height-small - 1});
+
+  @include media($bq-medium) {
+    height: calc(100vh - 1 * #{$slip-height-medium - 1});
+  }
+}
+
 .brand-primary {
   position: relative;
   z-index: 1;
@@ -26,5 +34,12 @@
 
   &:before {
     content: '⇧ ';
+  }
+}
+
+
+img {
+  .span-half &.only-child {
+    padding-right: 16px;
   }
 }

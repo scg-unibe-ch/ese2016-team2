@@ -80,11 +80,24 @@
     margin-right: 16px;
   }
 
-  .wo-search & {
-    right: -64px;
+  a {
+    margin-top: -12px;
+    margin-right: 16px;
   }
 
+  a {
+    padding: 0;
+    span {
+      margin: 0;
+    }
+  }
+
+  // .wo-search & {
+  //   right: -64px;
+  // }
+
   .map & {
+    display: none;
     right: -106px;
   }
 }

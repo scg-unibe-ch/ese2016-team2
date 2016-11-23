@@ -31,7 +31,7 @@ function validateType(form)
 	var rah = document.getElementById('rah');
 	var sah = document.getElementById('sah');
 	var all = document.getElementById('all');
-	
+
 	r.checked = false;
 	h.checked = false;
 	s.checked = false;
@@ -39,7 +39,7 @@ function validateType(form)
 	rah.checked = false;
 	sah.checked = false;
 	all.checked = false;
-	
+
 	if(!room.checked && !studio.checked && !house.checked) {
 		neither.checked = true;
 	}
@@ -66,7 +66,7 @@ function validateType(form)
 	}
 }
 </script>
-	
+
 <script>
 	$(document).ready(function() {
 		$("#city").autocomplete({
@@ -79,10 +79,10 @@ function validateType(form)
 			enabled : true,
 			autoFocus : true
 		});
-		
+
 		var price = document.getElementById('priceInput');
 		var radius = document.getElementById('radiusInput');
-		
+
 		if(price.value == null || price.value == "" || price.value == "0")
 			price.value = "500";
 		if(radius.value == null || radius.value == "" || radius.value == "0")
@@ -101,7 +101,7 @@ function validateType(form)
 		<form:checkbox name="room" id="room" path="room" /><label>Room</label>
 		<form:checkbox name="studio" id="studio" path="studio" /><label>Studio</label>
 		<form:checkbox name="house" id="house" path="house" /><label>House</label>
-		
+
 		<form:checkbox style="display:none" name="neither" id="neither" path="noRoomNoStudio" />
 		<form:checkbox style="display:none" name="r" id="r" path="alertType" value="Room" />
 		<form:checkbox style="display:none" name="s" id="s" path="alertType" value="Studio" />
@@ -111,12 +111,12 @@ function validateType(form)
 		<form:checkbox style="display:none" name="sah" id="sah" path="alertType" value="Studio and House" />
 		<form:checkbox style="display:none" name="all" id="all" path="alertType" value="All" />
 		<form:errors path="noRoomNoStudio" cssClass="validationErrorText" /><br />
-		
+
 		<label for="city">City / zip code:</label>
 		<form:input type="text" name="city" id="city" path="city"
 			placeholder="e.g. Bern" tabindex="3" />
 		<form:errors path="city" cssClass="validationErrorText" />
-		
+
 		<label for="radius">Within radius of (max.):</label>
 		<form:input id="radiusInput" type="number" path="radius"
 			placeholder="e.g. 5" step="5" />
@@ -136,7 +136,7 @@ function validateType(form)
 </form:form> <br />
 <h2>Your active alerts</h2>
 
-<div id="alertsDiv" class="alertsDiv">			
+<div id="alertsDiv" class="alertsDiv">
 <c:choose>
 	<c:when test="${empty alerts}">
 		<p>You currently aren't subscribed to any alerts.

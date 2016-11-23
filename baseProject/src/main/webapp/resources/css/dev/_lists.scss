@@ -88,6 +88,13 @@ select.list-sort {
   }
 }
 
+.list-delete-link {
+  display: block;
+  margin-top: -4px;
+  text-align: right;
+  cursor: pointer;
+}
+
 
 .resultAd-text {
   @include sidebar-slip-pad;
@@ -104,4 +111,18 @@ select.list-sort {
 
 .resultsDiv-small {
   font-size: 72%;
+}
+
+.deletion-confirm {
+  height: 0;
+  margin-top: 0;
+  overflow: hidden;
+  transition:
+    height $base-duration $base-timing,
+    margin-top $base-duration $base-timing;
+
+  &.js-confirm {
+    height: 72px;
+    margin-top: 24px;
+  }
 }

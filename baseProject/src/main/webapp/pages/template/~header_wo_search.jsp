@@ -14,7 +14,7 @@
     <div class="tile tile-full">
       <div class="action action-icon action-menu-primary">
 				<span id="js-menu-icon" class="fa fa-bars fa-2x"></span>
-				<%-- <span id="js-menu-form-search-icon" class="fa fa-search fa-2x"></span> --%>
+				<a href="/searchAd"><span class="fa fa-search fa-2x"></span></a>
 			</div>
     </div>
   </div>

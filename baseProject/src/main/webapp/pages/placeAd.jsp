@@ -357,44 +357,48 @@
 				</div> <%-- .form.form-search END --%>
 			</div> <%-- .span-half END --%>
 
-			<div class="span-half">
-				<h3 class="edit-section-title">
-					Drop images here...
-					<span>
-						Drag and drop images onto the window.<br>
-						You can remove an image by double clicking it.
-					</span>
-				</h3>
-				<div class="row">
-					<div class="tile tile-full action-dropzone">
-						<div id="image-preview"></div>
+			<div class="span-half page-max-height">
+				<div class="container-scroll">
+					<h3 class="edit-section-title">
+						Drop images here...
+						<span>
+							Drag and drop images onto the window.<br>
+							You can remove an image by double clicking it.
+						</span>
+					</h3>
+					<div class="row">
+						<div class="tile tile-full action-dropzone">
+							<div id="image-preview"></div>
+						</div>
 					</div>
-				</div>
 
-				<h3 class="edit-section-title">
-					Your viewing times...
-					<span>
-						Add viewing times from the panel to your left at the bottom of the
-						form. You can remove a viewing time by double clicking the corresponding
-						<i class="fa fa-times base-color-opposite"></i>.
-				</h3>
-				<div class="row">
-					<div class="tile tile-full action-viewing-delete">
-						<div id="viewing-preview"></div>
+					<h3 class="edit-section-title">
+						Your viewing times...
+						<span>
+							Add viewing times from the panel to your left at the bottom of the
+							form. You can remove a viewing time by double clicking the corresponding
+							<i class="fa fa-times base-color-opposite"></i>.
+					</h3>
+					<div class="row">
+						<div class="tile tile-full action-viewing-delete">
+							<div id="viewing-preview"></div>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="tile tile-half">
+					<div class="row">
+						<div class="tile tile-half">
 
+						</div>
 					</div>
-				</div>
-			</div>
+
+				</div> <%-- .container-scroll END --%>
+			</div> <%-- .span-half END --%>
 
 		</div> <%-- .row END --%>
 	</div> <%-- .container END --%>
 
 </main>
 
+<%-- <c:import url="template/footer.jsp" /> --%>
 <c:import url="template/~bottom.jsp">
 	<c:param name="js" value="placeAd" />
 </c:import>

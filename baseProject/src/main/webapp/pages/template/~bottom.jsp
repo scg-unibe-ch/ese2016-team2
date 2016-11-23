@@ -28,7 +28,72 @@
 				]);
 			},
 
+			register: function () {
+				/**
+		     * Initiate autocompletion for localities
+		     */
+		    $("#city").autocomplete({
+		      minLength : 2,
+		      enabled : true,
+		      autoFocus : true,
+		      source : $.flatfindr.ZIP_CODES
+		    });
+			},
+
+			alerts: function () {
+
+				function deleteAlert(button) {
+					var id = $(button).attr("data-id");
+					$.get("/profile/alerts/deleteAlert?id=" + id, function(){
+						$("#alertsDiv").load(document.URL + " #alertsDiv");
+					});
+				}
+
+				$(document).ready(function() {
+					$("#city").autocomplete({
+						minLength : 2
+					});
+					$("#city").autocomplete({
+						source : <c:import url="getzipcodes.jsp" />
+					});
+					$("#city").autocomplete("option", {
+						enabled : true,
+						autoFocus : true
+					});
+
+					var price = document.getElementById('priceInput');
+					var radius = document.getElementById('radiusInput');
+
+					if(price.value == null || price.value == "" || price.value == "0")
+						price.value = "500";
+					if(radius.value == null || radius.value == "" || radius.value == "0")
+						radius.value = "5";
+				});
+
+			},
+
+			updatedProfile: function () {
+				return;
+			},
+
 			myRooms: function () {
+				$('.list-delete-link').on('click touch', function (e) {
+					e.preventDefault();
+
+					$(this)
+						.parents('.row').first()
+						.find('.deletion-confirm')
+						.toggleClass('js-confirm');
+				});
+
+				$('.action-cancel').on('click touch', function(e) {
+					e.preventDefault();
+
+					$(this)
+						.parents('.deletion-confirm')
+						.removeClass('js-confirm');
+				});
+
 				return $.flatfindr.add([
 					'search'
 				]);
@@ -41,6 +106,22 @@
 						'search',
 						'message'
 					]);
+			},
+
+			editProfile: function () {
+				$("#about-me").val("${currentUser.aboutMe}");
+				$('#field-pictures').fileupload({
+					url : '/profile/editProfile/uploadPictures',
+					dataType : 'json',
+					acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
+				}).bind('fileuploaddone', function (e, data) {
+					var
+	          files = $.parseJSON(data.result).files,
+	          path = files[0].url;
+
+						$('#picture').val(path);
+						$('#profile-picture').attr('src', path);
+				});
 			},
 
 			index: function () {
@@ -71,6 +152,10 @@
 						'place',
 						'imageUpload'
 					]);
+			},
+
+			editAd: function () {
+				return js.placeAd();
 			},
 
 			placeAuction: function () {

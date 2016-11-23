@@ -18,6 +18,8 @@ public class EditProfileForm {
 	private String lastName;
 	
 	private String aboutMe;
+	
+	private String imagePath;
 
 	/**
 	* 	Getter and setter methods of
@@ -61,6 +63,14 @@ public class EditProfileForm {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 
 }

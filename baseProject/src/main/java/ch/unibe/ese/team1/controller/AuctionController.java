@@ -18,6 +18,14 @@ import ch.unibe.ese.team1.controller.service.MessageService;
 import ch.unibe.ese.team1.controller.service.VisitService;
 import ch.unibe.ese.team1.model.Auction;
 
+/**
+ * @Jerome
+ * Add these imports for basic search functionality.
+ */
+import org.springframework.web.bind.annotation.ModelAttribute;
+import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
+
+
 @Controller
 public class AuctionController {
 
@@ -35,6 +43,14 @@ public class AuctionController {
 
 	@Autowired
 	private VisitService visitService;
+
+
+	/**
+	 * @Jerome Add these properties for basic search functionality.
+	 */
+	private SearchForm searchForm;
+
+	
 
 	/** Gets the auction description page for the auction with the given id. */
 	@RequestMapping(value = "/auction", method = RequestMethod.GET)
@@ -68,5 +84,17 @@ public class AuctionController {
 			messageService.saveFrom(messageForm);
 		}
 		return model;
+	}
+
+
+	/**
+	 * @Jerome Add this attribute for basic search functionality.
+	 */
+	@ModelAttribute
+	public SearchForm getSearchForm() {
+		if (searchForm == null) {
+			searchForm = new SearchForm();
+		}
+		return searchForm;
 	}
 }
