@@ -1,65 +1,18 @@
 <%@page import="ch.unibe.ese.team1.model.Ad"%>
-<%@ page language="java" pageEncoding="UTF-8"
-	contentType="text/html;charset=utf-8"%>
+<%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
-<!-- check if user is logged in -->
+
+<%-- check if user is logged in --%>
 <security:authorize var="loggedIn" url="/profile" />
 
-<c:import url="template/header.jsp" />
 
-
-<pre><a href="/">Home</a>   &gt;   <a href="/profile/myRooms">My Rooms</a>   &gt;   Auction Description</pre>
-
-<script src="/js/image_slider.js"></script>
-<script src="/js/adDescription.js"></script>
-
-<script>
-	$(document).ready(function() {
-		$("#newMsg").click(function() {
-			$("#content").children().animate({
-				opacity : 0.4
-			}, 300, function() {
-				$("#msgDiv").css("display", "block");
-				$("#msgDiv").css("opacity", "1");
-			});
-		});
-
-		$("#messageCancel").click(function() {
-			$("#msgDiv").css("display", "none");
-			$("#msgDiv").css("opacity", "0");
-			$("#content").children().animate({
-				opacity : 1
-			}, 300);
-		});
-
-		$("#messageSend").click(function() {
-			if ($("#msgSubject").val() != "" && $("#msgTextarea").val() != "") {
-				var subject = $("#msgSubject").val();
-				var text = $("#msgTextarea").val();
-				var recipientEmail = "${shownAuction.user.username}";
-				$.post("profile/messages/sendMessage", {
-					subject : subject,
-					text : text,
-					recipientEmail : recipientEmail
-				}, function() {
-					$("#msgDiv").css("display", "none");
-					$("#msgDiv").css("opacity", "0");
-					$("#msgSubject").val("");
-					$("#msgTextarea").val("");
-					$("#content").children().animate({
-						opacity : 1
-					}, 300);
-				})
-			}
-		});
-	});
-</script>
+<c:import url="template/~top.jsp" />
+<c:import url="template/~header.jsp" />
 
 <!-- format the dates -->
 <fmt:formatDate value="${shownAuction.moveInDate}"
@@ -68,278 +21,399 @@
 	var="formattedCreationDate" type="date" pattern="dd.MM.yyyy" />
 
 
-<h1 id="shownAdTitle">${shownAuction.title}</h1>
+<div class="container sidebar">
+	<div class="row">
+		<div class="tile tile-full">
 
-<section>
+			<div class="action action-icon action-sidebar">
+				<span id="js-sidebar-icon" class="fa fa-info fa-2x"></span>
+			</div>
 
-	<table id="adDescTable" class="adDescDiv">
-		<tr>
-			<td><h2>Type</h2></td>
-			<td>${shownAuction.roomType}</td>
-		</tr>
-
-		<tr>
-			<td><h2>Address</h2></td>
-			<td><a class="link"
-				href="http://maps.google.com/?q=${shownAuction.street}, ${shownAuction.zipcode}, ${shownAuction.city}">${shownAuction.street},
-					${shownAuction.zipcode} ${shownAuction.city}</a></td>
-		</tr>
-
-		<tr>
-			<td><h2>Available from</h2></td>
-			<td>${formattedMoveInDate}</td>
-		</tr>
-
-		<tr>
-			<td><h2>Square Meters</h2></td>
-			<td>${shownAuction.squareFootage}&#32;m²</td>
-		</tr>
-		<tr>
-			<td><h2>Auction created on</h2></td>
-			<td>${formattedCreationDate}</td>
-		</tr>
-		<tr>
-			<td><h2>Auction end-date</h2></td>
-			<td>${shownAuction.endTime}</td>
-		</tr>
-	</table>
-</section>
-
-<div id="image-slider">
-	<div id="left-arrow">
-		<img src="/img/left-arrow.png" />
+		</div>
 	</div>
-	<div id="images">
-		<c:forEach items="${shownAuction.pictures}" var="picture">
-			<img src="${picture.filePath}" />
-		</c:forEach>
-	</div>
-	<div id="right-arrow">
-		<img src="/img/right-arrow.png" />
-	</div>
-</div>
 
-<hr class="clearBoth" />
+	<div class="row">
 
-<section>
-	<table id="adDescTable" class="adDescDiv">
 		<c:choose>
-			<c:when test="${empty shownAuction.bidderName}">
-				<tr>
-					<td><h2>Minimal bid prize:</h2></td>
-					<td>${shownAuction.prize}&#32;CHF</td>
-				</tr>
-				<td><c:choose>
-						<c:when test="${loggedIn}">
-							<c:if test="${loggedInUserEmail != shownAuction.user.username}">
-								<a
-									href="<c:url value='/auction/placeBid?id=${shownAuction.id}' />">
-									<button type="button">Place new bid</button>
-								</a>
-							</c:if>
-						</c:when>
-						<c:otherwise>
-							<a href="/login"><button class="thinInactiveButton"
-									type="button">Login to place new bid</button></a>
-						</c:otherwise>
-					</c:choose></td>
+			<c:when test="${loggedIn}">
+
+				<div class="tile tile-half action action-tile">
+					<a href="/user?id=${shownAuction.user.id}">Visit profile</a>
+				</div>
+
+				<div class="tile tile-half action action-tile">
+					<c:if test="${loggedInUserEmail != shownAuction.user.username }">
+						<button id="newMsg" type="button">Contact Advertiser</button>
+					</c:if>
+					<c:if test="${loggedInUserEmail == shownAuction.user.username }">
+						<%-- <a href="<c:url value='/profile/editAd?id=${shownAuction.id}' />">Edit auction</a> --%>
+					</c:if>
+				</div>
+
 			</c:when>
 			<c:otherwise>
-				<tr>
-					<td><h2>Highest bid:</h2></td>
-					<td>${shownAuction.prize}&#32;CHF</td>
-				</tr>
-				<tr>
-					<td><c:choose>
-							<c:when test="${loggedIn}">
-								<c:choose>
-									<c:when
-										test="${loggedInUserEmail != shownAuction.user.username}">
-										<a
-											href="<c:url value='/auction/placeBid?id=${shownAuction.id}' />">
-											<button type="button">Place new bid</button>
-										</a>
-									</c:when>
-									<c:otherwise>
-									By: ${shownAuction.bidderName}
-								</c:otherwise>
-								</c:choose>
-							</c:when>
-							<c:otherwise>
-								<a href="/login"><button class="thinInactiveButton"
-										type="button">Login to place new bid</button></a>
-							</c:otherwise>
-						</c:choose></td>
-				</tr>
+
+				<div class="tile tile-half action action-tile action-medium">
+					<a href="/login">Sign in to see profile</a>
+				</div>
+
+				<div class="tile tile-half action action-tile action-medium">
+					<a href="/login">Sign in to reach vendor</a>
+				</div>
+
 			</c:otherwise>
 		</c:choose>
-	</table>
-</section>
-<br />
 
-<hr class="clearBoth" />
-
-<section>
-	<div id="descriptionTexts">
-		<div class="adDescDiv">
-			<h2>Room Description</h2>
-			<p>${shownAuction.roomDescription}</p>
-		</div>
-		<br />
-		<div class="adDescDiv">
-			<h2>Preferences</h2>
-			<p>${shownAuction.preferences}</p>
-		</div>
-		<br />
-		<div id="visitList" class="adDescDiv">
-			<h2>Visiting times</h2>
-			<table>
-				<c:forEach items="${visits }" var="visit">
-					<tr>
-						<td><fmt:formatDate value="${visit.startTimestamp}"
-								pattern="dd-MM-yyyy " /> &nbsp; from <fmt:formatDate
-								value="${visit.startTimestamp}" pattern=" HH:mm " /> until <fmt:formatDate
-								value="${visit.endTimestamp}" pattern=" HH:mm" /></td>
-						<td><c:choose>
-								<c:when test="${loggedIn}">
-									<c:if test="${loggedInUserEmail != shownAuction.user.username}">
-										<button class="thinButton" type="button" data-id="${visit.id}">Send
-											enquiry to advertiser</button>
-									</c:if>
-								</c:when>
-								<c:otherwise>
-									<a href="/login"><button class="thinInactiveButton"
-											type="button" data-id="${visit.id}">Login to send
-											enquiries</button></a>
-								</c:otherwise>
-							</c:choose></td>
-					</tr>
-				</c:forEach>
-			</table>
-		</div>
-		<br />
 	</div>
 
+	<div class="row">
+		<div class="tile tile-full">
+			<form class="form form-message">
+				<input type="text" id="msgSubject" placeholder="Subject *" />
+				<textarea id="msgTextarea" placeholder="Message"></textarea>
+
+				<div class="row">
+					<div class="tile tile-half">
+						<button class="submit-state-before" type="button" id="messageSend">
+							<span class="submit-before">Send</span>
+							<span class="submit-after">Delivered</span>
+							<span class="fa fa-circle-o-notch fa-spin fa-fw submitting"></span>
+							<span class="sr-only">Sending...</span>
+						</button>
+					</div>
+					<div class="tile tile-half">
+						<button type="reset" id="messageCancel">Cancel</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<%--
+	@Jerome
+	TODO: Ask if needed.
+	<div id="confirmationDialog">
+		<form>
+		<p>Send enquiry to advertiser?</p>
+		<button type="button" id="confirmationDialogSend">Send</button>
+		<button type="button" id="confirmationDialogCancel">Cancel</button>
+		</form>
+	</div> --%>
+
+	<div class="row">
+		<div class="tile tile-three-quarter">
+			<h2>${shownAuction.title}</h2>
+		</div>
+		<div class="tile tile-quarter action action-tile action-icon">
+			<c:choose>
+				<c:when test="${loggedIn}">
+					<c:if test="${loggedInUserEmail != shownAuction.user.username }">
+						<a class="right" id="bookmarkButton" title="Bookmark property">
+							<span class="fa fa-bookmark fa-2x action-inactive-color"></span>
+						</a>
+					</c:if>
+				</c:when>
+			</c:choose>
+		</div>
+	</div>
+
+	<div class="container-scroll">
+
+		<div class="row">
+			<div class="tile tile-full">
+				<table>
+					<tr>
+						<td>Type</td>
+						<td>${shownAuction.roomType}</td>
+					</tr>
+
+					<tr>
+						<td>Address</td>
+						<td>
+							<a target="_blank" href="http://maps.google.com/?q=${shownAuction.street}, ${shownAuction.zipcode}, ${shownAuction.city}">${shownAuction.street},
+									${shownAuction.zipcode} ${shownAuction.city}</a>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Available from</td>
+						<td>${formattedMoveInDate}</td>
+					</tr>
+
+					<tr>
+						<td>Move-out Date</td>
+						<td>${formattedMoveOutDate}</td>
+					</tr>
+
+					<tr>
+						<td>Monthly Rent</td>
+						<td>${shownAuction.prize}&#32;CHF</td>
+					</tr>
+
+					<tr>
+						<td>Square Meters</td>
+						<td>${shownAuction.squareFootage}&#32;m²</td>
+					</tr>
+					<tr>
+						<td>Ad created on</td>
+						<td>${formattedCreationDate}</td>
+					</tr>
+				<%-- </table>
+
+				<table> --%>
+					<tr>
+						<td>Smoking inside allowed</td>
+						<td>
+							<c:choose>
+								<c:when test="${shownAuction.smokers}"><span class="fa fa-plus base-color"></span></c:when>
+								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Animals allowed</td>
+						<td>
+							<c:choose>
+								<c:when test="${shownAuction.animals}"><span class="fa fa-plus base-color"></span></c:when>
+								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Furnished Room</td>
+						<td>
+							<c:choose>
+								<c:when test="${shownAuction.furnished}"><span class="fa fa-plus base-color"></span></c:when>
+								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+
+					<tr>
+						<td>WiFi available</td>
+						<td>
+							<c:choose>
+								<c:when test="${shownAuction.internet}"><span class="fa fa-plus base-color"></span></c:when>
+								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Cable TV</td>
+						<td>
+							<c:choose>
+								<c:when test="${shownAuction.cable}"><span class="fa fa-plus base-color"></span></c:when>
+								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Garage</td>
+						<td>
+							<c:choose>
+								<c:when test="${shownAuction.garage}"><span class="fa fa-plus base-color"></span></c:when>
+								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Cellar</td>
+						<td>
+							<c:choose>
+								<c:when test="${shownAuction.cellar}"><span class="fa fa-plus base-color"></span></c:when>
+								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Balcony</td>
+						<td>
+							<c:choose>
+								<c:when test="${shownAuction.balcony}"><span class="fa fa-plus base-color"></span></c:when>
+								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Garden</td>
+						<td>
+							<c:choose>
+								<c:when test="${shownAuction.garden}"><span class="fa fa-plus base-color"></span></c:when>
+								<c:otherwise><span class="fa fa-minus base-color-opposite"></span></c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+
+				</table>
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="tile tile-full">
+				<table id="adDescTable" class="adDescDiv">
+					<c:choose>
+						<c:when test="${empty shownAuction.bidderName}">
+							<tr>
+								<td><h2>Minimal bid prize:</h2></td>
+								<td>${shownAuction.prize}&#32;CHF</td>
+							</tr>
+							<td><c:choose>
+									<c:when test="${loggedIn}">
+										<c:if test="${loggedInUserEmail != shownAuction.user.username}">
+											<a
+												href="<c:url value='/auction/placeBid?id=${shownAuction.id}' />">
+												<button type="button">Place new bid</button>
+											</a>
+										</c:if>
+									</c:when>
+									<c:otherwise>
+										<a href="/login"><button class="thinInactiveButton"
+												type="button">Login to place new bid</button></a>
+									</c:otherwise>
+								</c:choose></td>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td><h2>Highest bid:</h2></td>
+								<td>${shownAuction.prize}&#32;CHF</td>
+							</tr>
+							<tr>
+								<td><c:choose>
+										<c:when test="${loggedIn}">
+											<c:choose>
+												<c:when
+													test="${loggedInUserEmail != shownAuction.user.username}">
+													<a
+														href="<c:url value='/auction/placeBid?id=${shownAuction.id}' />">
+														<button type="button">Place new bid</button>
+													</a>
+												</c:when>
+												<c:otherwise>
+												By: ${shownAuction.bidderName}
+											</c:otherwise>
+											</c:choose>
+										</c:when>
+										<c:otherwise>
+											<a href="/login"><button class="thinInactiveButton"
+													type="button">Login to place new bid</button></a>
+										</c:otherwise>
+									</c:choose></td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+				</table>
+			</div>
+		</div>
 
 
-	<table id="checkBoxTable" class="adDescDiv">
-		<tr>
-			<td><h2>Smoking inside allowed</h2></td>
-			<td><c:choose>
-					<c:when test="${shownAuction.smokers}">
-						<img src="/img/check-mark.png">
-					</c:when>
-					<c:otherwise>
-						<img src="/img/check-mark-negative.png">
-					</c:otherwise>
-				</c:choose></td>
-		</tr>
+		<div class="row">
+			<div class="tile tile-full">
+				<h3>Description</h3>
+				<p>${shownAuction.roomDescription}</p>
+			</div>
+		</div>
 
-		<tr>
-			<td><h2>Animals allowed</h2></td>
-			<td><c:choose>
-					<c:when test="${shownAuction.animals}">
-						<img src="/img/check-mark.png">
-					</c:when>
-					<c:otherwise>
-						<img src="/img/check-mark-negative.png">
-					</c:otherwise>
-				</c:choose></td>
-		</tr>
+		<div class="row">
+			<div class="tile tile-full">
+				<h3>Preferences</h3>
+				<p>${shownAuction.preferences}</p>
+			</div>
+		</div>
 
-		<tr>
-			<td><h2>Furnished Room</h2></td>
-			<td><c:choose>
-					<c:when test="${shownAuction.furnished}">
-						<img src="/img/check-mark.png">
-					</c:when>
-					<c:otherwise>
-						<img src="/img/check-mark-negative.png">
-					</c:otherwise>
-				</c:choose></td>
-		</tr>
+		<div class="row">
+			<div class="tile tile-full">
 
-		<tr>
-			<td><h2>WiFi available</h2></td>
-			<td><c:choose>
-					<c:when test="${shownAuction.internet}">
-						<img src="/img/check-mark.png">
-					</c:when>
-					<c:otherwise>
-						<img src="/img/check-mark-negative.png">
-					</c:otherwise>
-				</c:choose></td>
-		</tr>
+				<c:if test="${loggedInUserEmail != shownAuction.user.username}">
+					<h3 class="row-h3">Viewing times</h3>
+				</c:if>
 
-		<tr>
-			<td><h2>Cable TV</h2></td>
-			<td><c:choose>
-					<c:when test="${shownAuction.cable}">
-						<img src="/img/check-mark.png">
-					</c:when>
-					<c:otherwise>
-						<img src="/img/check-mark-negative.png">
-					</c:otherwise>
-				</c:choose></td>
-		</tr>
+				<div class="row viewing-times">
+					<div class="tile tile-full action action-tile">
 
-		<tr>
-			<td><h2>Garage</h2></td>
-			<td><c:choose>
-					<c:when test="${shownAuction.garage}">
-						<img src="/img/check-mark.png">
-					</c:when>
-					<c:otherwise>
-						<img src="/img/check-mark-negative.png">
-					</c:otherwise>
-				</c:choose></td>
-		</tr>
+						<c:choose>
+							<c:when test="${loggedIn}">
+								<c:if test="${loggedInUserEmail != shownAuction.user.username}">
+									<c:forEach items="${visits}" var="visit">
+										<div class="row">
+											<div class="tile tile-full">
+												<button class="enquiry" type="button" data-id="${visit.id}">
+													<fmt:formatDate value="${visit.startTimestamp}" pattern="dd-MM-yyyy " />
+													&nbsp; from
+													<fmt:formatDate value="${visit.startTimestamp}" pattern=" HH:mm " />
+													until
+													<fmt:formatDate value="${visit.endTimestamp}" pattern=" HH:mm" />
+												</button>
+												<div class="row enquiry-confirm">
+													<div class="tile tile-half">
+														<button class="action-confirm">Confirm</button>
+													</div>
+													<div class="tile tile-half">
+														<button class="action-cancel">Cancel</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</c:forEach>
+								</c:if>
+							</c:when>
+							<c:otherwise>
 
-		<tr>
-			<td><h2>Cellar</h2></td>
-			<td><c:choose>
-					<c:when test="${shownAuction.cellar}">
-						<img src="/img/check-mark.png">
-					</c:when>
-					<c:otherwise>
-						<img src="/img/check-mark-negative.png">
-					</c:otherwise>
-				</c:choose></td>
-		</tr>
+								<a href="/login">Sign in to see viewing times</a>
 
-		<tr>
-			<td><h2>Balcony</h2></td>
-			<td><c:choose>
-					<c:when test="${shownAuction.balcony}">
-						<img src="/img/check-mark.png">
-					</c:when>
-					<c:otherwise>
-						<img src="/img/check-mark-negative.png">
-					</c:otherwise>
-				</c:choose></td>
-		</tr>
+							</c:otherwise>
+						</c:choose>
 
-		<tr>
-			<td><h2>Garden</h2></td>
-			<td><c:choose>
-					<c:when test="${shownAuction.garden}">
-						<img src="/img/check-mark.png">
-					</c:when>
-					<c:otherwise>
-						<img src="/img/check-mark-negative.png">
-					</c:otherwise>
-				</c:choose></td>
-		</tr>
+					</div>
+				</div>
 
-	</table>
-</section>
+			</div>
+		</div>
 
-<div class="clearBoth"></div>
-<br>
+	</div> <%-- .container-scroll END --%>
+
+</div>
+
+<main role="main">
+
+	<%--
+		@Jerome
+		For the outer div slider or blender may be chosen as class. It then does
+		what it says.
+	 --%>
+	<div class="slider slider-blender-full">
+		<ul class="slides">
+
+			<c:forEach items="${shownAuction.pictures}" var="picture">
+
+				<li class="slide" style="background-image: url(${picture.filePath})"></li>
+
+			</c:forEach>
+
+		</ul> <%-- .slides END --%>
+	</div> <%-- .[slider|blender] END --%>
+
+</main>
+
+<%-- <c:import url="template/~footer.jsp" /> --%>
+<c:import url="template/~bottom_shown_ad.jsp">
+	<c:param name="js" value="auctionDescription" />
+</c:import>
+
+
+
+<%--
 
 <table id="advertiserTable" class="adDescDiv">
 	<tr>
-		<td><h2>Advertiser</h2> <br /></td>
+	<td><h2>Advertiser</h2><br /></td>
 	</tr>
 
 	<tr>
@@ -354,56 +428,6 @@
 
 		<td>${shownAuction.user.username}</td>
 
-		<td id="advertiserEmail"><c:choose>
-				<c:when test="${loggedIn}">
-					<a href="/user?id=${shownAuction.user.id}"><button
-							type="button">Visit profile</button></a>
-				</c:when>
-				<c:otherwise>
-					<a href="/login"><button class="thinInactiveButton"
-							type="button">Login to visit profile</button></a>
-				</c:otherwise>
-			</c:choose>
-			
-			<td>
-			<form>
-				<c:choose>
-					<c:when test="${loggedIn}">
-						<c:if test="${loggedInUserEmail != shownAd.user.username }">
-							<button id="newMsg" type="button">Contact Advertiser</button>
-						</c:if>
-					</c:when>
-					<c:otherwise>
-						<a href="/login"><button class="thinInactiveButton" type="button">Login to contact advertiser</button></a>
-					</c:otherwise>
-				</c:choose>
-			</form>
-		</td>
 	</tr>
 </table>
-
-<div id="msgDiv">
-<form class="msgForm">
-	<h2>Contact the advertiser</h2>
-	<br>
-	<br>
-	<label>Subject: <span>*</span></label>
-	<input  class="msgInput" type="text" id="msgSubject" placeholder="Subject" />
-	<br><br>
-	<label>Message: </label>
-	<textarea id="msgTextarea" placeholder="Message" ></textarea>
-	<br/>
-	<button type="button" id="messageSend">Send</button>
-	<button type="button" id="messageCancel">Cancel</button>
-	</form>
-</div>
-
-<div id="confirmationDialog">
-	<form>
-		<p>Send enquiry to advertiser?</p>
-		<button type="button" id="confirmationDialogSend">Send</button>
-		<button type="button" id="confirmationDialogCancel">Cancel</button>
-	</form>
-</div>
-
-<c:import url="template/footer.jsp" />
+--%>
