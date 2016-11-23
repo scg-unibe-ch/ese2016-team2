@@ -40,6 +40,38 @@
 		    });
 			},
 
+			alerts: function () {
+
+				function deleteAlert(button) {
+					var id = $(button).attr("data-id");
+					$.get("/profile/alerts/deleteAlert?id=" + id, function(){
+						$("#alertsDiv").load(document.URL + " #alertsDiv");
+					});
+				}
+
+				$(document).ready(function() {
+					$("#city").autocomplete({
+						minLength : 2
+					});
+					$("#city").autocomplete({
+						source : <c:import url="getzipcodes.jsp" />
+					});
+					$("#city").autocomplete("option", {
+						enabled : true,
+						autoFocus : true
+					});
+
+					var price = document.getElementById('priceInput');
+					var radius = document.getElementById('radiusInput');
+
+					if(price.value == null || price.value == "" || price.value == "0")
+						price.value = "500";
+					if(radius.value == null || radius.value == "" || radius.value == "0")
+						radius.value = "5";
+				});
+
+			},
+
 			updatedProfile: function () {
 				return;
 			},
