@@ -437,7 +437,8 @@ $slip-height-medium: 73px;
 
 body.placeAd,
 body.placeAuction,
-body.editProfile {
+body.editProfile,
+body.editAd {
   .edit-section,
   .edit-section.js-show {
     border-bottom: 1px dotted lighten($base-color, 4%);

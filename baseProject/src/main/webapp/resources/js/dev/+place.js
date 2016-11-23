@@ -62,20 +62,37 @@ jQuery.flatfindr.register({
      dateFormat : 'dd-mm-yy'
     }).datepicker('setDate', null);
 
-    $("#moveInDate").datepicker({
-      altField: '#field-moveInDate',
-      dateFormat : 'dd-mm-yy'
-    }).datepicker('setDate', null);
+    if ($.flatfindr.PAGE_NAME === 'editAd') {
+      $("#moveInDate").datepicker({
+        altField: '#field-moveInDate',
+        dateFormat : 'dd-mm-yy'
+      });
 
-    $('#moveOutDate').datepicker({
-      altField: '#field-moveOutDate',
-      dateFormat : 'dd-mm-yy'
-    }).datepicker('setDate', null);
+      $('#moveOutDate').datepicker({
+        altField: '#field-moveOutDate',
+        dateFormat : 'dd-mm-yy'
+      });
 
-    $('#dp-endDate').datepicker({
-      altField: '#field-endDate',
-      dateFormat : 'dd-mm-yy'
-    }).datepicker('setDate', null);
+      $('#dp-endDate').datepicker({
+        altField: '#field-endDate',
+        dateFormat : 'dd-mm-yy'
+      });
+    } else {
+      $("#moveInDate").datepicker({
+        altField: '#field-moveInDate',
+        dateFormat : 'dd-mm-yy'
+      }).datepicker('setDate', null);
+
+      $('#moveOutDate').datepicker({
+        altField: '#field-moveOutDate',
+        dateFormat : 'dd-mm-yy'
+      }).datepicker('setDate', null);
+
+      $('#dp-endDate').datepicker({
+        altField: '#field-endDate',
+        dateFormat : 'dd-mm-yy'
+      }).datepicker('setDate', null);
+    }
 
 
 

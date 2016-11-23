@@ -89,13 +89,25 @@ jQuery.flatfindr.register({
       var
         $that = $(this),
         $parent = $that.parent(),
-        deleteUrl = $parent.attr('data-url');
+        deleteUrl, adId, pictureId;
 
-      $.post(
-        '/profile/'+ PAGE_NAME +'/deletePicture',
-        {url : deleteUrl}, function() {
-          $parent.remove();
+
+      if (PAGE_NAME === 'editAd') {
+        adId = $parent.attr('data-ad-id');
+        pictureId = $parent.attr('data-picture-id');
+        $.post(
+          "/profile/editAd/deletePictureFromAd",
+          {adId:adId, pictureId:pictureId}, function() {
+    			  $parent.remove();
+    		});
+      } else {
+        deleteUrl = $parent.attr('data-url');
+        $.post(
+          '/profile/'+ PAGE_NAME +'/deletePicture',
+          {url : deleteUrl}, function() {
+            $parent.remove();
         });
+      }
     }
 
 

@@ -106,6 +106,10 @@
 					]);
 			},
 
+			editAd: function () {
+				return js.placeAd();
+			},
+
 			placeAuction: function () {
 				return js.placeAd();
 			}
