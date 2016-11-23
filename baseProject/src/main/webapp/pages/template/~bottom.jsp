@@ -29,6 +29,23 @@
 			},
 
 			myRooms: function () {
+				$('.list-delete-link').on('click touch', function (e) {
+					e.preventDefault();
+
+					$(this)
+						.parents('.row').first()
+						.find('.deletion-confirm')
+						.toggleClass('js-confirm');
+				});
+
+				$('.action-cancel').on('click touch', function(e) {
+					e.preventDefault();
+
+					$(this)
+						.parents('.deletion-confirm')
+						.removeClass('js-confirm');
+				});
+
 				return $.flatfindr.add([
 					'search'
 				]);

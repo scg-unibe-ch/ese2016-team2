@@ -58,7 +58,6 @@
 																<a class="link" href="<c:url value='/ad?id=${ad.id}' />">
 																	${ad.title }
 																</a>
-																<a href="<c:url value='/deleteAd?id=${ad.id}' />">Delete</a>
 															</h2>
 															<h3>CHF ${ad.prize}</h3>
 														</div>
@@ -71,10 +70,36 @@
 															<p>${ad.street},${ad.zipcode} ${ad.city}</p>
 															<p>${ad.roomType}</p>
 
-															<fmt:formatDate value="${ad.moveInDate}"
-																var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
+															<div class="row">
+																<div class="tile tile-three-quarter">
+																	<fmt:formatDate value="${ad.moveInDate}"
+																		var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
 
-															<p>Move-in date: ${formattedMoveInDate }</p>
+																	<p>Move-in date: ${formattedMoveInDate }</p>
+																</div>
+																<div class="tile tile-quarter">
+																	<span
+																		title="Delete this ad. You will need to confirm your action."
+																		class="list-delete-link fa fa-times fa-2x base-color-opposite">
+																	</span>
+																</div>
+																<div class="tile tile-full">
+																	<div class="row deletion-confirm">
+																		<div class="tile tile-half action action-tile">
+																			<a
+																				href="<c:url value='/deleteAd?id=${ad.id}' />"
+																				class="action-confirm">
+																				Delete this ad
+																			</a>
+																		</div>
+																		<div class="tile tile-half action action-tile">
+																			<button class="action-cancel">Cancel</button>
+																		</div>
+																	</div>
+
+																</div>
+															</div>
+
 
 														</div>
 													</div>
