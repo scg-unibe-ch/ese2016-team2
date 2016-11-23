@@ -193,7 +193,7 @@ public class AuctionServiceTest {
 		results = toList(searchForm, true);
 		assertFalse(results.contains(auction3));
 		
-		searchForm.setCity("3315 - Bätterkinden");
+		searchForm.setCity("4242 - Laufen");
 		results = toList(searchForm, false);
 		assertFalse(results.contains(auction3));
 		
