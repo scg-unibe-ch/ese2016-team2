@@ -43,6 +43,22 @@
 					]);
 			},
 
+			editProfile: function () {
+				$("#about-me").val("${currentUser.aboutMe}");
+				$('#field-pictures').fileupload({
+					url : '/profile/editProfile/uploadPictures',
+					dataType : 'json',
+					acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
+				}).bind('fileuploaddone', function (e, data) {
+					var
+	          files = $.parseJSON(data.result).files,
+	          path = files[0].url;
+
+						$('#picture').val(path);
+						$('#profile-picture').attr('src', path);
+				});
+			},
+
 			index: function () {
 				return $.flatfindr.add([
 					'search',

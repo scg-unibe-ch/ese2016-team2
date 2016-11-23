@@ -58,6 +58,7 @@
 																<a class="link" href="<c:url value='/ad?id=${ad.id}' />">
 																	${ad.title }
 																</a>
+																<a href="<c:url value='/deleteAd?id=${ad.id}' />">Delete</a>
 															</h2>
 															<h3>CHF ${ad.prize}</h3>
 														</div>

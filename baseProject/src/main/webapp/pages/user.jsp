@@ -14,7 +14,7 @@
 
 <main role="main">
 	<c:import url="template/~top_bar.jsp">
-		<c:param name="instr" value="My public profile..." />
+		<c:param name="instr" value="Your public profile..." />
 	</c:import>
 
 	<div class="container container-pad">
