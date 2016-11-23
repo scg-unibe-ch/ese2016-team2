@@ -1,0 +1,107 @@
+// from _forms.scss
+// $slip-height-small: 57px;
+// $slip-height-medium: 73px;
+
+.list-max-height {
+  height: calc(100vh - 2 * #{$slip-height-small});
+
+  @include media($bq-medium) {
+    height: calc(100vh - 2 * #{$slip-height-medium});
+  }
+}
+
+
+.list-title,
+select.list-sort {
+  @include sidebar-select-pad;
+}
+
+.list-title {
+  text-align: center;
+  margin: 0;
+  line-height: 1;
+  border-bottom: 1px solid $whiff-of-gray;
+}
+
+select.list-sort {
+  margin-bottom: 0;
+
+  background-color: $whiff-of-gray;
+  color: $light-gray;
+
+  &:hover,
+  &:focus {
+    background-color: $whiff-of-gray;
+    color: $light-gray;
+  }
+}
+
+
+.resultAd,
+.resultPremiumAd {
+  //margin-bottom: $slip-height-small / 2;
+  border-bottom: 1px solid $whiff-of-gray;
+
+  @include media($bq-medium) {
+    //margin-bottom: $slip-height-medium / 2;
+  }
+}
+
+
+
+.resultPremiumAd {
+  a span {
+    color: $gold;
+  }
+}
+
+
+.list-image {
+  @include sidebar-slip-pad;
+  // @jerome: effing lazy i am.
+  padding-right: 0 !important;
+
+  .resultsDiv:not(.resultsDiv-small) & {
+    padding-left: 0 !important;
+  }
+}
+
+
+.list-image-link {
+  display: block;
+  width: 100%;
+  height: 3 * $slip-height-small;
+  background-position: center center;
+  background-repeat: none;
+  background-size: cover;
+
+  .resultsDiv-small & {
+    height: 1 * $slip-height-small;
+  }
+
+  @include media($bq-medium) {
+    height: 3 * $slip-height-medium;
+
+    .resultsDiv-small & {
+      height: 1 * $slip-height-medium;
+    }
+  }
+}
+
+
+.resultAd-text {
+  @include sidebar-slip-pad;
+
+  &.resultAd-details {
+    padding-top: 0;
+
+    p {
+      margin-bottom: .25em;
+    }
+  }
+}
+
+
+.resultsDiv-small {
+  font-size: 72%;
+}

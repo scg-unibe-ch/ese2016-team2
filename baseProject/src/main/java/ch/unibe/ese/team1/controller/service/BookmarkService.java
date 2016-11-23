@@ -55,4 +55,13 @@ public class BookmarkService {
 		userDao.save(user);
 	
 	}
+
+	public void delete(Ad ad) {
+		Iterable<User> userList = userDao.findAll();
+		for (User user: userList) {
+			if(user.getBookmarkedAds().contains(ad)) {
+				getBookmarkStatus(ad, true, user);
+			}
+		}
+	}
 }

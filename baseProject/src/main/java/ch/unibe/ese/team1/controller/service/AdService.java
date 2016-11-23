@@ -41,6 +41,12 @@ public class AdService {
 
 	@Autowired
 	private GeoDataService geoDataService;
+	
+	@Autowired
+	private VisitService visitService;
+	
+	@Autowired
+	private BookmarkService bookmarkService;
 
 	/**
 	 * Handles persisting a new ad to the database.
@@ -60,7 +66,6 @@ public class AdService {
 		/** general info values */
 		ad.setTitle(placeAdForm.getTitle());
 		ad.setStreet(placeAdForm.getStreet());
-		ad.setStudio(placeAdForm.getStudio());
 
 		ad.setRoomType(placeAdForm.getRoomType());
 		ad.setPrize(placeAdForm.getPrize());
@@ -207,7 +212,7 @@ public class AdService {
 	 * @return 	locatedResults	an Iterable of all search results
 	 */
 	@Transactional
-	public Iterable<Ad> queryResults(SearchForm searchForm) {
+	public Iterable<Ad> queryResults(SearchForm searchForm, boolean premium) {
 		Iterable<Ad> results = null;
 		// we use this method if we are looking for rooms AND studios AND houses
 		if (searchForm.getRoom() && searchForm.getStudio() && searchForm.getHouse()) {
@@ -241,11 +246,14 @@ public class AdService {
 		}
 
 		// filter out zipcodez
-		String city = searchForm.getCity().substring(7);
+		// @Jerome
+		// Lookup by zip instead of city name
+		//String city = searchForm.getCity().substring(7);
+		String zip = searchForm.getCity().substring(0, 4);
 
 		// get the location that the user searched for and take the one with the
 		// lowest zip code
-		Location searchedLocation = geoDataService.getLocationsByCity(city).get(0);
+		Location searchedLocation = geoDataService.getLocationsByZipcode(Integer.parseInt(zip)).get(0);
 
 		// create a list of the results and of their locations
 		List<Ad> locatedResults = new ArrayList<>();
@@ -395,7 +403,18 @@ public class AdService {
 					iterator.remove();
 			}
 		}
-		return locatedResults;
+		
+		Iterator<Ad> iterator = locatedResults.iterator();
+		List<Ad> finalResults = new ArrayList<>();
+		while (iterator.hasNext()) {
+			Ad ad = iterator.next();
+			User user = ad.getUser();
+			if (user.getAccount().equals("Premium") == premium){
+				finalResults.add(ad); 
+			}
+		}
+		
+		return finalResults;
 	}
 	
 	/**
@@ -471,5 +490,12 @@ public class AdService {
 			}
 		}
 		return false;
+	}
+
+	public void delete(long adId) {
+		Ad ad = adDao.findOne(adId);
+		visitService.delete(ad);
+		bookmarkService.delete(ad);
+		adDao.delete(ad);
 	}
 }

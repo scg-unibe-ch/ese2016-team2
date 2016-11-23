@@ -71,17 +71,6 @@
 <h1 id="shownAdTitle">${shownAuction.title}</h1>
 
 <section>
-	<c:choose>
-		<c:when test="${loggedIn}">
-			<c:if test="${loggedInUserEmail == shownAuction.user.username }">
-				<a
-					href="<c:url value='/profile/editAuction?id=${shownAuction.id}' />">
-					<button type="button">Edit Auction</button>
-				</a>
-			</c:if>
-		</c:when>
-	</c:choose>
-	<br> <br>
 
 	<table id="adDescTable" class="adDescDiv">
 		<tr>

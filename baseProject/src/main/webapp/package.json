@@ -1,6 +1,6 @@
 {
   "name": "flatfindr",
-  "version": "1.0.1",
+  "version": "2.1.1",
   "description": "web application for finding real estate",
   "main": "index.jsp",
   "scripts": {
@@ -18,5 +18,8 @@
   "homepage": "https://github.com/scg-unibe-ch/ese2016-team2#readme",
   "devDependencies": {
     "bower": "^1.7.9"
+  },
+  "dependencies": {
+    "jquery-latitude-longitude-picker-gmaps": "^1.1.0"
   }
 }

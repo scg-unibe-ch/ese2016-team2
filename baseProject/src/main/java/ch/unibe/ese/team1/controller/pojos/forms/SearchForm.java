@@ -5,6 +5,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import ch.unibe.ese.team1.model.dao.AdDao;
+
 /** This form is used for searching and filter for an ad. */
 public class SearchForm {
 
@@ -23,7 +25,7 @@ public class SearchForm {
 	private boolean cable;
 	private boolean garage;
 	private boolean internet;
-	
+
 	private String earliestMoveInDate;
 	private String latestMoveInDate;
 	private String earliestMoveOutDate;
@@ -32,20 +34,20 @@ public class SearchForm {
 	@AssertFalse(message = "Please select a sale type")
 	private boolean buyableNotFilled;
 	
-	@Pattern(regexp = "^[0-9]{4} - [-\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
+	@Pattern(regexp = "^[0-9]{4} - [-;\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
 	private String city;
-	
+
 	@NotNull(message = "Requires a number")
 	@Min(value = 0, message = "Please enter a positive distance")
 	private Integer radius;
-	
+
 	@NotNull(message = "Requires a number")
 	@Min(value = 0, message = "In your dreams.")
 	private Integer prize;
 
 	@AssertFalse(message = "Please select at least a type")
 	private boolean neither;
-	
+
 	/**
 	* 	Getter and setter methods of
 	* 	the attributes of a search
@@ -54,12 +56,13 @@ public class SearchForm {
 	public boolean getBuyable() {
 		return buyable;
 	}
-	
+
 	public void setBuyable(boolean buyable) {
 		this.buyable = buyable;
 	}
 
 	public String getCity() {
+
 		return city;
 	}
 
@@ -90,7 +93,7 @@ public class SearchForm {
 	public void setStudio(boolean studio) {
 		this.studio = studio;
 	}
-	
+
 	public boolean getRoom() {
 		return room;
 	}
@@ -98,11 +101,11 @@ public class SearchForm {
 	public void setRoom(boolean room) {
 		this.room = room;
 	}
-	
+
 	public boolean getHouse() {
 		return house;
 	}
-	
+
 	public void setHouse(boolean house) {
 		this.house = house;
 	}
@@ -114,11 +117,11 @@ public class SearchForm {
 	public void setNeither(boolean neither) {
 		this.neither = neither;
 	}
-	
+
 	public boolean getBuyableNotFilled() {
 		return buyableNotFilled;
 	}
-	
+
 	public void setBuyableNotFilled(boolean buyableNotFilled) {
 		this.buyableNotFilled = buyableNotFilled;
 	}

@@ -21,9 +21,33 @@
 }
 
 
+.container-scroll {
+  // @Jerome flex makes floats in rows with overflow hidden zero hight.
+  // Why did i set anyway?
+  // display: flex;
+  // flex-flow: column;
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  @include media($bq-large) {
+    overflow-y: auto;
+  }
+}
+
+
 
 .row {
   @include row();
+
+  &.fill-parent {
+    display: flex;
+  }
+
+  .fill-parent-child {
+    flex: 1;
+    height: auto;
+  }
 }
 
 
@@ -37,6 +61,15 @@
 }
 
 
+.span-third {
+  @include span-columns($grid-columns);
+
+  @include media($bq-large) {
+    @include span-columns(floor($grid-columns / 3));
+  }
+}
+
+
 
 .tile {
   display: block;
@@ -44,8 +77,19 @@
   margin: 0;
 }
 
+
+// @Jerome
+// TODO: Remove the tile prefix, it's useless.
 .tile-full {
   width: 100%;
+}
+
+.tile-three-quarter {
+  width: 75%;
+}
+
+.tile-two-thirds {
+  width: 66.66666%;
 }
 
 .tile-half {
@@ -54,4 +98,8 @@
 
 .tile-third {
   width: 33.33333%;
+}
+
+.tile-quarter {
+  width: 25%;
 }

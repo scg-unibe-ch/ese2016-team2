@@ -1,7 +1,7 @@
 /*
  * Neat
  */
-$max-width: 1200px !global;
+$max-width: 1400px !global;
 $grid-columns: 12 !global; // @Jerome: only use mod(2) = 0 values !!!
 //$gutter: 1.618em !global;
 //$column: 4.2358em !global;
@@ -15,7 +15,7 @@ $base-duration: 350ms !global;
 $white: #fefefe;
 $black: #121212;
 
-$is-this-even-gray: lighten($black, 96%);
+$is-this-even-gray: lighten($black, 92%);
 $whiff-of-gray: lighten($black, 88%);
 $slight-gray: lighten($black, 80%);
 $bright-gray: lighten($black, 64%);
@@ -40,7 +40,14 @@ $action-color-hover: $base-color-dark;
 $action-medium-color: $base-color-opposite;
 $action-medium-color-hover: $base-color-opposite-dark;
 
+$action-inactive-color: $slight-gray;
 
+
+
+
+$gold: #f1b10e;
+$slight-gold: lighten($gold, 24%);
+$dark-gold: darken($gold, 16%);
 
 /*
  * Pixel sizes
@@ -53,7 +60,7 @@ $huge:                64px;
 $giant:              128px;
 $astro:              256px;
 
-
+$preview-image-height: 128px;
 
 /*
  * Breakpoint sizes

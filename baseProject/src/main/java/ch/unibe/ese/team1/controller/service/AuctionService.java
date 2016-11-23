@@ -215,7 +215,7 @@ public class AuctionService {
 	 * @return an Iterable of all search results
 	 */
 	@Transactional
-	public Iterable<Auction> queryResults(SearchForm searchForm) {
+	public Iterable<Auction> queryResults(SearchForm searchForm, boolean premium) {
 		Iterable<Auction> results = null;
 		// we use this method if we are looking for rooms AND studios AND houses
 		if (searchForm.getRoom() && searchForm.getStudio() && searchForm.getHouse()) {
@@ -395,6 +395,16 @@ public class AuctionService {
 					iterator.remove();
 			}
 		}
+		
+		Iterator<Auction> iterator = locatedResults.iterator();
+		while (iterator.hasNext()) {
+			Auction ad = iterator.next();
+			User user = ad.getUser();
+			if (user.getAccount().equals("Premium") != premium){
+				iterator.remove(); 
+			}
+		}
+		
 		return locatedResults;
 	}
 

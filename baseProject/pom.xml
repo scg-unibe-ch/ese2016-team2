@@ -6,9 +6,19 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<dependencies>
 		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>javax.el-api</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>4.1.1.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.8.4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -114,9 +124,9 @@
 							<stopPort>9999</stopPort>
 							<useTestClasspath>true</useTestClasspath>
 							<contextPath>/</contextPath>
-						<webApp>
-							<tempDirectory>${basedir}/temp</tempDirectory>
-						</webApp>
+							<webApp>
+								<tempDirectory>${basedir}/temp</tempDirectory>
+							</webApp>
 						</configuration>
 						<executions>
 							<execution>
@@ -145,7 +155,7 @@
 						<configuration>
 							<source>1.8</source>
 							<target>1.8</target>
-							<encoding>ISO-8859-1</encoding>
+							<encoding>UTF-8</encoding>
 						</configuration>
 					</plugin>
 					<plugin>
@@ -213,21 +223,12 @@
 							</execution>
 						</executions>
 					</plugin>
-					<!-- <plugin>
-				    <groupId>org.apache.maven.plugins</groupId>
-				    <artifactId>maven-resources-plugin</artifactId>
-				    <version>2.7</version>
-				    <configuration>
-				      <nonFilteredFileExtensions>
-				        <nonFilteredFileExtension>woff</nonFilteredFileExtension>
-				        <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
-				        <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
-				        <nonFilteredFileExtension>eot</nonFilteredFileExtension>
-				        <nonFilteredFileExtension>swf</nonFilteredFileExtension>
-				        <nonFilteredFileExtension>ico</nonFilteredFileExtension>
-				      </nonFilteredFileExtensions>
-				    </configuration>
-				  </plugin> -->
+					<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-resources-plugin</artifactId>
+						<version>2.7</version> <configuration> <nonFilteredFileExtensions> <nonFilteredFileExtension>woff</nonFilteredFileExtension>
+						<nonFilteredFileExtension>ttf</nonFilteredFileExtension> <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+						<nonFilteredFileExtension>eot</nonFilteredFileExtension> <nonFilteredFileExtension>swf</nonFilteredFileExtension>
+						<nonFilteredFileExtension>ico</nonFilteredFileExtension> </nonFilteredFileExtensions>
+						</configuration> </plugin> -->
 				</plugins>
 			</build>
 		</profile>

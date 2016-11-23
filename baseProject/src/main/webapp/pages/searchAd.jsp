@@ -4,138 +4,267 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<c:import url="template/header.jsp" />
+<c:import url="template/~top.jsp" />
+<c:import url="template/~header_wo_search.jsp" />
 
-<pre><a href="/">Home</a>   &gt;   Search</pre>
+<main role="main">
+	<c:import url="template/~top_bar.jsp">
+		<c:param name="instr" value="Find..." />
+	</c:import>
 
-<script>
-function validateType(form)
-{
-	var room = document.getElementById('room');
-	var studio = document.getElementById('studio');
-	var house = document.getElementById('house');
-	var neither = document.getElementById('neither');
+	<div class="container">
 
-	neither.checked = false;
-	
-	if(!room.checked && !studio.checked && !house.checked) {
-		neither.checked = true;
-	}
-}
-</script>
+		<div class="row">
 
-<script>
-	$(document).ready(function() {
-		$("#city").autocomplete({
-			minLength : 2
-		});
-		$("#city").autocomplete({
-			source : <c:import url="getzipcodes.jsp" />
-		});
-		$("#city").autocomplete("option", {
-			enabled : true,
-			autoFocus : true
-		});
+			<div class="span-half">
+				<div class="form form-search form-max-height">
 
-		var price = document.getElementById('prizeInput');
-		var radius = document.getElementById('radiusInput');
-		
-		/**************************/
-		// Noetig?
-		/**************************/
-		//if(price.value == null || price.value == "" || price.value == "0")
-		//	price.value = "500";
-		//if(radius.value == null || radius.value == "" || radius.value == "0")
-		//	radius.value = "5";
-		
-		$("#field-earliestMoveInDate").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		$("#field-latestMoveInDate").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		$("#field-earliestMoveOutDate").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		$("#field-latestMoveOutDate").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-	});
-</script>
+					<form:form
+						method="post"
+						id="searchForm"
+						modelAttribute="searchForm"
+						action="/results"
+						autocomplete="off">
 
-<h1>Search for an ad</h1>
-<hr />
+						<div class="container-scroll">
 
-<form:form method="post" modelAttribute="searchForm" action="/results"
-	id="searchForm" autocomplete="off">
-	<fieldset>
-		<h2>Mandatory search criteria:</h2>
-		
-		<form:radiobutton name="buyable" id="buyable" path="buyable" value="0" /><label>Rent</label> 
-		<form:radiobutton name="buyable" id="buyable" path="buyable" value="1" /><label>Buy</label> <br />
-		
-		<form:checkbox name="room" id="room" path="room" /><label>Room</label>
-		<form:checkbox name="studio" id="studio" path="studio" /><label>Studio</label>
-		<form:checkbox name="house" id="house" path="house" /><label>House</label>
-		
-		<form:checkbox style="display:none" name="neither" id="neither" path="neither" />
-		<form:errors path="neither" cssClass="validationErrorText" /><br />
+							<form:input
+								type="text"
+								name="city"
+								id="city"
+								path="city"
+								placeholder="Find..."
+								tabindex="1"
+								value="" />
+							<form:errors path="city" cssClass="validationErrorText" />
 
-		<label for="city">City / zip code:</label>
-		<form:input type="text" name="city" id="city" path="city" placeholder="e.g. Bern" tabindex="3" />
-		<form:errors path="city" cssClass="validationErrorText" /><br/>
+							<div class="row checkboxes">
+								<div class="tile tile-half">
+									<form:radiobutton name="buyable" id="rent" path="buyable" value="0" />
+									<label for="rent">Rent</label>
+								</div>
+								<div class="tile tile-half">
+									<form:radiobutton name="buyable" id="buy" path="buyable" value="1" />
+									<label for="buy">Buy</label>
+								</div>
+							</div>
 
-		<label for="radius">Within radius of (max.):</label>
-		<form:input id="radiusInput" type="number" path="radius" placeholder="e.g. 5" step="5" /> km
-		<form:errors path="radius" cssClass="validationErrorText" /><br/> 
-		
-		<label for="prize">Price (max.):</label>
-		<form:input id="prizeInput" type="number" path="prize" placeholder="e.g. 5" step="50" /> CHF
-		<form:errors path="prize" cssClass="validationErrorText" /><br/>
 
-		<hr class="slim">
-		<h2>Optional search criteria:</h2>
-		<table style="width: 80%">
-			<tr>
-				<td><label for="earliestMoveInDate">Earliest move-in date</label></td>
-				<td><label for="earliestMoveOutDate">Earliest move-out date</label></td>
-			</tr>
-			<tr>
-				<td><form:input type="text" id="field-earliestMoveInDate" path="earliestMoveInDate" /></td>
-				<td><form:input type="text" id="field-earliestMoveOutDate" path="earliestMoveOutDate" /></td>
-			</tr>
-			<tr>
-				<td><label for="latestMoveInDate">Latest move-in date</label></td>
-				<td><label for="latestMoveOutDate">Latest move-out date</label></td>
-			</tr>
-			<tr>
-				<td><form:input type="text" id="field-latestMoveInDate" path="latestMoveInDate" /></td>
-				<td><form:input type="text" id="field-latestMoveOutDate" path="latestMoveOutDate" /></td>
-			</tr>
-			<tr>
-				<td><form:checkbox id="field-smoker" path="smokers" value="1" /><label>Smoking inside allowed</label></td>
-				<td><form:checkbox id="field-animals" path="animals" value="1" /><label>Animals inside allowed</label></td>
-			</tr>
-			<tr>
-				<td><form:checkbox id="field-garden" path="garden" value="1" /><label>Garden (co-use)</label></td>
-				<td><form:checkbox id="field-balcony" path="balcony" value="1" /><label>Balcony or Patio</label></td>
-			</tr>
-			<tr>
-				<td><form:checkbox id="field-cellar" path="cellar" value="1" /><label>Cellar or Attic</label></td>
-				<td><form:checkbox id="field-furnished" path="furnished" value="1" /><label>Furnished</label></td>
-			</tr>
-			<tr>
-				<td><form:checkbox id="field-cable" path="cable" value="1" /><label>Cable TV</label></td>
-				<td><form:checkbox id="field-garage" path="garage" value="1" /><label>Garage</label></td>
-			</tr>
-			<tr>
-				<td><form:checkbox id="field-internet" path="internet" value="1" /><label>WiFi</label></td>
-			</tr>
-		</table>
+							<form:input
+								id="radiusInput"
+								type="number"
+								path="radius"
+								placeholder="Radius in km (5, 10, 15,... , 500)"
+								tabindex="2"
+								step="5"
+								min="5"
+								max="500"
+								value="" />
+							<form:errors path="radius" cssClass="validationErrorText" />
 
-		<button type="submit" tabindex="7" onClick="validateType(this.form)">Search</button>
-		<button form="searchForm" type="reset" tabindex="8">Cancel</button>
-	</fieldset>
-</form:form>
 
-<c:import url="template/footer.jsp" />
+							<div class="row checkboxes">
+								<div class="tile tile-third">
+									<form:checkbox name="room" id="room" path="room" />
+									<label for="room">Room</label>
+								</div>
+								<div class="tile tile-third">
+									<form:checkbox name="studio" id="studio" path="studio" />
+									<label for="studio">Studio</label>
+								</div>
+								<div class="tile tile-third">
+									<form:checkbox name="house" id="house" path="house" />
+									<label for="house">House</label>
+								</div>
+							</div>
+
+
+							<form:checkbox style="display:none" name="neither" id="neither" path="neither" />
+							<form:errors path="neither" cssClass="validationErrorText" />
+
+
+							<form:input
+								id="prizeInput"
+								type="number"
+								path="prize"
+								placeholder="Maximum Price in CHF"
+								step="50"
+								tabindex="3"
+								min="50" />
+							<form:errors path="prize" cssClass="validationErrorText" />
+
+
+							<div class="row dates">
+	              <div class="tile tile-half">
+	                <div class="row">
+	                  <div class="tile tile-full">
+	                    <label>Earliest Move-in</label>
+	                  </div>
+	                  <div class="tile tile-full">
+	                    <form:input
+	                      class="js-has-label"
+	                      type="text"
+	                      id="field-earliestMoveInDate"
+	                      path="earliestMoveInDate"
+	                      tabindex="4"
+	                      placeholder="Choose from datepicker..." />
+	                  </div>
+	                </div>
+	              </div>
+	              <div class="tile tile-half">
+	                <div class="datepicker" id="earliestMoveInDate">
+
+	                </div>
+	              </div>
+	            </div>
+
+	            <div class="row dates">
+	              <div class="tile tile-half">
+	                <div class="row">
+	                  <div class="tile tile-full">
+	                    <label>Earliest Move-out</label>
+	                  </div>
+	                  <div class="tile tile-full">
+	                    <form:input
+	                      class="js-has-label"
+	                      type="text"
+	                      id="field-earliestMoveOutDate"
+	                      path="earliestMoveOutDate"
+	                      tabindex="5"
+	                      placeholder="Choose from datepicker..." />
+	                  </div>
+	                </div>
+	              </div>
+	              <div class="tile tile-half">
+	                <div class="datepicker" id="earliestMoveOutDate">
+
+	                </div>
+	              </div>
+	            </div>
+
+	            <div class="row dates">
+	              <div class="tile tile-half">
+	                <div class="row">
+	                  <div class="tile tile-full">
+	                    <label>Latest Move-in</label>
+	                  </div>
+	                  <div class="tile tile-full">
+	                    <form:input
+	                      class="js-has-label"
+	                      type="text"
+	                      id="field-latestMoveInDate"
+	                      path="latestMoveInDate"
+	                      tabindex="6"
+	                      placeholder="Choose from datepicker..." />
+	                  </div>
+	                </div>
+	              </div>
+	              <div class="tile tile-half">
+	                <div class="datepicker" id="latestMoveInDate">
+
+	                </div>
+	              </div>
+	            </div>
+
+	            <div class="row dates">
+	              <div class="tile tile-half">
+	                <div class="row">
+	                  <div class="tile tile-full">
+	                    <label>Latest Move-out</label>
+	                  </div>
+	                  <div class="tile tile-full">
+	                    <form:input
+	                      class="js-has-label"
+	                      type="text"
+	                      id="field-latestMoveOutDate"
+	                      path="latestMoveOutDate"
+	                      tabindex="7"
+	                      placeholder="Choose from datepicker..." />
+	                  </div>
+	                </div>
+	              </div>
+	              <div class="tile tile-half">
+	                <div class="datepicker" id="latestMoveOutDate">
+
+	                </div>
+	              </div>
+	            </div>
+
+
+
+	            <div class="row checkboxes">
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-smoker" path="smokers" value="1" />
+	                <label for="field-smoker">Smoking allowed</label>
+	              </div>
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-animals" path="animals" value="1" />
+	                <label for="field-animals">Animals allowed</label>
+	              </div>
+	            </div>
+
+	            <div class="row checkboxes">
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-balcony" path="balcony" value="1" />
+	                <label for="field-balcony">Balcony or Patio</label>
+	              </div>
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-garden" path="garden" value="1" />
+	                <label for="field-garden">Garden (co-use)</label>
+	              </div>
+	            </div>
+
+	            <div class="row checkboxes">
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-cellar" path="cellar" value="1" />
+	                <label for="field-cellar">Cellar or Attic</label>
+	              </div>
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-furnished" path="furnished" value="1" />
+	                <label for="field-furnished">Furnished</label>
+	              </div>
+	            </div>
+
+	            <div class="row checkboxes">
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-cable" path="cable" value="1" />
+	                <label for="field-cable">Cable TV</label>
+	              </div>
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-garage" path="garage" value="1" />
+	                <label for="field-garage">Garage</label>
+	              </div>
+	            </div>
+
+	            <div class="row checkboxes">
+	              <div class="tile tile-half">
+	                <form:checkbox id="field-internet" path="internet" value="1" />
+	                <label for="field-internet">WiFi</label>
+	              </div>
+	            </div>
+
+						</div> <%-- .container-scroll END --%>
+
+	          <div class="row">
+	            <div class="tile tile-half">
+	              <button type="submit" tabindex="8">Find</button>
+	            </div>
+	            <div class="tile tile-half">
+	    					<button form="searchForm" type="reset">Clear</button>
+	            </div>
+	          </div>
+
+					</form:form>
+
+				</div> <%-- .form.form-search END --%>
+			</div> <%-- .span-half END --%>
+
+		</div> <%-- .row END --%>
+	</div> <%-- .container END --%>
+
+</main>
+
+<%-- <c:import url="template/~footer.jsp" /> --%>
+<c:import url="template/~bottom.jsp">
+	<c:param name="js" value="searchAd" />
+</c:import>

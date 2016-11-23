@@ -1,6 +1,22 @@
+// @Jerome
+// TODO: Calculate slip heights by variable client values if possible.
+$slip-height-small: 57px;
+$slip-height-medium: 73px;
+
+
+.form-max-height form {
+  height: calc(100vh - 2 * #{$slip-height-small - 1});
+
+  @include media($bq-medium) {
+    height: calc(100vh - 2 * #{$slip-height-medium - 1});
+  }
+}
+
+
 .form {
 
-  input {
+  input,
+  textarea {
     margin: 0;
     background-color: $white;
     border: none;
@@ -21,7 +37,9 @@
     &:hover {
       border-color: $whiff-of-gray;
     }
+  }
 
+  input {
     /*
      * @Jerome
      * Regarding [type=number], this a workaround for a ff bug which is
@@ -37,7 +55,8 @@
       }
     }
 
-    &[type=checkbox] {
+    &[type=checkbox],
+    &[type=radio] {
       display: none;
 
       ~ label {
@@ -65,9 +84,15 @@
 
 
 
+  textarea {
+    resize: none;
+  }
+
+
   button {
     &[type=submit],
-    &[type=reset] {
+    &[type=reset],
+    &[type=button] {
       display: block;
       width: 100%;
       background-color: $whiff-of-gray;
@@ -80,53 +105,282 @@
         background-color: $slight-gray;
       }
 
-      @include sidebar-button-pad;
+      @include sidebar-button-pad-reduc;
     }
   }
 
   .checkboxes {
     border-bottom: 1px solid $whiff-of-gray;
 
-    :last-child label {
+    :last-child:not(:only-of-type) label {
       border-right: none;
     }
   }
 }
 
+.dates, .times, .multi-select {
+  label {
+    margin-bottom: 0;
+    font-weight: normal;
+    color: $bright-gray;
+    cursor: pointer;
+  }
+}
 
 
-// @Jerome
-// TODO: Calculate slip heights by variable client values if possible.
-$slip-height-small: 56px;
-$slip-height-medium: 72px;
+.dates {
+  border-bottom: 1px solid $whiff-of-gray;
+
+  &.related {
+    border: none;
+  }
+
+  input {
+    border: none;
+  }
+
+  label {
+    @include sidebar-slip-pad-label;
+  }
+
+  .datepicker {
+    @include sidebar-slip-pad-half-vert;
+    font-size: $f-atom;
+
+    .ui-corner-all {
+      margin-right: 16px;
+      cursor: pointer;
+    }
+
+    th, td {
+      padding: 0.21em 0;
+    }
+  }
+}
+
+
+.times, .multi-select {
+  label {
+    @include sidebar-slip-pad;
+    text-align: center;
+  }
+
+  select {
+    margin-bottom: 0;
+    @include sidebar-select-pad;
+    background-color: $whiff-of-gray;
+    font-weight: normal;
+    color: $light-gray;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      background-color: $whiff-of-gray;
+      color: $light-gray;
+    }
+  }
+}
+
+
+.times, .multi-select {
+  display: flex;
+
+  .action-add {
+    display: table;
+    width: 100%;
+    height: 100%;
+    text-align: right;
+
+    span {
+      display: table-cell;
+      vertical-align: top;
+      padding-right: 24px;
+
+      background-color: transparent;
+      color: $base-color;
+
+      &:hover,
+      &:focus {
+        background-color: inherit;
+        color: $base-color;
+      }
+
+    }
+  }
+}
+
+.multi-select:last-child {
+  border-bottom: 1px solid $white;
+}
+
+
+.submit-after {
+  transition: none;
+}
+
+.submit-after {
+  opacity: 0;
+  font-size: 0;
+}
+
+.submit-before {
+  opacity: 1;
+  font-size: inherit;
+  transition:
+    opacity ($base-duration / 2) $base-timing,
+    font-size $base-duration $base-timing;
+}
+
+.submitting {
+  opacity: 0;
+  font-size: 0;
+}
+
+.submit-state-before {}
+
+.submit-state-after {
+  .submit-before {
+    opacity: 0;
+    font-size: 0;
+  }
+  .submit-after {
+    opacity: 1;
+    font-size: inherit;
+    transition:
+      opacity ($base-duration / 2) $base-timing,
+      font-size $base-duration $base-timing;
+  }
+}
+
+.submit-state-submitting {
+  .submit-before {
+    opacity: 0;
+    font-size: 0;
+    transition: none;
+  }
+  .submitting {
+    opacity: 1;
+    font-size: inherit;
+  }
+}
+
+
 
 .header-primary .form-search {
   height: $slip-height-small;
   overflow: hidden;
   transition: height $base-duration $base-timing;
 
-  @include media($bq-medium) {
-    height: $slip-height-medium;
+  .container-scroll {
+    height: (4 * $slip-height-small);
   }
 
+  @include media($bq-medium) {
+    height: $slip-height-medium;
 
-  &.js-show {
-    height: 286px;
-
-    @include media($bq-medium) {
-      height: 366px;
+    .container-scroll {
+      height: (4 * $slip-height-medium);
     }
   }
 
   [view].headerPrimarySearchIn &,
   [view].headerPrimarySearchOpen & {
-    height: 286px;
+    height: (6 * $slip-height-small - 1);
 
     @include media($bq-medium) {
-      height: 366px;
+      height: (6 * $slip-height-medium - 1);
     }
   }
 }
+
+
+
+.sidebar .form-message {
+  height: 0;
+  overflow: hidden;
+  transition: height $base-duration $base-timing;
+
+  [view].sidebarMessageIn &,
+  [view].sidebarMessageOpen & {
+    height: 292px;
+  }
+
+  textarea {
+    height: 145px;
+  }
+}
+
+
+
+.image-preview-wrap {
+  position: relative;
+  float: left;
+
+  img {
+    display: inline-block;
+    height: 100%;
+  }
+
+  .action-delete {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding-top: 48px;
+    padding-bottom: 48px;
+    text-align: center;
+    color: $base-color-opposite;
+    background-color: rgba(255, 99, 71, .38);
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity $base-duration $base-timing;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+
+.action-dropzone,
+.action-viewing-delete {
+  @include sidebar-slip-pad;
+
+  & > div {
+    padding: $small;
+    border: 1px dotted lighten($base-color, 4%);
+  }
+}
+
+.action-dropzone {
+  & > div  {
+    float: inherit;
+    width: 100%;
+    min-height: 2 * $preview-image-height;
+  }
+}
+
+
+.action-viewing-delete {
+  & > div {
+    margin-bottom: 16px;
+  }
+
+  span {
+    display: block;
+    margin: 5px 0 3px;
+    color: $base-color;
+
+    &.fa {
+      margin: 0;
+      text-align: right;
+      color: $base-color-opposite;
+      cursor: pointer;
+    }
+  }
+}
+
+
 
 
 
@@ -135,7 +389,7 @@ $slip-height-medium: 72px;
   z-index: 3;
   top: $slip-height-small + 1 !important;
   width: 100% !important;
-  height: (4 * ($slip-height-small + 1));
+  height: (5 * $slip-height-small) - 1;
   overflow: scroll;
   background-color: $white;
   transition:
@@ -143,9 +397,19 @@ $slip-height-medium: 72px;
     height $base-duration $base-timing,
     width $base-duration $base-timing;
 
+  // could be .wo-search +
+  .results &, .searchAd & {
+    top: 2 * $slip-height-small + 1 !important;
+  }
+
   @include media($bq-medium) {
     top: $slip-height-medium + 1 !important;
-    height: (4 * ($slip-height-medium + 1));
+    height: (5 * $slip-height-medium) - 1;
+
+    // could be .wo-search +
+    .results &, .searchAd & {
+      top: 2 * $slip-height-medium + 1 !important;
+    }
   }
 
   li {
@@ -159,7 +423,7 @@ $slip-height-medium: 72px;
     }
   }
 
-  @include media($bq-huge/2) {
+  @include media($bq-huge / 2) {
     width: 50% !important;
   }
 }
@@ -167,4 +431,60 @@ $slip-height-medium: 72px;
 .ui-helper-hidden-accessible {
   display: none !important;
   visibility: hidden !important;
+}
+
+
+
+body.placeAd,
+body.placeAuction {
+  .edit-section,
+  .edit-section.js-show {
+    border-bottom: 1px dotted lighten($base-color, 4%);
+  }
+
+  .edit-section-title {
+    @include sidebar-slip-pad;
+    padding-bottom: 11px !important;
+    margin: 0;
+    color: $base-color;
+
+    span {
+      display: block;
+      font-size: 16px;
+      margin-top: 8px;
+    }
+  }
+}
+
+
+#viewing-preview:empty::before {
+  color: $bright-gray;
+  font-weight: lighter;
+  content: "... no viewing time yet.";
+}
+
+#image-preview:empty::before {
+  color: $bright-gray;
+  font-weight: lighter;
+  content: "... no image yet.";
+}
+
+
+
+.fields-optional {
+  max-height: 0;
+  border-bottom-color: transparent;
+  transition: max-height $base-duration $base-timing;
+  overflow: hidden;
+
+  &.dates.js-show {
+    // @Jerome
+    // I have a slight feeling that max-height is not a good practice for this.
+    max-height: 4 * $slip-height-small;
+    border-bottom-color: $whiff-of-gray;
+
+    @include media($bq-medium) {
+      max-height: 4 * $slip-height-medium;
+    }
+  }
 }

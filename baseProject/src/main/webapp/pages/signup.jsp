@@ -4,78 +4,115 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<c:import url="template/header.jsp" />
+<c:import url="template/~top.jsp" />
+<c:import url="template/~header.jsp" />
 
-<script>
-	// Validate the email field
-	$(document).ready(function() {
-		$("#field-email").focusout(function() {
-			var text = $(this).val();
-			$.post("/signup/doesEmailExist", {email: text}, function(data){
-				if(data){
-					alert("This username is taken. Please choose another one!");
-					$("#field-email").val("");
-				}
-			});
-		});
-	});
-</script>
+<main role="main">
+	<c:import url="template/~top_bar.jsp">
+		<c:param name="instr" value="Sign up..." />
+	</c:import>
 
-<pre>
-	<a href="/">Home</a>   &gt;   Sign up</pre>
+	<div class="container">
+		<div class="row">
+			<div class="span-half">
 
-<h1>Sign up</h1>
-<form:form id="signupForm" method="post" modelAttribute="signupForm"
-	action="signup">
-	<fieldset>
-		<legend>Enter Your Information</legend>
+				<div class="row">
+			    <div class="tile tile-full">
+			      <div class="form form-search form-signup form-max-height">
 
-		<table>
+							<form:form
+								id="signupForm"
+								method="post"
+								modelAttribute="signupForm"
+								action="signup">
 
-			<tr>
-				<td class="signupDescription"><label for="field-firstName">First Name:</label></td>
-				<td><form:input path="firstName" id="field-firstName" /> <form:errors
-						path="firstName" cssClass="validationErrorText" /></td>
-			</tr>
+								<div class="container-scroll">
 
-			<tr>
-				<td class="signupDescription"><label for="field-lastName">Last Name:</label></td>
-				<td><form:input path="lastName" id="field-lastName" /> <form:errors
-						path="lastName" cssClass="validationErrorText" /></td>
-			</tr>
+									<form:input
+										path="firstName"
+										id="field-firstName"
+										placeholder="Firstname" />
+									<form:errors path="firstName" cssClass="validationErrorText" />
 
-			<tr>
-				<td class="signupDescription"><label for="field-password">Password:</label></td>
-				<td><form:input path="password" id="field-password"
-						type="password" /> <form:errors path="password"
-						cssClass="validationErrorText" /></td>
-			</tr>
+									<form:input
+										path="lastName"
+										id="field-lastName"
+										placeholder="Lastname" />
+									<form:errors path="lastName" cssClass="validationErrorText" /></td>
 
-			<tr>
-				<td class="signupDescription"><label for="field-email">Email:</label></td>
-				<td><form:input path="email" id="field-email" /> <form:errors
-						path="email" cssClass="validationErrorText" /></td>
-			</tr>
+									<form:input
+										path="password"
+										id="field-password"
+										type="password"
+										placeholder="Password" />
+									<form:errors path="password" cssClass="validationErrorText" />
 
-			<tr>
-				<td class="signupDescription"><label for="field-gender">Gender:</label></td>
-				<td><form:select path="gender">
-						<form:option value="FEMALE" label="Female" />
-						<form:option value="MALE" label="Male" />
-					</form:select></td>
-			</tr>
-			
-			<tr>
-				<td class="signupDescription"><label for="field-account">Account type:</label></td>
-				<td><form:select path="account">
-						<form:option value="Normal" label="Normal" />
-						<form:option value="Premium" label="Premium" />
-					</form:select></td>
-			</tr>
-		</table>
-		<br />
-		<button type="submit">Sign up</button>
-	</fieldset>
-</form:form>
+									<form:input
+										path="email"
+										id="field-email"
+										placeholder="Email" />
+									<form:errors path="email" cssClass="validationErrorText" /></td>
 
-<c:import url="template/footer.jsp" />
+
+									<%-- <div class="row checkboxes">
+			              <div class="tile tile-half">
+			                <form:radiobutton id="female" path="gender" value="FEMALE" />
+			                <label for="female">Female</label>
+			              </div>
+			              <div class="tile tile-half">
+			                <form:radiobutton id="male" path="gender" value="MALE" />
+			                <label for="male">Male</label>
+			              </div>
+			            </div> --%>
+
+									<div class="row multi-select">
+										<div class="tile tile-half">
+											<div class="row">
+												<div class="tile tile-full">
+													<label>Gender</label>
+												</div>
+												<div class="tile tile-full action action-tile">
+
+													<form:select path="gender">
+														<form:option value="FEMALE" label="Female" />
+														<form:option value="MALE" label="Male" />
+													</form:select>
+
+												</div>
+											</div>
+										</div>
+										<div class="tile tile-half">
+											<div class="row">
+												<div class="tile tile-full">
+													<label>Account Type</label>
+												</div>
+												<div class="tile tile-full action action-tile">
+
+													<form:select path="account">
+														<form:option value="Normal" label="Normal" />
+														<form:option value="Premium" label="Premium" />
+													</form:select></td>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div> <%-- .container-scroll END --%>
+
+								<button type="submit">Sign up</button>
+							</form:form>
+
+						</div> <%-- .form END --%>
+					</div> <%-- .tile.tile-full END --%>
+				</div> <%-- .row END --%>
+
+
+			</div> <%-- .span-half END --%>
+		</div> <%-- .row END --%>
+	</div> <%-- .container END --%>
+
+<%-- <c:import url="template/~footer.jsp" /> --%>
+<c:import url="template/~bottom.jsp">
+	<c:param name="js" value="signup" />
+</c:import>

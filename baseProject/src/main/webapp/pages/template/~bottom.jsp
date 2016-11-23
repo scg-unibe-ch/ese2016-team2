@@ -3,43 +3,100 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<%--
-  @Jerome
-  NB: Ideally, everything js should be put here into one file (per page if
-      reasonable).
-      This index.js file should log "yay." for testing purposes.
-
-      Heads up!
-      As i am using codekit (https://incident57.com/codekit/) for combining
-      js files, you either have to use it too or setup your own task flow.
-      Codekit is paid software, so, if you do not want to pay, you could use
-      grunt (http://gruntjs.com/) or gulp (http://gulpjs.com/). There is even
-      a java tool that handles that kind of stuff (i guess), called
-      dandelion (http://dandelion.github.io/). Please talk to me, if the latter
-      seems to be the best option for you.
---%>
-<script src="/resources/js/prod/index.js"></script>
+<script src="/resources/js/prod/${param.js}.js"></script>
 <script>
-	// @Jerome
-	// TODO: Clean the closet, dude.
-  +function (window, document, $) {
-    $("#city").autocomplete({
-      minLength : 2,
-			enabled : true,
-      autoFocus : true,
-			source : <c:import url="getzipcodes.jsp" />
-    });
 
-    var price = document.getElementById('prizeInput');
-    var radius = document.getElementById('radiusInput');
+	(function ($, pagename) {
 
-		// @Jerome
-		// TODO: Do this in a beforeSubmit handler.
-    // if(price.value == null || price.value == "" || price.value == "0")
-    //   price.value = "500";
-    // if(radius.value == null || radius.value == "" || radius.value == "0")
-    //   radius.value = "5";
-  }(window, document, jQuery);
+		var js = {
+			common: function () {
+				return $.flatfindr
+					.with({ ZIP_CODES: <c:import url="getzipcodes.jsp" /> })
+					.add(['header']);
+			},
+
+			login: function () {
+				return $.flatfindr.add([
+					'search'
+				]);
+			},
+
+			signup: function () {
+				return $.flatfindr.add([
+					'search',
+					'signup'
+				]);
+			},
+
+			myRooms: function () {
+				return $.flatfindr.add([
+					'search'
+				]);
+			},
+
+			user: function () {
+				return $.flatfindr
+					.with({ username: '${user.username}' })
+					.add([
+						'search',
+						'message'
+					]);
+			},
+
+			index: function () {
+				return $.flatfindr.add([
+					'search',
+					'sliderBlender',
+					'sliderBlenderCaption'
+				]);
+			},
+
+			searchAd: function () {
+				return $.flatfindr.add([
+					'search'
+				]);
+			},
+
+			results: function () {
+				return $.flatfindr.add([
+					'filter',
+					'map'
+				]);
+			},
+
+			placeAd: function () {
+				return $.flatfindr
+					.with({ PAGE_NAME: pagename })
+					.add([
+						'place',
+						'imageUpload'
+					]);
+			},
+
+			placeAuction: function () {
+				return js.placeAd();
+			}
+		};
+
+		js.common();
+		pagename in js && js[pagename]();
+
+	})(jQuery, '${param.js}');
 </script>
+
+<c:choose>
+    <c:when test="${param.map=='1'}">
+			<script
+				async
+				defer
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAh9mJhrCy-xTWy5b3Niop8QilZAdMh1To&callback=initMap">
+			</script>
+    </c:when>
+    <c:otherwise>
+    </c:otherwise>
+</c:choose>
+
+<script src="js/hotfix.js"></script>
+
 </body>
 </html>

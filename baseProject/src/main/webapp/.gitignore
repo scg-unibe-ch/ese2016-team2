@@ -1,11 +1,12 @@
 # webapp dir specific
 
 .sass-cache/
-resources/components
+resources/components/*/*
+!resources/components/font-awesome/fonts/*
 node_modules/
 
-**/prod/*.*
-!**/prod/.keep
+# **/prod/*.*
+# !**/prod/.keep
 
 config.codekit
 config.codekit3

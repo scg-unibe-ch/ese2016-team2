@@ -76,7 +76,6 @@ public class AdTestDataSaver {
 		adBern.setPrize(400);
 		adBern.setSquareFootage(50);
 		adBern.setRoomType("Room");
-		adBern.setStudio(false);
 		adBern.setSmokers(false);
 		adBern.setAnimals(true);
 		adBern.setRoomDescription(roomDescription1);
@@ -121,14 +120,13 @@ public class AdTestDataSaver {
 		adBern2.setPrize(700);
 		adBern2.setSquareFootage(60);
 		adBern2.setRoomType("Studio");
-		adBern2.setStudio(true);
 		adBern2.setSmokers(false);
 		adBern2.setAnimals(true);
 		adBern2.setRoomDescription(studioDescription2);
 		adBern2.setPreferences(roomPreferences2);
 		adBern2.setUser(ese);
 		adBern2.setTitle("Cheap studio in Bern!");
-		adBern2.setStreet("L�ngassstr. 40");
+		adBern2.setStreet("Längassstr. 40");
 		adBern2.setCity("Bern");
 		adBern2.setGarden(false);
 		adBern2.setBalcony(false);
@@ -165,7 +163,6 @@ public class AdTestDataSaver {
 		adBasel.setPrize(480);
 		adBasel.setSquareFootage(10);
 		adBasel.setRoomType("Studio");
-		adBasel.setStudio(true);
 		adBasel.setSmokers(true);
 		adBasel.setAnimals(false);
 		adBasel.setRoomDescription(studioDescription3);
@@ -204,7 +201,6 @@ public class AdTestDataSaver {
 		adOlten.setPrize(430);
 		adOlten.setSquareFootage(60);
 		adOlten.setRoomType("Room");
-		adOlten.setStudio(false);
 		adOlten.setSmokers(true);
 		adOlten.setAnimals(false);
 		adOlten.setRoomDescription(studioDescription4);
@@ -227,11 +223,11 @@ public class AdTestDataSaver {
 		adOlten.setPictures(pictures);
 		adDao.save(adOlten);
 
-		String studioDescription5 = "Studio meubl� au 3i�me �tage, comprenant"
-				+ "une kitchenette enti�rement �quip�e (frigo, plaques,"
-				+ "four et hotte), une pi�ce � vivre donnant sur un balcon,"
+		String studioDescription5 = "Studio meublé au 3iéme étage, comprenant"
+				+ "une kitchenette entiérement équipée (frigo, plaques,"
+				+ "four et hotte), une pièce à vivre donnant sur un balcon,"
 				+ "une salle de bains avec wc. Cave, buanderie et site satellite"
-				+ "� disposition.";
+				+ "à disposition.";
 		String roomPreferences5 = "tout le monde est bienvenu";
 
 		Ad adNeuchâtel = new Ad();
@@ -242,14 +238,13 @@ public class AdTestDataSaver {
 		adNeuchâtel.setPrize(410);
 		adNeuchâtel.setSquareFootage(40);
 		adNeuchâtel.setRoomType("Studio");
-		adNeuchâtel.setStudio(true);
 		adNeuchâtel.setSmokers(true);
 		adNeuchâtel.setAnimals(false);
 		adNeuchâtel.setRoomDescription(studioDescription5);
 		adNeuchâtel.setPreferences(roomPreferences5);
 		adNeuchâtel.setUser(bernerBaer);
-		adNeuchâtel.setTitle("Studio extr�mement bon march� � Neuchâtel");
-		adNeuchâtel.setStreet("Rue de l'H�pital 11");
+		adNeuchâtel.setTitle("Studio extrémement bon marché à Neuchâtel");
+		adNeuchâtel.setStreet("Rue de l'Hôpital 11");
 		adNeuchâtel.setCity("Neuchâtel");
 		adNeuchâtel.setGarden(true);
 		adNeuchâtel.setBalcony(false);
@@ -279,7 +274,6 @@ public class AdTestDataSaver {
 		adBiel.setPrize(480);
 		adBiel.setSquareFootage(10);
 		adBiel.setRoomType("Studio");
-		adBiel.setStudio(true);
 		adBiel.setSmokers(true);
 		adBiel.setAnimals(false);
 		adBiel.setRoomDescription(studioDescription6);
@@ -322,15 +316,14 @@ public class AdTestDataSaver {
 		adZurich.setPrize(480);
 		adZurich.setSquareFootage(32);
 		adZurich.setRoomType("Room");
-		adZurich.setStudio(false);
 		adZurich.setSmokers(false);
 		adZurich.setAnimals(false);
 		adZurich.setRoomDescription(roomDescription7);
 		adZurich.setPreferences(preferences7);
 		adZurich.setUser(oprah);
-		adZurich.setTitle("Roommate wanted in Z�rich");
+		adZurich.setTitle("Roommate wanted in Zürich");
 		adZurich.setStreet("Hauptstrasse 61");
-		adZurich.setCity("Z�rich");
+		adZurich.setCity("Zürich");
 		adZurich.setGarden(false);
 		adZurich.setBalcony(true);
 		adZurich.setCellar(false);
@@ -367,7 +360,6 @@ public class AdTestDataSaver {
 		adLuzern.setPrize(700);
 		adLuzern.setSquareFootage(60);
 		adLuzern.setRoomType("Studio");
-		adLuzern.setStudio(true);
 		adLuzern.setSmokers(false);
 		adLuzern.setAnimals(false);
 		adLuzern.setRoomDescription(studioDescription8);
@@ -410,7 +402,6 @@ public class AdTestDataSaver {
 		adAarau.setPrize(800);
 		adAarau.setSquareFootage(26);
 		adAarau.setRoomType("Studio");
-		adAarau.setStudio(true);
 		adAarau.setSmokers(true);
 		adAarau.setAnimals(false);
 		adAarau.setRoomDescription(studioDescription9);
@@ -452,7 +443,6 @@ public class AdTestDataSaver {
 		adDavos.setPrize(1100);
 		adDavos.setSquareFootage(74);
 		adDavos.setRoomType("Room");
-		adDavos.setStudio(false);
 		adDavos.setSmokers(true);
 		adDavos.setAnimals(false);
 		adDavos.setRoomDescription(studioDescription10);
@@ -475,11 +465,11 @@ public class AdTestDataSaver {
 		adDavos.setPictures(pictures);
 		adDao.save(adDavos);
 
-		String studioDescription11 = "Studio meubl� au 3i�me �tage, comprenant"
-				+ "une kitchenette enti�rement �qui�e (frigo, plaques,"
-				+ "four et hotte), une pi�ce à vivre donnant sur un balcon,"
+		String studioDescription11 = "Studio meublé au 3iéme étage, comprenant"
+				+ "une kitchenette entiérement équipée (frigo, plaques,"
+				+ "four et hotte), une pièce à vivre donnant sur un balcon,"
 				+ "une salle de bains avec wc. Cave, buanderie et site satellite"
-				+ "� disposition.";
+				+ "à disposition.";
 		String roomPreferences11 = "tout le monde est bienvenu";
 
 		Ad adLausanne = new Ad();
@@ -490,13 +480,12 @@ public class AdTestDataSaver {
 		adLausanne.setPrize(360);
 		adLausanne.setSquareFootage(8);
 		adLausanne.setRoomType("Room");
-		adLausanne.setStudio(false);
 		adLausanne.setSmokers(true);
 		adLausanne.setAnimals(false);
 		adLausanne.setRoomDescription(studioDescription11);
 		adLausanne.setPreferences(roomPreferences11);
 		adLausanne.setUser(oprah);
-		adLausanne.setTitle("Studio extr�mement bon march� � Lausanne");
+		adLausanne.setTitle("Studio extrémement bon marché à Lausanne");
 		adLausanne.setStreet("Rue de l'Eglise 26");
 		adLausanne.setCity("Lausanne");
 		adLausanne.setGarden(true);
@@ -526,7 +515,6 @@ public class AdTestDataSaver {
 		adLocarno.setPrize(960);
 		adLocarno.setSquareFootage(42);
 		adLocarno.setRoomType("Room");
-		adLocarno.setStudio(false);
 		adLocarno.setSmokers(true);
 		adLocarno.setAnimals(false);
 		adLocarno.setRoomDescription(studioDescription12);
