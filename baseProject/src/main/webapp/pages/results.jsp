@@ -489,7 +489,7 @@
 			</div> <%-- .span-half END --%>
 
 		</div> <%-- .row END --%>
-	</div> <%-- .container.container-pad END --%>
+	</div> <%-- .containerEND --%>
 
 </main>
 <script>

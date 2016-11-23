@@ -28,6 +28,22 @@
 				]);
 			},
 
+			register: function () {
+				/**
+		     * Initiate autocompletion for localities
+		     */
+		    $("#city").autocomplete({
+		      minLength : 2,
+		      enabled : true,
+		      autoFocus : true,
+		      source : $.flatfindr.ZIP_CODES
+		    });
+			},
+
+			updatedProfile: function () {
+				return;
+			},
+
 			myRooms: function () {
 				$('.list-delete-link').on('click touch', function (e) {
 					e.preventDefault();
