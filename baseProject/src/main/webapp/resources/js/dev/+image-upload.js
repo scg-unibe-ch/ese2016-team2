@@ -112,6 +112,8 @@ jQuery.flatfindr.register({
 
 
 
+
+
     /**
      *
      * @private
@@ -123,16 +125,17 @@ jQuery.flatfindr.register({
     function createPreviewElement(image) {
       if (image.url && image.name)
         _image = '<img src="'+ image.url +'" alt="'+ image.name +'" />';
-      else if (image.preview) {
+      else if (image.preview)
         _image = image.preview;
-      }
       else return;
+
       return $('<div data-url="'+ image.url +'"' +
                'style="height:'+ PREVIEW_HEIGHT +'px" ' +
                'class="image-preview-wrap">' +
                '<span title="Remove image by double clicking it." class="fa fa-times fa-2x action-delete"></span></div>')
                .append(_image);
     }
+
 
 
 
@@ -148,8 +151,9 @@ jQuery.flatfindr.register({
     		dataType: 'json',
     		acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
         disableImageResize: true,
-        previewMaxWidth: PREVIEW_WIDTH,
-        previewMaxHeight: PREVIEW_HEIGHT,
+        // Canvas not used, therefore not needed
+        // previewMaxWidth: PREVIEW_WIDTH,
+        // previewMaxHeight: PREVIEW_HEIGHT,
         previewCrop: false
 
     	}).bind('fileuploadprocessalways', function(e, data) {
@@ -165,12 +169,22 @@ jQuery.flatfindr.register({
 
         var
           files = $.parseJSON(data.result).files,
-          file = files[files.length-1];
+          file = files[files.length-1],
+          path;
 
+
+        if (PAGE_NAME === 'editAd') {
           $image_preview
             .prepend(createPreviewElement(file))
             .find('.action-delete')
             .on('dblclick', deleteImage);
+        } else {
+          path = file.url;
+
+          $('#picture').val(path);
+          $('#profile-picture').attr('src', path);
+        }
+
       });
 
       retrieveImages();

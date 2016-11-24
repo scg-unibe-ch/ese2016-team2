@@ -11,7 +11,10 @@
 		var js = {
 			common: function () {
 				return $.flatfindr
-					.with({ ZIP_CODES: <c:import url="getzipcodes.jsp" /> })
+					.with({
+						PAGE_NAME: pagename,
+						ZIP_CODES: <c:import url="getzipcodes.jsp" />
+					})
 					.add(['header']);
 			},
 
@@ -49,26 +52,30 @@
 					});
 				}
 
-				$(document).ready(function() {
-					$("#city").autocomplete({
-						minLength : 2
-					});
-					$("#city").autocomplete({
-						source : <c:import url="getzipcodes.jsp" />
-					});
-					$("#city").autocomplete("option", {
-						enabled : true,
-						autoFocus : true
-					});
+				// $(document).ready(function() {
+				// 	$("#city").autocomplete({
+				// 		minLength : 2
+				// 	});
+				// 	$("#city").autocomplete({
+				// 		source : <c:import url="getzipcodes.jsp" />
+				// 	});
+				// 	$("#city").autocomplete("option", {
+				// 		enabled : true,
+				// 		autoFocus : true
+				// 	});
+				//
+				// 	var price = document.getElementById('priceInput');
+				// 	var radius = document.getElementById('radiusInput');
+				//
+				// 	if(price.value == null || price.value == "" || price.value == "0")
+				// 		price.value = "500";
+				// 	if(radius.value == null || radius.value == "" || radius.value == "0")
+				// 		radius.value = "5";
+				// });
+				//
 
-					var price = document.getElementById('priceInput');
-					var radius = document.getElementById('radiusInput');
+				return $.flatfindr.add
 
-					if(price.value == null || price.value == "" || price.value == "0")
-						price.value = "500";
-					if(radius.value == null || radius.value == "" || radius.value == "0")
-						radius.value = "5";
-				});
 
 			},
 
@@ -109,19 +116,16 @@
 			},
 
 			editProfile: function () {
-				$("#about-me").val("${currentUser.aboutMe}");
-				$('#field-pictures').fileupload({
-					url : '/profile/editProfile/uploadPictures',
-					dataType : 'json',
-					acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
-				}).bind('fileuploaddone', function (e, data) {
-					var
-	          files = $.parseJSON(data.result).files,
-	          path = files[0].url;
-
-						$('#picture').val(path);
-						$('#profile-picture').attr('src', path);
-				});
+				return $.flatfindr
+					.with({
+						popul: { '#about-me': {
+							val: "${currentUser.aboutMe}"
+						}}
+					})
+					.add([
+						'imageUpload',
+						'populate'
+					])
 			},
 
 			index: function () {
@@ -146,12 +150,10 @@
 			},
 
 			placeAd: function () {
-				return $.flatfindr
-					.with({ PAGE_NAME: pagename })
-					.add([
-						'place',
-						'imageUpload'
-					]);
+				return $.flatfindr.add([
+					'place',
+					'imageUpload'
+				]);
 			},
 
 			editAd: function () {

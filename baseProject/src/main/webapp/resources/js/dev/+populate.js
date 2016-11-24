@@ -1,19 +1,19 @@
 /**
  *
- * @name validator
+ * @name populate
  * @memberof jQuery.flatfindr
- * @namespace jQuery.flatfindr.validator
+ * @namespace jQuery.flatfindr.populate
  */
 
 
 
 jQuery.flatfindr.register({
 
-  name: 'validator',
+  name: 'populate',
 
 
   /**
-   * @memberof jQuery.flatfindr.validator
+   * @memberof jQuery.flatfindr.populate
    * @method fn
    *
    * @protected
@@ -26,22 +26,16 @@ jQuery.flatfindr.register({
    */
   fn: function (window, document, $, $view, option) {
 
+    var popul = $.flatfindr.popul;
 
-    var PAGE_NAME = $.flatfindr.PAGE_NAME;
+    for (var o in popul) {
+      var
+        item = popul[o],
+        $item = $(o);
 
-    // Validate the email field
-		$("#field-email").focusout(function() {
-			var text = $(this).val();
-			$.post("/signup/doesEmailExist", {email: text}, function(data){
-				if(data){
-					alert("This username is taken. Please choose another one!");
-					$("#field-email").val("");
-				}
-			});
-		});
-
-
-
+      if ('val' in item) $item.val(item.val);
+      else $item.text(item);
+    }
   }
 
 });

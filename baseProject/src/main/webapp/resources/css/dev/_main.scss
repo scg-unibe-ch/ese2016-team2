@@ -35,6 +35,22 @@
   &:before {
     content: '⇧ ';
   }
+
+  a {
+    display: inline;
+    vertical-align: baseline;
+    background-color: transparent;
+    color: inherit;
+    padding: 0;
+
+    &:hover,
+    &:active,
+    &:visited,
+    &:link {
+      background-color: transparent;
+      color: inherit;
+    }
+  }
 }
 
 
@@ -42,4 +58,9 @@ img {
   .span-half &.only-child {
     padding-right: 16px;
   }
+}
+
+.hide {
+  display: none;
+  visibility: hidden;
 }

@@ -20,3 +20,6 @@
 /**
  * Page specific
  */
+
+// @codekit-prepend "+image-upload.js"
+// @codekit-prepend "+populate.js"

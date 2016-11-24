@@ -17,6 +17,7 @@
       "+image-upload.js",
       "+map.js",
       "+place.js",
+      "+populate.js",
       "+message.js",
       "+sidebar.js",
       "+slider-blender-caption.js"],

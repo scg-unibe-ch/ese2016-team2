@@ -68,30 +68,34 @@
 									<div class="row multi-select">
 										<div class="tile tile-half">
 											<div class="row">
-												<div class="tile tile-full">
+												<%-- <div class="tile tile-full">
 													<label>Gender</label>
-												</div>
+												</div> --%>
 												<div class="tile tile-full action action-tile">
 
 													<form:select path="gender">
+														<form:option value="Choose gender" disabled="true" selected="selected" />
 														<form:option value="FEMALE" label="Female" />
 														<form:option value="MALE" label="Male" />
 													</form:select>
+													<form:errors htmlEscape="false" path="gender" cssClass="validationErrorText" />
 
 												</div>
 											</div>
 										</div>
 										<div class="tile tile-half">
 											<div class="row">
-												<div class="tile tile-full">
+												<%-- <div class="tile tile-full">
 													<label>Account Type</label>
-												</div>
+												</div> --%>
 												<div class="tile tile-full action action-tile">
 
 													<form:select path="account">
+														<form:option value="Choose account type" disabled="true" selected="selected" />
 														<form:option value="Normal" label="Normal" />
 														<form:option value="Premium" label="Premium" />
 													</form:select></td>
+													<form:errors path="account" cssClass="validationErrorText" />
 
 												</div>
 											</div>
