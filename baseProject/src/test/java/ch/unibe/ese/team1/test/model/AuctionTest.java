@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.AuctionPicture;
+import ch.unibe.ese.team1.model.Visit;
 
 public class AuctionTest {
 	
@@ -56,6 +57,19 @@ public class AuctionTest {
 		auction.setPictures(pictures);
 		
 		assertTrue(auction.getPictures().contains(auctionPicture));
+	}
+	
+	@Test
+	public void testVisits() {
+		Visit visit1 = new Visit();
+		Visit visit2 = new Visit();
+		ArrayList<Visit> visits = new ArrayList<Visit>();
+		visits.add(visit1);
+		visits.add(visit2);
+		auction.setVisits(visits);
+		
+		assertTrue(auction.getVisits().contains(visit1));
+		assertTrue(auction.getVisits().contains(visit2));
 	}
 
 }
