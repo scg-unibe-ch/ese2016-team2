@@ -41,7 +41,7 @@ public class AuctionTestDataSaver {
 
 		SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm, dd.MM.yyyy");
 
-		Date endTime1 = timeFormatter.parse("12:00, 14.12.2017");
+		Date endTime1 = timeFormatter.parse("11:39, 25.11.2016");
 		Date endTime2 = timeFormatter.parse("12:00, 20.12.2017");
 
 		String roomDescription1 = "The room is a part of 3.5 rooms apartment completely renovated"

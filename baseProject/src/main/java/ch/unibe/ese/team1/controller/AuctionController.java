@@ -85,6 +85,20 @@ public class AuctionController {
 		}
 		return model;
 	}
+	
+	/**
+	 * Deletes the ad with the given id, if the logged in user is 
+	 * the creator of the ad and auction has ended.
+	 */
+	@RequestMapping(value = "/deleteAuction", method = RequestMethod.GET)
+	public ModelAndView deleteAd(@RequestParam("id") long id, Principal principal) {
+		if (auctionService.getAuctionById(id).getUser().getUsername().equals(principal.getName())
+				&& auctionService.getAuctionById(id).getAuctionEnded()) {
+			auctionService.delete(id);
+		}
+
+		return new ModelAndView("redirect:/profile/myRooms");
+	}
 
 
 	/**

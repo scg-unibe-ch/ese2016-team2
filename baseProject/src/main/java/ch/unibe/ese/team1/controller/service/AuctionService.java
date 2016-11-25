@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceBidForm;
 import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
+import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.AuctionPicture;
 import ch.unibe.ese.team1.model.Location;
@@ -35,6 +36,9 @@ public class AuctionService {
 
 	@Autowired
 	private GeoDataService geoDataService;
+	
+	@Autowired
+	private VisitService visitService;
 
 	/**
 	 * Handles persisting a new auction to the database.
@@ -445,5 +449,11 @@ public class AuctionService {
 			}
 		}
 		return ads;
+	}
+
+	public void delete(long auctionId) {
+		Auction auction = auctionDao.findOne(auctionId);
+		visitService.delete(auction);
+		auctionDao.delete(auction);
 	}
 }
