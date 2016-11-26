@@ -80,6 +80,54 @@ $slip-height-medium: 73px;
         }
       }
     }
+
+    &[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: $slip-height-small / 1.4;
+      padding: 0;
+      border: none;
+
+      @include media($bq-medium) {
+        height: $slip-height-medium / 1.4;
+      }
+
+      &::-moz-range-track {
+        background-color: $base-color;
+        border-radius: 1px;
+      }
+
+      &::-moz-range-thumb {
+        width: 24px;
+        height: 24px;
+        border: none;
+        border-radius: 50%;
+        background-color: $base-color;
+        cursor: grab;
+
+        &:hover:active {
+          cursor: grabbing;
+        }
+      }
+
+      &::-webkit-slider-runnable-track {
+        background-color: $base-color;
+        border-radius: 1px;
+      }
+
+      &::-webkit-slider-thumb {
+        width: 24px;
+        height: 24px;
+        border: none;
+        border-radius: 50%;
+        background-color: $base-color;
+        cursor: grab;
+
+        &:hover:active {
+          cursor: grabbing;
+        }
+      }
+    }
   }
 
 
@@ -123,7 +171,46 @@ $slip-height-medium: 73px;
     margin-bottom: 0;
     font-weight: normal;
     color: $bright-gray;
-    cursor: pointer;
+    //cursor: pointer;
+  }
+}
+
+.times {
+  label, p {
+    @include sidebar-slip-pad-half;
+  }
+
+  label, p {
+    padding-right: 0 !important;
+  }
+
+  p {
+    text-align: right;
+    padding-left: 0 !important;
+  }
+
+  .action-add {
+    display: table;
+    width: 100%;
+    height: $slip-height-small;
+    text-align: center;
+    background-color: $whiff-of-gray;
+    border-bottom: 1px dotted $base-color;
+    transition: background-color $base-duration $base-timing;
+
+    &:hover {
+      background-color: $slight-gray;
+    }
+
+    span {
+      font-weight: 600;
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    @include media($bq-medium) {
+      height: $slip-height-medium;
+    }
   }
 }
 
@@ -159,7 +246,7 @@ $slip-height-medium: 73px;
 }
 
 
-.times, .multi-select {
+.multi-select {
   label {
     @include sidebar-slip-pad;
     text-align: center;
@@ -182,7 +269,7 @@ $slip-height-medium: 73px;
 }
 
 
-.times, .multi-select {
+.multi-select {
   display: flex;
 
   .action-add {
@@ -448,12 +535,19 @@ body.editAd {
     @include sidebar-slip-pad;
     padding-bottom: 11px !important;
     margin: 0;
-    color: $base-color;
+    //color: $base-color;
 
     span {
       display: block;
+      max-height: 0;
+      overflow: hidden;
       font-size: 16px;
       margin-top: 8px;
+      transition: max-height $base-duration $base-timing;
+
+      &.js-show {
+        max-height: 480px;
+      }
     }
   }
 }
