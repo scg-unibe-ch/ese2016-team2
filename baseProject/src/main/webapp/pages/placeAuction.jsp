@@ -270,105 +270,60 @@
 									To add another one, just change the values and click the button again.
 								</span>
 							</h3>
-							<div class="row dates related">
-								<div class="tile tile-half">
-									<div class="row">
-										<div class="tile tile-full">
-											<input
-												tabindex="10"
-												class="js-has-label"
-												type="text"
-												id="field-visitDay"
-												placeholder="Choose from datepicker..." />
-										</div>
-									</div>
+
+							<div class="row times">
+								<div class="tile tile-quarter">
+									<label>From</label>
 								</div>
 								<div class="tile tile-half">
-									<div class="datepicker" id="visitDay">
+									<input class="time-range" id="startTime" type="range" value="48" min="0" max="96">
+								</div>
+								<div class="tile tile-quarter show-time">
+									<p id="show-startTime">12:00</p>
+								</div>
+							</div> <%-- .row.times END --%>
 
+							<div class="row times related">
+								<div class="tile tile-quarter">
+									<label>To</label>
+								</div>
+								<div class="tile tile-half">
+									<input class="time-range" id="endTime" type="range" value="48" min="0" max="96">
+								</div>
+								<div class="tile tile-quarter">
+									<p id="show-endTime">12:00</p>
+								</div>
+							</div> <%-- .row.times END --%>
+
+
+							<div class="row dates related">
+	              <div class="tile tile-half">
+	                <div class="row">
+	                  <div class="tile tile-full">
+	                    <input
+												tabindex="10"
+	                      class="js-has-label"
+	                      type="text"
+	                      id="field-visitDay"
+	                      placeholder="Choose from datepicker..." />
+	                  </div>
+	                </div>
+	              </div>
+	              <div class="tile tile-half">
+	                <div class="datepicker" id="visitDay">
+
+	                </div>
+	              </div>
+	            </div>
+
+							<div class="row times">
+								<div class="tile tile-full">
+									<div id="addVisitButton" class="action action-icon action-add">
+										<span>Add viewing time</span>
+										<%-- <span title="Add viewing time" class="fa fa-plus-circle fa-3x"></span> --%>
 									</div>
 								</div>
 							</div>
-
-
-							<div class="row times fill-parent edit-section">
-								<div class="tile tile-three-quarter">
-
-									<div class="row">
-										<div class="tile tile-half">
-											<div class="row">
-												<div class="tile tile-full">
-													<label>From: Hour</label>
-												</div>
-												<div class="tile tile-full action action-tile">
-													<select id="startHour">
-														<% for (int i = 0; i < 24; i++) {
-															String hour = String.format("%02d", i);
-															out.print("<option value=\"" + hour + "\">" + hour +"</option>");
-														} %>
-													</select>
-												</div>
-											</div>
-										</div>
-										<div class="tile tile-half">
-											<div class="row">
-												<div class="tile tile-full">
-													<label>Minute</label>
-												</div>
-												<div class="tile tile-full action action-tile">
-													<select id="startMinutes">
-														<% for (int i = 0; i < 60; i++) {
-															String minute = String.format("%02d", i);
-															out.print("<option value=\"" + minute + "\">" + minute +"</option>");
-														} %>
-													</select>
-												</div>
-											</div>
-										</div>
-									</div>
-
-
-
-									<div class="row times">
-										<div class="tile tile-half">
-											<div class="row">
-												<div class="tile tile-full">
-													<label>To: Hour</label>
-												</div>
-												<div class="tile tile-full action action-tile">
-													<select id="endHour">
-														<% for (int i = 0; i < 24; i++) {
-															String hour = String.format("%02d", i);
-															out.print("<option value=\"" + hour + "\">" + hour +"</option>");
-														} %>
-													</select>
-												</div>
-											</div>
-										</div>
-										<div class="tile tile-half">
-											<div class="row">
-												<div class="tile tile-full">
-													<label>Minute</label>
-												</div>
-												<div class="tile tile-full action action-tile">
-													<select id="endMinutes">
-														<% for (int i = 0; i < 60; i++) {
-															String minute = String.format("%02d", i);
-															out.print("<option value=\"" + minute + "\">" + minute +"</option>");
-														} %>
-													</select>
-												</div>
-											</div>
-										</div>
-									</div>
-
-								</div> <%-- .tile-three-quarter END --%>
-								<div class="tile tile-quarter fill-parent-child">
-									<div id="addVisitButton" class="action action-icon action-add">
-										<span title="Add viewing time" class="fa fa-plus-circle fa-3x"></span>
-									</div>
-								</div>
-							</div> <%-- .row.times END --%>
 
 						</div> <%-- .container-scroll END --%>
 
