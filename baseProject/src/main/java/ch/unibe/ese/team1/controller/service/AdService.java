@@ -495,7 +495,7 @@ public class AdService {
 	public void delete(long adId) {
 		Ad ad = adDao.findOne(adId);
 		visitService.delete(ad);
-		bookmarkService.delete(ad);
+		bookmarkService.deleteAd(ad);
 		adDao.delete(ad);
 	}
 }
