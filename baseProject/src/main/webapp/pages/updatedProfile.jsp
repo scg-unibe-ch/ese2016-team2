@@ -5,13 +5,32 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 
-<c:import url="template/header.jsp" />
+<c:import url="template/~top.jsp" />
+<c:import url="template/~header_wo_search.jsp" />
 
-<%-- profile/publicProfile not valid anymore... needs to be corrected: problem -> how to get the right user??? Maybe use a JS Script --%>
-<pre><a href="/">Home</a>   &gt;   <a href="/user?id=${currentUser.id}">Public Profile</a>   &gt;   <a
-			href="/profile/editProfile">Edit Profile</a>    &gt;    Profile Updated</pre>
+<main role="main">
+	<c:import url="template/~top_bar.jsp">
+		<c:param name="instr" value="Well done..." />
+	</c:import>
 
-<h1>${message}</h1>
-<hr />
+	<div class="container container-pad">
+		<div class="row">
+			<div class="span-half">
 
-<c:import url="template/footer.jsp" />
+				<%-- profile/publicProfile not valid anymore... needs to be corrected: problem -> how to get the right user??? Maybe use a JS Script --%>
+				<%-- <pre><a href="/">Home</a>   &gt;   <a href="/user?id=${currentUser.id}">Public Profile</a>   &gt;   <a
+							href="/profile/editProfile">Edit Profile</a>    &gt;    Profile Updated</pre> --%>
+
+				<h3>${message}</h3>
+				<a href="/user?id=${currentUser.id}">Check it out...</a>
+
+			</div> <%-- .span-half END --%>
+		</div> <%-- .row END --%>
+	</div> <%-- .containerEND --%>
+
+</main>
+
+<%-- <c:import url="template/~footer.jsp" /> --%>
+<c:import url="template/~bottom.jsp">
+	<c:param name="js" value="updatedProfile" />
+</c:import>

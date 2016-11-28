@@ -34,6 +34,9 @@ public class UserUpdateService {
 		currentUser.setLastName(editProfileForm.getLastName());
 		currentUser.setPassword(editProfileForm.getPassword());
 		currentUser.setAboutMe(editProfileForm.getAboutMe());
+		currentUser
+			.getPicture()
+			.setFilePath(editProfileForm.getImagePath());
 
 		userDao.save(currentUser);
 	}

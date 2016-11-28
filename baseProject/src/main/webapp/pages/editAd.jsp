@@ -5,435 +5,549 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<c:import url="template/header.jsp" />
+<c:import url="template/~top.jsp" />
+<c:import url="template/~header_wo_search.jsp" />
 
-<script src="/js/jquery.ui.widget.js"></script>
-<script src="/js/jquery.iframe-transport.js"></script>
-<script src="/js/jquery.fileupload.js"></script>
+<main role="main">
+	<c:import url="template/~top_bar.jsp">
+		<c:param name="instr" value="Edit this ad..." />
+	</c:import>
 
-<script src="/js/pictureUploadEditAd.js"></script>
+	<div class="container">
 
-<script src="/js/editAd.js"></script>
+		<div class="row">
 
-
-<script>
-	$(document).ready(function() {		
-		$("#field-city").autocomplete({
-			minLength : 2
-		});
-		$("#field-city").autocomplete({
-			source : <c:import url="getzipcodes.jsp" />
-		});
-		$("#field-city").autocomplete("option", {
-			enabled : true,
-			autoFocus : true
-		});
-		$("#field-moveInDate").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		$("#field-moveOutDate").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		
-		$("#field-visitDay").datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		
-		$("#addbutton").click(function() {
-			// Validates the input for Email Syntax
-			function validateForm(text) {
-			    var positionAt = text.indexOf("@");
-			    var positionDot = text.lastIndexOf(".");
-			    if (positionAt< 1 || positionDot<positionAt+2 || positionDot+2>=text.length) {
-			        return false;
-			    } else {
-			    	return true;
-			    }
-			}
-		});
-		
-		$("#addVisitButton").click(function() {
-			var date = $("#field-visitDay").val();
-			if(date == ""){
-				return;
-			}
-			
-			var startHour = $("#startHour").val();
-			var startMinutes = $("#startMinutes").val();
-			var endHour = $("#endHour").val();
-			var endMinutes = $("#endMinutes").val();
-			
-			if (startHour > endHour) {
-				alert("Invalid times. The visit can't end before being started.");
-				return;
-			} else if (startHour == endHour && startMinutes >= endMinutes) {
-				alert("Invalid times. The visit can't end before being started.");
-				return;
-			}
-			
-			var newVisit = date + ";" + startHour + ":" + startMinutes + 
-				";" + endHour + ":" + endMinutes; 
-			var newVisitLabel = date + " " + startHour + ":" + startMinutes + 
-			" to " + endHour + ":" + endMinutes; 
-			
-			var index = $("#addedVisits input").length;
-			
-			var label = "<p>" + newVisitLabel + "</p>";
-			var input = "<input type='hidden' value='" + newVisit + "' name='visits[" + index + "]' />";
-			
-			$("#addedVisits").append(label + input);
-		});
-	});
-</script>
-
-<!-- format the dates -->
-<fmt:formatDate value="${ad.moveInDate}" var="formattedMoveInDate"
-	type="date" pattern="dd-MM-yyyy" />
-<fmt:formatDate value="${ad.moveOutDate}" var="formattedMoveOutDate"
-	type="date" pattern="dd-MM-yyyy" />
-	
-<pre><a href="/">Home</a>   &gt;   <a href="/profile/myRooms">My Rooms</a>   &gt;   <a href="/ad?id=${ad.id}">Ad Description</a>   &gt;   Edit Ad</pre>
+			<div class="span-half">
+				<div class="form form-search form-edit form-max-height">
 
 
-<h1>Edit Ad</h1>
-<hr />
-
-<form:form method="post" modelAttribute="placeAdForm"
-	action="/profile/editAd" id="placeAdForm" autocomplete="off"
-	enctype="multipart/form-data">
-
-<input type="hidden" name="adId" value="${ad.id }" />
-
-	<fieldset>
-		<legend>Change General info</legend>
-		<table class="placeAdTable">
-			<tr>
-				<td><label for="field-buyable">Rentable or Buyable:</label></td>
-			</tr>
-			<tr>
-				<td><c:choose>
-					<c:when test="${!ad.buyable}">
-					<form:radiobutton id="field-buyable" path="buyable" value="0" checked="checked" />Rentable
-					<form:radiobutton id="field-buyable" path="buyable" value="1" />Buyalbe
-					</c:when>
-					<c:otherwise>
-					<form:radiobutton id="field-buyable" path="buyable" value="0"  />Rentable
-					<form:radiobutton id="field-buyable" path="buyable" value="1" checked="checked" />Buyalbe
-					</c:otherwise>
-					</c:choose></td>
-			</tr>
-			<tr>
-				<td><label for="field-title">Ad Title</label></td>
-				<td><label for="type-room">Type:</label></td>
-			</tr>
-
-			<tr>
-				<td><form:input id="field-title" path="title" value="${ad.title}" /></td>
-				<td><c:choose>
-						<c:when test="${ad.roomType == 'Room'}">
-							<form:radiobutton id="type-room" path="roomType" value="Room" checked="checked"/>Room 
-							<form:radiobutton id="type-room" path="roomType" value="Studio" />Studio
-							<form:radiobutton id="type-room" path="roomType" value="House" />House
-						</c:when>
-						<c:when test="${ad.roomType == 'Studio'}">
-							<form:radiobutton id="type-room" path="roomType" value="Room" />Room 
-							<form:radiobutton id="type-room" path="roomType" value="Studio" checked="checked"/>Studio
-							<form:radiobutton id="type-room" path="roomType" value="House" />House
-						</c:when>
-						<c:otherwise>
-							<form:radiobutton id="type-room" path="roomType" value="Room" />Room 
-							<form:radiobutton id="type-room" path="roomType" value="Studio" />Studio
-							<form:radiobutton id="type-room" path="roomType" value="House" checked="checked"/>House
-						</c:otherwise>
-					</c:choose></td>
-			</tr>
-
-			<tr>
-				<td><label for="field-street">Street</label></td>
-				<td><label for="field-city">City / Zip code</label></td>
-			</tr>
-
-			<tr>
-				<td><form:input id="field-street" path="street"
-						value="${ad.street}" /></td>
-				<td>
-					<form:input id="field-city" path="city" value="${ad.zipcode} - ${ad.city}" />
-					<form:errors path="city" cssClass="validationErrorText" />
-				</td>
-			</tr>
-
-			<tr>
-				<td><label for="moveInDate">Move-in date</label></td>
-				<td><label for="moveOutDate">Move-out date (optional)</label></td>
-			</tr>
-			<tr>
-				<td>
-					<form:input type="text" id="field-moveInDate"
-						path="moveInDate" value="${formattedMoveInDate }"/>
-				</td>
-				<td>
-					<form:input type="text" id="field-moveOutDate"
-						path="moveOutDate" value="${formattedMoveOutDate }"/>
-				</td>
-			</tr>
-
-			<tr>
-				<td><label for="field-Prize">Prize per month</label></td>
-				<td><label for="field-SquareFootage">Square Meters</label></td>
-			</tr>
-			<tr>
-				<td>
-					<form:input id="field-Prize" type="number" path="prize"
-						placeholder="Prize per month" step="50" value="${ad.prize}"/> <form:errors
-						path="prize" cssClass="validationErrorText" />
-				</td>
-				<td>
-					<form:input id="field-SquareFootage" type="number"
-						path="squareFootage" placeholder="Prize per month" step="5" 
-						value="${ad.squareFootage }"/> <form:errors
-						path="squareFootage" cssClass="validationErrorText" />
-				</td>
-			</tr>
-		</table>
-	</fieldset>
+					<!-- format the dates -->
+					<fmt:formatDate value="${ad.moveInDate}" var="formattedMoveInDate"
+						type="date" pattern="dd-MM-yyyy" />
+					<fmt:formatDate value="${ad.moveOutDate}" var="formattedMoveOutDate"
+						type="date" pattern="dd-MM-yyyy" />
 
 
-	<br />
-	<fieldset>
-		<legend>Change Room Description</legend>
+					<form:form
+						method="post"
+						modelAttribute="placeAdForm"
+						action="/profile/editAd"
+						id="placeAdForm"
+						autocomplete="off"
+						enctype="multipart/form-data">
 
-		<table class="placeAdTable">
-			<tr>
-				<td>
-					<c:choose>
-						<c:when test="${ad.smokers}">
-							<form:checkbox id="field-smoker" path="smokers" checked="checked" /><label>Smoking
-							inside allowed</label>
-						</c:when>
-						<c:otherwise>
-							<form:checkbox id="field-smoker" path="smokers" /><label>Smoking
-							inside allowed</label>
-						</c:otherwise>
-					</c:choose>
-				</td>
-				
-				<td>
-					<c:choose>
-						<c:when test="${ad.animals}">
-							<form:checkbox id="field-animals" path="animals"  checked="checked" /><label>Animals
-						allowed</label>
-						</c:when>
-						<c:otherwise>
-							<form:checkbox id="field-animals" path="animals" /><label>Animals
-						allowed</label>
-						</c:otherwise>
-					</c:choose>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<c:choose>
-						<c:when test="${ad.garden}">
-							<form:checkbox id="field-garden" path="garden" checked="checked" /><label>Garden
-							(co-use)</label>
-						</c:when>
-						<c:otherwise>
-							<form:checkbox id="field-garden" path="garden" /><label>Garden
-							(co-use)</label>
-						</c:otherwise>
-					</c:choose>
-				</td>
-				
-				<td>
-					<c:choose>
-						<c:when test="${ad.balcony}">
-							<form:checkbox id="field-balcony" path="balcony"  checked="checked" /><label>Balcony
-						or Patio</label>
-						</c:when>
-						<c:otherwise>
-							<form:checkbox id="field-balcony" path="balcony" /><label>Balcony
-						or Patio</label>
-						</c:otherwise>
-					</c:choose>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<c:choose>
-						<c:when test="${ad.cellar}">
-							<form:checkbox id="field-cellar" path="cellar" checked="checked" /><label>Cellar
-						or Attic</label>
-						</c:when>
-						<c:otherwise>
-							<form:checkbox id="field-cellar" path="cellar" /><label>Cellar
-						or Atticd</label>
-						</c:otherwise>
-					</c:choose>
-				</td>
-				
-				<td>
-					<c:choose>
-						<c:when test="${ad.furnished}">
-							<form:checkbox id="field-furnished" path="furnished"  checked="checked" /><label>Furnished
-							</label>
-						</c:when>
-						<c:otherwise>
-							<form:checkbox id="field-furnished" path="furnished" /><label>Furnished</label>
-						</c:otherwise>
-					</c:choose>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<c:choose>
-						<c:when test="${ad.cable}">
-							<form:checkbox id="field-cable" path="cable" checked="checked" /><label>Cable TV</label>
-						</c:when>
-						<c:otherwise>
-							<form:checkbox id="field-cable" path="cable" /><label>Cable TV</label>
-						</c:otherwise>
-					</c:choose>
-				</td>
-				
-				<td>
-					<c:choose>
-						<c:when test="${ad.garage}">
-							<form:checkbox id="field-garage" path="garage"  checked="checked" /><label>Garage
-							</label>
-						</c:when>
-						<c:otherwise>
-							<form:checkbox id="field-garage" path="garage" /><label>Garage</label>
-						</c:otherwise>
-					</c:choose>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<c:choose>
-						<c:when test="${ad.internet}">
-							<form:checkbox id="field-internet" path="internet"  checked="checked" /><label>WiFi available
-							</label>
-						</c:when>
-						<c:otherwise>
-							<form:checkbox id="field-internet" path="internet" /><label>WiFi available</label>
-						</c:otherwise>
-					</c:choose>
-				</td>
-			</tr>
+						<div class="container-scroll">
 
-		</table>
-		<br />
-		<form:textarea path="roomDescription" rows="10" cols="100" value="${ad.roomDescription}" />
-		<form:errors path="roomDescription" cssClass="validationErrorText" />
-	</fieldset>
+							<c:choose>
+								<c:when test="${ad.roomType == 'Room'}">
+									<div class="row checkboxes edit-section">
+										<div class="tile tile-third">
+											<form:radiobutton id="room" path="roomType" value="Room" checked="checked" />
+											<label for="room">Room</label>
+										</div>
+										<div class="tile tile-third">
+											<form:radiobutton id="studio" path="roomType" value="Studio" />
+											<label for="studio">Studio</label>
+										</div>
+										<div class="tile tile-third">
+											<form:radiobutton id="house" path="roomType" value="House" />
+											<label for="house">House</label>
+										</div>
+									</div>
+								</c:when>
+								<c:when test="${ad.roomType == 'Studio'}">
+									<div class="row checkboxes edit-section">
+										<div class="tile tile-third">
+											<form:radiobutton id="room" path="roomType" value="Room" />
+											<label for="room">Room</label>
+										</div>
+										<div class="tile tile-third">
+											<form:radiobutton id="studio" path="roomType" value="Studio" checked="checked" />
+											<label for="studio">Studio</label>
+										</div>
+										<div class="tile tile-third">
+											<form:radiobutton id="house" path="roomType" value="House" />
+											<label for="house">House</label>
+										</div>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="row checkboxes edit-section">
+										<div class="tile tile-third">
+											<form:radiobutton id="room" path="roomType" value="Room" />
+											<label for="room">Room</label>
+										</div>
+										<div class="tile tile-third">
+											<form:radiobutton id="studio" path="roomType" value="Studio" />
+											<label for="studio">Studio</label>
+										</div>
+										<div class="tile tile-third">
+											<form:radiobutton id="house" path="roomType" value="House" checked="checked" />
+											<label for="house">House</label>
+										</div>
+									</div>
+								</c:otherwise>
+							</c:choose>
 
-	<br />
-	<fieldset>
-		<legend>Change preferences</legend>
-		<form:textarea path="preferences" rows="5" cols="100"
-			value="${ad.preferences}" ></form:textarea>
-	</fieldset>
+							<input type="hidden" name="adId" value="${ad.id }" />
 
-	
-	<fieldset>
-		<legend>Add visiting times</legend>
-		
-		<table>
-			<tr>
-				<td>
-					<input type="text" id="field-visitDay" />
-					
-					<select id="startHour">
- 					<% 
- 						for(int i = 0; i < 24; i++){
- 							String hour = String.format("%02d", i);
-							out.print("<option value=\"" + hour + "\">" + hour + "</option>");
- 						}
- 					%>
-					</select>
-					
-					<select id="startMinutes">
- 					<% 
- 						for(int i = 0; i < 60; i++){
- 							String minute = String.format("%02d", i);
-							out.print("<option value=\"" + minute + "\">" + minute + "</option>");
- 						}
- 					%>
-					</select>
-					
-					<span>to&thinsp; </span>
-					
-					<select id="endHour">
- 					<% 
- 						for(int i = 0; i < 24; i++){
- 							String hour = String.format("%02d", i);
-							out.print("<option value=\"" + hour + "\">" + hour + "</option>");
- 						}
- 					%>
-					</select>
-					
-					<select id="endMinutes">
- 					<% 
- 						for(int i = 0; i < 60; i++){
- 							String minute = String.format("%02d", i);
-							out.print("<option value=\"" + minute + "\">" + minute + "</option>");
- 						}
- 					%>
-					</select>
-			
+							<c:choose>
+								<c:when test="${!ad.buyable}">
+									<div class="row checkboxes edit-section">
+										<div class="tile tile-half">
+											<form:radiobutton id="rent" path="buyable" value="0" checked="checked" />
+											<label for="rent">Rent</label>
+										</div>
+										<div class="tile tile-half">
+											<form:radiobutton id="buy" path="buyable" value="1" />
+											<label for="buy">Sell</label>
+										</div>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="row checkboxes edit-section">
+										<div class="tile tile-half">
+											<form:radiobutton id="rent" path="buyable" value="0" />
+											<label for="rent">Rent</label>
+										</div>
+										<div class="tile tile-half">
+											<form:radiobutton id="buy" path="buyable" value="1" checked="checked" />
+											<label for="buy">Sell</label>
+										</div>
+									</div>
+								</c:otherwise>
+							</c:choose>
 
-					<div id="addVisitButton" class="smallPlusButton">+</div>
-					
-					<div id="addedVisits"></div>
-				</td>
-				
-			</tr>
-			
-		</table>
-		<br>
-	</fieldset>
 
-	<br />
+							<form:input
+								type="text"
+								id="field-street"
+								path="street"
+								value="${ad.street}"
+								placeholder="Address"
+								tabindex="1" />
 
-	<fieldset>
-		<legend>Change pictures</legend>
-		<h3>Delete existing pictures</h3>
-		<br />
-		<div>
-			<c:forEach items="${ad.pictures }" var="picture">
-				<div class="pictureThumbnail">
-					<div>
-					<img src="${picture.filePath}" />
+
+							<form:input
+								class="edit-section"
+								type="text"
+								id="field-city"
+								path="city"
+								value="${ad.zipcode} - ${ad.city}"
+								placeholder="City"
+								tabindex="2" />
+							<form:errors path="city" cssClass="validationErrorText" />
+
+
+
+							<%-- @Jerome: for some reason it autosets '0' as value. W/A: set
+							to '' by js. --%>
+							<form:input
+								id="field-Prize"
+								type="number"
+								path="prize"
+								placeholder="Rent or Price in CHF"
+								tabindex="3"
+								value="${ad.prize}"
+								min="1" />
+							<form:errors path="prize" cssClass="validationErrorText" />
+
+
+
+							<form:input
+								class="edit-section"
+								id="field-SquareFootage"
+								type="number"
+								path="squareFootage"
+								value="${ad.squareFootage }"
+								placeholder="Space in m²"
+								tabindex="4"
+								min="5" />
+							<form:errors path="squareFootage" cssClass="validationErrorText" />
+
+
+							<div class="row dates">
+	              <div class="tile tile-half">
+	                <div class="row">
+	                  <div class="tile tile-full">
+	                    <label>Move-in</label>
+	                  </div>
+	                  <div class="tile tile-full">
+	                    <form:input
+	                      class="js-has-label"
+	                      type="text"
+	                      id="field-moveInDate"
+	                      path="moveInDate"
+												value="${formattedMoveInDate }"
+	                      tabindex="5"
+	                      placeholder="Choose from datepicker..." />
+	                  </div>
+	                </div>
+	              </div>
+	              <div class="tile tile-half">
+	                <div class="datepicker" id="moveInDate">
+
+	                </div>
+	              </div>
+	            </div>
+
+
+
+							<div class="row dates fields-optional fields-optional-sell js-show edit-section">
+	              <div class="tile tile-half">
+	                <div class="row">
+	                  <div class="tile tile-full">
+	                    <label>Move-out (optional when selling)</label>
+	                  </div>
+	                  <div class="tile tile-full">
+	                    <form:input
+	                      class="js-has-label"
+	                      type="text"
+	                      id="field-moveOutDate"
+	                      path="moveOutDate"
+												value="${formattedMoveOutDate }"
+	                      tabindex="6"
+	                      placeholder="Choose from datepicker..." />
+	                  </div>
+	                </div>
+	              </div>
+	              <div class="tile tile-half">
+	                <div class="datepicker" id="moveOutDate">
+
+	                </div>
+	              </div>
+	            </div>
+
+
+
+							<div class="row checkboxes">
+								<div class="tile tile-half">
+									<c:choose>
+										<c:when test="${ad.smokers}">
+											<form:checkbox id="field-smoker" path="smokers" checked="checked" />
+										</c:when>
+										<c:otherwise>
+											<form:checkbox id="field-smoker" path="smokers" />
+										</c:otherwise>
+									</c:choose>
+									<label for="field-smoker">Smoking allowed</label>
+								</div>
+								<div class="tile tile-half">
+									<c:choose>
+										<c:when test="${ad.animals}">
+											<form:checkbox id="field-animals" path="animals"  checked="checked" />
+										</c:when>
+										<c:otherwise>
+											<form:checkbox id="field-animals" path="animals" />
+										</c:otherwise>
+									</c:choose>
+									<label for="field-animals">Animals allowed</label>
+								</div>
+							</div>
+
+							<div class="row checkboxes">
+								<div class="tile tile-half">
+									<c:choose>
+										<c:when test="${ad.balcony}">
+											<form:checkbox id="field-balcony" path="balcony"  checked="checked" />
+										</c:when>
+										<c:otherwise>
+											<form:checkbox id="field-balcony" path="balcony" />
+										</c:otherwise>
+									</c:choose>
+									<label for="field-balcony">Balcony or Patio</label>
+								</div>
+								<div class="tile tile-half">
+									<c:choose>
+										<c:when test="${ad.garden}">
+											<form:checkbox id="field-garden" path="garden" checked="checked" />
+										</c:when>
+										<c:otherwise>
+											<form:checkbox id="field-garden" path="garden" />
+										</c:otherwise>
+									</c:choose>
+									<label for="field-garden">Garden (co-use)</label>
+								</div>
+							</div>
+
+							<div class="row checkboxes">
+								<div class="tile tile-half">
+									<c:choose>
+										<c:when test="${ad.cellar}">
+											<form:checkbox id="field-cellar" path="cellar" checked="checked" />
+										</c:when>
+										<c:otherwise>
+											<form:checkbox id="field-cellar" path="cellar" />
+										</c:otherwise>
+									</c:choose>
+									<label for="field-cellar">Cellar or Attic</label>
+								</div>
+								<div class="tile tile-half">
+									<c:choose>
+										<c:when test="${ad.furnished}">
+											<form:checkbox id="field-furnished" path="furnished"  checked="checked" />
+										</c:when>
+										<c:otherwise>
+											<form:checkbox id="field-furnished" path="furnished" />
+										</c:otherwise>
+									</c:choose>
+									<label for="field-furnished">Furnished</label>
+								</div>
+							</div>
+
+							<div class="row checkboxes">
+								<div class="tile tile-half">
+									<c:choose>
+										<c:when test="${ad.cable}">
+											<form:checkbox id="field-cable" path="cable" checked="checked" />
+										</c:when>
+										<c:otherwise>
+											<form:checkbox id="field-cable" path="cable" />
+										</c:otherwise>
+									</c:choose>
+									<label for="field-cable">Cable TV</label>
+								</div>
+								<div class="tile tile-half">
+									<c:choose>
+										<c:when test="${ad.garage}">
+											<form:checkbox id="field-garage" path="garage"  checked="checked" />
+										</c:when>
+										<c:otherwise>
+											<form:checkbox id="field-garage" path="garage" />
+										</c:otherwise>
+									</c:choose>
+									<label for="field-garage">Garage</label>
+								</div>
+							</div>
+
+							<div class="row checkboxes edit-section">
+								<div class="tile tile-half">
+									<c:choose>
+										<c:when test="${ad.internet}">
+											<form:checkbox id="field-internet" path="internet"  checked="checked" />
+										</c:when>
+										<c:otherwise>
+											<form:checkbox id="field-internet" path="internet" />
+										</c:otherwise>
+									</c:choose>
+									<label for="field-internet">WiFi</label>
+								</div>
+							</div>
+
+
+							<form:input
+								type="text"
+								id="field-title"
+								path="title"
+								value="${ad.title}"
+								placeholder="Title"
+								tabindex="7" />
+
+
+							<form:textarea
+								id="roomDescription"
+								path="roomDescription"
+								value="${ad.roomDescription}"
+								rows="10"
+								tabindex="8"
+								placeholder="Room Description" />
+							<form:errors path="roomDescription" cssClass="validationErrorText" />
+
+
+							<form:textarea
+								class="edit-section"
+								path="preferences"
+								value="${ad.preferences}"
+								rows="5"
+								tabindex="9"
+								placeholder="Preferences" />
+
+
+							<input
+								type="hidden"
+								id="field-pictures"
+								accept="image/*"
+								multiple="multiple" />
+
+
+
+							<h3 class="edit-section-title">
+								Viewing times
+								<span>
+									Choose a date and a time span, then click the
+									<i class="fa fa-plus-circle" aris-hidden="true"></i> button below.
+									To add another one, just change the values and click the button again.
+								</span>
+							</h3>
+							<div class="row dates related">
+	              <div class="tile tile-half">
+	                <div class="row">
+	                  <div class="tile tile-full">
+	                    <input
+												tabindex="10"
+	                      class="js-has-label"
+	                      type="text"
+	                      id="field-visitDay"
+	                      placeholder="Choose from datepicker..." />
+	                  </div>
+	                </div>
+	              </div>
+	              <div class="tile tile-half">
+	                <div class="datepicker" id="visitDay">
+
+	                </div>
+	              </div>
+	            </div>
+
+
+
+							<div class="row times fill-parent edit-section">
+								<div class="tile tile-three-quarter">
+
+									<div class="row">
+										<div class="tile tile-half">
+											<div class="row">
+												<div class="tile tile-full">
+			                    <label>From: Hour</label>
+			                  </div>
+												<div class="tile tile-full action action-tile">
+													<select id="startHour">
+														<% for (int i = 0; i < 24; i++) {
+															String hour = String.format("%02d", i);
+															out.print("<option value=\"" + hour + "\">" + hour +"</option>");
+														} %>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="tile tile-half">
+											<div class="row">
+												<div class="tile tile-full">
+			                    <label>Minute</label>
+			                  </div>
+												<div class="tile tile-full action action-tile">
+													<select id="startMinutes">
+														<% for (int i = 0; i < 60; i++) {
+															String minute = String.format("%02d", i);
+															out.print("<option value=\"" + minute + "\">" + minute +"</option>");
+														} %>
+													</select>
+			                  </div>
+											</div>
+										</div>
+									</div>
+
+
+
+									<div class="row times">
+										<div class="tile tile-half">
+											<div class="row">
+												<div class="tile tile-full">
+			                    <label>To: Hour</label>
+			                  </div>
+												<div class="tile tile-full action action-tile">
+													<select id="endHour">
+														<% for (int i = 0; i < 24; i++) {
+															String hour = String.format("%02d", i);
+															out.print("<option value=\"" + hour + "\">" + hour +"</option>");
+														} %>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="tile tile-half">
+											<div class="row">
+												<div class="tile tile-full">
+			                    <label>Minute</label>
+			                  </div>
+												<div class="tile tile-full action action-tile">
+													<select id="endMinutes">
+														<% for (int i = 0; i < 60; i++) {
+															String minute = String.format("%02d", i);
+															out.print("<option value=\"" + minute + "\">" + minute +"</option>");
+														} %>
+													</select>
+			                  </div>
+											</div>
+										</div>
+									</div>
+
+								</div> <%-- .tile-three-quarter END --%>
+								<div class="tile tile-quarter fill-parent-child">
+									<div id="addVisitButton" class="action action-icon action-add">
+										<span title="Add viewing time" class="fa fa-plus-circle fa-3x"></span>
+									</div>
+								</div>
+							</div> <%-- .row.times END --%>
+
+						</div> <%-- .container-scroll END --%>
+
+						<div>
+							<button type="submit">Submit</button>
+							<a href="<c:url value='/ad?id=${ad.id}' />">
+								<button type="button">Cancel</button>
+							</a>
+						</div>
+
+					</form:form>
+
+				</div> <%-- .form.form-search END --%>
+			</div> <%-- .span-half END --%>
+
+			<div class="span-half page-max-height">
+				<div class="container-scroll">
+					<h3 class="edit-section-title">
+						Drop images here...
+						<span>
+							Drag and drop images onto the window.<br>
+							You can remove an image by double clicking it.
+						</span>
+					</h3>
+
+					<div class="row">
+						<div class="tile tile-full action-dropzone">
+							<div id="image-preview"><c:forEach items="${ad.pictures }" var="picture">
+								<div
+									data-ad-id="${ad.id }"
+									data-picture-id="${picture.id }"
+					        style="height:128px"
+					        class="image-preview-wrap">
+					        <span
+										title="Remove image by double clicking it."
+										class="fa fa-times fa-2x action-delete"></span>
+									<img src="${picture.filePath}" alt="" />
+								</div>
+							</c:forEach></div>
+						</div>
 					</div>
-					<button type="button" data-ad-id="${ad.id }" data-picture-id="${picture.id }">Delete</button>
-				</div>
-			</c:forEach>
-		</div>
-		<p class="clearBoth"></p>
-		<br /><br />
-		<hr />
-		<h3>Add new pictures</h3>
-		<br />
-		<label for="field-pictures">Pictures</label> <input
-			type="file" id="field-pictures" accept="image/*" multiple="multiple" />
-		<table id="uploaded-pictures" class="styledTable">
-			<tr>
-				<th id="name-column">Uploaded picture</th>
-				<th>Size</th>
-				<th>Delete</th>
-			</tr>
-		</table>
-		<br>
-	</fieldset>
 
-	<div>
-		<button type="submit">Submit</button>
-		<a href="<c:url value='/ad?id=${ad.id}' />"> 
-			<button type="button">Cancel</button>
-		</a>
-	</div>
+					<h3 class="edit-section-title">
+						Your viewing times...
+						<span>
+							Add viewing times from the panel to your left at the bottom of the
+							form. You can remove a viewing time by double clicking the corresponding
+							<i class="fa fa-times base-color-opposite"></i>.
+					</h3>
+					<div class="row">
+						<div class="tile tile-full action-viewing-delete">
+							<div id="viewing-preview"></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="tile tile-half">
 
-</form:form>
+						</div>
+					</div>
 
+				</div> <%-- .container-scroll END --%>
+			</div> <%-- .span-half END --%>
 
-<c:import url="template/footer.jsp" />
+		</div> <%-- .row END --%>
+	</div> <%-- .container END --%>
+
+</main>
+
+<%-- <c:import url="template/footer.jsp" /> --%>
+<c:import url="template/~bottom.jsp">
+	<c:param name="js" value="editAd" />
+</c:import>

@@ -22,6 +22,9 @@
 <c:choose>
 	<c:when test="${empty shownAd.moveOutDate }">
 		<c:set var="formattedMoveOutDate" value="unlimited" />
+		<c:if test="${shownAd.buyable}">
+			<c:set var="hide" value="hide" />
+		</c:if>
 	</c:when>
 	<c:otherwise>
 		<fmt:formatDate value="${shownAd.moveOutDate}"
@@ -149,7 +152,7 @@
 						<td>${formattedMoveInDate}</td>
 					</tr>
 
-					<tr>
+					<tr class="${hide}">
 						<td>Move-out Date</td>
 						<td>${formattedMoveOutDate}</td>
 					</tr>

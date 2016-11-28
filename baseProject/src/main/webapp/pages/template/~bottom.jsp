@@ -11,7 +11,10 @@
 		var js = {
 			common: function () {
 				return $.flatfindr
-					.with({ ZIP_CODES: <c:import url="getzipcodes.jsp" /> })
+					.with({
+						PAGE_NAME: pagename,
+						ZIP_CODES: <c:import url="getzipcodes.jsp" />
+					})
 					.add(['header']);
 			},
 
@@ -28,7 +31,76 @@
 				]);
 			},
 
+			register: function () {
+				/**
+		     * Initiate autocompletion for localities
+		     */
+		    $("#city").autocomplete({
+		      minLength : 2,
+		      enabled : true,
+		      autoFocus : true,
+		      source : $.flatfindr.ZIP_CODES
+		    });
+			},
+
+			alerts: function () {
+
+				function deleteAlert(button) {
+					var id = $(button).attr("data-id");
+					$.get("/profile/alerts/deleteAlert?id=" + id, function(){
+						$("#alertsDiv").load(document.URL + " #alertsDiv");
+					});
+				}
+
+				// $(document).ready(function() {
+				// 	$("#city").autocomplete({
+				// 		minLength : 2
+				// 	});
+				// 	$("#city").autocomplete({
+				// 		source : <c:import url="getzipcodes.jsp" />
+				// 	});
+				// 	$("#city").autocomplete("option", {
+				// 		enabled : true,
+				// 		autoFocus : true
+				// 	});
+				//
+				// 	var price = document.getElementById('priceInput');
+				// 	var radius = document.getElementById('radiusInput');
+				//
+				// 	if(price.value == null || price.value == "" || price.value == "0")
+				// 		price.value = "500";
+				// 	if(radius.value == null || radius.value == "" || radius.value == "0")
+				// 		radius.value = "5";
+				// });
+				//
+
+				return $.flatfindr.add
+
+
+			},
+
+			updatedProfile: function () {
+				return;
+			},
+
 			myRooms: function () {
+				$('.list-delete-link').on('click touch', function (e) {
+					e.preventDefault();
+
+					$(this)
+						.parents('.row').first()
+						.find('.deletion-confirm')
+						.toggleClass('js-confirm');
+				});
+
+				$('.action-cancel').on('click touch', function(e) {
+					e.preventDefault();
+
+					$(this)
+						.parents('.deletion-confirm')
+						.removeClass('js-confirm');
+				});
+
 				return $.flatfindr.add([
 					'search'
 				]);
@@ -41,6 +113,19 @@
 						'search',
 						'message'
 					]);
+			},
+
+			editProfile: function () {
+				return $.flatfindr
+					.with({
+						popul: { '#about-me': {
+							val: "${currentUser.aboutMe}"
+						}}
+					})
+					.add([
+						'imageUpload',
+						'populate'
+					])
 			},
 
 			index: function () {
@@ -65,12 +150,14 @@
 			},
 
 			placeAd: function () {
-				return $.flatfindr
-					.with({ PAGE_NAME: pagename })
-					.add([
-						'place',
-						'imageUpload'
-					]);
+				return $.flatfindr.add([
+					'place',
+					'imageUpload'
+				]);
+			},
+
+			editAd: function () {
+				return js.placeAd();
 			},
 
 			placeAuction: function () {

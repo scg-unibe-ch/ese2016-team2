@@ -26,19 +26,22 @@ jQuery.flatfindr.register({
    */
   fn: function (window, document, $, $view, option) {
 
+
+    var PAGE_NAME = $.flatfindr.PAGE_NAME;
+
     // Validate the email field
-  	$(document).ready(function() {
-  		$("#field-email").focusout(function() {
-  			var text = $(this).val();
-  			$.post("/signup/doesEmailExist", {email: text}, function(data){
-  				if(data){
-  					alert("This username is taken. Please choose another one!");
-  					$("#field-email").val("");
-  				}
-  			});
-  		});
-  	});
-    
+		$("#field-email").focusout(function() {
+			var text = $(this).val();
+			$.post("/signup/doesEmailExist", {email: text}, function(data){
+				if(data){
+					alert("This username is taken. Please choose another one!");
+					$("#field-email").val("");
+				}
+			});
+		});
+
+
+
   }
 
 });

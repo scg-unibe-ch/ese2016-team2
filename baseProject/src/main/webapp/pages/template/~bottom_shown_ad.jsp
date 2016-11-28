@@ -29,6 +29,23 @@
 					'message',
 					'enquiry'
 				]);
+		},
+
+		auctionDescription: function () {
+			return $.flatfindr
+				.with({
+					advertisementID: '${shownAuction.id}',
+					advertisement: '${shownAuction}',
+					username: '${shownAuction.user.username}'
+				})
+				.add([
+					'search',
+					'sidebar',
+					'sliderBlender',
+					'bookmark',
+					'message',
+					'enquiry'
+				]);
 		}
 	};
 
