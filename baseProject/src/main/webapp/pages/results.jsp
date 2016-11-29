@@ -326,7 +326,7 @@
 
 															<h2>
 																<a title="Premium Offer!" class="link" href="<c:url value='/ad?id=${ad.id}' />">
-																	${ad.title } <span class="fa fa-star" aria-hidden="true"></span>
+																	<span class="fa fa-star" aria-hidden="true"></span>&nbsp;&nbsp;${ad.title }
 																</a>
 															</h2>
 
@@ -350,6 +350,50 @@
 
 										<c:otherwise>
 											<li
+												class="resultPremiumAd"
+												data-price="${ad.prize}"
+												data-moveIn="${ad.moveInDate}"
+												data-age="${ad.moveInDate}">
+
+												<div class="row">
+													<div class="tile tile-half">
+														<div class="list-image">
+															<a
+																class="list-image-link"
+																href="<c:url value='/auction?id=${ad.id}' />"
+																style="background-image: url(${ad.pictures[0].filePath})">
+															</a>
+														</div>
+													</div>
+
+													<div class="tile tile-half">
+														<div class="resultAd-text">
+
+															<h2>
+																<a title="Premium Offer!" class="link" href="<c:url value='/auction?id=${ad.id}' />">
+																	<span class="fa fa-star" aria-hidden="true"></span>
+																	<span class="fa fa-gavel" aria-hidden="true"></span>
+																	&nbsp;&nbsp;${ad.title }
+																</a>
+															</h2>
+
+															<p>${ad.street},${ad.zipcode} ${ad.city}</p>
+															<p>${ad.roomType}</p>
+
+
+															<h3>CHF ${ad.prize}</h3>
+
+															<fmt:formatDate value="${ad.moveInDate}"
+																var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
+
+															<p>Move-in date: ${formattedMoveInDate }</p>
+															<p>Auction end-date: ${ad.endTime}</p>
+														</div>
+													</div>
+												</div>
+
+											</li>
+											<%-- <li
 												class="resultPremiumAd"
 												data-price="${ad.prize}"
 												data-moveIn="${ad.moveInDate}"
@@ -381,7 +425,7 @@
 													<p>Auction end-date: ${ad.endTime}</p>
 												</div>
 
-											</li>
+											</li> --%>
 										</c:otherwise>
 
 									</c:choose>
@@ -447,6 +491,48 @@
 												data-moveIn="${ad.moveInDate}"
 												data-age="${ad.moveInDate}">
 
+												<div class="row">
+													<div class="tile tile-half">
+														<div class="list-image">
+															<a
+																class="list-image-link"
+																href="<c:url value='/auction?id=${ad.id}' />"
+																style="background-image: url(${ad.pictures[0].filePath})">
+															</a>
+														</div>
+													</div>
+
+													<div class="tile tile-half">
+														<div class="resultAd-text">
+
+															<h2>
+																<a class="link" href="<c:url value='/auction?id=${ad.id}' />">
+																	<span class="fa fa-gavel" aria-hidden="true"></span>&nbsp;&nbsp;${ad.title }
+																</a>
+															</h2>
+
+															<p>${ad.street},${ad.zipcode} ${ad.city}</p>
+															<p>${ad.roomType}</p>
+
+
+															<h3>CHF ${ad.prize}</h3>
+
+															<fmt:formatDate value="${ad.moveInDate}"
+																var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
+
+															<p>Move-in date: ${formattedMoveInDate }</p>
+															<p>Auction end-date: ${ad.endTime}</p>
+														</div>
+													</div>
+												</div>
+
+											</li>
+											<%-- <li
+												class="resultAd"
+												data-price="${ad.prize}"
+												data-moveIn="${ad.moveInDate}"
+												data-age="${ad.moveInDate}">
+
 												<a
 													class="list-image-link"
 													href="<c:url value='/auction?id=${ad.id}' />"
@@ -473,7 +559,7 @@
 													<p>Auction end-date: ${ad.endTime}</p>
 												</div>
 
-											</li>
+											</li> --%>
 										</c:otherwise>
 
 									</c:choose>
