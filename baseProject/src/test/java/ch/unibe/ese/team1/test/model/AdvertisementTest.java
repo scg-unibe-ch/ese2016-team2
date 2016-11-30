@@ -163,19 +163,6 @@ public class AdvertisementTest {
 		assertEquals(user, ad.getUser());
 	}
 	
-	@Test
-	public void testVisits() {
-		Visit visit1 = new Visit();
-		Visit visit2 = new Visit();
-		ArrayList<Visit> visits = new ArrayList<Visit>();
-		visits.add(visit1);
-		visits.add(visit2);
-		ad.setVisits(visits);
-		
-		assertTrue(ad.getVisits().contains(visit1));
-		assertTrue(ad.getVisits().contains(visit2));
-	}
-	
 	@Test 
 	public void testAuction() {
 		boolean auction = false;

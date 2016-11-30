@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.AdPicture;
+import ch.unibe.ese.team1.model.Visit;
 
 public class AdTest {
 	
@@ -26,6 +27,19 @@ public class AdTest {
 		ad.setPictures(pictures);
 		
 		assertTrue(ad.getPictures().contains(adPicture));
+	}
+	
+	@Test
+	public void testVisits() {
+		Visit visit1 = new Visit();
+		Visit visit2 = new Visit();
+		ArrayList<Visit> visits = new ArrayList<Visit>();
+		visits.add(visit1);
+		visits.add(visit2);
+		ad.setVisits(visits);
+		
+		assertTrue(ad.getVisits().contains(visit1));
+		assertTrue(ad.getVisits().contains(visit2));
 	}
 	
 }

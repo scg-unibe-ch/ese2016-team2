@@ -104,9 +104,6 @@ public abstract class Advertisement {
 	@ManyToOne(optional = false)
 	private User user;
 	
-	@OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Visit> visits;
-	
 	@Column(nullable=false)
 	private boolean auction;
 	
@@ -323,14 +320,6 @@ public abstract class Advertisement {
 			return moveInDate;
 		else
 			return moveOutDate;
-	}
-
-	public List<Visit> getVisits() {
-		return visits;
-	}
-
-	public void setVisits(List<Visit> visits) {
-		this.visits = visits;
 	}
 	
 	public boolean getAuction() {
