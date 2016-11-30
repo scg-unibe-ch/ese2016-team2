@@ -4,6 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <c:import url="template/~top.jsp" />
 <c:import url="template/~header_w_map_wo_search.jsp" />
@@ -14,11 +15,7 @@
 	</c:import>
 
 	<div class="container">
-		<div class="row map">
-			<div id="map">
 
-			</div>
-		</div>
 	</div>
 
 	<div class="container">
@@ -26,6 +23,7 @@
 		<div class="row">
 
 			<div class="span-half">
+
 				<div class="form form-search form-filter form-max-height">
 
 					<form:form
@@ -36,6 +34,11 @@
 						autocomplete="off">
 
 						<div class="container-scroll">
+							<div class="row">
+								<div id="map">
+
+								</div>
+							</div>
 
 							<form:input
 								type="text"
@@ -287,7 +290,7 @@
 				</div>
 
 
-				<div class="container-scroll">
+				<div id="list" class="container-scroll">
 
 
 					<c:choose>
@@ -308,7 +311,11 @@
 												class="resultPremiumAd"
 												data-price="${ad.prize}"
 												data-moveIn="${ad.moveInDate}"
-												data-age="${ad.moveInDate}">
+												data-age="${ad.moveInDate}"
+												data-lat="${ad.latitude}"
+												data-lon="${ad.longitude}"
+												data-title="${ad.title}"
+												data-address="${ad.street},${ad.zipcode} ${ad.city}">
 
 												<div class="row">
 													<div class="tile tile-half">
@@ -353,7 +360,11 @@
 												class="resultPremiumAd"
 												data-price="${ad.prize}"
 												data-moveIn="${ad.moveInDate}"
-												data-age="${ad.moveInDate}">
+												data-age="${ad.moveInDate}"
+												data-lat="${ad.latitude}"
+												data-lon="${ad.longitude}"
+												data-title="${ad.title}"
+												data-address="${ad.street},${ad.zipcode} ${ad.city}">
 
 												<div class="row">
 													<div class="tile tile-half">
@@ -444,7 +455,11 @@
 												class="resultAd"
 												data-price="${ad.prize}"
 												data-moveIn="${ad.moveInDate}"
-												data-age="${ad.moveInDate}">
+												data-age="${ad.moveInDate}"
+												data-lat="${ad.latitude}"
+												data-lon="${ad.longitude}"
+												data-title="${ad.title}"
+												data-address="${ad.street},${ad.zipcode} ${ad.city}">
 
 												<div class="row">
 													<div class="tile tile-half">
@@ -489,7 +504,11 @@
 												class="resultAd"
 												data-price="${ad.prize}"
 												data-moveIn="${ad.moveInDate}"
-												data-age="${ad.moveInDate}">
+												data-age="${ad.moveInDate}"
+												data-lat="${ad.latitude}"
+												data-lon="${ad.longitude}"
+												data-title="${ad.title}"
+												data-address="${ad.street},${ad.zipcode} ${ad.city}">
 
 												<div class="row">
 													<div class="tile tile-half">
@@ -578,7 +597,7 @@
 	</div> <%-- .containerEND --%>
 
 </main>
-<script>
+<%-- <script>
 	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 	window.geoc = [
 		<c:forEach var="geo" varStatus="status" items="${results}">
@@ -592,7 +611,7 @@
 			</c:choose>
 		</c:forEach>
 	];
-</script>
+</script> --%>
 
 
 <%-- <c:import url="template/~footer.jsp" /> --%>

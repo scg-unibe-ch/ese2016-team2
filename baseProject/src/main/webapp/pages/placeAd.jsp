@@ -71,6 +71,8 @@
 								tabindex="2" />
 							<form:errors path="city" cssClass="validationErrorText" />
 
+							<form:input id="ad-lat" path="latitude" type="hidden" value="46.947974"/>
+							<form:input id="ad-lon" path="longitude" type="hidden" value="7.447447"/>
 
 								<%-- @Jerome: for some reason it autosets '0' as value. W/A: set
 								to '' by js. --%>
@@ -317,6 +319,19 @@
 			<div class="span-half page-max-height">
 				<div class="container-scroll">
 					<h3 class="edit-section-title">
+						Map
+					</h3>
+					<div class="row container-pad">
+						<fieldset class="gllpLatlonPicker">
+							<input type="text" class="gllpSearchField">
+							<input type="button" class="gllpSearchButton" value="search">
+							<div class="gllpMap">Google Maps</div>
+							<input id="map-lat" type="hidden" class="gllpLatitude" value="46.947974"/>
+							<input id="map-lon" type="hidden" class="gllpLongitude" value="7.447447"/>
+							<input type="hidden" class="gllpZoom" value="14"/>
+						</fieldset>
+					</div>
+					<h3 class="edit-section-title">
 						Drop images here...
 						<span>
 							Drag and drop images onto the window.<br>
@@ -358,4 +373,5 @@
 <%-- <c:import url="template/footer.jsp" /> --%>
 <c:import url="template/~bottom.jsp">
 	<c:param name="js" value="placeAd" />
+	<c:param name="map" value="2" />
 </c:import>

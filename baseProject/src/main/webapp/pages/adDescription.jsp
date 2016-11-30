@@ -33,7 +33,7 @@
 </c:choose>
 
 
-<div class="container sidebar">
+<div class="container sidebar" data-lat="${shownAd.latitude}" data-lon="${shownAd.longitude}">
 	<div class="row">
 		<div class="tile tile-full">
 

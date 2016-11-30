@@ -32,6 +32,28 @@ jQuery.flatfindr.register({
     // if there is id == x then make "Bookmark Me" to "bookmarked"
 
 
+    // @Jerome quick and dirty.
+    $('#field-city').on('input blur', function() {
+      var streetVal = $('#field-street').val();
+      $('.gllpSearchField').val(streetVal +', '+ this.value);
+
+      $('.ui-menu')
+      .off('mouseup')
+      .on('mouseup', function () {
+        setTimeout(function() {
+          var streetVal = $('#field-street').val();
+          var cityVal = $('#field-city').val();
+          $('.gllpSearchField').val(streetVal +', '+ cityVal);
+        }, 100);
+      });
+    });
+
+    $('#field-street').on('input blur', function() {
+      var cityVal = $('#field-city').val();
+      $('.gllpSearchField').val(this.value +', '+ cityVal);
+    });
+
+
 
     $("#field-city").autocomplete({
       minLength : 2,
