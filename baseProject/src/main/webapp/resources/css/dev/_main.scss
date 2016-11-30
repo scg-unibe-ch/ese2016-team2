@@ -64,3 +64,16 @@ img {
   display: none;
   visibility: hidden;
 }
+
+.pad {
+  @include sidebar-slip-pad;
+}
+
+.gllpMap	{ width: 500px; height: 250px; }
+
+
+#map {
+  &.js-show {
+    height: 500px;
+  }
+}

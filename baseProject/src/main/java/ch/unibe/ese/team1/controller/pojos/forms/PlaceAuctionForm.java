@@ -19,6 +19,14 @@ public class PlaceAuctionForm {
 	@Pattern(regexp = "^[0-9]{4} - [-\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
 	private String city;
 	
+	
+	
+	private String latitude;
+	
+	private String longitude;
+	
+	
+	
 	@NotBlank(message = "Required")
 	private String moveInDate;
 	
@@ -239,5 +247,21 @@ public class PlaceAuctionForm {
 
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 }

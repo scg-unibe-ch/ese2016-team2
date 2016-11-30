@@ -92,12 +92,16 @@
     }
   }
 
+  .map.wo-search & {
+    right: -156px;
+  }
+
   // .wo-search & {
   //   right: -64px;
   // }
 
-  .map & {
-    display: none;
-    right: -106px;
-  }
+  // .map & {
+  //   display: none;
+  //   right: -106px;
+  // }
 }

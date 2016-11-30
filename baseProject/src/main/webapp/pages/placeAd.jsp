@@ -71,6 +71,8 @@
 								tabindex="2" />
 							<form:errors path="city" cssClass="validationErrorText" />
 
+							<form:input id="ad-lat" path="latitude" type="hidden" value="46.947974"/>
+							<form:input id="ad-lon" path="longitude" type="hidden" value="7.447447"/>
 
 								<%-- @Jerome: for some reason it autosets '0' as value. W/A: set
 								to '' by js. --%>
@@ -229,6 +231,8 @@
 								multiple="multiple" />
 
 
+
+
 							<h3 class="edit-section-title">
 								Viewing times
 								<span>
@@ -237,6 +241,32 @@
 									To add another one, just change the values and click the button again.
 								</span>
 							</h3>
+
+							<div class="row times">
+								<div class="tile tile-quarter">
+									<label>From</label>
+								</div>
+								<div class="tile tile-half">
+									<input class="time-range" id="startTime" type="range" value="48" min="0" max="96">
+								</div>
+								<div class="tile tile-quarter show-time">
+									<p id="show-startTime">12:00</p>
+								</div>
+							</div> <%-- .row.times END --%>
+
+							<div class="row times related">
+								<div class="tile tile-quarter">
+									<label>To</label>
+								</div>
+								<div class="tile tile-half">
+									<input class="time-range" id="endTime" type="range" value="48" min="0" max="96">
+								</div>
+								<div class="tile tile-quarter">
+									<p id="show-endTime">12:00</p>
+								</div>
+							</div> <%-- .row.times END --%>
+
+
 							<div class="row dates related">
 	              <div class="tile tile-half">
 	                <div class="row">
@@ -257,85 +287,14 @@
 	              </div>
 	            </div>
 
-
-							<div class="row times fill-parent edit-section">
-								<div class="tile tile-three-quarter">
-
-									<div class="row">
-										<div class="tile tile-half">
-											<div class="row">
-												<div class="tile tile-full">
-			                    <label>From: Hour</label>
-			                  </div>
-												<div class="tile tile-full action action-tile">
-													<select id="startHour">
-														<% for (int i = 0; i < 24; i++) {
-															String hour = String.format("%02d", i);
-															out.print("<option value=\"" + hour + "\">" + hour +"</option>");
-														} %>
-													</select>
-												</div>
-											</div>
-										</div>
-										<div class="tile tile-half">
-											<div class="row">
-												<div class="tile tile-full">
-			                    <label>Minute</label>
-			                  </div>
-												<div class="tile tile-full action action-tile">
-													<select id="startMinutes">
-														<% for (int i = 0; i < 60; i++) {
-															String minute = String.format("%02d", i);
-															out.print("<option value=\"" + minute + "\">" + minute +"</option>");
-														} %>
-													</select>
-			                  </div>
-											</div>
-										</div>
-									</div>
-
-
-
-									<div class="row times">
-										<div class="tile tile-half">
-											<div class="row">
-												<div class="tile tile-full">
-			                    <label>To: Hour</label>
-			                  </div>
-												<div class="tile tile-full action action-tile">
-													<select id="endHour">
-														<% for (int i = 0; i < 24; i++) {
-															String hour = String.format("%02d", i);
-															out.print("<option value=\"" + hour + "\">" + hour +"</option>");
-														} %>
-													</select>
-												</div>
-											</div>
-										</div>
-										<div class="tile tile-half">
-											<div class="row">
-												<div class="tile tile-full">
-			                    <label>Minute</label>
-			                  </div>
-												<div class="tile tile-full action action-tile">
-													<select id="endMinutes">
-														<% for (int i = 0; i < 60; i++) {
-															String minute = String.format("%02d", i);
-															out.print("<option value=\"" + minute + "\">" + minute +"</option>");
-														} %>
-													</select>
-			                  </div>
-											</div>
-										</div>
-									</div>
-
-								</div> <%-- .tile-three-quarter END --%>
-								<div class="tile tile-quarter fill-parent-child">
+							<div class="row times">
+								<div class="tile tile-full">
 									<div id="addVisitButton" class="action action-icon action-add">
-										<span title="Add viewing time" class="fa fa-plus-circle fa-3x"></span>
+										<span>Add viewing time</span>
+										<%-- <span title="Add viewing time" class="fa fa-plus-circle fa-3x"></span> --%>
 									</div>
 								</div>
-							</div> <%-- .row.times END --%>
+							</div>
 
 						</div> <%-- .container-scroll END --%>
 
@@ -359,6 +318,19 @@
 
 			<div class="span-half page-max-height">
 				<div class="container-scroll">
+					<h3 class="edit-section-title">
+						Map
+					</h3>
+					<div class="row container-pad">
+						<fieldset class="gllpLatlonPicker">
+							<input type="text" class="gllpSearchField">
+							<input type="button" class="gllpSearchButton" value="search">
+							<div class="gllpMap">Google Maps</div>
+							<input id="map-lat" type="hidden" class="gllpLatitude" value="46.947974"/>
+							<input id="map-lon" type="hidden" class="gllpLongitude" value="7.447447"/>
+							<input type="hidden" class="gllpZoom" value="14"/>
+						</fieldset>
+					</div>
 					<h3 class="edit-section-title">
 						Drop images here...
 						<span>
@@ -401,4 +373,5 @@
 <%-- <c:import url="template/footer.jsp" /> --%>
 <c:import url="template/~bottom.jsp">
 	<c:param name="js" value="placeAd" />
+	<c:param name="map" value="2" />
 </c:import>

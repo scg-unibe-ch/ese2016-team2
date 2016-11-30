@@ -32,19 +32,35 @@ jQuery.flatfindr.register({
     // if there is id == x then make "Bookmark Me" to "bookmarked"
 
 
+    // @Jerome quick and dirty.
+    $('#field-city').on('input blur', function() {
+      var streetVal = $('#field-street').val();
+      $('.gllpSearchField').val(streetVal +', '+ this.value);
+
+      $('.ui-menu')
+      .off('mouseup')
+      .on('mouseup', function () {
+        setTimeout(function() {
+          var streetVal = $('#field-street').val();
+          var cityVal = $('#field-city').val();
+          $('.gllpSearchField').val(streetVal +', '+ cityVal);
+        }, 100);
+      });
+    });
+
+    $('#field-street').on('input blur', function() {
+      var cityVal = $('#field-city').val();
+      $('.gllpSearchField').val(this.value +', '+ cityVal);
+    });
+
+
 
     $("#field-city").autocomplete({
-      minLength : 2
-    });
-    $("#field-city").autocomplete({
-      source : $.flatfindr.ZIP_CODES
-    });
-    $("#field-city").autocomplete("option", {
+      minLength : 2,
+      source : $.flatfindr.ZIP_CODES,
       enabled : true,
       autoFocus : true
     });
-
-
 
     $('#buy').on('click', function() {
       $('.fields-optional-sell').removeClass('js-show');
@@ -95,69 +111,75 @@ jQuery.flatfindr.register({
     }
 
 
+    $('.time-range').on('input', function () {
+      var
+        id = $(this).attr('id'),
+        val = this.value,
+        hour = Math.floor(val / 4),
+        minute = (val % 4) * 15,
+        minute = minute < 10 ? '0'+ minute : minute,
+        time = hour +':'+ minute;
 
-    $("#addbutton").click(function() {
-      // Validates the input for Email Syntax
-      function validateForm(text) {
-          var positionAt = text.indexOf("@");
-          var positionDot = text.lastIndexOf(".");
-          if (positionAt< 1 || positionDot<positionAt+2 || positionDot+2>=text.length) {
-              return false;
-          } else {
-            return true;
-          }
+      $('#show-'+ id).text(time);
+
+      if (id === 'startTime' ) {
+        var $endTime = $('#endTime');
+        if (parseInt(val, 10) >= parseInt($endTime.val(), 10)) {
+          $endTime.val(this.value);
+          $('#show-endTime').text(time);
+        }
+      } else if (id === 'endTime') {
+        var $startTime = $('#startTime');
+        if (parseInt(val, 10) <= parseInt($startTime.val(), 10)) {
+          $startTime.val(val)
+          $('#show-startTime').text(time);
+        }
       }
     });
 
 
 
-    // $('#addedVisits').mole(function($this) {
-    //   return $this.find('p');
-    // });
-
-    // $('#roomDescription')
-    //   .mole(function($this) {
-    //     var
-    //       lines = $this.val().split('\n'),
-    //       html = '';
-    //
-    //     $.each(lines, function(_, line) {
-    //       if (line) html += line +'<br>';
-    //     });
-    //
-    //     return html;
-    //   })
-    //   .on('focusout', function() {
-    //     $(this).trigger('mole');
-    //   });
+    $("#addbutton").click(function() {
+      // Validates the input for Email Syntax
+      function validateForm(text) {
+        var positionAt = text.indexOf("@");
+        var positionDot = text.lastIndexOf(".");
+        if (positionAt< 1 || positionDot<positionAt+2 || positionDot+2>=text.length) {
+            return false;
+        } else {
+          return true;
+        }
+      }
+    });
 
 
     $("#addVisitButton").click(function() {
       var date = $("#field-visitDay").val();
-      if(date == ""){
-        return;
-      }
+      if (date == "") return;
 
-      var startHour = $("#startHour").val();
-      var startMinutes = $("#startMinutes").val();
-      var endHour = $("#endHour").val();
-      var endMinutes = $("#endMinutes").val();
 
-      if (startHour > endHour) {
-        alert("Invalid times. The visit can't end before being started.");
-        return;
-      } else if (startHour == endHour && startMinutes >= endMinutes) {
-        alert("Invalid times. The visit can't end before being started.");
-        return;
-      }
+      var startTime = $('#show-startTime').text();
+      var endTime = $('#show-endTime').text();
 
-      var newVisit = date + ";" + startHour + ":" + startMinutes +
-        ";" + endHour + ":" + endMinutes;
-      var newVisitLabel = date + " " + startHour + ":" + startMinutes +
-      " to " + endHour + ":" + endMinutes;
-
+      //
+      // var startHour = $("#startHour").val();
+      // var startMinutes = $("#startMinutes").val();
+      // var endHour = $("#endHour").val();
+      // var endMinutes = $("#endMinutes").val();
+      //
+      // if (startHour > endHour) {
+      //   alert("Invalid times. The visit can't end before being started.");
+      //   return;
+      // } else if (startHour == endHour && startMinutes >= endMinutes) {
+      //   alert("Invalid times. The visit can't end before being started.");
+      //   return;
+      // }
+      //
+      var newVisit = date +';'+ startTime +';'+ endTime;
+      var newVisitLabel = date +' '+ startTime +' to '+ endTime;
+      //
       var index = $("#addedVisits input").length;
-
+      //
       var label = createViewingPreviewElement(newVisitLabel, index);
       var input = "<input type='hidden' value='" + newVisit + "' name='visits[" + index + "]' />";
 

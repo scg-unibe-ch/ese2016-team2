@@ -9,13 +9,13 @@
 <security:authorize var="loggedIn" url="/profile" />
 
 
-<header class="container header-primary wo-search">
+<header class="container header-primary map wo-search">
   <div class="row">
     <div class="tile tile-full">
       <div class="action action-icon action-menu-primary">
 				<span id="js-menu-icon" class="fa fa-bars fa-2x"></span>
-				<%-- <span id="js-map" class="fa fa-map-marker fa-2x"></span> --%>
         <a href="/searchAd"><span class="fa fa-search fa-2x"></span></a>
+        <span id="js-map" class="fa fa-map-marker fa-2x"></span>
 			</div>
     </div>
   </div>

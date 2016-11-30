@@ -102,7 +102,15 @@
 
 	<div class="row">
 		<div class="tile tile-three-quarter">
-			<h2>${shownAuction.title}</h2>
+			<h2>
+				<%--
+				@Jerome
+				TODO: Has an ad a premium property??
+				<c:if test="">
+					<span class="fa fa-gavel" aria-hidden="true"></span>
+				</c:if> --%>
+				<span class="fa fa-gavel" aria-hidden="true"></span>
+				&nbsp;&nbsp;${shownAuction.title}</h2>
 		</div>
 		<div class="tile tile-quarter action action-tile action-icon">
 			<c:choose>
@@ -258,55 +266,75 @@
 
 		<div class="row">
 			<div class="tile tile-full">
-				<table id="adDescTable" class="adDescDiv">
 					<c:choose>
 						<c:when test="${empty shownAuction.bidderName}">
-							<tr>
-								<td><h2>Minimal bid prize:</h2></td>
-								<td>${shownAuction.prize}&#32;CHF</td>
-							</tr>
-							<td><c:choose>
-									<c:when test="${loggedIn}">
-										<c:if test="${loggedInUserEmail != shownAuction.user.username}">
-											<a
-												href="<c:url value='/auction/placeBid?id=${shownAuction.id}' />">
-												<button type="button">Place new bid</button>
+							<table id="adDescTable" class="adDescDiv">
+								<tr>
+									<td>Minimal bid prize:</td>
+									<td>${shownAuction.prize}&#32;CHF</td>
+								</tr>
+							</table>
+							<c:choose>
+								<c:when test="${loggedIn}">
+									<div class="row">
+										<div class="tile tile-full action action-tile">
+											<c:if test="${loggedInUserEmail != shownAuction.user.username}">
+												<a
+													href="<c:url value='/auction/placeBid?id=${shownAuction.id}' />">
+													Place new bid
+												</a>
+											</c:if>
+										</div>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="row">
+										<div class="tile tile-full action action-tile">
+											<a href="/login">
+												Login to place new bid
 											</a>
-										</c:if>
-									</c:when>
-									<c:otherwise>
-										<a href="/login"><button class="thinInactiveButton"
-												type="button">Login to place new bid</button></a>
-									</c:otherwise>
-								</c:choose></td>
+										</div>
+									</div>
+								</c:otherwise>
+							</c:choose>
+
 						</c:when>
 						<c:otherwise>
-							<tr>
-								<td><h2>Highest bid:</h2></td>
-								<td>${shownAuction.prize}&#32;CHF</td>
-							</tr>
-							<tr>
-								<td><c:choose>
-										<c:when test="${loggedIn}">
-											<c:choose>
-												<c:when
-													test="${loggedInUserEmail != shownAuction.user.username}">
+							<table id="adDescTable" class="adDescDiv">
+								<tr>
+									<td>Highest bid:</td>
+									<td>${shownAuction.prize}&#32;CHF</td>
+								</tr>
+							</table>
+							<c:choose>
+								<c:when test="${loggedIn}">
+									<c:choose>
+										<c:when
+											test="${loggedInUserEmail != shownAuction.user.username}">
+											<div class="row">
+												<div class="tile tile-full action action-tile">
 													<a
 														href="<c:url value='/auction/placeBid?id=${shownAuction.id}' />">
-														<button type="button">Place new bid</button>
+														Place new bid
 													</a>
-												</c:when>
-												<c:otherwise>
-												By: ${shownAuction.bidderName}
-											</c:otherwise>
-											</c:choose>
+												</div>
+											</div>
 										</c:when>
 										<c:otherwise>
-											<a href="/login"><button class="thinInactiveButton"
-													type="button">Login to place new bid</button></a>
-										</c:otherwise>
-									</c:choose></td>
-							</tr>
+										By: ${shownAuction.bidderName}
+									</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:otherwise>
+									<div class="row">
+										<div class="tile tile-full action">
+											<a href="/login">
+												Login to place new bid
+											</a>
+										</div>
+									</div>
+								</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 				</table>

@@ -35,6 +35,16 @@ public abstract class Advertisement {
 	@Column(nullable = false)
 	private String city;
 	
+	
+	
+	@Column(nullable = true)
+	private String latitude;
+	
+	@Column(nullable = true)
+	private String longitude;
+	
+	
+	
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date creationDate;
@@ -107,6 +117,27 @@ public abstract class Advertisement {
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
+	
+	
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+	
+	
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+	
+	
+	
 	
 	public String getRoomType() {
 		return roomType;

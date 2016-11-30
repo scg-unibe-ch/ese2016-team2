@@ -4,4 +4,12 @@ table:first-of-type {
 
 td {
   border-bottom: 1px solid $whiff-of-gray;
+
+  #adDescTable & {
+    border-bottom: none;
+  }
+}
+
+#adDescTable + .row {
+  margin-bottom: 32px;
 }

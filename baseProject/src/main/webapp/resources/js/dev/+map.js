@@ -30,154 +30,74 @@ jQuery.flatfindr.register({
     // @Jerome: just testing
     $('#js-map').click(function() {
       // open map;
-      $('.map').css('height', '500px');
+      $map = $('#map');
 
-      // NB: I ll do that differently later. Just for testing: I call the map
-      // again after parent element has some height, so the map gets rendered
-      // properly.
-      window.initMap();
+      $map.toggleClass('js-show');
+
+      if ($map.is('.js-show')) window.initMap();
     });
 
-    // @Jerome
-    // NB: Just testing and familiarizing.
-    // Geojson, http://geojson.org/ or rather
-    // http://geojson.org/geojson-spec.html
-    // .... coool.... works.
-    // NB: first link shows an even simpler example.
-    var geo = {
-    	"type": "FeatureCollection",
-    	"features": [{
-    		"type": "Feature",
-    		"geometry": {
-    			"type": "Point",
-    			"coordinates": [102.0, 0.5]
-    		},
-    		"properties": {
-    			"prop0": "value0"
-    		}
-    	},
+    var locs = [];
+    var locIdx = 0;
 
-      //@Jerome: added this one...
-      {
-    		"type": "Feature",
-    		"geometry": {
-    			"type": "Point",
-    			"coordinates": [202.0, 10.5]
-    		},
-    		"properties": {
-    			"prop0": "value0"
-    		}
-    	},
+    $('.resultAd, .resultPremiumAd').each(function(i, x) {
+      var
+        $this = $(this),
+        lat = $this.attr('data-lat'),
+        lon = $this.attr('data-lon'),
+        title = $this.attr('data-title'),
+        address = $this.attr('data-address'),
+        price = $this.attr('data-price'),
+        content = '<h3>'+ title +'</h3><p>'+ address +'</p><p>'+ price +'</p>';
 
-      //... and this one (beautiful place to settle.. )
-      {
-    		"type": "Feature",
-    		"geometry": {
-    			"type": "Point",
-    			"coordinates": [52.0, 60.5]
-    		},
-    		"properties": {
-    			"prop0": "value0"
-    		}
-    	},
+      if (lat && lon)
+        locs[locIdx] = [$this, content, parseFloat(lat), parseFloat(lon), locIdx++];
+    });
 
-      //... and one more
-      {
-    		"type": "Feature",
-    		"geometry": {
-    			"type": "LineString",
-    			"coordinates": [
-    				[102.0, 0.0],
-    				[103.0, 1.0],
-    				[104.0, 0.0],
-    				[105.0, 1.0]
-    			]
-    		},
-    		"properties": {
-    			"prop0": "value0",
-    			"prop1": 0.0
-    		}
-    	}, {
-    		"type": "Feature",
-    		"geometry": {
-    			"type": "Polygon",
-    			"coordinates": [
-    				[
-    					[100.0, 0.0],
-    					[101.0, 0.0],
-    					[101.0, 1.0],
-    					[100.0, 1.0],
-    					[100.0, 0.0]
-    				]
-    			]
-    		},
-    		"properties": {
-    			"prop0": "value0",
-    			"prop1": {
-    				"this": "that"
-    			}
-    		}
-    	}]
-    };
 
-    var geocoder;
     var map;
-    var georesults = [];
-
-    function code(addresses) {
-      geocoder = new google.maps.Geocoder();
-
-      addresses.forEach(function(address) {
-        geocoder.geocode( address, function(results, status) {
-          if (status == 'OK') {
-            //console.log(results);
-          } else {
-            console.log('Geocode was not successful for the following reason: ' + status);
-          }
-        });
-      });
-    }
-
 
     // @Jerome
-    // Has to be global, i guess. That's why window.blah..
-    // Well, maybe only because the callback param in the deferred script of
-    // bottom.jsp is set globaly.
-    // TODO: Try to call the callback in another namespace by altering the
-    // callback param... tomorrow.
-    window.initMap = function() {
+    window.initMap = function () {
       map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 2,
-        center: new google.maps.LatLng(2.8,-187.3),
-        mapTypeId: 'terrain'
+        zoom: 9,
+        center: new google.maps.LatLng(locs[0][2],locs[0][3]),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
       });
 
-      // Create a <script> tag and set the USGS URL as the source.
-      var script = document.createElement('script');
-      // This example uses a local copy of the GeoJSON stored at
-      // http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp
-
-      // @Jerome
-      // Calling 'callback' function right here because we just declared a
-      // json object above.
-      script.src = eqfeed_callback(geo);
-      document.getElementsByTagName('head')[0].appendChild(script);
+      var
+        infowindow = new google.maps.InfoWindow({}),
+        marker, i;
 
 
-      code(window.geoc);
+      for (i = 0; i < locs.length; i++) {
+    		marker = new google.maps.Marker({
+    			position: new google.maps.LatLng(locs[i][2], locs[i][3]),
+    			map: map
+    		});
+
+    		google.maps.event.addListener(marker, 'click', (function (marker, i) {
+    			return function () {
+            var $adinlist = locs[i][0];
+    				infowindow.setContent(locs[i][1]);
+    				infowindow.open(map, marker);
+
+            $('.resultAd, .resultPremiumAd').attr('style', '');
+            $adinlist
+              .css('background-color', '#f2f2f2')
+
+            animateScrollTop(
+              $('#list').scrollTop() + $adinlist.position().top
+            );
+    			}
+    		})(marker, i));
+    	}
     }
 
-    // Loop through the results array and place a marker for each
-    // set of coordinates.
-    window.eqfeed_callback = function(results) {
-      for (var i = 0; i < results.features.length; i++) {
-        var coords = results.features[i].geometry.coordinates;
-        var latLng = new google.maps.LatLng(coords[1],coords[0]);
-        var marker = new google.maps.Marker({
-          position: latLng,
-          map: map
-        });
-      }
+    function animateScrollTop(scrollTop) {
+      $('#list')
+        .delay(20)
+        .animate({scrollTop: scrollTop}, $.flatfindr.BASE_DURATION);
     }
   }
 

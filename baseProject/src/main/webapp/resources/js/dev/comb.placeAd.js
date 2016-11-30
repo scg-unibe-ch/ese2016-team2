@@ -14,7 +14,7 @@
 // @codekit-prepend "../../components/blueimp-file-upload/js/jquery.fileupload.js"
 // @codekit-prepend "../../components/blueimp-file-upload/js/jquery.fileupload-process.js"
 // @codekit-prepend "../../components/blueimp-file-upload/js/jquery.fileupload-image.js"
-
+//  "../../../node_modules/jquery-latitude-longitude-picker-gmaps/js/google-maps-latitude-longitude-picker.js"
 
 /**
  * Page specific
