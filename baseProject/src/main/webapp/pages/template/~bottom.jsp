@@ -163,6 +163,7 @@
 			placeAuction: function () {
 				return js.placeAd();
 			}
+
 		};
 
 		js.common();

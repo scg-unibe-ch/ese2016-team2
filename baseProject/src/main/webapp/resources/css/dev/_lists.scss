@@ -53,6 +53,10 @@ select.list-sort {
   a span:not(.fa-gavel) {
     color: $gold;
   }
+
+   a:hover .fa-gavel {
+    color: $base-color;
+  }
 }
 
 

@@ -64,3 +64,7 @@ img {
   display: none;
   visibility: hidden;
 }
+
+.pad {
+  @include sidebar-slip-pad;
+}
