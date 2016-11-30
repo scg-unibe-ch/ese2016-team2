@@ -81,13 +81,17 @@ public class AdController {
 		return model;
 	}
 
+	/**
+	 * Deletes the ad with the given id, if the logged in user is 
+	 * the creator of the ad.
+	 */
 	@RequestMapping(value = "/deleteAd", method = RequestMethod.GET)
 	public ModelAndView deleteAd(@RequestParam("id") long id, Principal principal) {
 		if (adService.getAdById(id).getUser().getUsername().equals(principal.getName())) {
 			adService.delete(id);
 		}
 
-		return new ModelAndView("redirect:/");
+		return new ModelAndView("redirect:/profile/myRooms");
 	}
 
 	/**

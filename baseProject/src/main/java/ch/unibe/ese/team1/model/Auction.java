@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -23,6 +24,9 @@ public class Auction extends Advertisement{
 	
 	@Column
 	private String bidderName;
+	
+	@OneToMany(mappedBy = "auction", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Visit> visits;
 	
 	@Fetch(FetchMode.SELECT)
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -59,5 +63,15 @@ public class Auction extends Advertisement{
 	public void setPictures(List<AuctionPicture> pictures) {
 		this.pictures = pictures;
 	}
+
+	public List<Visit> getVisits() {
+		return visits;
+	}
+
+	public void setVisits(List<Visit> visits) {
+		this.visits = visits;
+	}
+	
+	
 
 }
