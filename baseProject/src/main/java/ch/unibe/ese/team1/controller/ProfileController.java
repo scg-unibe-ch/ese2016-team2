@@ -134,6 +134,7 @@ public class ProfileController {
 		return model;
 	}
 
+	
 	/** Validates the signup form and on success persists the new user. */
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public ModelAndView signupResultPage(@Valid SignupForm signupForm, BindingResult bindingResult) {
@@ -148,6 +149,8 @@ public class ProfileController {
 		}
 		return model;
 	}
+	
+	
 
 	/**
 	 * Checks and returns whether a user with the given email already exists.
