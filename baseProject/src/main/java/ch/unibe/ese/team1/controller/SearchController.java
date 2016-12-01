@@ -56,27 +56,53 @@ public class SearchController {
 			List<Advertisement> premiumResults = new ArrayList<Advertisement>();
 			Iterable<Ad> matchingAds;
 			Iterable<Auction> matchingAuctions;
-			if (searchForm.getBuyable()) {
-				matchingAuctions = auctionService.queryResults(searchForm, false);
-				for (Auction auction : matchingAuctions) {
-					results.add(auction);
+			if (searchForm.getAuction() == searchForm.getAd()) {
+				if (searchForm.getBuyable()) {
+					matchingAuctions = auctionService.queryResults(searchForm, false);
+					for (Auction auction : matchingAuctions) {
+						results.add(auction);
+					}
+					matchingAuctions = auctionService.queryResults(searchForm, true);
+					for (Auction auction : matchingAuctions) {
+						premiumResults.add(auction);
+					}
 				}
-				matchingAuctions = auctionService.queryResults(searchForm, true);
-				for (Auction auction : matchingAuctions) {
-					premiumResults.add(auction);
+				matchingAds = adService.queryResults(searchForm, false);
+				for (Ad ad : matchingAds) {
+					results.add(ad);
 				}
+				matchingAds = adService.queryResults(searchForm, true);
+				for (Ad ad : matchingAds) {
+					premiumResults.add(ad);
+				}
+				model.addObject("results", results);
+				model.addObject("premiumResults", premiumResults);
+				return model;
+			} else {
+				if (searchForm.getBuyable() && searchForm.getAuction()) {
+					matchingAuctions = auctionService.queryResults(searchForm, false);
+					for (Auction auction : matchingAuctions) {
+						results.add(auction);
+					}
+					matchingAuctions = auctionService.queryResults(searchForm, true);
+					for (Auction auction : matchingAuctions) {
+						premiumResults.add(auction);
+					}
+				}
+				if (searchForm.getAd()) {
+					matchingAds = adService.queryResults(searchForm, false);
+					for (Ad ad : matchingAds) {
+						results.add(ad);
+					}
+					matchingAds = adService.queryResults(searchForm, true);
+					for (Ad ad : matchingAds) {
+						premiumResults.add(ad);
+					}
+				}
+				model.addObject("results", results);
+				model.addObject("premiumResults", premiumResults);
+				return model;
 			}
-			matchingAds = adService.queryResults(searchForm, false);
-			for (Ad ad : matchingAds) {
-				results.add(ad);
-			}
-			matchingAds = adService.queryResults(searchForm, true);
-			for (Ad ad : matchingAds) {
-				premiumResults.add(ad);
-			}
-			model.addObject("results", results);
-			model.addObject("premiumResults", premiumResults);
-			return model;
 
 		} else
 

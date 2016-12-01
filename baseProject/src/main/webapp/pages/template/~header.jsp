@@ -52,6 +52,18 @@
                 <label for="buy">Buy</label>
               </div>
             </div>
+            
+            
+            <div class="row checkboxes">
+				<div class="tile tile-half">
+					<form:checkbox name="auction" id="auction" path="auction" />
+					<label for="auction">Auction</label>
+				</div>
+				<div class="tile tile-half">
+					<form:checkbox name="ad" id="ad" path="ad" />
+					<label for="ad">Ad</label>
+				</div>
+			</div>
 
 
   					<form:input
