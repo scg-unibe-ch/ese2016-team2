@@ -28,6 +28,7 @@ import ch.unibe.ese.team1.controller.pojos.forms.EditProfileForm;
 import ch.unibe.ese.team1.controller.pojos.forms.MessageForm;
 import ch.unibe.ese.team1.controller.pojos.forms.RegisterForm;
 import ch.unibe.ese.team1.controller.pojos.forms.SignupForm;
+import ch.unibe.ese.team1.controller.pojos.forms.SignupGoogleForm;
 import ch.unibe.ese.team1.controller.service.AdService;
 import ch.unibe.ese.team1.controller.service.AuctionService;
 import ch.unibe.ese.team1.controller.service.RegisterService;
@@ -73,10 +74,6 @@ public class ProfileController {
 	@Autowired
 	private ServletContext servletContext;
 	
-	
-	
-	
-
 	@Autowired
 	private SignupService signupService;
 
@@ -150,7 +147,20 @@ public class ProfileController {
 		return model;
 	}
 	
-	
+	@RequestMapping(value = "/signup/Google", method = RequestMethod.POST)
+	public ModelAndView signupGoogleResultPage(@Valid SignupGoogleForm signupGoogleForm, BindingResult bindingResult) {
+		ModelAndView model;
+		
+		if (bindingResult.hasErrors()) {
+			signupService.saveFromGoogle(signupGoogleForm);
+			model = new ModelAndView("login");
+			model.addObject("confirmationMessage", "Signup complete!");
+		} else {
+			model = new ModelAndView("signupGoogle");
+			model.addObject("signupGoogleForm", signupGoogleForm);
+		}
+		return model;
+	}
 
 	/**
 	 * Checks and returns whether a user with the given email already exists.

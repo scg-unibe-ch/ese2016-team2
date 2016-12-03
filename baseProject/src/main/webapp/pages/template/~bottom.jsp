@@ -28,17 +28,10 @@
 
 		// EXAMPLE
 		// check if email exists - and handle according response (bool)
-		$.post('/signup/doesEmailExist', {email: gUser.email})
+		$.post('/signup/Google', {email: gUser.email, firstName: gUser.firstName, lastName: gUser.lastName})
 			.done(function (existingEmail) {
-				if (existingEmail) {
-					// do somn, i.e. send stuff to another controller the same way
-
-
-				} else {
-					// do somn else
-
-
-				}
+					
+				
 			});
 
 	}
