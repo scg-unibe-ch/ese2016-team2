@@ -5,11 +5,40 @@
  * @namespace jQuery.flatfindr.search
  */
 
-
+// @codekit-prepend "+autoloc.js"
+// @codekit-prepend "+datepicker.js"
 
 jQuery.flatfindr.register({
 
   name: 'search',
+
+  deps: [
+    'autoloc',
+    'datepicker'
+  ],
+  
+  'datepicker': {
+    '#earliestMoveInDate': {
+      altField: '#field-earliestMoveInDate',
+      format: 'dd-mm-yy',
+      unset: true
+    },
+    '#latestMoveInDate': {
+      altField: '#field-latestMoveInDate',
+      format: 'dd-mm-yy',
+      unset: true
+    },
+    '#earliestMoveOutDate': {
+      altField: '#field-earliestMoveOutDate',
+      format: 'dd-mm-yy',
+      unset: true
+    },
+    '#latestMoveOutDate': {
+      altField: '#field-latestMoveOutDate',
+      format: 'dd-mm-yy',
+      unset: true
+    }
+  },
 
 
   /**
@@ -79,46 +108,6 @@ jQuery.flatfindr.register({
      */
     $('.form-search button[type=reset]')
       .on('click', alignTop);
-
-
-
-    /**
-     * Initiate datepicker with no date set.
-     * @type {String}
-     */
-    $("#earliestMoveInDate").datepicker({
-      altField: '#field-earliestMoveInDate',
-      dateFormat : 'dd-mm-yy'
-    }).datepicker('setDate', null);
-
-    $("#latestMoveInDate").datepicker({
-      altField: '#field-latestMoveInDate',
-      dateFormat : 'dd-mm-yy'
-    }).datepicker('setDate', null);
-
-    $("#earliestMoveOutDate").datepicker({
-      altField: '#field-earliestMoveOutDate',
-      dateFormat : 'dd-mm-yy'
-    }).datepicker('setDate', null);
-
-    $("#latestMoveOutDate").datepicker({
-      altField: '#field-latestMoveOutDate',
-      dateFormat : 'dd-mm-yy'
-    }).datepicker('setDate', null);
-
-
-
-
-    /**
-     * Initiate autocompletion for localities
-     */
-    $("#city").autocomplete({
-      minLength : 2,
-      enabled : true,
-      autoFocus : true,
-      source : $.flatfindr.ZIP_CODES
-    });
-
 
 
 

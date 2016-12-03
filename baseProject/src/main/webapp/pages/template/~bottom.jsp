@@ -70,10 +70,6 @@
 			},
 
 			login: function () {
-
-
-
-
 				return $.flatfindr.add([
 					'search'
 				]);
@@ -87,15 +83,9 @@
 			},
 
 			register: function () {
-				/**
-		     * Initiate autocompletion for localities
-		     */
-		    $("#city").autocomplete({
-		      minLength : 2,
-		      enabled : true,
-		      autoFocus : true,
-		      source : $.flatfindr.ZIP_CODES
-		    });
+		    return $.flatfindr.add([
+					'autoloc'
+				]);
 			},
 
 			alerts: function () {
@@ -107,30 +97,7 @@
 					});
 				}
 
-				// $(document).ready(function() {
-				// 	$("#city").autocomplete({
-				// 		minLength : 2
-				// 	});
-				// 	$("#city").autocomplete({
-				// 		source : <c:import url="getzipcodes.jsp" />
-				// 	});
-				// 	$("#city").autocomplete("option", {
-				// 		enabled : true,
-				// 		autoFocus : true
-				// 	});
-				//
-				// 	var price = document.getElementById('priceInput');
-				// 	var radius = document.getElementById('radiusInput');
-				//
-				// 	if(price.value == null || price.value == "" || price.value == "0")
-				// 		price.value = "500";
-				// 	if(radius.value == null || radius.value == "" || radius.value == "0")
-				// 		radius.value = "5";
-				// });
-				//
-
-				return $.flatfindr.add
-
+				//return $.flatfindr.add
 
 			},
 

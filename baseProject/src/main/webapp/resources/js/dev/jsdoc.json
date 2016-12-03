@@ -9,6 +9,7 @@
     "include": [
       "jquery.bury-unearth.js",
       "jquery.flatfindr.js",
+      "+autoloc.js",
       "+bookmark.js",
       "+enquiry.js",
       "+form-filter.js",

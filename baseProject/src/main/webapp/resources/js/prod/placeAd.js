@@ -29122,9 +29122,18 @@ jQuery.extend({
     add: function(modules) {
 
       modules.forEach(function(module) {
+        var option;
         if (!(module in jQuery.flatfindr)) return;
 
         module = jQuery.flatfindr[module];
+        option = module.option || {};
+
+        if ('deps' in module &&
+            !(module.deps.name in jQuery.flatfindr)) {
+          if (module[module.deps]) // dep's option by name (failing of course!!!)
+            module.deps.option = module[module.deps.name];
+          jQuery.flatfindr.add(module.deps);
+        }
 
         module.fn.call(
           module,
@@ -29132,7 +29141,7 @@ jQuery.extend({
           document,
           jQuery,
           module.$view || $(jQuery.flatfindr.VIEW),
-          module.option || {});
+          option);
       });
 
       return jQuery.flatfindr;
@@ -29444,16 +29453,132 @@ jQuery.flatfindr.register({
 
 /**
  *
- * @name search
+ * @name autoloc
  * @memberof jQuery.flatfindr
- * @namespace jQuery.flatfindr.search
+ * @namespace jQuery.flatfindr.autoloc
  */
 
 
 
 jQuery.flatfindr.register({
 
+  name: 'autoloc',
+
+
+  /**
+   * @memberof jQuery.flatfindr.autoloc
+   * @method fn
+   *
+   * @protected
+   * @param  {Object}   window   the window as you know it
+   * @param  {Object}   document the document element
+   * @param  {Object}   $        jQuery
+   * @param  {jQuery}   $view    the default or custom view if set
+   * @param  {Object}   option   what ever object param if passed
+   * @return {Function}          method that sets up simple dom manipulations
+   */
+  fn: function (window, document, $, $view, option) {
+
+    $("#city").autocomplete({
+      minLength : 2,
+      enabled : true,
+      autoFocus : true,
+      source : $.flatfindr.ZIP_CODES
+    });
+    
+  }
+
+});
+
+
+/**
+ *
+ * @name datepicker
+ * @memberof jQuery.flatfindr
+ * @namespace jQuery.flatfindr.datepicker
+ */
+
+
+
+jQuery.flatfindr.register({
+
+  name: 'datepicker',
+
+
+  /**
+   * @memberof jQuery.flatfindr.datepicker
+   * @method fn
+   *
+   * @protected
+   * @param  {Object}   window   the window as you know it
+   * @param  {Object}   document the document element
+   * @param  {Object}   $        jQuery
+   * @param  {jQuery}   $view    the default or custom view if set
+   * @param  {Object}   option   what ever object param if passed
+   * @return {Function}          method that sets up simple dom manipulations
+   */
+  fn: function (window, document, $, $view, option) {
+
+    var
+      datepickers = option,
+      $datepicker;
+
+    for (var item in datepickers) {
+      $datepicker =
+        $(item).datepicker({
+          altField: item.altfield,
+          dateFormat: item.format
+        });
+
+      if (item.unset)
+        $datepicker.datepicker('setDate', null);
+    }
+  }
+
+});
+
+
+/**
+ *
+ * @name search
+ * @memberof jQuery.flatfindr
+ * @namespace jQuery.flatfindr.search
+ */
+
+// @codekit-prepend "+autoloc.js"
+// @codekit-prepend "+datepicker.js"
+
+jQuery.flatfindr.register({
+
   name: 'search',
+
+  deps: [
+    'autoloc',
+    'datepicker'
+  ],
+  
+  'datepicker': {
+    '#earliestMoveInDate': {
+      altField: '#field-earliestMoveInDate',
+      format: 'dd-mm-yy',
+      unset: true
+    },
+    '#latestMoveInDate': {
+      altField: '#field-latestMoveInDate',
+      format: 'dd-mm-yy',
+      unset: true
+    },
+    '#earliestMoveOutDate': {
+      altField: '#field-earliestMoveOutDate',
+      format: 'dd-mm-yy',
+      unset: true
+    },
+    '#latestMoveOutDate': {
+      altField: '#field-latestMoveOutDate',
+      format: 'dd-mm-yy',
+      unset: true
+    }
+  },
 
 
   /**
@@ -29523,46 +29648,6 @@ jQuery.flatfindr.register({
      */
     $('.form-search button[type=reset]')
       .on('click', alignTop);
-
-
-
-    /**
-     * Initiate datepicker with no date set.
-     * @type {String}
-     */
-    $("#earliestMoveInDate").datepicker({
-      altField: '#field-earliestMoveInDate',
-      dateFormat : 'dd-mm-yy'
-    }).datepicker('setDate', null);
-
-    $("#latestMoveInDate").datepicker({
-      altField: '#field-latestMoveInDate',
-      dateFormat : 'dd-mm-yy'
-    }).datepicker('setDate', null);
-
-    $("#earliestMoveOutDate").datepicker({
-      altField: '#field-earliestMoveOutDate',
-      dateFormat : 'dd-mm-yy'
-    }).datepicker('setDate', null);
-
-    $("#latestMoveOutDate").datepicker({
-      altField: '#field-latestMoveOutDate',
-      dateFormat : 'dd-mm-yy'
-    }).datepicker('setDate', null);
-
-
-
-
-    /**
-     * Initiate autocompletion for localities
-     */
-    $("#city").autocomplete({
-      minLength : 2,
-      enabled : true,
-      autoFocus : true,
-      source : $.flatfindr.ZIP_CODES
-    });
-
 
 
 
