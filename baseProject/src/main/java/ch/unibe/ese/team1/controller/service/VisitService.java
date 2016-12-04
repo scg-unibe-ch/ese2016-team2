@@ -39,7 +39,7 @@ public class VisitService {
 	 */
 	@Transactional
 	public Iterable<Visit> getVisitsByAd(Ad ad) {
-		return visitDao.findByAd(ad);
+		return visitDao.findByAdOrderByStartTimestampAsc(ad);
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class VisitService {
 	 */
 	@Transactional
 	public Iterable<Visit> getVisitsByAuction(Auction auction) {
-		return visitDao.findByAuction(auction);
+		return visitDao.findByAuctionOrderByStartTimestampAsc(auction);
 	}
 
 	/** Returns the visit with the given id. */
