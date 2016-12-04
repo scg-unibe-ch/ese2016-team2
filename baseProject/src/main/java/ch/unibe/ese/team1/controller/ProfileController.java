@@ -147,17 +147,19 @@ public class ProfileController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/signup/Google", method = RequestMethod.POST)
+	@RequestMapping(value = "/signup/google", method = RequestMethod.POST)
 	public ModelAndView signupGoogleResultPage(@Valid SignupGoogleForm signupGoogleForm, BindingResult bindingResult) {
 		ModelAndView model;
 		
-		if (bindingResult.hasErrors()) {
+		if (!bindingResult.hasErrors()) {
 			signupService.saveFromGoogle(signupGoogleForm);
 			model = new ModelAndView("login");
 			model.addObject("confirmationMessage", "Signup complete!");
 		} else {
-			model = new ModelAndView("signupGoogle");
-			model.addObject("signupGoogleForm", signupGoogleForm);
+//			model = new ModelAndView("signupGoogle");
+//			model.addObject("signupGoogleForm", signupGoogleForm);
+			model = new ModelAndView("login");
+			model.addObject("confirmationMessage", "Shit.");
 		}
 		return model;
 	}
@@ -169,6 +171,17 @@ public class ProfileController {
 	public @ResponseBody boolean doesEmailExist(@RequestParam String email) {
 		return signupService.doesUserWithUsernameExist(email);
 	}
+	
+	
+	
+	//@Jerome
+	@RequestMapping(value = "/signup/doesGoogleEmailExist", method = RequestMethod.POST)
+	public @ResponseBody boolean doesGoogleEmailExist(@RequestParam String email) {
+		return signupService.doesGoogleUserWithUsernameExist(email);
+	}
+	
+	
+	
 
 	/** Shows the edit profile page. */
 	@RequestMapping(value = "/profile/editProfile", method = RequestMethod.GET)

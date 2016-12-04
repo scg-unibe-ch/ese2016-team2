@@ -64,7 +64,7 @@ public class SignupService {
 		
 		Set<UserRole> userRoles = new HashSet<>();
 		UserRole role = new UserRole();
-		role.setRole(DEFAULT_ROLE);
+		role.setRole("ROLE_WHATEVER");
 		role.setUser(user);
 		userRoles.add(role);
 		
@@ -81,5 +81,12 @@ public class SignupService {
 	@Transactional
 	public boolean doesUserWithUsernameExist(String username){
 		return userDao.findByUsername(username) != null;
+	}
+	
+	
+	//@Jerome
+	@Transactional
+	public boolean doesGoogleUserWithUsernameExist(String username){
+		return userGoogleDao.findByUsername(username) != null;
 	}
 }

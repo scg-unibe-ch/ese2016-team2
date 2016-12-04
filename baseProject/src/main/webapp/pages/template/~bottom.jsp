@@ -11,8 +11,8 @@
 
 		var gUser = {
 			id_token: googleUser.getAuthResponse().id_token,
-			firstname: profile.getGivenName(),
-			lastname: profile.getFamilyName(),
+			firstName: profile.getGivenName(), // before: firstname
+			lastName: profile.getFamilyName(), // before: lastname
 			email: profile.getEmail(),
 			picture: profile.getImageUrl()
 		};
@@ -28,12 +28,39 @@
 
 		// EXAMPLE
 		// check if email exists - and handle according response (bool)
-		$.post('/signup/Google', {email: gUser.email, firstName: gUser.firstName, lastName: gUser.lastName})
-			.done(function (existingEmail) {
-					
-				
-			});
 
+		$.post('/signup/doesGoogleEmailExist', {
+			email: gUser.email
+		})
+		.done(function (existingEmail) {
+			if (existingEmail) {
+				console.log('user exists');
+			} else {
+				$.post('/signup/google', {
+					email: gUser.email,
+					firstName: gUser.firstName,
+					lastName: gUser.lastName
+					// password: '654321',
+					// Gender: 'MALE',
+					// Account: 'normal'
+				})
+				.done(function (data) {
+					console.log('Yepp: ', data);
+				})
+				.fail(function (data) {
+					console.log('Nope: ', data);
+				});
+			}
+		})
+		.fail(function (data) {
+			console.log(data.responseText);
+		});
+
+		// @Jerome
+		// The object literal held firstname / lastname not firstName / lastName.
+		// But yea, i changed the names to be the same as in signupForm ->
+		// firstName / lastName. It would have worked with gUser.firstname/.lastname,
+		// though.
 	}
 
 
