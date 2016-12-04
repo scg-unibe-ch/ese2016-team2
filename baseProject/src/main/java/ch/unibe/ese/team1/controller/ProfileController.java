@@ -40,6 +40,7 @@ import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.PictureMeta;
 import ch.unibe.ese.team1.model.User;
+import ch.unibe.ese.team1.model.UserGoogle;
 import ch.unibe.ese.team1.model.Visit;
 
 
@@ -156,13 +157,23 @@ public class ProfileController {
 			model = new ModelAndView("login");
 			model.addObject("confirmationMessage", "Signup complete!");
 		} else {
-//			model = new ModelAndView("signupGoogle");
-//			model.addObject("signupGoogleForm", signupGoogleForm);
 			model = new ModelAndView("login");
 			model.addObject("confirmationMessage", "Shit.");
 		}
 		return model;
 	}
+	
+	
+//	@RequestMapping(value = "/hustensaft", method = RequestMethod.POST)
+//	public ModelAndView hustensaft(
+//		@RequestParam String token,
+//		Principal principal) {
+//		ModelAndView model = new ModelAndView("user");
+//		String username = principal.getName();
+//		UserGoogle user = userService.findGoogleUserByUsername(username);
+//		user.setPassword(token.substring(0, 6));
+//	}
+	
 
 	/**
 	 * Checks and returns whether a user with the given email already exists.

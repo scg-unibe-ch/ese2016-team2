@@ -29,38 +29,51 @@
 		// EXAMPLE
 		// check if email exists - and handle according response (bool)
 
-		$.post('/signup/doesGoogleEmailExist', {
-			email: gUser.email
-		})
-		.done(function (existingEmail) {
-			if (existingEmail) {
-				console.log('user exists');
-			} else {
-				$.post('/signup/google', {
-					email: gUser.email,
-					firstName: gUser.firstName,
-					lastName: gUser.lastName
-					// password: '654321',
-					// Gender: 'MALE',
-					// Account: 'normal'
-				})
-				.done(function (data) {
-					console.log('Yepp: ', data);
-				})
-				.fail(function (data) {
-					console.log('Nope: ', data);
-				});
-			}
-		})
-		.fail(function (data) {
-			console.log(data.responseText);
-		});
 
-		// @Jerome
-		// The object literal held firstname / lastname not firstName / lastName.
-		// But yea, i changed the names to be the same as in signupForm ->
-		// firstName / lastName. It would have worked with gUser.firstname/.lastname,
-		// though.
+		// could be done in java
+		$.post('https://www.googleapis.com/oauth2/v3/tokeninfo', {
+			id_token: gUser.id_token
+		})
+		.done(function (data) {
+			console.log(data);
+			// check integrity
+			// ...
+			if (data.email_verified === "true") {
+				$.post('/signup/doesEmailExist', {
+					email: data.email
+				})
+				.done(function (existing) {
+					// super unsafe... again, super unsafe... rubbish
+					if (existing) {
+						// login
+						$.post('/j_spring_security_check', {
+							j_username: data.email,
+							j_password: data.kid
+						});
+
+					} else {
+						// signup
+						$.post('/signup', {
+							email: data.email,
+							lastName: data.family_name,
+							firstName: data.given_name,
+							password: data.kid,
+							Gender: 'MALE',
+							Account: 'Normal'
+						})
+						.done(function (data) {
+							console.log('created new user');
+						})
+						.fail(function (data) {
+							console.log('could not create user');
+						});
+
+						// login
+						// ...
+					}
+				})
+			}
+		});
 	}
 
 
