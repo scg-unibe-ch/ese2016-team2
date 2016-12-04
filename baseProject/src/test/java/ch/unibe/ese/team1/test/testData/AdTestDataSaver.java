@@ -223,8 +223,8 @@ public class AdTestDataSaver {
 		adOlten.setPictures(pictures);
 		adDao.save(adOlten);
 
-		String studioDescription5 = "Studio meublé au 3iéme étage, comprenant"
-				+ "une kitchenette entiérement équipée (frigo, plaques,"
+		String studioDescription5 = "Studio meublé au 3ième étage, comprenant"
+				+ "une kitchenette entièrement équipée (frigo, plaques,"
 				+ "four et hotte), une pièce à vivre donnant sur un balcon,"
 				+ "une salle de bains avec wc. Cave, buanderie et site satellite"
 				+ "à disposition.";
@@ -243,7 +243,7 @@ public class AdTestDataSaver {
 		adNeuchâtel.setRoomDescription(studioDescription5);
 		adNeuchâtel.setPreferences(roomPreferences5);
 		adNeuchâtel.setUser(bernerBaer);
-		adNeuchâtel.setTitle("Studio extrémement bon marché à Neuchâtel");
+		adNeuchâtel.setTitle("Studio extrêmement bon marché à Neuchâtel");
 		adNeuchâtel.setStreet("Rue de l'Hôpital 11");
 		adNeuchâtel.setCity("Neuchâtel");
 		adNeuchâtel.setGarden(true);
@@ -465,8 +465,8 @@ public class AdTestDataSaver {
 		adDavos.setPictures(pictures);
 		adDao.save(adDavos);
 
-		String studioDescription11 = "Studio meublé au 3iéme étage, comprenant"
-				+ "une kitchenette entiérement équipée (frigo, plaques,"
+		String studioDescription11 = "Studio meublé au 3ième étage, comprenant"
+				+ "une kitchenette entièrement équipée (frigo, plaques,"
 				+ "four et hotte), une pièce à vivre donnant sur un balcon,"
 				+ "une salle de bains avec wc. Cave, buanderie et site satellite"
 				+ "à disposition.";
@@ -485,7 +485,7 @@ public class AdTestDataSaver {
 		adLausanne.setRoomDescription(studioDescription11);
 		adLausanne.setPreferences(roomPreferences11);
 		adLausanne.setUser(oprah);
-		adLausanne.setTitle("Studio extrémement bon marché à Lausanne");
+		adLausanne.setTitle("Studio extrêmement bon marché à Lausanne");
 		adLausanne.setStreet("Rue de l'Eglise 26");
 		adLausanne.setCity("Lausanne");
 		adLausanne.setGarden(true);
