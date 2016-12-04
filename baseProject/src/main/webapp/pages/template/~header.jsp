@@ -262,7 +262,7 @@
 
           <div class="row">
             <div class="tile tile-half">
-              <button type="submit" tabindex="8">Find</button>
+              <button type="submit" tabindex="8" name="results" value="Results">Find</button>
             </div>
             <div class="tile tile-half">
     					<button form="searchForm" type="reset">Clear</button>
