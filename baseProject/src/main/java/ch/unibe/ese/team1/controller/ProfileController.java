@@ -28,6 +28,7 @@ import ch.unibe.ese.team1.controller.pojos.forms.EditProfileForm;
 import ch.unibe.ese.team1.controller.pojos.forms.MessageForm;
 import ch.unibe.ese.team1.controller.pojos.forms.RegisterForm;
 import ch.unibe.ese.team1.controller.pojos.forms.SignupForm;
+import ch.unibe.ese.team1.controller.pojos.forms.SignupGoogleForm;
 import ch.unibe.ese.team1.controller.service.AdService;
 import ch.unibe.ese.team1.controller.service.AuctionService;
 import ch.unibe.ese.team1.controller.service.RegisterService;
@@ -39,6 +40,7 @@ import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.PictureMeta;
 import ch.unibe.ese.team1.model.User;
+import ch.unibe.ese.team1.model.UserGoogle;
 import ch.unibe.ese.team1.model.Visit;
 
 
@@ -73,10 +75,6 @@ public class ProfileController {
 	@Autowired
 	private ServletContext servletContext;
 	
-	
-	
-	
-
 	@Autowired
 	private SignupService signupService;
 
@@ -150,6 +148,31 @@ public class ProfileController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/signup/google", method = RequestMethod.POST)
+	public ModelAndView signupGoogleResultPage(@Valid SignupGoogleForm signupGoogleForm, BindingResult bindingResult) {
+		ModelAndView model;
+		
+		if (!bindingResult.hasErrors()) {
+			signupService.saveFromGoogle(signupGoogleForm);
+			model = new ModelAndView("login");
+			model.addObject("confirmationMessage", "Signup complete!");
+		} else {
+			model = new ModelAndView("login");
+			model.addObject("confirmationMessage", "Shit.");
+		}
+		return model;
+	}
+	
+	
+//	@RequestMapping(value = "/hustensaft", method = RequestMethod.POST)
+//	public ModelAndView hustensaft(
+//		@RequestParam String token,
+//		Principal principal) {
+//		ModelAndView model = new ModelAndView("user");
+//		String username = principal.getName();
+//		UserGoogle user = userService.findGoogleUserByUsername(username);
+//		user.setPassword(token.substring(0, 6));
+//	}
 	
 
 	/**
@@ -159,6 +182,17 @@ public class ProfileController {
 	public @ResponseBody boolean doesEmailExist(@RequestParam String email) {
 		return signupService.doesUserWithUsernameExist(email);
 	}
+	
+	
+	
+	//@Jerome
+	@RequestMapping(value = "/signup/doesGoogleEmailExist", method = RequestMethod.POST)
+	public @ResponseBody boolean doesGoogleEmailExist(@RequestParam String email) {
+		return signupService.doesGoogleUserWithUsernameExist(email);
+	}
+	
+	
+	
 
 	/** Shows the edit profile page. */
 	@RequestMapping(value = "/profile/editProfile", method = RequestMethod.GET)
