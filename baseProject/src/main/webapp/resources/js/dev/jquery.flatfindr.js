@@ -96,9 +96,18 @@ jQuery.extend({
     add: function(modules) {
 
       modules.forEach(function(module) {
+        var option;
         if (!(module in jQuery.flatfindr)) return;
 
         module = jQuery.flatfindr[module];
+        option = module.option || {};
+
+        if ('deps' in module &&
+            !(module.deps.name in jQuery.flatfindr)) {
+          if (module[module.deps]) // dep's option by name (failing of course!!!)
+            module.deps.option = module[module.deps.name];
+          jQuery.flatfindr.add(module.deps);
+        }
 
         module.fn.call(
           module,
@@ -106,7 +115,7 @@ jQuery.extend({
           document,
           jQuery,
           module.$view || $(jQuery.flatfindr.VIEW),
-          module.option || {});
+          option);
       });
 
       return jQuery.flatfindr;

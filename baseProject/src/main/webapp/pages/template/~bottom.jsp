@@ -6,6 +6,57 @@
 <script src="/resources/js/prod/${param.js}.js"></script>
 <script>
 
+	function onSignIn(googleUser) {
+		var profile = googleUser.getBasicProfile();
+
+		var gUser = {
+			id_token: googleUser.getAuthResponse().id_token,
+			firstname: profile.getGivenName(),
+			lastname: profile.getFamilyName(),
+			email: profile.getEmail(),
+			picture: profile.getImageUrl()
+		};
+
+
+		// Send stuff to controller just like the example below. So, specify
+		// the url, e.g '/signup/doesEmailExist' and then specify an obj with
+		// key:value pairs ({key1: value, key2: value, ...}) where the keys
+		// correspond to the properties of the form that is handled in a
+		// controller method. I.e. if the signupForm has a property firstname, the
+		// key to be passed to the controller method has to be the same. Of course,
+		// types of the values should match too, i guess.
+
+		// EXAMPLE
+		// check if email exists - and handle according response (bool)
+		$.post('/signup/doesEmailExist', {email: gUser.email})
+			.done(function (existingEmail) {
+				if (existingEmail) {
+					// do somn, i.e. send stuff to another controller the same way
+
+
+				} else {
+					// do somn else
+
+
+				}
+			});
+
+	}
+
+
+
+
+	function signOut() {
+		var auth2 = gapi.auth2.getAuthInstance();
+		auth2.signOut().then(function () {
+			console.log('User signed out.');
+		});
+	}
+
+
+
+
+
 	(function ($, pagename) {
 
 		var js = {
@@ -32,15 +83,9 @@
 			},
 
 			register: function () {
-				/**
-		     * Initiate autocompletion for localities
-		     */
-		    $("#city").autocomplete({
-		      minLength : 2,
-		      enabled : true,
-		      autoFocus : true,
-		      source : $.flatfindr.ZIP_CODES
-		    });
+		    return $.flatfindr.add([
+					'autoloc'
+				]);
 			},
 
 			alerts: function () {
@@ -52,30 +97,7 @@
 					});
 				}
 
-				// $(document).ready(function() {
-				// 	$("#city").autocomplete({
-				// 		minLength : 2
-				// 	});
-				// 	$("#city").autocomplete({
-				// 		source : <c:import url="getzipcodes.jsp" />
-				// 	});
-				// 	$("#city").autocomplete("option", {
-				// 		enabled : true,
-				// 		autoFocus : true
-				// 	});
-				//
-				// 	var price = document.getElementById('priceInput');
-				// 	var radius = document.getElementById('radiusInput');
-				//
-				// 	if(price.value == null || price.value == "" || price.value == "0")
-				// 		price.value = "500";
-				// 	if(radius.value == null || radius.value == "" || radius.value == "0")
-				// 		radius.value = "5";
-				// });
-				//
-
-				return $.flatfindr.add
-
+				//return $.flatfindr.add
 
 			},
 

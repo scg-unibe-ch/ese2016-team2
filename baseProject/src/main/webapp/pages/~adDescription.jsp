@@ -347,7 +347,7 @@
 		<div id="visitList" class="adDescDiv">
 			<h2>Visiting times</h2>
 			<table>
-				<c:forEach items="${visits }" var="visit">
+				<c:forEach items="${visits}" var="visit">
 					<tr>
 						<td><fmt:formatDate value="${visit.startTimestamp}"
 								pattern="dd-MM-yyyy " /> &nbsp; from <fmt:formatDate

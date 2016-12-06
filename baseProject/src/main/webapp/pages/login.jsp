@@ -3,8 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="388404425969-6u07lg832603b5udk20qal9c5e1vj213.apps.googleusercontent.com">
@@ -14,16 +13,6 @@
 
 <c:import url="template/~top.jsp" />
 <c:import url="template/~header.jsp" />
-
-<script>
-	function onSignIn(googleUser) {
-	  var profile = googleUser.getBasicProfile();
-	  var id = profile.getId(); // Do not send to your backend! Use an ID token instead.
-	  var name = profile.getName();
-	  var url = profile.getImageUrl();
-	  var email = profile.getEmail();
-	}
-</script>
 
 <main role="main">
 	<c:import url="template/~top_bar.jsp">
@@ -61,7 +50,7 @@
 													and password.
 												</p>
 											</c:if>
-										</div>											
+										</div>
 										<button type="submit">Sign in</button>
 									</form>
 								</c:otherwise>
@@ -88,11 +77,16 @@
 						Or <a class="link" href="<c:url value="/signup" />">sign up</a> as a new user.
 					</p>
 				</div>
-					
-					<div class="container-pad">
-						<h3>You can also use your Google Account to sign in:</h3>
-						<div class="g-signin2" data-onsuccess="onSignIn"></div>		
-					</div>
+
+				<div class="container-pad">
+					<h3>You can also use your Google Account to sign in:</h3>
+					<div class="g-signin2" data-onsuccess="onSignIn"></div>
+				</div>
+
+				<div class="container-pad">
+					<h3>Google sign out: (while deving it)</h3>
+					<a href="#" onclick="signOut();">Sign out</a>
+				</div>
 			</div> <%-- .span-half END --%>
 
 
