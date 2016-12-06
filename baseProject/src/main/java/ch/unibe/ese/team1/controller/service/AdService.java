@@ -75,6 +75,9 @@ public class AdService {
 		String zip = placeAdForm.getCity().substring(0, 4);
 		ad.setZipcode(Integer.parseInt(zip));
 		ad.setCity(placeAdForm.getCity().substring(7));
+		
+		ad.setLatitude(placeAdForm.getLatitude());
+		ad.setLongitude(placeAdForm.getLongitude());
 
 		// java.util.Calendar uses a month range of 0-11 instead of the
 		// XMLGregorianCalendar which uses 1-12

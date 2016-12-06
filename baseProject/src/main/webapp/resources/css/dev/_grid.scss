@@ -40,14 +40,14 @@
 .row {
   @include row();
 
-  &.fill-parent {
-    display: flex;
-  }
-
-  .fill-parent-child {
-    flex: 1;
-    height: auto;
-  }
+  // &.fill-parent {
+  //   display: flex;
+  // }
+  //
+  // .fill-parent-child {
+  //   flex: 1;
+  //   height: auto;
+  // }
 }
 
 .span-full {

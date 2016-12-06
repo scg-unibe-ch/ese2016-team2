@@ -18,6 +18,10 @@ public class PlaceAdForm {
 
 	@Pattern(regexp = "^[0-9]{4} - [-;\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
 	private String city;
+	
+	private String latitude;
+	
+	private String longitude;
 
 	@NotBlank(message = "Required")
 	private String moveInDate;
@@ -249,5 +253,21 @@ public class PlaceAdForm {
 
 	public void setBuyable(boolean buyable) {
 		this.buyable = buyable;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 }

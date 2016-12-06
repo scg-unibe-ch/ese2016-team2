@@ -52,16 +52,16 @@ jQuery.flatfindr.register({
     /**
      * All input fields within the search form scrollable container.
      */
-    $('.form-search .container-scroll input')
-      .focus(alignInputToTop);
+    // $('.form-search .container-scroll input')
+    //   .focus(alignInputToTop);
 
 
 
     /**
      * All checkboxes within the search form scrollable container.
      */
-    $('.form-search .container-scroll label')
-      .on('click', alignInputToTop);
+    // $('.form-search .container-scroll label')
+    //   .on('click', alignInputToTop);
 
 
 

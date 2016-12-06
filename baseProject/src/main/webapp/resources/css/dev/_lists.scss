@@ -50,8 +50,12 @@ select.list-sort {
 
 
 .resultPremiumAd {
-  a span {
+  a span:not(.fa-gavel) {
     color: $gold;
+  }
+
+   a:hover .fa-gavel {
+    color: $base-color;
   }
 }
 
