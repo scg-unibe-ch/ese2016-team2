@@ -39,6 +39,9 @@ public class AuctionService {
 	
 	@Autowired
 	private VisitService visitService;
+	
+	@Autowired
+	BookmarkService bookmarkService;
 
 	/**
 	 * Handles persisting a new auction to the database.
@@ -454,6 +457,7 @@ public class AuctionService {
 	public void delete(long auctionId) {
 		Auction auction = auctionDao.findOne(auctionId);
 		visitService.delete(auction);
+		bookmarkService.deleteAuction(auction);
 		auctionDao.delete(auction);
 	}
 }
