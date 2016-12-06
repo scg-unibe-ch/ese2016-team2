@@ -52,6 +52,18 @@
                 <label for="buy">Buy</label>
               </div>
             </div>
+            
+            
+            <div class="row checkboxes">
+				<div class="tile tile-half">
+					<form:checkbox name="auction" id="auction" path="auction" />
+					<label for="auction">Auction</label>
+				</div>
+				<div class="tile tile-half">
+					<form:checkbox name="ad" id="ad" path="ad" />
+					<label for="ad">Ad</label>
+				</div>
+			</div>
 
 
   					<form:input
@@ -250,7 +262,7 @@
 
           <div class="row">
             <div class="tile tile-half">
-              <button type="submit" tabindex="8">Find</button>
+              <button type="submit" tabindex="8" name="results" value="Results">Find</button>
             </div>
             <div class="tile tile-half">
     					<button form="searchForm" type="reset">Clear</button>

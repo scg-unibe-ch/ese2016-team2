@@ -15,6 +15,8 @@ public class SearchForm {
 	private boolean studio;
 	private boolean room;
 	private boolean house;
+	private boolean auction;
+	private boolean ad;
 
 	private boolean smokers;
 	private boolean animals;
@@ -229,4 +231,22 @@ public class SearchForm {
 	public void setLatestMoveOutDate(String latestMoveOutDate) {
 		this.latestMoveOutDate = latestMoveOutDate;
 	}
+
+	public boolean getAuction() {
+		return auction;
+	}
+
+	public void setAuction(boolean auction) {
+		this.auction = auction;
+	}
+
+	public boolean getAd() {
+		return ad;
+	}
+
+	public void setAd(boolean ad) {
+		this.ad = ad;
+	}
+	
+	
 }
