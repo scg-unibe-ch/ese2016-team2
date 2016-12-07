@@ -26,22 +26,25 @@ public class UserGoogle {
 	@GeneratedValue
 	private long id;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = true, unique = true)
 	private String username;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String email;
+	
+//	@Column(nullable = false)
+//	private String password;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String firstName;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String lastName;
 
 	@Column(nullable = true)
 	private Gender gender;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String account;
 	
 	@Column(nullable = true)
@@ -95,6 +98,14 @@ public class UserGoogle {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+//	public String getPassword() {
+//		return password;
+//	}
+//
+//	public void setPassword(String password) {
+//		this.password = password;
+//	}
 
 	public String getFirstName() {
 		return firstName;

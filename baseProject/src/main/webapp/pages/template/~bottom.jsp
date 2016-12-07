@@ -11,8 +11,8 @@
 
 		var gUser = {
 			id_token: googleUser.getAuthResponse().id_token,
-			firstname: profile.getGivenName(),
-			lastname: profile.getFamilyName(),
+			firstName: profile.getGivenName(), // before: firstname
+			lastName: profile.getFamilyName(), // before: lastname
 			email: profile.getEmail(),
 			picture: profile.getImageUrl()
 		};
@@ -28,19 +28,52 @@
 
 		// EXAMPLE
 		// check if email exists - and handle according response (bool)
-		$.post('/signup/doesEmailExist', {email: gUser.email})
-			.done(function (existingEmail) {
-				if (existingEmail) {
-					// do somn, i.e. send stuff to another controller the same way
 
 
-				} else {
-					// do somn else
+		// could be done in java
+		$.post('https://www.googleapis.com/oauth2/v3/tokeninfo', {
+			id_token: gUser.id_token
+		})
+		.done(function (data) {
+			console.log(data);
+			// check integrity
+			// ...
+			if (data.email_verified === "true") {
+				$.post('/signup/doesEmailExist', {
+					email: data.email
+				})
+				.done(function (existing) {
+					// super unsafe... again, super unsafe... rubbish
+					if (existing) {
+						// login
+						$.post('/j_spring_security_check', {
+							j_username: data.email,
+							j_password: data.kid
+						});
 
+					} else {
+						// signup
+						$.post('/signup', {
+							email: data.email,
+							lastName: data.family_name,
+							firstName: data.given_name,
+							password: data.kid,
+							Gender: 'MALE',
+							Account: 'Normal'
+						})
+						.done(function (data) {
+							console.log('created new user');
+						})
+						.fail(function (data) {
+							console.log('could not create user');
+						});
 
-				}
-			});
-
+						// login
+						// ...
+					}
+				})
+			}
+		});
 	}
 
 

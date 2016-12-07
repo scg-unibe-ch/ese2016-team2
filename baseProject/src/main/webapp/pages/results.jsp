@@ -307,7 +307,8 @@
 															</a>
 														</h2>
 
-														<p>${ad.street},${ad.zipcode}${ad.city}</p>
+														<p>${ad.street}</p>
+														<p>${ad.zipcode} ${ad.city}</p>
 														<p>${ad.roomType}</p>
 
 
@@ -355,7 +356,8 @@
 															</a>
 														</h2>
 
-														<p>${ad.street},${ad.zipcode}${ad.city}</p>
+														<p>${ad.street}</p>
+														<p>${ad.zipcode} ${ad.city}</p>
 														<p>${ad.roomType}</p>
 
 
@@ -443,7 +445,8 @@
 																${ad.title } </a>
 														</h2>
 
-														<p>${ad.street},${ad.zipcode}${ad.city}</p>
+														<p>${ad.street}</p>
+														<p>${ad.zipcode} ${ad.city}</p>
 														<p>${ad.roomType}</p>
 
 
@@ -489,7 +492,8 @@
 															</a>
 														</h2>
 
-														<p>${ad.street},${ad.zipcode}${ad.city}</p>
+														<p>${ad.street}</p>
+														<p>${ad.zipcode} ${ad.city}</p>
 														<p>${ad.roomType}</p>
 
 
