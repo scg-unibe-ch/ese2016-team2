@@ -2,94 +2,12 @@
 	contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+
+<security:authorize var="loggedIn" url="/profile" />
 
 <script src="/resources/js/prod/${param.js}.js"></script>
 <script>
-
-	function onSignIn(googleUser) {
-		var profile = googleUser.getBasicProfile();
-
-		var gUser = {
-			id_token: googleUser.getAuthResponse().id_token,
-			firstName: profile.getGivenName(), // before: firstname
-			lastName: profile.getFamilyName(), // before: lastname
-			email: profile.getEmail(),
-			picture: profile.getImageUrl()
-		};
-
-
-		// Send stuff to controller just like the example below. So, specify
-		// the url, e.g '/signup/doesEmailExist' and then specify an obj with
-		// key:value pairs ({key1: value, key2: value, ...}) where the keys
-		// correspond to the properties of the form that is handled in a
-		// controller method. I.e. if the signupForm has a property firstname, the
-		// key to be passed to the controller method has to be the same. Of course,
-		// types of the values should match too, i guess.
-
-		// EXAMPLE
-		// check if email exists - and handle according response (bool)
-
-
-		// could be done in java
-		$.post('https://www.googleapis.com/oauth2/v3/tokeninfo', {
-			id_token: gUser.id_token
-		})
-		.done(function (data) {
-			console.log(data);
-			// check integrity
-			// ...
-			if (data.email_verified === "true") {
-				$.post('/signup/doesEmailExist', {
-					email: data.email
-				})
-				.done(function (existing) {
-					// super unsafe... again, super unsafe... rubbish
-					if (existing) {
-						// login
-						$.post('/j_spring_security_check', {
-							j_username: data.email,
-							j_password: data.kid
-						});
-
-					} else {
-						// signup
-						$.post('/signup', {
-							email: data.email,
-							lastName: data.family_name,
-							firstName: data.given_name,
-							password: data.kid,
-							Gender: 'MALE',
-							Account: 'Normal'
-						})
-						.done(function (data) {
-							console.log('created new user');
-						})
-						.fail(function (data) {
-							console.log('could not create user');
-						});
-
-						// login
-						// ...
-					}
-				})
-			}
-		});
-	}
-
-
-
-
-	function signOut() {
-		var auth2 = gapi.auth2.getAuthInstance();
-		auth2.signOut().then(function () {
-			console.log('User signed out.');
-		});
-	}
-
-
-
-
-
 	(function ($, pagename) {
 
 		var js = {
@@ -97,28 +15,19 @@
 				return $.flatfindr
 					.with({
 						PAGE_NAME: pagename,
-						ZIP_CODES: <c:import url="getzipcodes.jsp" />
+						ZIP_CODES: <c:import url="getzipcodes.jsp" />,
+						logged: ${loggedIn}
 					})
-					.add(['header']);
-			},
-
-			login: function () {
-				return $.flatfindr.add([
-					'search'
-				]);
+					.add(['header'])
+					.then('bits', 'unreadMessages');
 			},
 
 			signup: function () {
-				return $.flatfindr.add([
-					'search',
-					'signup'
-				]);
+				return $.flatfindr.add(['search', 'signup']);
 			},
 
 			register: function () {
-		    return $.flatfindr.add([
-					'autoloc'
-				]);
+		    return $.flatfindr.add(['autoloc']);
 			},
 
 			alerts: function () {
@@ -129,8 +38,6 @@
 						$("#alertsDiv").load(document.URL + " #alertsDiv");
 					});
 				}
-
-				//return $.flatfindr.add
 
 			},
 
@@ -156,18 +63,13 @@
 						.removeClass('js-confirm');
 				});
 
-				return $.flatfindr.add([
-					'search'
-				]);
+				return $.flatfindr.add(['search']);
 			},
 
 			user: function () {
 				return $.flatfindr
 					.with({ username: '${user.username}' })
-					.add([
-						'search',
-						'message'
-					]);
+					.add(['message']);
 			},
 
 			editProfile: function () {
@@ -177,38 +79,32 @@
 							val: "${currentUser.aboutMe}"
 						}}
 					})
-					.add([
-						'imageUpload',
-						'populate'
-					])
+					.add(['imageUpload', 'populate'])
 			},
 
 			index: function () {
-				return $.flatfindr.add([
-					'search',
-					'sliderBlender',
-					'sliderBlenderCaption'
-				]);
+				return $.flatfindr
+					.add(['sliderBlender'])
+					.then('sliderBlender', 'addSliderBlenderCaption');
 			},
 
 			searchAd: function () {
-				return $.flatfindr.add([
-					'search'
-				]);
+				return $.flatfindr.add(['search']);
 			},
 
 			results: function () {
-				return $.flatfindr.add([
-					'filter',
-					'map'
-				]);
+				return $.flatfindr.add(['filter', 'map']);
 			},
 
 			placeAd: function () {
-				return $.flatfindr.add([
-					'place',
-					'imageUpload'
-				]);
+				return $.flatfindr.add(['place', 'imageUpload']);
+			},
+
+			messages: function () {
+				return $.flatfindr
+					.add(['message'])
+					.then('message', 'update')
+					.then('bits', 'unreadMessages', ['messages']);
 			},
 
 			editAd: function () {
@@ -232,7 +128,7 @@
 			<script
 				async
 				defer
-				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAh9mJhrCy-xTWy5b3Niop8QilZAdMh1To&callback=initMap">
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAh9mJhrCy-xTWy5b3Niop8QilZAdMh1To">
 			</script>
     </c:when>
     <c:otherwise>

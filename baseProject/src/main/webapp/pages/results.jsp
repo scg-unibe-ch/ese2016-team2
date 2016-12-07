@@ -27,9 +27,7 @@
 					action="/results" id="filterForm" autocomplete="off">
 
 					<div class="container-scroll">
-						<div class="row">
-							<div id="map"></div>
-						</div>
+						<div id="map" class="row"></div>
 
 						<form:input type="text" name="city" id="city" path="city"
 							placeholder="Find..." tabindex="1" />
@@ -559,25 +557,10 @@
 		</div>
 		<%-- .span-half END --%>
 
-	</div>
-	<%-- .row END --%>
-</div>
-<%-- .containerEND --%> </main>
-<%-- <script>
-	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-	window.geoc = [
-		<c:forEach var="geo" varStatus="status" items="${results}">
-			<c:choose>
-			  <c:when test="${(fn:length(results)) == status.count}" >
-			    {"address": "${geo.street}, ${geo.zipcode} ${geo.city}"}
-			  </c:when>
-				<c:otherwise>
-					{"address": "${geo.street}, ${geo.zipcode} ${geo.city}"},
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
-	];
-</script> --%>
+		</div> <%-- .row END --%>
+	</div> <%-- .containerEND --%>
+
+</main>
 
 
 <%-- <c:import url="template/~footer.jsp" /> --%>

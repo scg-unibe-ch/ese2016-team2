@@ -23,5 +23,9 @@
  * flatfindr shtiy wannabe 'modules'
  */
 
+// IIFE
+// @codekit-prepend "+bits.js"
+
+// LAZY
 // @codekit-prepend "+header-primary.js"
 // @codekit-prepend "+form-search.js"

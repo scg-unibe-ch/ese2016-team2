@@ -12,6 +12,42 @@ $slip-height-medium: 73px;
   }
 }
 
+.form-half-height form {
+  height: calc(50vh - 1 * #{$slip-height-small});
+
+  @include media($bq-medium) {
+    height: calc(50vh - 1 * #{$slip-height-medium});
+  }
+}
+
+.form-half-plus-1-height form {
+  height: 50vh;
+}
+
+.form-minus-3-height form {
+  height: calc(100vh - 3 * #{$slip-height-small});
+
+  @include media($bq-medium) {
+    height: calc(100vh - 3 * #{$slip-height-medium});
+  }
+}
+
+.form-minus-4-height form {
+  height: calc(100vh - 4 * #{$slip-height-small});
+
+  @include media($bq-medium) {
+    height: calc(100vh - 4 * #{$slip-height-medium});
+  }
+}
+
+.form-minus-5-height form {
+  height: calc(100vh - 5 * #{$slip-height-small});
+
+  @include media($bq-medium) {
+    height: calc(100vh - 5 * #{$slip-height-medium});
+  }
+}
+
 
 .form {
 
@@ -398,6 +434,19 @@ $slip-height-medium: 73px;
 }
 
 
+.form-messages {
+  display: none;
+
+  &.js-show {
+    display: block;
+
+    & + .container-scroll {
+      display: none;
+    }
+  }
+}
+
+
 
 .image-preview-wrap {
   position: relative;
@@ -525,7 +574,8 @@ $slip-height-medium: 73px;
 body.placeAd,
 body.placeAuction,
 body.editProfile,
-body.editAd {
+body.editAd,
+body.messages {
   .edit-section,
   .edit-section.js-show {
     border-bottom: 1px dotted lighten($base-color, 4%);

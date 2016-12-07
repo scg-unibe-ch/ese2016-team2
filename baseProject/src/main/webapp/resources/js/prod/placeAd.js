@@ -29125,23 +29125,28 @@ jQuery.extend({
         var option;
         if (!(module in jQuery.flatfindr)) return;
 
+        mod = module;
         module = jQuery.flatfindr[module];
-        option = module.option || {};
 
-        if ('deps' in module &&
-            !(module.deps.name in jQuery.flatfindr)) {
-          if (module[module.deps]) // dep's option by name (failing of course!!!)
-            module.deps.option = module[module.deps.name];
-          jQuery.flatfindr.add(module.deps);
+        if ('fn' in module) {
+          module = module.fn.call(
+            module,
+            window,
+            document,
+            jQuery,
+            module.$view || $(jQuery.flatfindr.VIEW),
+            module.option || {});
+        } else {
+          module = module.call(
+            module,
+            window,
+            document,
+            jQuery,
+            module.$view || $(jQuery.flatfindr.VIEW),
+            module.option || {});
         }
 
-        module.fn.call(
-          module,
-          window,
-          document,
-          jQuery,
-          module.$view || $(jQuery.flatfindr.VIEW),
-          option);
+        jQuery.flatfindr[mod] = module;
       });
 
       return jQuery.flatfindr;
@@ -29169,9 +29174,128 @@ jQuery.extend({
         jQuery.flatfindr[option] = options[option];
 
       return jQuery.flatfindr;
+    },
+
+
+
+    /**
+     *
+     *
+     * @public
+     * @param  {String} module the module name
+     * @param  {String} add    a public method of the module
+     * @return {Object} jQuery.flatfindr  flatfindr for chaining
+     */
+    then: function(module, method, arglist) {
+      if (!(method in jQuery.flatfindr[module])) return;
+      jQuery.flatfindr[module][method].apply(window, arglist);
+      return jQuery.flatfindr;
     }
   }
 });
+
+
+/**
+ * @name bits
+ * @memberof jQuery.flatfindr
+ * @namespace jQuery.flatfindr.bits
+ *
+ *
+ * @param  {Object} window   the window as you know it
+ * @param  {Object} document the document element
+ * @param  {jQuery} $
+ * @return {Object}          public methods
+ */
+jQuery.flatfindr.bits = function (window, document, $) {
+
+
+  /**
+   *
+   * @type {Object} pub   public methods
+   */
+  var pub = {
+
+
+    /**
+     * @memberof jQuery.flatfindr.bits
+     * @method addDatepicker
+     *
+     * @public
+     * @param {Object} datepicker  element and options
+     */
+    addDatepicker: function (item) {
+
+      $datepicker =
+        $(item.selector).datepicker({
+          altField: item.altfield,
+          dateFormat: item.format
+        });
+
+      if (item.unset)
+        $datepicker.datepicker('setDate', null);
+    },
+
+
+    /**
+     *
+     * @memberof jQuery.flatfindr.bits
+     * @method addAutoloc
+     *
+     * @public
+     * @param {String} selector  element selector
+     */
+    addAutoloc: function (selector) {
+
+      $(selector).autocomplete({
+        minLength : 2,
+        enabled : true,
+        autoFocus : true,
+        source : $.flatfindr.ZIP_CODES
+      });
+    },
+
+
+
+    /**
+     * We pass a place: If it is "messages", the function returns the string
+     * for the inbox; if it is anything else, it returns the string for the header.
+     *
+     * @memberof jQuery.flatfindr.message
+     * @method unreadMessages
+     *
+     * @public
+     */
+    unreadMessages: function (place) {
+      if (!$.flatfindr.logged) return;
+
+    	$.get("/profile/unread", function(data){
+        var message;
+    		if(place == "messages")
+    			message = "Inbox";
+    		else
+    			message = "Messages";
+    		if(data > 0)
+    			message += " (" + data + ")";
+    		if(place == "messages")
+    			$("#inbox").html(message);
+    		else {
+    			$("#messageLink").html(message);
+          $('#new-mail').remove();
+          if (data > 0)
+            $('<a id="new-mail" href="/profile/messages" title="New mail ('+ data +')">'+
+              '<span class="fa fa-envelope fa-2x" aria-hidden="true"></span>'+
+              '<span id="icon-new-mail">('+ data +')</span>'+
+            '</a>').appendTo('#icons-bar');
+        }
+    	});
+    }
+
+  };
+
+
+  return pub;
+
+}(window, document, jQuery);
 
 
 /**
@@ -29452,280 +29576,63 @@ jQuery.flatfindr.register({
 
 
 /**
- *
- * @name autoloc
- * @memberof jQuery.flatfindr
- * @namespace jQuery.flatfindr.autoloc
- */
-
-
-
-jQuery.flatfindr.register({
-
-  name: 'autoloc',
-
-
-  /**
-   * @memberof jQuery.flatfindr.autoloc
-   * @method fn
-   *
-   * @protected
-   * @param  {Object}   window   the window as you know it
-   * @param  {Object}   document the document element
-   * @param  {Object}   $        jQuery
-   * @param  {jQuery}   $view    the default or custom view if set
-   * @param  {Object}   option   what ever object param if passed
-   * @return {Function}          method that sets up simple dom manipulations
-   */
-  fn: function (window, document, $, $view, option) {
-
-    $("#city").autocomplete({
-      minLength : 2,
-      enabled : true,
-      autoFocus : true,
-      source : $.flatfindr.ZIP_CODES
-    });
-    
-  }
-
-});
-
-
-/**
- *
- * @name datepicker
- * @memberof jQuery.flatfindr
- * @namespace jQuery.flatfindr.datepicker
- */
-
-
-
-jQuery.flatfindr.register({
-
-  name: 'datepicker',
-
-
-  /**
-   * @memberof jQuery.flatfindr.datepicker
-   * @method fn
-   *
-   * @protected
-   * @param  {Object}   window   the window as you know it
-   * @param  {Object}   document the document element
-   * @param  {Object}   $        jQuery
-   * @param  {jQuery}   $view    the default or custom view if set
-   * @param  {Object}   option   what ever object param if passed
-   * @return {Function}          method that sets up simple dom manipulations
-   */
-  fn: function (window, document, $, $view, option) {
-
-    var
-      datepickers = option,
-      $datepicker;
-
-    for (var item in datepickers) {
-      $datepicker =
-        $(item).datepicker({
-          altField: item.altfield,
-          dateFormat: item.format
-        });
-
-      if (item.unset)
-        $datepicker.datepicker('setDate', null);
-    }
-  }
-
-});
-
-
-/**
- *
  * @name search
  * @memberof jQuery.flatfindr
  * @namespace jQuery.flatfindr.search
+ *
+ * @param  {Object} window   the window as you know it
+ * @param  {Object} document the document element
+ * @param  {jQuery} $
+ * @param  {Object} $view    the view, defaults to the body element
+ * @param  {Object} option
  */
-
-// @codekit-prepend "+autoloc.js"
-// @codekit-prepend "+datepicker.js"
-
-jQuery.flatfindr.register({
-
-  name: 'search',
-
-  deps: [
-    'autoloc',
-    'datepicker'
-  ],
-  
-  'datepicker': {
-    '#earliestMoveInDate': {
-      altField: '#field-earliestMoveInDate',
-      format: 'dd-mm-yy',
-      unset: true
-    },
-    '#latestMoveInDate': {
-      altField: '#field-latestMoveInDate',
-      format: 'dd-mm-yy',
-      unset: true
-    },
-    '#earliestMoveOutDate': {
-      altField: '#field-earliestMoveOutDate',
-      format: 'dd-mm-yy',
-      unset: true
-    },
-    '#latestMoveOutDate': {
-      altField: '#field-latestMoveOutDate',
-      format: 'dd-mm-yy',
-      unset: true
-    }
-  },
+jQuery.flatfindr.search = function (window, document, $, $view, option) {
 
 
-  /**
-   * @memberof jQuery.flatfindr.search
-   * @method fn
-   *
-   * @protected
-   * @param  {Object}   window   the window as you know it
-   * @param  {Object}   document the document element
-   * @param  {Object}   $        jQuery
-   * @param  {jQuery}   $view    the default or custom view if set
-   * @param  {Object}   option   what ever object param if passed
-   * @return {Function}          method that sets up simple dom manipulations
-   */
-  fn: function (window, document, $, $view, option) {
+  $.flatfindr.bits.addAutoloc('#city');
 
 
-    var
-      /**
-       * An opinionated bit of an extra delay. (usability specific)
-       *
-       * @private
-       * @type {Number}
-       * @constant
-       */
-      DURATION_BUFFER = 50,
-
-
-      /**
-       * The scrollable container.
-       *
-       * @type {Object}
-       */
-      $container_scroll = $('.form-search .container-scroll');
-
-
-
-
-
-    /**
-     * All input fields within the search form scrollable container.
-     */
-    // $('.form-search .container-scroll input')
-    //   .focus(alignInputToTop);
-
-
-
-    /**
-     * All checkboxes within the search form scrollable container.
-     */
-    // $('.form-search .container-scroll label')
-    //   .on('click', alignInputToTop);
-
-
-
-    /**
-     * The submit button.
-     */
-    $('[type=submit]').on('click', function () {
-      validateType($('.form-search form')[0]);
+  [ 'earliestMoveInDate',
+    'earliestMoveOutDate',
+    'latestMoveInDate',
+    'latestMoveOutDate' ]
+    .forEach(function (name) {
+      $.flatfindr.bits.addDatepicker({
+        selector: '#'+ name,
+        altfield: '#field-'+ name,
+        format: 'dd-mm-yy',
+        unset: true
+      });
     });
 
 
-
-    /**
-     * The clear button.
-     */
-    $('.form-search button[type=reset]')
-      .on('click', alignTop);
+  $('button[type=submit]').on('click', function () {
+    validateType($('.form-search form')[0]);
+  });
 
 
 
-    /**
-     * Align the focused or cliced element to top of the visible part of the
-     * scrollable $container_scroll.
-     *
-     * @private
-     */
-    function alignInputToTop() {
-      var
-        $this = $(this),
-        offset_mod = 0;
+  /**
+   * Validate form inputs.
+   *
+   * @private
+   * @param  {Object} form the form to be validated
+   */
+  function validateType(form) {
+    var
+      room = document.getElementById('room'),
+      studio = document.getElementById('studio'),
+      house = document.getElementById('house'),
+      neither = document.getElementById('neither');
 
-      if ($this.is('.js-has-label')) {
-        offset_mod =
-          $this
-            .parents('.row')
-            .first()
-            .find('label')
-            .outerHeight();
-      }
+    neither.checked = false;
 
-      animateScrollTop(
-        $container_scroll.scrollTop() + $(this).position().top - offset_mod
-      );
+    if(!room.checked && !studio.checked && !house.checked) {
+      neither.checked = true;
     }
-
-
-
-    /**
-     * Align $container_scroll to top, so scrollTop position is 0.
-     *
-     * @private
-     */
-    function alignTop() {
-      animateScrollTop(0);
-    }
-
-
-
-    /**
-     * Animate the change of the scrollTop position of the scrollable
-     * element $container_scroll.
-     *
-     * @private
-     * @param  {number} scrollTop the new scroll position to be animated to.
-     */
-    function animateScrollTop(scrollTop) {
-      $container_scroll
-        .delay(DURATION_BUFFER)
-        .animate({scrollTop: scrollTop}, $.flatfindr.BASE_DURATION);
-    }
-
-
-
-    /**
-     * Validate form inputs.
-     *
-     * @private
-     * @param  {Object} form the form to be validated
-     */
-    function validateType(form) {
-    	var
-        room = document.getElementById('room'),
-        studio = document.getElementById('studio'),
-        house = document.getElementById('house'),
-    	  neither = document.getElementById('neither');
-
-    	neither.checked = false;
-
-    	if(!room.checked && !studio.checked && !house.checked) {
-    		neither.checked = true;
-    	}
-    }
-
   }
-});
+
+};
 
 
 /**
@@ -29753,6 +29660,10 @@ jQuery.flatfindr.register({
  * flatfindr shtiy wannabe 'modules'
  */
 
+// IIFE
+// @codekit-prepend "+bits.js"
+
+// LAZY
 // @codekit-prepend "+header-primary.js"
 // @codekit-prepend "+form-search.js"
 

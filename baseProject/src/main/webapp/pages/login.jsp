@@ -5,14 +5,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-<meta name="google-signin-client_id" content="388404425969-6u07lg832603b5udk20qal9c5e1vj213.apps.googleusercontent.com">
+<%-- <script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="388404425969-6u07lg832603b5udk20qal9c5e1vj213.apps.googleusercontent.com"> --%>
 
 <!-- check if user is logged in -->
 <security:authorize var="loggedIn" url="/profile" />
 
 <c:import url="template/~top.jsp" />
-<c:import url="template/~header.jsp" />
+<c:import url="template/~header_wo_search.jsp" />
 
 <main role="main">
 	<c:import url="template/~top_bar.jsp">

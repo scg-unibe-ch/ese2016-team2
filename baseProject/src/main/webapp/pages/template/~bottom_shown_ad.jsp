@@ -11,7 +11,8 @@
 		common: function () {
 			return $.flatfindr
 				.with({ ZIP_CODES: <c:import url="getzipcodes.jsp" /> })
-				.add(['header']);
+				.add(['header'])
+				.then('bits', 'unreadMessages');
 		},
 
 		adDescription: function () {

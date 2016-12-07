@@ -16,7 +16,12 @@
         <div class="icon-pusher"></div>
         <div id="icons-bar" class="icon-wrapper">
           <span id="js-menu-icon" class="fa fa-bars fa-2x"></span>
-  				<a href="/searchAd" title="Search ads"><span class="fa fa-search fa-2x"></span></a>
+  				<a href="/searchAd" title="Search ads">
+            <span class="fa fa-search fa-2x"></span>
+          </a>
+          <a href="javascript:history.back()" title="Go back">
+            <span class="fa fa-list fa-2x"></span>
+          </a>
         </div>
 			</div>
     </div>
