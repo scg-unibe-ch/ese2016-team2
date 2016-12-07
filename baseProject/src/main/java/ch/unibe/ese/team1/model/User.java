@@ -74,6 +74,10 @@ public class User {
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Ad> bookmarkedAds;
+	
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Auction> bookmarkedAuctions;
 
 	public long getId() {
 		return id;
@@ -202,6 +206,14 @@ public class User {
 	public void setBookmarkedAds(List<Ad> bookmarkedAds) {
 		this.bookmarkedAds = bookmarkedAds;
 	}
+	
+	public List<Auction> getBookmarkedAuctions() {
+		return bookmarkedAuctions;
+	}
+	
+	public void setBookmarkedAuctions(List<Auction> bookmarkedAuctions) {
+		this.bookmarkedAuctions = bookmarkedAuctions;
+	}
 
 	@Override
 	public int hashCode() {
@@ -224,6 +236,5 @@ public class User {
 		if (id != other.id)
 			return false;
 		return true;
-	}
-	
+	}	
 }

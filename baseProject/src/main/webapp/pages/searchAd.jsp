@@ -38,6 +38,7 @@
 								value="" />
 							<form:errors path="city" cssClass="validationErrorText" />
 
+
 							<div class="row checkboxes">
 								<div class="tile tile-half">
 									<form:radiobutton name="buyable" id="rent" path="buyable" value="0" />
@@ -46,6 +47,18 @@
 								<div class="tile tile-half">
 									<form:radiobutton name="buyable" id="buy" path="buyable" value="1" />
 									<label for="buy">Buy</label>
+								</div>
+							</div>
+							
+							
+							<div class="row checkboxes">
+								<div class="tile tile-half">
+									<form:checkbox name="auction" id="auction" path="auction" />
+									<label for="auction">Auction</label>
+								</div>
+								<div class="tile tile-half">
+									<form:checkbox name="ad" id="ad" path="ad" />
+									<label for="ad">Ad</label>
 								</div>
 							</div>
 
@@ -77,11 +90,11 @@
 									<label for="house">House</label>
 								</div>
 							</div>
-
+							
 
 							<form:checkbox style="display:none" name="neither" id="neither" path="neither" />
 							<form:errors path="neither" cssClass="validationErrorText" />
-
+							
 
 							<form:input
 								id="prizeInput"

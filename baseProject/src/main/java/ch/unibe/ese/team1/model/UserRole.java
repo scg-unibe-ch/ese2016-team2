@@ -21,6 +21,9 @@ public class UserRole {
 
 	@ManyToOne
 	private User user;
+	
+	@ManyToOne
+	private UserGoogle userGoogle;
 
 	@Column(nullable = false)
 	private String role;
@@ -47,6 +50,10 @@ public class UserRole {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public void setUser(UserGoogle user) {
+		this.userGoogle = user;
 	}
 
 }

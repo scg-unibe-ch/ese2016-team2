@@ -46,7 +46,7 @@ public class MyRoomController {
 	private SearchForm searchForm;
 
 	/**
-	 * Fetches information about bookmarked rooms and own ads and attaches this
+	 * Fetches information about own ads and attaches this
 	 * information to the myRooms page in order to be displayed.
 	 */
 	@RequestMapping(value = "/profile/myRooms", method = RequestMethod.GET)
@@ -62,6 +62,7 @@ public class MyRoomController {
 			Iterable<Auction> ownAuctions = auctionService.getAuctionsByUser(user);
 
 			model.addObject("bookmarkedAdvertisements", user.getBookmarkedAds());
+			model.addObject("bookmarkedAuctions", user.getBookmarkedAuctions());
 			model.addObject("ownAds", ownAds);
 			model.addObject("ownAuctions", ownAuctions);
 			return model;
