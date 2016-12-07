@@ -124,7 +124,8 @@ public class ProfileControllerTest {
 						.param("username", "user@bern.com")
 						.param("password", "password")
 						.param("firstName", "Test name")
-						.param("lastName", "Test name"))
+						.param("lastName", "Test name")
+						.param("imagePath", "Test Path"))
 					.andExpect(status().isOk())
 					.andExpect(view().name("updatedProfile"))
 					.andExpect(model().attributeExists("message", "currentUser"));
