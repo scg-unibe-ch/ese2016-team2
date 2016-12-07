@@ -65,7 +65,7 @@
 			user: function () {
 				return $.flatfindr
 					.with({ username: '${user.username}' })
-					.add(['search', 'message']);
+					.add(['message']);
 			},
 
 			editProfile: function () {
@@ -80,7 +80,7 @@
 
 			index: function () {
 				return $.flatfindr
-					.add(['search', 'sliderBlender'])
+					.add(['sliderBlender'])
 					.then('sliderBlender', 'addSliderBlenderCaption');
 			},
 
