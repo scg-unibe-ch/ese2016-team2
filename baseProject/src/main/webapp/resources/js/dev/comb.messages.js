@@ -9,11 +9,10 @@
  *  jQuery 3rdp components
  */
 
-// @codekit-prepend "../../components/flexslider/jquery.flexslider.js"
 
 
 /**
  * Page specific
  */
 
-// @codekit-prepend "+slider-blender.js"
+// @codekit-prepend "+message.js"

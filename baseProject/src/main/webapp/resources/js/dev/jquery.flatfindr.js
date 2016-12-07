@@ -99,23 +99,28 @@ jQuery.extend({
         var option;
         if (!(module in jQuery.flatfindr)) return;
 
+        mod = module;
         module = jQuery.flatfindr[module];
-        option = module.option || {};
 
-        if ('deps' in module &&
-            !(module.deps.name in jQuery.flatfindr)) {
-          if (module[module.deps]) // dep's option by name (failing of course!!!)
-            module.deps.option = module[module.deps.name];
-          jQuery.flatfindr.add(module.deps);
+        if ('fn' in module) {
+          module = module.fn.call(
+            module,
+            window,
+            document,
+            jQuery,
+            module.$view || $(jQuery.flatfindr.VIEW),
+            module.option || {});
+        } else {
+          module = module.call(
+            module,
+            window,
+            document,
+            jQuery,
+            module.$view || $(jQuery.flatfindr.VIEW),
+            module.option || {});
         }
 
-        module.fn.call(
-          module,
-          window,
-          document,
-          jQuery,
-          module.$view || $(jQuery.flatfindr.VIEW),
-          option);
+        jQuery.flatfindr[mod] = module;
       });
 
       return jQuery.flatfindr;
@@ -142,6 +147,22 @@ jQuery.extend({
       for (var option in options)
         jQuery.flatfindr[option] = options[option];
 
+      return jQuery.flatfindr;
+    },
+
+
+
+    /**
+     *
+     *
+     * @public
+     * @param  {String} module the module name
+     * @param  {String} add    a public method of the module
+     * @return {Object} jQuery.flatfindr  flatfindr for chaining
+     */
+    then: function(module, method, arglist) {
+      if (!(method in jQuery.flatfindr[module])) return;
+      jQuery.flatfindr[module][method].apply(window, arglist);
       return jQuery.flatfindr;
     }
   }

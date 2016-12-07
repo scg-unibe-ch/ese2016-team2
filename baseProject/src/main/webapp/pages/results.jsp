@@ -597,21 +597,6 @@
 	</div> <%-- .containerEND --%>
 
 </main>
-<%-- <script>
-	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-	window.geoc = [
-		<c:forEach var="geo" varStatus="status" items="${results}">
-			<c:choose>
-			  <c:when test="${(fn:length(results)) == status.count}" >
-			    {"address": "${geo.street}, ${geo.zipcode} ${geo.city}"}
-			  </c:when>
-				<c:otherwise>
-					{"address": "${geo.street}, ${geo.zipcode} ${geo.city}"},
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
-	];
-</script> --%>
 
 
 <%-- <c:import url="template/~footer.jsp" /> --%>

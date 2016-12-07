@@ -6,6 +6,34 @@
   }
 }
 
+.page-half-height {
+  height: 50vh;
+}
+
+.page-half-plus-1-height {
+  height: calc(50vh + 1 * #{$slip-height-small - 1});
+
+  @include media($bq-medium) {
+    height: calc(50vh + 1 * #{$slip-height-medium - 1});
+  }
+}
+
+.page-half-minus-1-height {
+  height: calc(50vh - 1 * #{$slip-height-small - 1});
+
+  @include media($bq-medium) {
+    height: calc(50vh - 1 * #{$slip-height-medium - 1});
+  }
+}
+
+.page-half-minus-2-height {
+  height: calc(50vh - 2 * #{$slip-height-small - 1});
+
+  @include media($bq-medium) {
+    height: calc(50vh - 2 * #{$slip-height-medium - 1});
+  }
+}
+
 .brand-primary {
   position: relative;
   z-index: 1;
@@ -75,5 +103,48 @@ img {
 #map {
   &.js-show {
     height: 500px;
+  }
+}
+
+
+.messageDetail {
+  border-top: 1px solid $whiff-of-gray;
+}
+
+#messageDetail {
+  h3 {
+    padding-top: 16px;
+  }
+  ul {
+    padding-bottom: 16px;
+  }
+  p {
+    padding-bottom: 32px;
+  }
+}
+
+
+#messageList {
+  tr {
+    cursor: pointer;
+  }
+
+  .fa {
+    display: inline-block;
+    margin-right: 8px;
+  }
+
+  .UNREAD {
+    .fa {
+      color: $base-color;
+    }
+  }
+
+  .READ {
+    color: $bright-gray;
+
+    .fa {
+      display: none;
+    }
   }
 }

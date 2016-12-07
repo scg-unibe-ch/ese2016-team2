@@ -12,7 +12,7 @@
 <security:authorize var="loggedIn" url="/profile" />
 
 <c:import url="template/~top.jsp" />
-<c:import url="template/~header.jsp" />
+<c:import url="template/~header_wo_search.jsp" />
 
 <main role="main">
 	<c:import url="template/~top_bar.jsp">

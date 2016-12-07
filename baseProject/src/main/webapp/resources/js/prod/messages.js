@@ -29665,9 +29665,9 @@ jQuery.flatfindr.search = function (window, document, $, $view, option) {
 
 
 /**
- * @name filter
+ * @name message
  * @memberof jQuery.flatfindr
- * @namespace jQuery.flatfindr.filter
+ * @namespace jQuery.flatfindr.message
  *
  * @param  {Object} window   the window as you know it
  * @param  {Object} document the document element
@@ -29675,291 +29675,192 @@ jQuery.flatfindr.search = function (window, document, $, $view, option) {
  * @param  {Object} $view    the view, defaults to the body element
  * @param  {Object} option
  */
-jQuery.flatfindr.filter = function (window, document, $, $view, option) {
+jQuery.flatfindr.message = function (window, document, $, $view, option) {
 
 
   var
     /**
-     * An opinionated bit of an extra delay. (usability specific)
+     * A bit of an extra delay in ms to prevent janky css transitions.
      *
      * @private
      * @type {Number}
      * @constant
      */
-    DURATION_BUFFER = 50,
+    DURATION_BUFFER = 10;
 
 
 
-    /**
-     *
-     * @private
-     * @type {jQuery}
-     */
-    $form_filter = $('.form-filter form');
 
-
-
-  $.flatfindr.bits.addAutoloc('#city');
-
-
-  [ 'earliestMoveInDate',
-    'earliestMoveOutDate',
-    'latestMoveInDate',
-    'latestMoveOutDate' ]
-    .forEach(function (name) {
-      $.flatfindr.bits.addDatepicker({
-        selector: '#'+ name,
-        altfield: '#field-'+ name,
-        format: 'dd-mm-yy',
-        unset: false
-      });
-    });
-
-
-
-  $('[type=submit]').click(function () {
-    validateType_FilterForm($form_filter[0]);
+  $("#messageSend").on('click', function() {
+    sendMessage.call(this, $.flatfindr.username);
   });
 
 
-  $('#modus').on('change', sort_div_attribute);
+  $("#new_messageSend").on('click', function() {
+    animateSubmit($(this));
+  });
 
 
-  $('.js-has-label').hide(0);
+  $("#inbox").click(function() {
+		$.post("/profile/message/inbox", function(data) {
+      $('.form-messages').removeClass('js-show');
+			loadMessages(data);
+			prepareRows();
+		}, 'json');
+	});
 
 
-
-  /**
-   * Validate form inputs.
-   *
-   * @private
-   * @param  {Object} form the form to be validated
-   */
-  function validateType_FilterForm(form) {
-  	var room = document.getElementById('room');
-  	var studio = document.getElementById('studio');
-  	var house = document.getElementById('house');
-  	var neither = document.getElementById('neither');
-
-  	neither.checked = false;
-  	if(!room.checked && !studio.checked && !house.checked) {
-  		neither.checked = true;
-  	}
-  }
+  $("#newMessage").click(function(){
+		$('.form-messages').addClass('js-show');
+	});
 
 
+	$("#sent").click(function() {
+		$.post("/profile/message/sent", function(data) {
+			loadMessages(data);
+			prepareRows();
+		}, 'json');
+	});
 
-  /**
-   * This script takes all the resultAd divs and sorts them by a parameter
-   * specified by the user. No arguments need to be passed, since the function
-   * simply looks up the dropdown selection.
-   *
-   * @private
-   */
-  function sort_div_attribute() {
-    //determine sort modus (by which attribute, asc/desc)
-    var sortmode = $('#modus').find(":selected").val();
 
-    //only start the process if a modus has been selected
-    if(sortmode.length > 0) {
-    	var attname;
+	$("#receiverEmail").focusout(function() {
+		var text = $("#receiverEmail").val();
 
-    	//determine which variable we pass to the sort function
-  		if(sortmode == "price_asc" || sortmode == "price_desc")
-  			attname = 'data-price';
-	    else if(sortmode == "moveIn_asc" || sortmode == "moveIn_desc")
-			  attname = 'data-moveIn';
-	    else
-		    attname = 'data-age';
+		$.post("/profile/messages/validateEmail", {email:text}, function(data) {
+			if (data != text) {
+				alert(data);
+				$("#receiverEmail").val("");
+			}
+		});
+	});
 
-  		//copying divs into an array which we're going to sort
-	    var divsbucket = new Array();
-	    var divslist = $('li.resultAd');
-	    var divlength = divslist.length;
-	    for (a = 0; a < divlength; a++) {
-  			divsbucket[a] = new Array();
-  			divsbucket[a][0] =
-          attname.match('price') ?
-          parseInt(divslist[a].getAttribute(attname), 10) :
-          divslist[a].getAttribute(attname);
-  			divsbucket[a][1] = divslist[a];
-  			divslist[a].remove();
-	    }
 
-  	    //sort the array
-  		divsbucket.sort(function(a, b) {
-  	    if (a[0] == b[0])
-  			return 0;
-  	    else if (a[0] > b[0])
-  			return 1;
-          else
-  			return -1;
-  		});
-
-  	    //invert sorted array for certain sort options
-  		if(sortmode == "price_desc" || sortmode == "moveIn_asc" || sortmode == "dateAge_asc")
-  			divsbucket.reverse();
-
-  	    //insert sorted divs into document again
-  		for(a = 0; a < divlength; a++)
-        $("#resultsDiv").append($(divsbucket[a][1]));
-    }
-  }
+	$("#messageForm").submit(function (e){
+		if($("#receiverEmail").val() == ""){
+			e.preventDefault();
+		}
+	});
 
 
 
   /**
-   * Little hack
-   */
-  setTimeout(function() {
-    $form_filter[0].reset();
-    $('.js-has-label').fadeIn($.flatfindr.BASE_DURATION);
-  }, $.flatfindr.BASE_DURATION);
-
-};
-
-
-/**
- * @name map
- * @memberof jQuery.flatfindr
- * @namespace jQuery.flatfindr.map
- *
- * @param  {Object} window   the window as you know it
- * @param  {Object} document the document element
- * @param  {jQuery} $
- * @param  {Object} $view    the view, defaults to the body element
- * @param  {Object} option
- */
-jQuery.flatfindr.map = function (window, document, $, $view, option) {
-
-
-  var
-    /**
-     * The container for the google map that can be toggled via menu bar
-     *
-     * @private
-     * @type {jQuery}
-     */
-    $map = $('#map'),
-
-    /**
-     * An array that gets populated with location items to be redered into the
-     * the google map.
-     *
-     * @private
-     * @type {Array}
-     */
-    locs = [],
-
-    /**
-     * A helper index for the markers, resp. the location items
-     * @type {Number}
-     */
-    locIdx = 0,
-
-
-    /**
-     * The var that the actual google map is assigned to.
-     */
-    map;
-
-
-
-
-  $('#js-map').click(toggleMap);
-
-
-
-  $('.resultAd, .resultPremiumAd').each(createLocItem);
-
-
-
-  /**
-   * Toggle map container, call initMap to rerender if opening.
+   * Send the message.
    * @private
    */
-  function toggleMap() {
-    $map.toggleClass('js-show');
-    if ($map.is('.js-show')) window.initMap();
-  }
-
-
-
-  /**
-   * Create a location item to be rendered into map with info content.
-   * @private
-   */
-  function createLocItem() {
+  function sendMessage(recipient) {
     var
       $this = $(this),
-      lat = $this.attr('data-lat'),
-      lon = $this.attr('data-lon'),
-      title = $this.attr('data-title'),
-      address = $this.attr('data-address'),
-      price = $this.attr('data-price'),
-      content = '<h3>'+ title +'</h3><p>'+ address +'</p><p>'+ price +'</p>';
+      $msgSubject = $('#msgSubject'),
+      $msgTextarea = $('#msgTextarea');
 
-    if (lat && lon)
-      locs[locIdx] = [$this, content, parseFloat(lat), parseFloat(lon), locIdx++];
-  }
-
-
-
-  /**
-   * Scroll corresponding ad into view when clicked on marker.
-   *
-   * @private
-   * @param  {Number} scrollTop   scrollTop of the ad
-   */
-  function animateScrollTop(scrollTop) {
-    $('#list')
-      .delay(20)
-      .animate({scrollTop: scrollTop}, $.flatfindr.BASE_DURATION);
-  }
-
-
-
-  /**
-   * The map callback that does the setup for the google map
-   * @private
-   */
-  window.initMap = function () {
-    if (!locs.length) return;
-
-    map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 9,
-      center: new google.maps.LatLng(locs[0][2],locs[0][3]),
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
+    if ($this.attr('disable') ||
+        $msgSubject.val() == "" ||
+        $msgTextarea.val() == "") return;
 
     var
-      infowindow = new google.maps.InfoWindow({}),
-      marker, i;
+      subject = $msgSubject.val(),
+      text = $msgTextarea.val(),
+      recipientEmail = recipient;
+
+    $.post("profile/messages/sendMessage", {
+      subject : subject,
+      text: text,
+      recipientEmail : recipientEmail
+    }, function () { animateSubmit($this); });
+  }
 
 
-    for (i = 0; i < locs.length; i++) {
-  		marker = new google.maps.Marker({
-  			position: new google.maps.LatLng(locs[i][2], locs[i][3]),
-  			map: map
+
+
+  /**
+   * Show some animations during submitting proc, so user is happy.
+   * @private
+   */
+  function animateSubmit($this) {
+    var
+     duration = $.flatfindr.BASE_DURATION,
+     $msgSubject = $('#msgSubject'),
+     $msgTextarea = $('#msgTextarea');
+
+    $this
+      .attr('disable', 'disable')
+      .toggleClass('submit-state-before submit-state-submitting');
+    setTimeout(function () {
+      $this.toggleClass('submit-state-submitting submit-state-after');
+      $msgSubject.val("");
+      $msgTextarea.val("");
+      setTimeout(function () {
+        $this
+          .removeAttr('disable')
+          .toggleClass('submit-state-after submit-state-before');
+      }, (duration * 3));
+    }, (duration * 3) + DURATION_BUFFER);
+  }
+
+
+
+
+  /**
+   * @private
+   * @param  {Object} data
+   */
+  function loadMessages(data) {
+  	$("#messageList table tr:gt(0)").remove();
+  	$.each(data, function(index, message) {
+  		var result = '<tr data-id="' + message.id + '" class="' + message.state + '" >';
+  		result += '<td><span class="fa fa-circle" aria-hidden="true"></span>' + message.subject + '</td>';
+  		result += '<td>' + message.sender.email + '</td>';
+  		result += '<td>' + message.recipient.email + '</td>';
+  		result += '<td>' + message.dateSent + '</td></tr>';
+
+  		$("#messageList table").append(result);
+  	});
+  }
+
+
+
+  /**
+   *
+   * @protected
+   */
+  function prepareRows() {
+  	var $rows = $("#messageList table tr:gt(0)");
+  	$rows.click(function() {
+      $('.form-messages').removeClass('js-show');
+  		var id = $(this).attr("data-id");
+  		$(this).removeClass("UNREAD");
+  		$.get("/profile/readMessage?id=" + id, function (data) {
+  			$.get("/profile/messages/getMessage?id=" + id, function(data) {
+  				var result = '<h3>' + data.subject + '</h3><ul>';
+  				result += '<li><b>To: </b>' + data.recipient.email + '</li>';
+  				result += '<li><b>From: </b>' + data.sender.email + '</li>';
+  				result += '<li><b>Date sent: </b>' + data.dateSent + '</li>';
+  				result += '</ul><p>' + data.text + '</p>';
+  				$("#messageDetail").html(result);
+  			}, 'json');
+  			$.flatfindr.bits.unreadMessages("header");
+  			$.flatfindr.bits.unreadMessages("messages");
   		});
+  	});
+  }
 
-  		google.maps.event.addListener(marker, 'click', (function (marker, i) {
-  			return function () {
-          var $adinlist = locs[i][0];
-  				infowindow.setContent(locs[i][1]);
-  				infowindow.open(map, marker);
 
-          $('.resultAd, .resultPremiumAd').attr('style', '');
-          $adinlist
-            .css('background-color', '#f2f2f2')
 
-          animateScrollTop(
-            $('#list').scrollTop() + $adinlist.position().top
-          );
-  			}
-  		})(marker, i));
-  	}
+  var pub = {
+
+    /**
+     *
+     * @memberof jQuery.flatfindr.message
+     * @method update
+     *
+     * @public
+     */
+    update: function () {
+      prepareRows();
+    }
   };
+
+  return pub;
 
 };
 
@@ -29972,10 +29873,15 @@ jQuery.flatfindr.map = function (window, document, $, $view, option) {
 
 
 /**
+ *  jQuery 3rdp components
+ */
+
+
+
+/**
  * Page specific
  */
 
-// @codekit-prepend "+form-filter.js"
-// @codekit-prepend "+map.js"
+// @codekit-prepend "+message.js"
 
 

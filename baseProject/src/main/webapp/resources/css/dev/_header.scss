@@ -54,17 +54,20 @@
 .menu-primary li {
   border-bottom: 1px solid $whiff-of-gray;
 
-  > a {
+  > a,
+  > span {
     display: block;
     background-color: $is-this-even-gray;
     color: $light-gray;
     transition: all $base-duration $base-timing;
+    cursor: pointer;
 
     @include sidebar-slip-pad;
   }
 
   &:hover {
-    > a {
+    > a,
+    > span {
       background-color: $whiff-of-gray;
     }
   }
@@ -73,7 +76,8 @@
 
 
 .action-menu-primary {
-  right: -116px;
+  //right: -116px;
+  width: 150%;
 
   span {
     margin-top: 2px;
@@ -92,16 +96,22 @@
     }
   }
 
-  .map.wo-search & {
-    right: -156px;
+  .icon-pusher {
+    float: left;
+    width: 66.66666%;
+    min-height: 1px;
   }
 
-  // .wo-search & {
-  //   right: -64px;
-  // }
+  .icon-wrapper {
+    float: left;
+    width: 33.33333%;
+    padding-left: 24px;
+  }
 
-  // .map & {
-  //   display: none;
-  //   right: -106px;
-  // }
+  #icon-new-mail {
+    display: inline-block;
+    margin-left: -23px;
+    font-size: $f-small + 0.05;
+    color: $base-color-light;
+  }
 }

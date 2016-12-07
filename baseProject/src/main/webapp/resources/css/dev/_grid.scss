@@ -54,6 +54,25 @@
   width: 100%;
 }
 
+
+.span-three-quarter {
+  @include span-columns($grid-columns);
+
+  @include media($bq-large) {
+    @include span-columns(floor($grid-columns / 4 * 3));
+  }
+}
+
+
+.span-two-thirds {
+  @include span-columns($grid-columns);
+
+  @include media($bq-large) {
+    @include span-columns(floor($grid-columns / 3 * 2));
+  }
+}
+
+
 .span-half {
   @include span-columns($grid-columns);
 
@@ -68,6 +87,15 @@
 
   @include media($bq-large) {
     @include span-columns(floor($grid-columns / 3));
+  }
+}
+
+
+.span-quarter {
+  @include span-columns($grid-columns);
+
+  @include media($bq-large) {
+    @include span-columns(floor($grid-columns / 4));
   }
 }
 

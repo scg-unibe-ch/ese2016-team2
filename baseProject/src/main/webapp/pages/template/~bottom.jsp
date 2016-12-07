@@ -66,26 +66,16 @@
 						PAGE_NAME: pagename,
 						ZIP_CODES: <c:import url="getzipcodes.jsp" />
 					})
-					.add(['header']);
-			},
-
-			login: function () {
-				return $.flatfindr.add([
-					'search'
-				]);
+					.add(['header'])
+					.then('bits', 'unreadMessages');
 			},
 
 			signup: function () {
-				return $.flatfindr.add([
-					'search',
-					'signup'
-				]);
+				return $.flatfindr.add(['search', 'signup']);
 			},
 
 			register: function () {
-		    return $.flatfindr.add([
-					'autoloc'
-				]);
+		    return $.flatfindr.add(['autoloc']);
 			},
 
 			alerts: function () {
@@ -96,8 +86,6 @@
 						$("#alertsDiv").load(document.URL + " #alertsDiv");
 					});
 				}
-
-				//return $.flatfindr.add
 
 			},
 
@@ -123,18 +111,13 @@
 						.removeClass('js-confirm');
 				});
 
-				return $.flatfindr.add([
-					'search'
-				]);
+				return $.flatfindr.add(['search']);
 			},
 
 			user: function () {
 				return $.flatfindr
 					.with({ username: '${user.username}' })
-					.add([
-						'search',
-						'message'
-					]);
+					.add(['search', 'message']);
 			},
 
 			editProfile: function () {
@@ -144,38 +127,33 @@
 							val: "${currentUser.aboutMe}"
 						}}
 					})
-					.add([
-						'imageUpload',
-						'populate'
-					])
+					.add(['imageUpload', 'populate'])
 			},
 
 			index: function () {
-				return $.flatfindr.add([
-					'search',
-					'sliderBlender',
-					'sliderBlenderCaption'
-				]);
+				return $.flatfindr
+					.add(['search', 'sliderBlender'])
+					.then('sliderBlender', 'addSliderBlenderCaption');
 			},
 
 			searchAd: function () {
-				return $.flatfindr.add([
-					'search'
-				]);
+				return $.flatfindr
+					.add(['search']);
 			},
 
 			results: function () {
-				return $.flatfindr.add([
-					'filter',
-					'map'
-				]);
+				return $.flatfindr.add(['filter', 'map']);
 			},
 
 			placeAd: function () {
-				return $.flatfindr.add([
-					'place',
-					'imageUpload'
-				]);
+				return $.flatfindr.add(['place', 'imageUpload']);
+			},
+
+			messages: function () {
+				return $.flatfindr
+					.add(['message'])
+					.then('message', 'update')
+					.then('bits', 'unreadMessages', ['messages']);
 			},
 
 			editAd: function () {
