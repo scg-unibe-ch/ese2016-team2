@@ -12,7 +12,7 @@
 
 
 <c:import url="template/~top.jsp" />
-<c:import url="template/~header_wo_search.jsp" />
+<c:import url="template/~header_details_wo_search.jsp" />
 
 <!-- format the dates -->
 <fmt:formatDate value="${shownAuction.moveInDate}"

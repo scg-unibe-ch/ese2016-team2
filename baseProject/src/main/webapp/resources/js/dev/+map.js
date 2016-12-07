@@ -39,8 +39,10 @@ jQuery.flatfindr.map = function (window, document, $, $view, option) {
 
     /**
      * The var that the actual google map is assigned to.
+     * Plus a helper boolean that tells if the map has already been initilized.
      */
-    map;
+    map,
+    map_initd = false;
 
 
 
@@ -59,7 +61,16 @@ jQuery.flatfindr.map = function (window, document, $, $view, option) {
    */
   function toggleMap() {
     $map.toggleClass('js-show');
-    if ($map.is('.js-show')) window.initMap();
+    $('#js-map')
+      .toggleClass('fa-map')
+      .toggleClass('fa-map-o');
+
+    if ($map.is('.js-show') && !map_initd) {
+      setTimeout(function () {
+        window.initMap();
+        map_initd = true;
+      }, $.flatfindr.BASE_DURATION * 2);
+    }
   }
 
 
@@ -76,7 +87,8 @@ jQuery.flatfindr.map = function (window, document, $, $view, option) {
       title = $this.attr('data-title'),
       address = $this.attr('data-address'),
       price = $this.attr('data-price'),
-      content = '<h3>'+ title +'</h3><p>'+ address +'</p><p>'+ price +'</p>';
+      content = '<h3>'+ title +'</h3><p>'+ address +'</p><p>CHF '+ price +'</p>'+
+                '<button type="button" id="zoom'+ locIdx +'" class="action">Close view</button>';
 
     if (lat && lon)
       locs[locIdx] = [$this, content, parseFloat(lat), parseFloat(lon), locIdx++];
@@ -98,6 +110,27 @@ jQuery.flatfindr.map = function (window, document, $, $view, option) {
 
 
 
+  function zoomIn(pos) {
+    map.setCenter(pos);
+    map.setZoom(18);
+    $(this).text('Distant view');
+  }
+
+
+  function zoomOut(bounds) {
+    map.fitBounds(bounds);
+    $(this).text('Close view');
+  }
+
+
+  function toggleZoom(pos, bounds) {
+    if ($(this).is('.zoomIn'))
+      return zoomIn.call(this, pos);
+    return zoomOut.call(this, bounds);
+  }
+
+
+
   /**
    * The map callback that does the setup for the google map
    * @private
@@ -106,38 +139,54 @@ jQuery.flatfindr.map = function (window, document, $, $view, option) {
     if (!locs.length) return;
 
     map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 9,
+      zoom: 7,
       center: new google.maps.LatLng(locs[0][2],locs[0][3]),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
     var
       infowindow = new google.maps.InfoWindow({}),
-      marker, i;
+      bounds = new google.maps.LatLngBounds(),
+      marker, i, pos;
 
 
     for (i = 0; i < locs.length; i++) {
+      pos = new google.maps.LatLng(locs[i][2], locs[i][3]);
+      bounds.extend(pos);
+
   		marker = new google.maps.Marker({
-  			position: new google.maps.LatLng(locs[i][2], locs[i][3]),
+  			position: pos,
   			map: map
   		});
 
-  		google.maps.event.addListener(marker, 'click', (function (marker, i) {
+  		google.maps.event.addListener(marker, 'click', (function (marker, i, pos) {
   			return function () {
           var $adinlist = locs[i][0];
+
   				infowindow.setContent(locs[i][1]);
   				infowindow.open(map, marker);
 
           $('.resultAd, .resultPremiumAd').attr('style', '');
-          $adinlist
-            .css('background-color', '#f2f2f2')
+          $adinlist.css('background-color', '#f2f2f2');
+
+          if (map.getZoom() > 11)
+            $('#zoom'+i)
+              .text('Distant view')
+              .addClass('zoomIn');
+
+          $('#zoom'+i).on('click', function() {
+            $(this).toggleClass('zoomIn');
+            toggleZoom.call(this, pos, bounds);
+          });
 
           animateScrollTop(
             $('#list').scrollTop() + $adinlist.position().top
           );
   			}
-  		})(marker, i));
+  		})(marker, i, pos));
   	}
+
+    map.fitBounds(bounds);
   };
 
 };

@@ -97,15 +97,6 @@ img {
   @include sidebar-slip-pad;
 }
 
-.gllpMap	{ width: 500px; height: 250px; }
-
-
-#map {
-  &.js-show {
-    height: 500px;
-  }
-}
-
 
 .messageDetail {
   border-top: 1px solid $whiff-of-gray;

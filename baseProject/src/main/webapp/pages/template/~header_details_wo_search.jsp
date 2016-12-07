@@ -12,12 +12,16 @@
 <header class="container header-primary wo-search">
   <div class="row">
     <div class="tile tile-full">
-      <div class="action action-icon action-menu-primary">
+      <div class="row action action-icon action-menu-primary">
         <div class="icon-pusher"></div>
         <div id="icons-bar" class="icon-wrapper">
           <span id="js-menu-icon" class="fa fa-bars fa-2x"></span>
-  				<a href="/searchAd" title="Search ads"><span class="fa fa-search fa-2x"></span></a>
-          <span id="js-map" class="fa fa-map fa-2x"></span>
+  				<a href="/searchAd" title="Search ads">
+            <span class="fa fa-search fa-2x"></span>
+          </a>
+          <a href="javascript:history.back()" title="Go back">
+            <span class="fa fa-list fa-2x"></span>
+          </a>
         </div>
 			</div>
     </div>
@@ -91,16 +95,16 @@
       </c:otherwise>
     </c:choose>
 
-  </div>
-
-  <div class="row">
-    <div class="tile-full">
-      <%-- <a href="#">
-        <small>Terms of Use</small>
-      </a>
-      <a href="#">
-        <small>Privacy Policy</small>
-      </a> --%>
+    <div class="row">
+      <div class="tile-full">
+        <%-- <a href="#">
+          <small>Terms of Use</small>
+        </a>
+        <a href="#">
+          <small>Privacy Policy</small>
+        </a> --%>
+      </div>
     </div>
+
   </div>
 </header>

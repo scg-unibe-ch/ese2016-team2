@@ -29606,9 +29606,9 @@ jQuery.flatfindr.search = function (window, document, $, $view, option) {
     });
 
 
-  // $('[type=submit]').on('click', function () {
-  //   validateType($('.form-search form')[0]);
-  // });
+  $('button[type=submit]').on('click', function () {
+    validateType($('.form-search form')[0]);
+  });
 
 
 

@@ -27,9 +27,7 @@
 					action="/results" id="filterForm" autocomplete="off">
 
 					<div class="container-scroll">
-						<div class="row">
-							<div id="map"></div>
-						</div>
+						<div id="map" class="row"></div>
 
 						<form:input type="text" name="city" id="city" path="city"
 							placeholder="Find..." tabindex="1" />

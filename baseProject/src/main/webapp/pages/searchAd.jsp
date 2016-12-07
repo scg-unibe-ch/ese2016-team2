@@ -23,7 +23,7 @@
 						method="post"
 						id="searchForm"
 						modelAttribute="searchForm"
-						action="/results"
+						action="/results?results"
 						autocomplete="off">
 
 						<div class="container-scroll">
@@ -49,8 +49,8 @@
 									<label for="buy">Buy</label>
 								</div>
 							</div>
-							
-							
+
+
 							<div class="row checkboxes">
 								<div class="tile tile-half">
 									<form:checkbox name="auction" id="auction" path="auction" />
@@ -61,19 +61,6 @@
 									<label for="ad">Ad</label>
 								</div>
 							</div>
-
-
-							<form:input
-								id="radiusInput"
-								type="number"
-								path="radius"
-								placeholder="Radius in km (5, 10, 15,... , 500)"
-								tabindex="2"
-								step="5"
-								min="5"
-								max="500"
-								value="" />
-							<form:errors path="radius" cssClass="validationErrorText" />
 
 
 							<div class="row checkboxes">
@@ -90,11 +77,24 @@
 									<label for="house">House</label>
 								</div>
 							</div>
-							
+
 
 							<form:checkbox style="display:none" name="neither" id="neither" path="neither" />
 							<form:errors path="neither" cssClass="validationErrorText" />
-							
+
+
+							<form:input
+								id="radiusInput"
+								type="number"
+								path="radius"
+								placeholder="Radius in km (5, 10, 15,... , 500)"
+								tabindex="2"
+								step="5"
+								min="5"
+								max="500"
+								value="" />
+							<form:errors path="radius" cssClass="validationErrorText" />
+
 
 							<form:input
 								id="prizeInput"

@@ -128,7 +128,7 @@
 			<script
 				async
 				defer
-				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAh9mJhrCy-xTWy5b3Niop8QilZAdMh1To&callback=initMap">
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAh9mJhrCy-xTWy5b3Niop8QilZAdMh1To">
 			</script>
     </c:when>
     <c:otherwise>
