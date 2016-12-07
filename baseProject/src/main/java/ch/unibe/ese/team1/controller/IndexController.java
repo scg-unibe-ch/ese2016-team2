@@ -7,12 +7,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ch.unibe.ese.team1.controller.service.AdService;
 
-/**
- * @Jerome
- * Add these imports for basic search functionality.
- */
-import org.springframework.web.bind.annotation.ModelAttribute;
-import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
 
 /**
  * This controller handles request concerning the home page and several other
@@ -24,11 +18,6 @@ public class IndexController {
 	@Autowired
 	private AdService adService;
 
-	/**
-	 * @Jerome
-	 * Add these properties for basic search functionality.
-	 */
-	private SearchForm searchForm;
 
 
 	/** Displays the home page. */
@@ -51,15 +40,4 @@ public class IndexController {
 		return new ModelAndView("disclaimer");
 	}
 
-	/**
-	 * @Jerome
-	 * Add this attribute for basic search functionality.
-	 */
-	@ModelAttribute
-	public SearchForm getSearchForm() {
-		if (searchForm == null) {
-			searchForm = new SearchForm();
-		}
-		return searchForm;
-	}
 }

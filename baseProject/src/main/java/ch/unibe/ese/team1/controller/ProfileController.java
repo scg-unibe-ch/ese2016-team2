@@ -148,32 +148,7 @@ public class ProfileController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/signup/google", method = RequestMethod.POST)
-	public ModelAndView signupGoogleResultPage(@Valid SignupGoogleForm signupGoogleForm, BindingResult bindingResult) {
-		ModelAndView model;
 		
-		if (!bindingResult.hasErrors()) {
-			signupService.saveFromGoogle(signupGoogleForm);
-			model = new ModelAndView("login");
-			model.addObject("confirmationMessage", "Signup complete!");
-		} else {
-			model = new ModelAndView("login");
-			model.addObject("confirmationMessage", "Shit.");
-		}
-		return model;
-	}
-	
-	
-//	@RequestMapping(value = "/hustensaft", method = RequestMethod.POST)
-//	public ModelAndView hustensaft(
-//		@RequestParam String token,
-//		Principal principal) {
-//		ModelAndView model = new ModelAndView("user");
-//		String username = principal.getName();
-//		UserGoogle user = userService.findGoogleUserByUsername(username);
-//		user.setPassword(token.substring(0, 6));
-//	}
-	
 
 	/**
 	 * Checks and returns whether a user with the given email already exists.
@@ -183,13 +158,6 @@ public class ProfileController {
 		return signupService.doesUserWithUsernameExist(email);
 	}
 	
-	
-	
-	//@Jerome
-	@RequestMapping(value = "/signup/doesGoogleEmailExist", method = RequestMethod.POST)
-	public @ResponseBody boolean doesGoogleEmailExist(@RequestParam String email) {
-		return signupService.doesGoogleUserWithUsernameExist(email);
-	}
 	
 	
 	

@@ -109,7 +109,7 @@
 
 </main>
 
-<c:import url="template/~footer.jsp" />
+<%-- <c:import url="template/~footer.jsp" /> --%>
 <c:import url="template/~bottom.jsp">
 	<c:param name="js" value="index" />
 </c:import>

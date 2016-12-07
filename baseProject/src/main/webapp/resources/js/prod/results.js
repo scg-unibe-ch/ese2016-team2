@@ -29266,6 +29266,7 @@ jQuery.flatfindr.bits = function (window, document, $) {
      * @public
      */
     unreadMessages: function (place) {
+      return;
     	$.get("/profile/unread", function(data){
     		var message;
     		if(place == "messages")
