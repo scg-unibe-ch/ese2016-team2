@@ -7,7 +7,7 @@
  * @param  {Object} document the document element
  * @param  {jQuery} $
  * @param  {Object} $view    the view, defaults to the body element
- * @param  {Object} option   
+ * @param  {Object} option
  */
 jQuery.flatfindr.search = function (window, document, $, $view, option) {
 
@@ -29,9 +29,9 @@ jQuery.flatfindr.search = function (window, document, $, $view, option) {
     });
 
 
-  $('[type=submit]').on('click', function () {
-    validateType($('.form-search form')[0]);
-  });
+  // $('[type=submit]').on('click', function () {
+  //   validateType($('.form-search form')[0]);
+  // });
 
 
 

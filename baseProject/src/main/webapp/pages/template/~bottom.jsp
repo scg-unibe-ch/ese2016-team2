@@ -2,6 +2,9 @@
 	contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+
+<security:authorize var="loggedIn" url="/profile" />
 
 <script src="/resources/js/prod/${param.js}.js"></script>
 <script>
@@ -12,7 +15,8 @@
 				return $.flatfindr
 					.with({
 						PAGE_NAME: pagename,
-						ZIP_CODES: <c:import url="getzipcodes.jsp" />
+						ZIP_CODES: <c:import url="getzipcodes.jsp" />,
+						logged: ${loggedIn}
 					})
 					.add(['header'])
 					.then('bits', 'unreadMessages');
@@ -85,8 +89,7 @@
 			},
 
 			searchAd: function () {
-				return $.flatfindr
-					.add(['search']);
+				return $.flatfindr.add(['search']);
 			},
 
 			results: function () {

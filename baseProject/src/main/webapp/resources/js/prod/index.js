@@ -29266,9 +29266,10 @@ jQuery.flatfindr.bits = function (window, document, $) {
      * @public
      */
     unreadMessages: function (place) {
-      return;
+      if (!$.flatfindr.logged) return;
+
     	$.get("/profile/unread", function(data){
-    		var message;
+        var message;
     		if(place == "messages")
     			message = "Inbox";
     		else
@@ -29279,10 +29280,12 @@ jQuery.flatfindr.bits = function (window, document, $) {
     			$("#inbox").html(message);
     		else {
     			$("#messageLink").html(message);
-          $('<a href="/profile/messages" title="New mail ('+ data +')">'+
-            '<span class="fa fa-envelope fa-2x" aria-hidden="true"></span>'+
-            '<span id="icon-new-mail">'+ data +'</span>'+
-          '</a>').appendTo('#icons-bar');
+          $('#new-mail').remove();
+          if (data > 0)
+            $('<a id="new-mail" href="/profile/messages" title="New mail ('+ data +')">'+
+              '<span class="fa fa-envelope fa-2x" aria-hidden="true"></span>'+
+              '<span id="icon-new-mail">('+ data +')</span>'+
+            '</a>').appendTo('#icons-bar');
         }
     	});
     }
@@ -29581,7 +29584,7 @@ jQuery.flatfindr.register({
  * @param  {Object} document the document element
  * @param  {jQuery} $
  * @param  {Object} $view    the view, defaults to the body element
- * @param  {Object} option   
+ * @param  {Object} option
  */
 jQuery.flatfindr.search = function (window, document, $, $view, option) {
 
@@ -29603,9 +29606,9 @@ jQuery.flatfindr.search = function (window, document, $, $view, option) {
     });
 
 
-  $('[type=submit]').on('click', function () {
-    validateType($('.form-search form')[0]);
-  });
+  // $('[type=submit]').on('click', function () {
+  //   validateType($('.form-search form')[0]);
+  // });
 
 
 

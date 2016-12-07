@@ -76,7 +76,6 @@
 
 
 .action-menu-primary {
-  //right: -116px;
   width: 150%;
 
   span {
@@ -110,8 +109,7 @@
 
   #icon-new-mail {
     display: inline-block;
-    margin-left: -23px;
-    font-size: $f-small + 0.05;
-    color: $base-color-light;
+    margin-left: 8px;
+    font-size: $f-atom;
   }
 }
