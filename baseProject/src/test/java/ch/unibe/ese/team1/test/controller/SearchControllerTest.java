@@ -45,7 +45,8 @@ public class SearchControllerTest {
 	@Test
 	public void postInvalidSearchForm() throws Exception {
 		this.mockMvc.perform(post("/results")
-						.param("prize", "0"))
+						.param("city", "")
+						.param("results", "Results"))
  					.andExpect(status().isOk())
  					.andExpect(view().name("searchAd"));
 	}
@@ -59,7 +60,8 @@ public class SearchControllerTest {
 						.param("neither", "false")
 						.param("buyableNotFilled", "false")
 						.param("studio", "true")
-						.param("room", "true"))
+						.param("room", "true")
+						.param("results", "Results"))
  					.andExpect(status().isOk())
  					.andExpect(view().name("results"))
  					.andExpect(model().attributeExists("results", "premiumResults"));
