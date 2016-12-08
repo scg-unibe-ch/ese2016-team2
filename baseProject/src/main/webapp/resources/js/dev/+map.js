@@ -113,12 +113,14 @@ jQuery.flatfindr.map = function (window, document, $, $view, option) {
   function zoomIn(pos) {
     map.setCenter(pos);
     map.setZoom(18);
+    map.setMapTypeId('hybrid');
     $(this).text('Distant view');
   }
 
 
   function zoomOut(bounds) {
     map.fitBounds(bounds);
+    map.setMapTypeId('roadmap');
     $(this).text('Close view');
   }
 
