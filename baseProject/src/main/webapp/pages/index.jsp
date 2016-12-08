@@ -83,6 +83,13 @@
 
 								--%>
 
+								<li class="slide" style="background-image: url(${advertisement.pictures[0].filePath})">
+									<a class="slide-caption" href="<c:url value='/ad?id=${advertisement.id}' />">
+										<span>${advertisement.city}</span>
+										<span>${advertisement.title}</span>
+									</a>
+								</li>
+
 							</c:when>
 
 							<c:otherwise>
