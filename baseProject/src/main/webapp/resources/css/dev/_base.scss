@@ -1,3 +1,7 @@
+// from _forms.scss, have it here or in vars, delete there...
+$slip-height-small: 57px;
+$slip-height-medium: 73px;
+
 body {
   position: relative;
   width: 100%;
@@ -5,12 +9,26 @@ body {
 }
 
 
-
 main {
   position: relative;
   height: 100%;
-  height: 100vh;
-  overflow: hidden;
+  margin-top: $slip-height-small;
+
+  @include media($bq-medium) {
+    margin-top: $slip-height-medium;
+  }
+
+  @include media($bq-large) {
+    height: 100vh;
+    margin-top: 0;
+    overflow: hidden;
+  }
+
+  .index &,
+  .adDescription &,
+  .auctionDescription & {
+    margin-top: 0;
+  }
 }
 
 

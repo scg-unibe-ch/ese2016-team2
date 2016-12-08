@@ -6,7 +6,18 @@
 
 <security:authorize var="loggedIn" url="/profile" />
 
-<script src="/resources/js/prod/${param.js}.js"></script>
+<c:choose>
+	<c:when test="${not empty param.js}">
+
+		<script src="/resources/js/prod/${param.js}.js"></script>
+
+	</c:when>
+	<c:otherwise>
+
+		<script src="/resources/js/prod/common.js"></script>
+
+	</c:otherwise>
+</c:choose>
 <script>
 	(function ($, pagename) {
 

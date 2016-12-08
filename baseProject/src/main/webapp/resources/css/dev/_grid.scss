@@ -22,10 +22,6 @@
 
 
 .container-scroll {
-  // @Jerome flex makes floats in rows with overflow hidden zero hight.
-  // Why did i set anyway?
-  // display: flex;
-  // flex-flow: column;
   position: relative;
   width: 100%;
   height: 100%;

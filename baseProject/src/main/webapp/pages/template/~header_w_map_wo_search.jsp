@@ -15,7 +15,7 @@
       <div class="action action-icon action-menu-primary">
         <div class="icon-pusher"></div>
         <div id="icons-bar" class="icon-wrapper">
-          <span id="js-menu-icon" class="fa fa-bars fa-2x"></span>
+          <span title="Open main menu." id="js-menu-icon" class="fa fa-bars fa-2x"></span>
   				<a href="/searchAd" title="Search ads"><span class="fa fa-search fa-2x"></span></a>
           <span id="js-map" class="fa fa-map fa-2x"></span>
         </div>
