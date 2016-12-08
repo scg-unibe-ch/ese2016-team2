@@ -113,6 +113,10 @@
 
 			placeAuction: function () {
 				return js.placeAd();
+			},
+
+			enquiries: function () {
+				return $.flatfindr.add(['enquiries']);
 			}
 
 		};

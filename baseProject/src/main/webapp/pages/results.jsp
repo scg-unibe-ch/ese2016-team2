@@ -9,9 +9,10 @@
 <c:import url="template/~top.jsp" />
 <c:import url="template/~header_w_map_wo_search.jsp" />
 
-<main role="main"> <c:import url="template/~top_bar.jsp">
-	<c:param name="instr" value="Filter finds..." />
-</c:import>
+<main role="main">
+	<c:import url="template/~top_bar.jsp">
+		<c:param name="instr" value="Filter finds..." />
+	</c:import>
 
 <div class="container"></div>
 
