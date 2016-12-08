@@ -82,6 +82,7 @@
 		<div class="tile tile-full">
 			<form class="form form-message">
 				<input type="text" id="msgSubject" placeholder="Subject *" />
+				<p class="validationErrorText"></p>
 				<textarea id="msgTextarea" placeholder="Message"></textarea>
 
 				<div class="row">
