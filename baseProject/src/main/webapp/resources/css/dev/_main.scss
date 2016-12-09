@@ -140,6 +140,20 @@ img {
   }
 }
 
+.validator {
+  height: 0;
+  overflow: hidden;
+  transition: height $base-duration $base-timing;
+
+  &.js-show {
+    height: $slip-height-small;
+
+    @include media($bq-medium) {
+      height: $slip-height-medium;
+    }
+  }
+}
+
 // this is not a good idea.
 // a[title]:hover:after,
 // span[title]:hover:after {

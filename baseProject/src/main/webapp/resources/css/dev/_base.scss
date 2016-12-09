@@ -12,15 +12,15 @@ body {
 main {
   position: relative;
   height: 100%;
-  margin-top: $slip-height-small;
+  padding-top: $slip-height-small;
 
   @include media($bq-medium) {
-    margin-top: $slip-height-medium;
+    padding-top: $slip-height-medium;
   }
 
   @include media($bq-large) {
     height: 100vh;
-    margin-top: 0;
+    padding-top: 0;
     overflow: hidden;
   }
 

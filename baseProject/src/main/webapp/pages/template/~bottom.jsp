@@ -34,7 +34,7 @@
 			},
 
 			signup: function () {
-				return $.flatfindr.add(['search', 'signup']);
+				return $.flatfindr.add(['validator']);
 			},
 
 			register: function () {

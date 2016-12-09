@@ -5,7 +5,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <c:import url="template/~top.jsp" />
-<c:import url="template/~header.jsp" />
+<c:import url="template/~header_wo_search.jsp" />
 
 <main role="main">
 	<c:import url="template/~top_bar.jsp">
@@ -38,39 +38,31 @@
 										path="lastName"
 										id="field-lastName"
 										placeholder="Lastname" />
-									<form:errors path="lastName" cssClass="validationErrorText" /></td>
+									<form:errors path="lastName" cssClass="validationErrorText" />
 
 									<form:input
 										path="password"
 										id="field-password"
 										type="password"
 										placeholder="Password" />
+									<div class="validator error-field-password">
+										<span class="validationErrorText"></span>
+									</div>
 									<form:errors path="password" cssClass="validationErrorText" />
 
 									<form:input
 										path="email"
 										id="field-email"
 										placeholder="Email" />
-									<form:errors path="email" cssClass="validationErrorText" /></td>
+									<div class="validator error-field-email">
+										<span class="validationErrorText"></span>
+									</div>
+									<form:errors path="email" cssClass="validationErrorText" />
 
-
-									<%-- <div class="row checkboxes">
-			              <div class="tile tile-half">
-			                <form:radiobutton id="female" path="gender" value="FEMALE" />
-			                <label for="female">Female</label>
-			              </div>
-			              <div class="tile tile-half">
-			                <form:radiobutton id="male" path="gender" value="MALE" />
-			                <label for="male">Male</label>
-			              </div>
-			            </div> --%>
 
 									<div class="row multi-select">
 										<div class="tile tile-half">
 											<div class="row">
-												<%-- <div class="tile tile-full">
-													<label>Gender</label>
-												</div> --%>
 												<div class="tile tile-full action action-tile">
 
 													<form:select path="gender">
@@ -85,16 +77,13 @@
 										</div>
 										<div class="tile tile-half">
 											<div class="row">
-												<%-- <div class="tile tile-full">
-													<label>Account Type</label>
-												</div> --%>
 												<div class="tile tile-full action action-tile">
 
 													<form:select path="account">
 														<form:option value="Choose account type" disabled="true" selected="selected" />
 														<form:option value="Normal" label="Normal" />
 														<form:option value="Premium" label="Premium" />
-													</form:select></td>
+													</form:select>
 													<form:errors path="account" cssClass="validationErrorText" />
 
 												</div>
