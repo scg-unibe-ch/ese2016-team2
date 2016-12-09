@@ -11,7 +11,7 @@ body {
 
 main {
   position: relative;
-  height: 100%;
+  height: auto;
   padding-top: $slip-height-small;
 
   @include media($bq-medium) {
@@ -32,12 +32,13 @@ main {
 }
 
 
-
 a {
   color: $base-color;
 }
 
 
 hr {
+  @include sidebar-slip-pad;
+  transition: padding $base-duration $base-timing;
   border-bottom-color: $whiff-of-gray;
 }

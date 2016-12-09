@@ -17,3 +17,4 @@
  */
 
 // @codekit-prepend "+message.js"
+// @codekit-prepend "+form-validator.js"

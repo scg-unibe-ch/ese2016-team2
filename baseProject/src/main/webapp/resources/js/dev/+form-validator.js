@@ -6,7 +6,7 @@
  * @param  {Object} window   the window as you know it
  * @param  {Object} document the document element
  * @param  {jQuery} $
- * @param  {Object} $view    the view, defaults to the body element
+ * @param  {jQuery} $view    the view, defaults to the body element
  * @param  {Object} option
  */
 jQuery.flatfindr.validator = function (window, document, $, $view, option) {
@@ -14,38 +14,82 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
 
 
   /**
-   *
+   * @private
    * @type {Object}   error messages object
    */
   var errors = {
     'field-password': {
-      text: 'The password must be at least 6 characters long.',
-      clientOnly: false
+      isError: function ($this) {
+        return $this.val().length < 6;
+      },
+      is_other_than_server: false,
+      text: 'The password must be at least 6 characters long.'
     },
+
     'field-email': {
-      text: 'This username is taken. Please choose another one.',
-      clientOnly: true
+      isError: function ($this, callback) {
+        $.post("/signup/doesEmailExist", {email: $this.val()}, callback);
+      },
+      is_other_than_server: true,
+      text: 'This username is taken. Please choose another one.'
+    },
+
+    'msgSubject': {
+      isError: function ($this) {
+        return $this.val() === '';
+      },
+      is_other_than_server: true,
+      text: 'Please add a subject to your message.'
+    },
+
+    'msgTextarea': {
+      isError: function ($this) {
+        return $this.val() === '';
+      },
+      is_other_than_server: true,
+      text: 'Well, it says "Leave a message", so, please drop some lines.'
     }
   };
 
 
 	$("#field-password").focusout(function() {
-    var
-      $this = $(this),
-      tooshort = $this.val().length < 6;
-
-    if (tooshort) showError($this, true);
+    var $this = $(this);
+    if (isViolated($this)) showError($this, true);
 		else handleValidity($this);
 	});
 
 
   $("#field-email").focusout(function() {
     var $this = $(this);
-		$.post("/signup/doesEmailExist", {email: $this.val()}, function(exists){
-			if (exists) showError($this);
+		isViolated($this, function(violated) {
+      if (violated) showError($this);
 			else handleValidity($this);
-		});
+    });
 	});
+
+
+  $("#msgSubject, #msgTextarea").focusout(function() {
+    var $this = $(this);
+    if (isViolated($this)) showError($this);
+		else handleValidity($this);
+	});
+
+
+
+
+  /**
+   *
+   * @private
+   * @param  {jQuery}   $this    the form field under test
+   * @param  {Function} callback a callback functoin if we have to wait for a
+   *                             server response
+   * @return {Boolean}           [description]
+   */
+  function isViolated($this, callback) {
+    var error = errors[$this.attr('id')];
+    if (callback) return error.isError($this, callback);
+    else return error.isError($this);
+  }
 
 
 
@@ -65,7 +109,7 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
       placeholder = $this.attr('placeholder'),
       $error_field = $('.error-'+id);
 
-    if (isSensibleError(id))
+    if (isSensibleError($this))
       $error_field
         .addClass('js-show')
         .find('.validationErrorText')
@@ -78,7 +122,7 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
         });
 
     $this
-      .attr('placeholder', value)
+      .attr('placeholder', (value !== '' ? value : placeholder))
       .val('')
       .on('click', function () {
         $this
@@ -120,12 +164,13 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
    * @param  {String} id  the id of the form field
    * @return {Boolean}    [description]
    */
-  function isSensibleError(id) {
+  function isSensibleError($this) {
     var
+      id = $this.attr('id'),
       $error_field = $('.error-'+id),
       has_server_error = hasServerError($error_field);
     return (!has_server_error ||
-            (has_server_error && errors[id].clientOnly));
+            (has_server_error && errors[id].is_other_than_server));
   }
 
 

@@ -80,7 +80,7 @@
 			user: function () {
 				return $.flatfindr
 					.with({ username: '${user.username}' })
-					.add(['message']);
+					.add(['message', 'validator']);
 			},
 
 			editProfile: function () {

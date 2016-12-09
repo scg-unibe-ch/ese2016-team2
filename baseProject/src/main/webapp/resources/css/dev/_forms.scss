@@ -6,11 +6,12 @@ $slip-height-medium: 73px;
 
 .form-max-height form {
   // height: calc(100vh - 2 * #{$slip-height-small - 1});
-  height: auto;
 
   // @include media($bq-medium) {
   //   height: calc(100vh - 2 * #{$slip-height-medium - 1});
   // }
+
+  height: auto;
 
   @include media($bq-large) {
     height: calc(100vh - 2 * #{$slip-height-medium - 1});
@@ -30,9 +31,15 @@ $slip-height-medium: 73px;
 }
 
 .form-minus-3-height form {
-  height: calc(100vh - 3 * #{$slip-height-small});
+  // height: calc(100vh - 3 * #{$slip-height-small});
+  //
+  // @include media($bq-medium) {
+  //   height: calc(100vh - 3 * #{$slip-height-medium});
+  // }
 
-  @include media($bq-medium) {
+  height: auto;
+
+  @include media($bq-large) {
     height: calc(100vh - 3 * #{$slip-height-medium});
   }
 }
@@ -580,7 +587,8 @@ body.placeAd,
 body.placeAuction,
 body.editProfile,
 body.editAd,
-body.messages {
+body.messages,
+body.user {
   .edit-section,
   .edit-section.js-show {
     border-bottom: 1px dotted lighten($base-color, 4%);
