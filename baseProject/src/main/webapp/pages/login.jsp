@@ -77,16 +77,6 @@
 						Or <a class="link" href="<c:url value="/signup" />">sign up</a> as a new user.
 					</p>
 				</div>
-
-				<div class="container-pad">
-					<h3>You can also use your Google Account to sign in:</h3>
-					<div class="g-signin2" data-onsuccess="onSignIn"></div>
-				</div>
-
-				<div class="container-pad">
-					<h3>Google sign out: (while deving it)</h3>
-					<a href="#" onclick="signOut();">Sign out</a>
-				</div>
 			</div> <%-- .span-half END --%>
 
 
