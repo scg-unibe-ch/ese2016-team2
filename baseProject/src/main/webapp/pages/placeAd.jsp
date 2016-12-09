@@ -60,6 +60,10 @@
 								path="street"
 								placeholder="Address"
 								tabindex="1" />
+							<div class="validator error-field-street">
+								<span class="validationErrorText"></span>
+							</div>
+							<form:errors path="street" cssClass="validationErrorText" />
 
 
 							<form:input
@@ -69,6 +73,9 @@
 								path="city"
 								placeholder="City"
 								tabindex="2" />
+							<div class="validator error-field-city">
+								<span class="validationErrorText"></span>
+							</div>
 							<form:errors path="city" cssClass="validationErrorText" />
 
 							<form:input id="ad-lat" path="latitude" type="hidden" value="46.947974"/>
@@ -84,6 +91,9 @@
 								placeholder="Rent or Price in CHF"
 								tabindex="3"
 								min="1" />
+							<div class="validator error-field-Prize">
+								<span class="validationErrorText"></span>
+							</div>
 							<form:errors path="prize" cssClass="validationErrorText" />
 
 							<form:input
@@ -94,7 +104,10 @@
 								path="squareFootage"
 								placeholder="Space in m²"
 								tabindex="4"
-								min="5" />
+								min="1" />
+							<div class="validator error-field-SquareFootage">
+								<span class="validationErrorText"></span>
+							</div>
 							<form:errors path="squareFootage" cssClass="validationErrorText" />
 
 
@@ -203,8 +216,12 @@
 								type="text"
 								id="field-title"
 								path="title"
-								placeholder="Title"
+								placeholder="Title *"
 								tabindex="7" />
+							<div class="validator error-field-title">
+								<span class="validationErrorText"></span>
+							</div>
+							<form:errors path="title" cssClass="validationErrorText" />
 
 
 							<form:textarea
@@ -212,7 +229,10 @@
 								path="roomDescription"
 								rows="10"
 								tabindex="8"
-								placeholder="Room Description" />
+								placeholder="Room Description *" />
+							<div class="validator error-roomDescription">
+								<span class="validationErrorText"></span>
+							</div>
 							<form:errors path="roomDescription" cssClass="validationErrorText" />
 
 
@@ -318,50 +338,52 @@
 
 			<div class="span-half page-max-height">
 				<div class="container-scroll">
-					<h3 class="edit-section-title">
-						Map
-					</h3>
-					<div class="row container-pad">
-						<fieldset class="gllpLatlonPicker">
-							<input type="text" class="gllpSearchField">
-							<input type="button" class="gllpSearchButton" value="search">
-							<div class="gllpMap">Google Maps</div>
-							<input id="map-lat" type="hidden" class="gllpLatitude" value="46.947974"/>
-							<input id="map-lon" type="hidden" class="gllpLongitude" value="7.447447"/>
-							<input type="hidden" class="gllpZoom" value="14"/>
-						</fieldset>
-					</div>
-					<h3 class="edit-section-title">
-						Drop images here...
-						<span>
-							Drag and drop images onto the window.<br>
-							You can remove an image by double clicking it.
-						</span>
-					</h3>
-					<div class="row">
-						<div class="tile tile-full action-dropzone">
-							<div id="image-preview"></div>
-						</div>
-					</div>
+					<div class="scroll-wrapper">
 
-					<h3 class="edit-section-title">
-						Your viewing times...
-						<span>
-							Add viewing times from the panel to your left at the bottom of the
-							form. You can remove a viewing time by double clicking the corresponding
-							<i class="fa fa-times base-color-opposite"></i>.
-					</h3>
-					<div class="row">
-						<div class="tile tile-full action-viewing-delete">
-							<div id="viewing-preview"></div>
+						<h3 class="edit-section-title">
+							Map
+						</h3>
+						<div class="row container-pad">
+							<fieldset class="gllpLatlonPicker">
+								<input type="text" class="gllpSearchField">
+								<input type="button" class="gllpSearchButton" value="search">
+								<div class="gllpMap">Google Maps</div>
+								<input id="map-lat" type="hidden" class="gllpLatitude" value="46.947974"/>
+								<input id="map-lon" type="hidden" class="gllpLongitude" value="7.447447"/>
+								<input type="hidden" class="gllpZoom" value="14"/>
+							</fieldset>
 						</div>
-					</div>
-					<div class="row">
-						<div class="tile tile-half">
-
+						<h3 class="edit-section-title">
+							Drop images here...
+							<span>
+								Drag and drop images onto the window.<br>
+								You can remove an image by double clicking it.
+							</span>
+						</h3>
+						<div class="row">
+							<div class="tile tile-full action-dropzone">
+								<div id="image-preview"></div>
+							</div>
 						</div>
-					</div>
 
+						<h3 class="edit-section-title">
+							Your viewing times...
+							<span>
+								Add viewing times from the panel to your left at the bottom of the
+								form. You can remove a viewing time by double clicking the corresponding
+								<i class="fa fa-times base-color-opposite"></i>.
+						</h3>
+						<div class="row">
+							<div class="tile tile-full action-viewing-delete">
+								<div id="viewing-preview"></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="tile tile-half">
+
+							</div>
+						</div>
+					</div> <%-- .scroll-wrapper END --%>
 				</div> <%-- .container-scroll END --%>
 			</div> <%-- .span-half END --%>
 

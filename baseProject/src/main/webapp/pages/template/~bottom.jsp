@@ -108,7 +108,7 @@
 			},
 
 			placeAd: function () {
-				return $.flatfindr.add(['place', 'imageUpload']);
+				return $.flatfindr.add(['place', 'imageUpload', 'validator']);
 			},
 
 			messages: function () {

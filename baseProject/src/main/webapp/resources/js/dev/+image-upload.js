@@ -141,7 +141,7 @@ jQuery.flatfindr.register({
 
     /**
      *
-     * IEEF
+     * IIFE
      * @private
      */
     $(function() {
@@ -173,7 +173,7 @@ jQuery.flatfindr.register({
           path;
 
 
-        if (PAGE_NAME === 'editAd') {
+        if (PAGE_NAME === 'editAd' || PAGE_NAME === 'placeAd') {
           $image_preview
             .prepend(createPreviewElement(file))
             .find('.action-delete')
