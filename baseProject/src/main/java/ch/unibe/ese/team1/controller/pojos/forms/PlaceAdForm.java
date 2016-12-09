@@ -207,22 +207,6 @@ public class PlaceAdForm {
 		this.street = street;
 	}
 
-	public String getRoomFriends() {
-		return roomFriends;
-	}
-
-	public void setRoomFriends(String roomFriends) {
-		this.roomFriends = roomFriends;
-	}
-
-	public boolean getStudio() {
-		return studio;
-	}
-
-	public void setStudio(boolean studio) {
-		this.studio = studio;
-	}
-
 	public String getRoomType() {
 		return roomType;
 	}

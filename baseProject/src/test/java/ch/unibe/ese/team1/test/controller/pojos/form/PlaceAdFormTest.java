@@ -173,4 +173,20 @@ public class PlaceAdFormTest {
 		
 		assertTrue(placeAdForm.getAuction());
 	}
+	
+	@Test
+	public void testLatitude() {
+		String latitude = "Test latitude";
+		placeAdForm.setLatitude(latitude);
+		
+		assertEquals(latitude, placeAdForm.getLatitude());
+	}
+	
+	@Test
+	public void testLongitude() {
+		String longitude = "Test longitude";
+		placeAdForm.setLongitude(longitude);
+		
+		assertEquals(longitude, placeAdForm.getLongitude());
+	}
 }
