@@ -99,7 +99,7 @@
 
 						</div>
 
-						<div class="container-scroll container-pad">
+						<div class="container-scroll container-pad" style="padding-left: 0">
 
 							<c:choose>
 								<c:when test="${not empty messages}">

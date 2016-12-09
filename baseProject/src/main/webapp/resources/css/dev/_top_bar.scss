@@ -4,11 +4,21 @@
 
 
 .top-bar {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
   height: $slip-height-small;
+  background-color: $white;
   border-bottom: 1px solid $whiff-of-gray;
 
   @include media($bq-medium) {
     height: $slip-height-medium;
+  }
+
+  @include media($bq-large) {
+    position: relative;
   }
 
   h2 {
