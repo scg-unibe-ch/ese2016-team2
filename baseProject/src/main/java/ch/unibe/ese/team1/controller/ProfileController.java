@@ -28,7 +28,6 @@ import ch.unibe.ese.team1.controller.pojos.forms.EditProfileForm;
 import ch.unibe.ese.team1.controller.pojos.forms.MessageForm;
 import ch.unibe.ese.team1.controller.pojos.forms.RegisterForm;
 import ch.unibe.ese.team1.controller.pojos.forms.SignupForm;
-import ch.unibe.ese.team1.controller.pojos.forms.SignupGoogleForm;
 import ch.unibe.ese.team1.controller.service.AdService;
 import ch.unibe.ese.team1.controller.service.AuctionService;
 import ch.unibe.ese.team1.controller.service.RegisterService;
@@ -40,7 +39,6 @@ import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.PictureMeta;
 import ch.unibe.ese.team1.model.User;
-import ch.unibe.ese.team1.model.UserGoogle;
 import ch.unibe.ese.team1.model.Visit;
 
 
@@ -56,9 +54,6 @@ import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
  */
 @Controller
 public class ProfileController {
-	
-	
-	
 	
 	public static final String IMAGE_DIRECTORY = "/img/test";
 
