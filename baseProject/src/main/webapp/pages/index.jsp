@@ -13,7 +13,7 @@
 	<div class="container container-pad">
 		<div class="row">
 			<div class="tile-full brand brand-primary">
-				<h1><span class="base-color-opposite">flat</span><span class="base-color">findr</span></h1>
+				<h1><a href="/searchAd" title="Start searching."><span class="base-color-opposite">flat</span><span class="base-color">findr</span></a></h1>
 			</div>
 		</div>
 	</div>
@@ -70,25 +70,21 @@
 
 							<c:when test="${advertisement.auction}">
 
-								<%--
-									@Jerome
-									TODO: Add some images to test auctions before uncommenting.
 
-									<li style="background-image: url(${advertisement.pictures[0].filePath})">
-										<a class="blender-caption" href="<c:url value='/ad?id=${advertisement.id}' />">
-											<span>${advertisement.city}</span>
-											<span>${advertisement.title}</span>
-										</a>
-									</li>
-
-								--%>
+								<li class="slide" style="background-image: url(${advertisement.pictures[0].filePath})">
+									<a title="View this auction." class="slide-caption" href="<c:url value='/auction?id=${advertisement.id}' />">
+										<span class="fa fa-gavel" aria-hidden="true"></span>
+										<span>${advertisement.city}</span>
+										<span>${advertisement.title}</span>
+									</a>
+								</li>
 
 							</c:when>
 
 							<c:otherwise>
 
 								<li class="slide" style="background-image: url(${advertisement.pictures[0].filePath})">
-									<a class="slide-caption" href="<c:url value='/ad?id=${advertisement.id}' />">
+									<a title="View this ad." class="slide-caption" href="<c:url value='/ad?id=${advertisement.id}' />">
 										<span>${advertisement.city}</span>
 										<span>${advertisement.title}</span>
 									</a>

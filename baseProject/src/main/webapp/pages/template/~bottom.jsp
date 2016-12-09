@@ -6,7 +6,18 @@
 
 <security:authorize var="loggedIn" url="/profile" />
 
-<script src="/resources/js/prod/${param.js}.js"></script>
+<c:choose>
+	<c:when test="${not empty param.js}">
+
+		<script src="/resources/js/prod/${param.js}.js"></script>
+
+	</c:when>
+	<c:otherwise>
+
+		<script src="/resources/js/prod/common.js"></script>
+
+	</c:otherwise>
+</c:choose>
 <script>
 	(function ($, pagename) {
 
@@ -23,7 +34,7 @@
 			},
 
 			signup: function () {
-				return $.flatfindr.add(['search', 'signup']);
+				return $.flatfindr.add(['validator']);
 			},
 
 			register: function () {
@@ -69,7 +80,7 @@
 			user: function () {
 				return $.flatfindr
 					.with({ username: '${user.username}' })
-					.add(['message']);
+					.add(['message', 'validator']);
 			},
 
 			editProfile: function () {
@@ -113,6 +124,10 @@
 
 			placeAuction: function () {
 				return js.placeAd();
+			},
+
+			enquiries: function () {
+				return $.flatfindr.add(['enquiries']);
 			}
 
 		};

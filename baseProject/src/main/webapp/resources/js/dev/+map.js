@@ -42,7 +42,10 @@ jQuery.flatfindr.map = function (window, document, $, $view, option) {
      * Plus a helper boolean that tells if the map has already been initilized.
      */
     map,
-    map_initd = false;
+    map_initd = false,
+
+    // ... Engelberg.
+    ch_center = {LAT: 46.8210087, LON: 8.3943264};
 
 
 
@@ -56,7 +59,7 @@ jQuery.flatfindr.map = function (window, document, $, $view, option) {
 
 
   /**
-   * Toggle map container, call initMap to rerender if opening.
+   * Toggle map container, render map only once.
    * @private
    */
   function toggleMap() {
@@ -70,6 +73,10 @@ jQuery.flatfindr.map = function (window, document, $, $view, option) {
         window.initMap();
         map_initd = true;
       }, $.flatfindr.BASE_DURATION * 2);
+    }
+
+    if ($view.is('.headerPrimaryOpen')) {
+      $view.trigger('header:toggle');
     }
   }
 
@@ -110,19 +117,41 @@ jQuery.flatfindr.map = function (window, document, $, $view, option) {
 
 
 
+  /**
+   * @private
+   * @param  {Object} pos   the coordinate of the target
+   */
   function zoomIn(pos) {
     map.setCenter(pos);
     map.setZoom(18);
+    map.setMapTypeId('hybrid');
     $(this).text('Distant view');
   }
 
 
+
+  /**
+   * @private
+   * @param  {Object} bounds  the bounds of the map
+   */
   function zoomOut(bounds) {
     map.fitBounds(bounds);
+    map.setMapTypeId('roadmap');
     $(this).text('Close view');
   }
 
 
+
+  /**
+   * Toggle map zoom level according to the current map view state, checked by
+   * the presence of css class 'zoomIn' (tells: going to zoom in).
+   *
+   * @private
+   * @param  {Object} pos    the coordinate of the target
+   * @param  {Object} bounds the bounds of the map
+   * @return {Function}      zoomIn if the map is in distant view state
+   *                                - else zoomOut
+   */
   function toggleZoom(pos, bounds) {
     if ($(this).is('.zoomIn'))
       return zoomIn.call(this, pos);
@@ -132,7 +161,9 @@ jQuery.flatfindr.map = function (window, document, $, $view, option) {
 
 
   /**
-   * The map callback that does the setup for the google map
+   * The map function that does the setup for the google map, markers, info
+   * window.
+   *
    * @private
    */
   window.initMap = function () {
@@ -140,7 +171,7 @@ jQuery.flatfindr.map = function (window, document, $, $view, option) {
 
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 7,
-      center: new google.maps.LatLng(locs[0][2],locs[0][3]),
+      center: new google.maps.LatLng(ch_center.LAT, ch_center.LON),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 

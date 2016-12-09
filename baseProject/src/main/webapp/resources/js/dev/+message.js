@@ -89,7 +89,13 @@ jQuery.flatfindr.message = function (window, document, $, $view, option) {
 
     if ($this.attr('disable') ||
         $msgSubject.val() == "" ||
-        $msgTextarea.val() == "") return;
+        $msgTextarea.val() == "") {
+      if ($msgSubject.val() == ""){
+        
+      }
+
+      return;
+    }
 
     var
       subject = $msgSubject.val(),

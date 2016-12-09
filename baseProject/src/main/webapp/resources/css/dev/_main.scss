@@ -1,7 +1,13 @@
 .page-max-height {
-  height: calc(100vh - 1 * #{$slip-height-small - 1});
+  // height: calc(100vh - 1 * #{$slip-height-small - 1});
+  //
+  // @include media($bq-medium) {
+  //   height: calc(100vh - 1 * #{$slip-height-medium - 1});
+  // }
 
-  @include media($bq-medium) {
+  height: auto;
+
+  @include media($bq-large) {
     height: calc(100vh - 1 * #{$slip-height-medium - 1});
   }
 }
@@ -52,35 +58,6 @@
     text-shadow: 0 0 64px $white;
   }
 }
-
-
-.validationErrorText {
-  display: block;
-  color: $base-color-opposite;
-
-  @include sidebar-slip-pad;
-
-  &:before {
-    content: '⇧ ';
-  }
-
-  a {
-    display: inline;
-    vertical-align: baseline;
-    background-color: transparent;
-    color: inherit;
-    padding: 0;
-
-    &:hover,
-    &:active,
-    &:visited,
-    &:link {
-      background-color: transparent;
-      color: inherit;
-    }
-  }
-}
-
 
 img {
   .span-half &.only-child {
@@ -137,5 +114,65 @@ img {
     .fa {
       display: none;
     }
+  }
+}
+
+.validator {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height (2 * $base-duration) $base-timing;
+
+  &.js-show {
+    max-height: 2 * $slip-height-small;
+
+    @include media($bq-medium) {
+      max-height: 2 * $slip-height-medium;
+    }
+  }
+}
+
+.validationErrorText {
+  display: block;
+  margin: 0;
+  font-weight: 400;
+  color: $base-color-opposite;
+  transition: padding $base-duration $base-timing;
+
+  @include sidebar-slip-pad;
+
+  &:before {
+    content: '⇧ ';
+  }
+
+  a {
+    display: inline;
+    vertical-align: baseline;
+    background-color: transparent;
+    color: inherit;
+    padding: 0;
+
+    &:hover,
+    &:active,
+    &:visited,
+    &:link {
+      background-color: transparent;
+      color: inherit;
+    }
+  }
+}
+
+
+.section-title {
+  @include sidebar-slip-pad;
+  margin-bottom: 0;
+  padding-left: 8px !important;
+  transition: padding $base-duration $base-timing;
+
+  @include media($bq-medium) {
+    padding-left: 16px !important;
+  }
+
+  @include media($bq-large) {
+    padding-left: 0 !important;
   }
 }

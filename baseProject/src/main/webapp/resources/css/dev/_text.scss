@@ -2,9 +2,15 @@ body {
   color: $light-gray;
 }
 
-h2, h3 {
+h2, h3, h5 {
   font-weight: 300;
   color: $light-gray;
+}
+
+h5, h6 {
+  margin: 0;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 p {
