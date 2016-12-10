@@ -21,7 +21,6 @@ import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Gender;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.UserRole;
-import ch.unibe.ese.team1.model.dao.AdDao;
 import ch.unibe.ese.team1.model.dao.UserDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -34,9 +33,6 @@ public class ParserTest {
 
 	@Autowired
 	private AdService adService;
-
-	@Autowired
-	private AdDao adDao;
 
 	@Autowired
 	UserDao userDao;

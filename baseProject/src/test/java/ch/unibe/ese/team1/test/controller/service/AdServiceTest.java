@@ -142,14 +142,6 @@ public class AdServiceTest {
 		Date result = df.parse("2015-02-27");
 
 		assertEquals(0, result.compareTo(ad.getMoveInDate()));
-		
-		Iterable<Advertisement> iterableAds = adService.getNewestAds(6);
-		Iterator<Advertisement> iteratorAds = iterableAds.iterator();
-		List<Advertisement> adsList = new ArrayList<Advertisement>();
-		while (iteratorAds.hasNext()) {
-			adsList.add(iteratorAds.next());
-		}
-		assertTrue(adsList.contains(ad));
 	}
 
 	@Test

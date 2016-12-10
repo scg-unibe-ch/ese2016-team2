@@ -2,7 +2,6 @@ package ch.unibe.ese.team1.test.controller.service;
 
 import static org.junit.Assert.assertEquals;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,19 +16,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import ch.unibe.ese.team1.controller.pojos.forms.EditProfileForm;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
 import ch.unibe.ese.team1.controller.service.AdService;
 import ch.unibe.ese.team1.controller.service.AuctionService;
-import ch.unibe.ese.team1.controller.service.UserService;
-import ch.unibe.ese.team1.controller.service.UserUpdateService;
 import ch.unibe.ese.team1.controller.service.VisitService;
 import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.Gender;
 import ch.unibe.ese.team1.model.User;
-import ch.unibe.ese.team1.model.UserPicture;
 import ch.unibe.ese.team1.model.UserRole;
 import ch.unibe.ese.team1.model.Visit;
 import ch.unibe.ese.team1.model.dao.AdDao;

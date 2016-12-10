@@ -79,6 +79,7 @@ public class MessageServiceTest {
 		assertEquals(MessageState.UNREAD, message.get(size-2).getState());
 		assertEquals(2, messageService.unread(receiverId));
 		assertEquals(message.get(size-2).getId(), messageService.getMessage(id1).getId());
+		assertEquals(message.get(size-1).getId(), messageService.getMessage(id2).getId());
 		
 		messageService.readMessage(message.get(size-2).getId());
 		
