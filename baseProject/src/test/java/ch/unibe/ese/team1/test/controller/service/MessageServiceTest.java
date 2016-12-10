@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
@@ -56,29 +57,35 @@ public class MessageServiceTest {
 		String subject = "Test subject";
 		String text = "Test text";
 		messageService.sendMessage(sender, receiver, subject, text);
+		String subject2 = "Test subject2";
+		String text2 = "Test text2";
+		messageService.sendMessage(sender, receiver, subject2, text2);
 		
 		Iterable<Message> messages = messageDao.findAll();
-		Message message = new Message();
+		List<Message> message = new ArrayList<Message>();
 		for (Message tempMessage: messages) {
-			message = tempMessage;
+			message.add(tempMessage);
 		}
 		
-		long id = message.getId();
+		int size = message.size();
 		
-		assertEquals(subject, message.getSubject());
-		assertEquals(receiver.getUsername(), userDao.findOne(message.getRecipient().getId()).getUsername());
-		assertEquals(sender.getUsername(), userDao.findOne(message.getSender().getId()).getUsername());
-		assertEquals(text, message.getText());
-		assertEquals(MessageState.UNREAD, message.getState());
+		long id1 = message.get(size-2).getId();
+		long id2 = message.get(size-1).getId();
+		
+		assertEquals(subject, message.get(size-2).getSubject());
+		assertEquals(receiver.getUsername(), userDao.findOne(message.get(size-2).getRecipient().getId()).getUsername());
+		assertEquals(sender.getUsername(), userDao.findOne(message.get(size-2).getSender().getId()).getUsername());
+		assertEquals(text, message.get(size-2).getText());
+		assertEquals(MessageState.UNREAD, message.get(size-2).getState());
+		assertEquals(2, messageService.unread(receiverId));
+		assertEquals(message.get(size-2).getId(), messageService.getMessage(id1).getId());
+		
+		messageService.readMessage(message.get(size-2).getId());
+		
+		Message message1 = messageService.getMessage(id1);
+		
+		assertEquals(MessageState.READ, message1.getState());
 		assertEquals(1, messageService.unread(receiverId));
-		assertEquals(message.getId(), messageService.getMessage(id).getId());
-		
-		messageService.readMessage(message.getId());
-		
-		message = messageService.getMessage(id);
-		
-		assertEquals(MessageState.READ, message.getState());
-		assertEquals(0, messageService.unread(receiverId));
 		
 		Iterable<Message> inboxOfUser = messageService.getInboxForUser(receiver);
 		ArrayList<Message> messagesOfInbox = new ArrayList<Message>();
@@ -86,7 +93,7 @@ public class MessageServiceTest {
 			messagesOfInbox.add(tempMessage);
 		}
 		
-		assertEquals(messagesOfInbox.get(0).getId(), message.getId());
+		assertEquals(messagesOfInbox.get(0).getId(), message.get(size-2).getId());
 		
 		Iterable<Message> messagesSentOfSender = messageService.getSentForUser(sender);
 		ArrayList<Message> messagesSentOfSenderList = new ArrayList<Message>();
@@ -94,7 +101,7 @@ public class MessageServiceTest {
 			messagesSentOfSenderList.add(tempMessage);
 		}
 		
-		assertEquals(messagesSentOfSenderList.get(0).getId(), message.getId());		
+		assertEquals(messagesSentOfSenderList.get(0).getId(), message.get(size-2).getId());		
 	}
 	
 	private User createUser(String email, String password, String firstName, String lastName, Gender gender,
