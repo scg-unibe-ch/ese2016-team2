@@ -30,7 +30,6 @@ import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.AdPicture;
 import ch.unibe.ese.team1.model.Advertisement;
 import ch.unibe.ese.team1.model.Gender;
-import ch.unibe.ese.team1.model.Picture;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.UserRole;
 import ch.unibe.ese.team1.model.dao.UserDao;
@@ -143,6 +142,14 @@ public class AdServiceTest {
 		Date result = df.parse("2015-02-27");
 
 		assertEquals(0, result.compareTo(ad.getMoveInDate()));
+		
+		Iterable<Advertisement> iterableAds = adService.getNewestAds(6);
+		Iterator<Advertisement> iteratorAds = iterableAds.iterator();
+		List<Advertisement> adsList = new ArrayList<Advertisement>();
+		while (iteratorAds.hasNext()) {
+			adsList.add(iteratorAds.next());
+		}
+		assertTrue(adsList.contains(ad));
 	}
 
 	@Test
@@ -150,6 +157,8 @@ public class AdServiceTest {
 		User hans = createUser("adService@Test2.ch", "password", "AdService", "Test2", Gender.MALE, "Normal");
 		hans.setAboutMe("AdServiceTest2");
 		userDao.save(hans);
+		
+		placeAdForm.setMoveOutDate("12-12-2016");
 
 		adService.saveFrom(placeAdForm, filePaths, hans);
 		
@@ -160,6 +169,8 @@ public class AdServiceTest {
 		while (iterator.hasNext()) {
 			ad2 = iterator.next();
 		}
+		
+		assertEquals("12-12-2016", new SimpleDateFormat("dd-MM-yyyy").format(ad2.getMoveOutDate()));
 
 		results = toList(searchForm, false);
 		assertTrue(results.contains(ad2));
@@ -193,6 +204,42 @@ public class AdServiceTest {
 		assertFalse(results.contains(ad2));
 
 		searchForm.setInternet(false);
+		searchForm.setEarliestMoveInDate("12-12-2042");
+		results = toList(searchForm, false);
+		assertFalse(results.contains(ad2));
+		
+		searchForm.setEarliestMoveInDate("12-12-2012");
+		results = toList(searchForm, false);
+		assertTrue(results.contains(ad2));
+		
+		searchForm.setLatestMoveInDate("12-12-2012");
+		results = toList(searchForm, false);
+		assertFalse(results.contains(ad2));
+		
+		searchForm.setLatestMoveInDate("12-12-2042");
+		results = toList(searchForm, false);
+		assertTrue(results.contains(ad2));
+		
+		searchForm.setEarliestMoveInDate(null);
+		searchForm.setLatestMoveInDate(null);
+		searchForm.setEarliestMoveOutDate("12-12-2042");
+		results = toList(searchForm, false);
+		assertFalse(results.contains(ad2));
+		
+		searchForm.setEarliestMoveOutDate("12-12-2012");
+		results = toList(searchForm, false);
+		assertTrue(results.contains(ad2));
+		
+		searchForm.setEarliestMoveOutDate(null);
+		searchForm.setLatestMoveOutDate("12-12-2017");
+		results = toList(searchForm, false);
+		assertTrue(results.contains(ad2));
+		
+		searchForm.setLatestMoveOutDate("12-12-2012");
+		results = toList(searchForm, false);
+		assertFalse(results.contains(ad2));
+		
+		searchForm.setLatestMoveOutDate(null);
 		searchForm.setRoom(false);
 		results = toList(searchForm, false);
 		assertTrue(results.contains(ad2));
@@ -254,12 +301,11 @@ public class AdServiceTest {
 		PlaceAdForm editAdForm = editAdService.fillForm(ad2);
 		assertEquals("Test preferences", editAdForm.getPreferences());
 		editAdForm.setCity("3000 - Bern");
-		editAdForm.setPreferences("Test preferences");
-		editAdForm.setRoomDescription("Test Room description");
+		editAdForm.setPreferences("New pref");
 		editAdForm.setPrize(600);
 		editAdForm.setBalcony(false);
 		editAdForm.setSquareFootage(50);
-		editAdForm.setTitle("new title");
+		editAdForm.setTitle("title");
 		editAdForm.setStreet("Hauptstrasse 13");
 		editAdForm.setRoomType("Studio");
 		editAdForm.setMoveInDate("27-02-2015");
@@ -288,8 +334,20 @@ public class AdServiceTest {
 			ad2 = iterator.next();
 		}
 		
-		assertEquals("new title", ad2.getTitle());
+		assertEquals("New pref",ad2.getPreferences());
 		
+	}
+	
+	@Test
+	public void testCheckIfAlreadyAdded() {
+		String toBeTested = "asdfasdf; TestName; asdfasdf";
+		String name = "TestName";
+		
+		assertTrue(adService.checkIfAlreadyAdded(name, toBeTested));
+		
+		name = "asdf";
+		
+		assertFalse(adService.checkIfAlreadyAdded(name, toBeTested));
 	}
 
 	private ArrayList<Advertisement> toList(SearchForm searchForm, boolean premium) {
