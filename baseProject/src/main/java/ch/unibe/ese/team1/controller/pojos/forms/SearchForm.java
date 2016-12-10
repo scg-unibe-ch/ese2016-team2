@@ -5,8 +5,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import ch.unibe.ese.team1.model.dao.AdDao;
-
 /** This form is used for searching and filter for an ad. */
 public class SearchForm {
 

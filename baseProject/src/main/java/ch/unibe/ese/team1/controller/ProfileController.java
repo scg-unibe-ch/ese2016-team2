@@ -1,5 +1,4 @@
-package ch.unibe.ese.team1.controller;
-
+package ch.unibe.ese.team1.controller
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -54,7 +53,7 @@ import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
  */
 @Controller
 public class ProfileController {
-	
+
 	public static final String IMAGE_DIRECTORY = "/img/test";
 
 	/** Used for generating a JSON representation of a given object. */
@@ -91,14 +90,11 @@ public class ProfileController {
 	@Autowired
 	private AuctionService auctionService;
 
-
-
 	/**
 	 * @Jerome
 	 * Add these properties for basic search functionality.
 	 */
 	private SearchForm searchForm;
-
 
 	/** Returns the login page. */
 	@RequestMapping(value = "/login")
@@ -127,7 +123,6 @@ public class ProfileController {
 		return model;
 	}
 
-	
 	/** Validates the signup form and on success persists the new user. */
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public ModelAndView signupResultPage(@Valid SignupForm signupForm, BindingResult bindingResult) {
@@ -143,8 +138,7 @@ public class ProfileController {
 		return model;
 	}
 	
-		
-
+	
 	/**
 	 * Checks and returns whether a user with the given email already exists.
 	 */
@@ -152,10 +146,6 @@ public class ProfileController {
 	public @ResponseBody boolean doesEmailExist(@RequestParam String email) {
 		return signupService.doesUserWithUsernameExist(email);
 	}
-	
-	
-	
-	
 
 	/** Shows the edit profile page. */
 	@RequestMapping(value = "/profile/editProfile", method = RequestMethod.GET)
@@ -178,10 +168,8 @@ public class ProfileController {
 		if (!bindingResult.hasErrors()) {
 			userUpdateService.updateForm(editProfileForm);
 			
-			
 			// reset the picture uploader
 			this.pictureUploader = null;
-			
 			
 			model = new ModelAndView("updatedProfile");
 			model.addObject("message", "Your Profile has been updated!");
@@ -193,11 +181,6 @@ public class ProfileController {
 			return model;
 		}
 	}
-	
-	
-	
-	
-	
 	
 	/**
 	 * Uploads the pictures that are attached as multipart files to the request.
@@ -234,12 +217,6 @@ public class ProfileController {
 		jsonResponse += "}";
 		return jsonResponse;
 	}
-	
-	
-	
-	
-	
-	
 
 	/** Returns the register page for upgrading the user account to a premium account. */
 	@RequestMapping(value = "/profile/registerProfile", method = RequestMethod.GET)

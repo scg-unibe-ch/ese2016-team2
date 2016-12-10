@@ -39,7 +39,6 @@ public class SignupService {
 		role.setRole(DEFAULT_ROLE);
 		role.setUser(user);
 		userRoles.add(role);
-		
 		user.setUserRoles(userRoles);
 		
 		userDao.save(user);

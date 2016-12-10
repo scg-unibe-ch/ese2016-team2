@@ -12,37 +12,29 @@
 <%-- check if user is logged in --%>
 <security:authorize var="loggedIn" url="/profile" />
 
-
 <main role="main">
 	<c:import url="template/~top_bar.jsp">
 		<c:param name="instr" value="Place a bid..." />
 	</c:import>
-
 		<div class="container">
 			<div class="row">
-
 				<div class="span-half">
 					<div class="form form-search form-place form-max-height">
-
 						<form:form
 							method="post"
 							modelAttribute="placeBidForm"
 							action="/auction/placeBid"
 							id="placeBidForm"
 							autocomplete="off">
-
 							<div class="container-scroll">
-
 								<fmt:parseNumber var="formattedId" integerOnly="true" type="number"
 									value="${shownAuction.id}" />
-
 								<c:if test="${loggedIn}">
 									<form:input
 										id="bid-prize"
 										type="number"
 										path="prize"
 										placeholder="${shownAuction.prize}" step="50" />
-
 									<form:checkbox
 										style="display:none"
 										id="id" name="id"
@@ -50,7 +42,6 @@
 										value="${formattedId}"
 										checked="checked" />
 								</c:if>
-
 								<div class="row">
 									<div class="tile tile-full">
 											<c:choose>
@@ -63,16 +54,6 @@
 															<p class="pad">${shownAuction.prize}&#32;CHF</p>
 														</div>
 													</div>
-													<c:if test="${loggedIn}">
-														<div class="row">
-															<div class="tile tile-full action action-tile">
-																<a href="/login">
-																	Login to place new bid
-																</a>
-															</div>
-														</div>
-													</c:if>
-
 												</c:when>
 												<c:otherwise>
 													<div class="row">
@@ -108,8 +89,6 @@
 										</table>
 									</div>
 								</div>
-
-
 								<c:if test="${not empty warningMessage }">
 									<div class="row">
 										<div class="tile tile-full">
@@ -117,10 +96,7 @@
 										</div>
 									</div>
 								</c:if>
-
 							</div> <%-- .container-scroll END --%>
-
-
 							<c:if test="${loggedIn}">
 								<div class="row">
 									<div class="tile tile-half">
@@ -131,23 +107,14 @@
 									</div>
 								</div>
 							</c:if>
-
 						</form:form>
-
 					</div> <%-- .form END --%>
 				</div> <%-- .span-half END --%>
-
 				<div class="span-half page-max-height">
 					<div class="container-scroll container-pad">
 						<div class="row">
 							<div class="tile tile-full">
 								<h2>
-									<%--
-									@Jerome
-									TODO: Has an ad a premium property??
-									<c:if test="">
-										<span class="fa fa-gavel" aria-hidden="true"></span>
-									</c:if> --%>
 									${shownAuction.title}
 								</h2>
 							</div>
@@ -163,7 +130,6 @@
 								<p>${shownAuction.roomDescription}</p>
 							</div>
 						</div>
-
 						<div style="margin-bottom: 73px" class="row">
 							<div class="tile tile-full">
 								<h3>Preferences</h3>
@@ -172,10 +138,8 @@
 						</div>
 					</div>
 				</div> <%-- .span-half END --%>
-
 		</div> <%-- .row END --%>
 	</div> <%-- .container END --%>
-
 </main>
 
 <%-- <script src="/js/adDescription.js"></script> --%>

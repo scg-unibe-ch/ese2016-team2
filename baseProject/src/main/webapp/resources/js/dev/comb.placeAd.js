@@ -22,3 +22,4 @@
 
 // @codekit-prepend "+place.js"
 // @codekit-prepend "+image-upload.js"
+// @codekit-prepend "+form-validator.js"

@@ -12,14 +12,10 @@
 	<c:import url="template/~top_bar.jsp">
 		<c:param name="instr" value="Place an auction..." />
 	</c:import>
-
 	<div class="container">
-
 		<div class="row">
-
 			<div class="span-half">
 				<div class="form form-search form-place form-max-height">
-
 					<form:form
 						method="post"
 						modelAttribute="placeAuctionForm"
@@ -27,7 +23,6 @@
 						id="placeAuctionForm"
 						autocomplete="off"
 						enctype="multipart/form-data">
-
 						<div class="container-scroll">
 							<div class="row checkboxes edit-section">
 								<div class="tile tile-third">
@@ -43,16 +38,12 @@
 									<label for="house">House</label>
 								</div>
 							</div>
-
-
 							<form:input
 								type="text"
 								id="field-street"
 								path="street"
 								placeholder="Address"
 								tabindex="1" />
-
-
 							<form:input
 								class="edit-section"
 								type="text"
@@ -61,10 +52,7 @@
 								placeholder="City"
 								tabindex="2" />
 							<form:errors path="city" cssClass="validationErrorText" />
-
-
-								<%-- @Jerome: for some reason it autosets '0' as value. W/A: set
-								to '' by js. --%>
+							<%-- @Jerome: for some reason it autosets '0' as value. W/A: setto '' by js. --%>
 							<form:input
 								value=""
 								id="field-Prize"
@@ -74,7 +62,6 @@
 								tabindex="3"
 								min="1" />
 							<form:errors path="prize" cssClass="validationErrorText" />
-
 							<form:input
 								class="edit-section"
 								value=""
@@ -85,10 +72,6 @@
 								tabindex="4"
 								min="5" />
 							<form:errors path="squareFootage" cssClass="validationErrorText" />
-
-
-
-
 							<h3 class="edit-section-title">
 								End date
 								<span>
@@ -96,32 +79,30 @@
 								</span>
 							</h3>
 							<div class="row dates related">
-	              <div class="tile tile-half">
-	                <div class="row">
-	                  <div class="tile tile-full">
-	                    <input
+				            	<div class="tile tile-half">
+				                	<div class="row">
+				                  		<div class="tile tile-full">
+				                    		<input
 												tabindex="10"
-	                      class="js-has-label"
-	                      type="text"
-	                      id="field-endDate"
+	                      						class="js-has-label"
+	                      						type="text"
+	                      						id="field-endDate"
 												path="endDate"
-	                      placeholder="Choose from datepicker..." />
-	                  </div>
-	                </div>
-	              </div>
-	              <div class="tile tile-half">
-	                <div class="datepicker" id="dp-endDate">
-
-	                </div>
-	              </div>
-	            </div>
-
+	                      						placeholder="Choose from datepicker..." />
+	                  					</div>
+	                				</div>
+	              				</div>
+	              			<div class="tile tile-half">
+	                			<div class="datepicker" id="dp-endDate">
+	                			</div>
+	              			</div>
+	            		</div>
 							<div class="row times edit-section">
 								<div class="tile tile-half">
 									<div class="row">
 										<div class="tile tile-full">
-	                    <label>End: Hour</label>
-	                  </div>
+	                   			 			<label>End: Hour</label>
+	                  					</div>
 										<div class="tile tile-full action action-tile">
 											<select id="auctionEndHour">
 												<% for (int i = 0; i < 24; i++) {
@@ -135,8 +116,8 @@
 								<div class="tile tile-half">
 									<div class="row">
 										<div class="tile tile-full">
-	                    <label>Minute</label>
-	                  </div>
+	                    					<label>Minute</label>
+	                  					</div>
 										<div class="tile tile-full action action-tile">
 											<select id="auctionEndMinute">
 												<% for (int i = 0; i < 60; i++) {
@@ -144,40 +125,33 @@
 													out.print("<option value=\"" + minute + "\">" + minute +"</option>");
 												} %>
 											</select>
-	                  </div>
+	                  					</div>
 									</div>
 								</div>
 							</div>
-
-
 							<form:input id="field-endTime" type="hidden" path="endTime" /></td>
-
-
 							<div class="row dates">
-	              <div class="tile tile-half">
-	                <div class="row">
-	                  <div class="tile tile-full">
-	                    <label>Move-in</label>
-	                  </div>
-	                  <div class="tile tile-full">
-	                    <form:input
-	                      class="js-has-label"
-	                      type="text"
-	                      id="field-moveInDate"
-	                      path="moveInDate"
-	                      tabindex="5"
-	                      placeholder="Choose from datepicker..." />
-	                  </div>
-	                </div>
-	              </div>
-	              <div class="tile tile-half">
-	                <div class="datepicker" id="moveInDate">
-
-	                </div>
-	              </div>
-	            </div>
-
-
+	              				<div class="tile tile-half">
+	                				<div class="row">
+	                  					<div class="tile tile-full">
+	                    					<label>Move-in</label>
+	                  					</div>
+	                  					<div class="tile tile-full">
+	                    				<form:input
+						                      class="js-has-label"
+						                      type="text"
+						                      id="field-moveInDate"
+						                      path="moveInDate"
+						                      tabindex="5"
+						                      placeholder="Choose from datepicker..." />
+	                  					</div>
+	                				</div>
+	              				</div>
+	              				<div class="tile tile-half">
+	                				<div class="datepicker" id="moveInDate">
+									</div>
+	              				</div>
+	            			</div>
 							<div class="row checkboxes">
 								<div class="tile tile-half">
 									<form:checkbox id="field-smoker" path="smokers" value="1" />
@@ -188,7 +162,6 @@
 									<label for="field-animals">Animals allowed</label>
 								</div>
 							</div>
-
 							<div class="row checkboxes">
 								<div class="tile tile-half">
 									<form:checkbox id="field-balcony" path="balcony" value="1" />
@@ -199,7 +172,6 @@
 									<label for="field-garden">Garden (co-use)</label>
 								</div>
 							</div>
-
 							<div class="row checkboxes">
 								<div class="tile tile-half">
 									<form:checkbox id="field-cellar" path="cellar" value="1" />
@@ -210,7 +182,6 @@
 									<label for="field-furnished">Furnished</label>
 								</div>
 							</div>
-
 							<div class="row checkboxes">
 								<div class="tile tile-half">
 									<form:checkbox id="field-cable" path="cable" value="1" />
@@ -221,23 +192,18 @@
 									<label for="field-garage">Garage</label>
 								</div>
 							</div>
-
 							<div class="row checkboxes edit-section">
 								<div class="tile tile-half">
 									<form:checkbox id="field-internet" path="internet" value="1" />
 									<label for="field-internet">WiFi</label>
 								</div>
 							</div>
-
-
 							<form:input
 								type="text"
 								id="field-title"
 								path="title"
 								placeholder="Title"
 								tabindex="7" />
-
-
 							<form:textarea
 								id="roomDescription"
 								path="roomDescription"
@@ -245,23 +211,17 @@
 								tabindex="8"
 								placeholder="Room Description" />
 							<form:errors path="roomDescription" cssClass="validationErrorText" />
-
-
 							<form:textarea
 								class="edit-section"
 								path="preferences"
 								rows="5"
 								tabindex="9"
 								placeholder="Preferences" />
-
-
 							<input
 								type="hidden"
 								id="field-pictures"
 								accept="image/*"
 								multiple="multiple" />
-
-
 							<h3 class="edit-section-title">
 								Viewing times
 								<span>
@@ -270,7 +230,6 @@
 									To add another one, just change the values and click the button again.
 								</span>
 							</h3>
-
 							<div class="row times">
 								<div class="tile tile-quarter">
 									<label>From</label>
@@ -282,7 +241,6 @@
 									<p id="show-startTime">12:00</p>
 								</div>
 							</div> <%-- .row.times END --%>
-
 							<div class="row times related">
 								<div class="tile tile-quarter">
 									<label>To</label>
@@ -294,28 +252,24 @@
 									<p id="show-endTime">12:00</p>
 								</div>
 							</div> <%-- .row.times END --%>
-
-
 							<div class="row dates related">
-	              <div class="tile tile-half">
-	                <div class="row">
-	                  <div class="tile tile-full">
-	                    <input
+	              				<div class="tile tile-half">
+	                				<div class="row">
+	                  					<div class="tile tile-full">
+	                    					<input
 												tabindex="10"
-	                      class="js-has-label"
-	                      type="text"
-	                      id="field-visitDay"
-	                      placeholder="Choose from datepicker..." />
-	                  </div>
-	                </div>
-	              </div>
-	              <div class="tile tile-half">
-	                <div class="datepicker" id="visitDay">
-
-	                </div>
-	              </div>
-	            </div>
-
+						                    	class="js-has-label"
+						                      	type="text"
+						                      	id="field-visitDay"
+						                      	placeholder="Choose from datepicker..." />
+	                  					</div>
+	                				</div>
+	              				</div>
+	              				<div class="tile tile-half">
+	                				<div class="datepicker" id="visitDay">
+									</div>
+	              				</div>
+	            			</div>
 							<div class="row times">
 								<div class="tile tile-full">
 									<div id="addVisitButton" class="action action-icon action-add">
@@ -324,14 +278,10 @@
 									</div>
 								</div>
 							</div>
-
 						</div> <%-- .container-scroll END --%>
-
-
 						<div class="row">
 							<%-- Will be populated with hidden inputs --%>
 							<div style="display: none" id="addedVisits"></div>
-
 							<div class="tile tile-half">
 								<button type="submit">Submit</button>
 							</div>
@@ -339,12 +289,9 @@
 								<a href="/"><button type="button">Cancel</button></a>
 							</div>
 						</div>
-
 					</form:form>
-
 				</div> <%-- .form.form-search END --%>
 			</div> <%-- .span-half END --%>
-
 			<div class="span-half">
 				<h3 class="edit-section-title">
 					Drop images here...
@@ -358,7 +305,6 @@
 						<div id="image-preview"></div>
 					</div>
 				</div>
-
 				<h3 class="edit-section-title">
 					Your viewing times...
 					<span>
@@ -373,14 +319,11 @@
 				</div>
 				<div class="row">
 					<div class="tile tile-half">
-
 					</div>
 				</div>
 			</div>
-
 		</div> <%-- .row END --%>
 	</div> <%-- .container END --%>
-
 </main>
 
 <c:import url="template/~bottom.jsp">

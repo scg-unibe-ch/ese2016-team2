@@ -25,7 +25,6 @@ import ch.unibe.ese.team1.model.Auction;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
 
-
 @Controller
 public class AuctionController {
 
@@ -49,8 +48,6 @@ public class AuctionController {
 	 * @Jerome Add these properties for basic search functionality.
 	 */
 	private SearchForm searchForm;
-
-	
 
 	/** Gets the auction description page for the auction with the given id. */
 	@RequestMapping(value = "/auction", method = RequestMethod.GET)

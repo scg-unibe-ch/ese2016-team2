@@ -2,7 +2,6 @@ package ch.unibe.ese.team1.controller.service;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.transaction.Transactional;
 

@@ -31,15 +31,11 @@ public abstract class Advertisement {
 	@Column(nullable = false)
 	private String city;
 	
-	
-	
 	@Column(nullable = true)
 	private String latitude;
 	
 	@Column(nullable = true)
 	private String longitude;
-	
-	
 	
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)

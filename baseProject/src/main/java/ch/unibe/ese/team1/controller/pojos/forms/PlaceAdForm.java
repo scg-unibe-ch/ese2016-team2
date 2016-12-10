@@ -10,10 +10,10 @@ import org.hibernate.validator.constraints.NotBlank;
 /** This form is used when a user wants to place a new ad. */
 public class PlaceAdForm {
 
-	@NotBlank(message = "Required")
+	@NotBlank(message = "Please add a title.")
 	private String title;
 
-	@NotBlank(message = "Required")
+	@NotBlank(message = "Please add an address.")
 	private String street;
 
 	@Pattern(regexp = "^[0-9]{4} - [-;\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
@@ -23,18 +23,18 @@ public class PlaceAdForm {
 	
 	private String longitude;
 
-	@NotBlank(message = "Required")
+	@NotBlank(message = "Please set a move-in date.")
 	private String moveInDate;
 
 	private String moveOutDate;
 
-	@Min(value = 1, message = "Has to be equal to 1 or more")
+	@Min(value = 1, message = "Price should be at least one lousy buck and not exceed "+ Integer.MAX_VALUE)
 	private int prize;
 
-	@Min(value = 1, message = "Has to be equal to 1 or more")
+	@Min(value = 1, message = "Square footage should be at least 1 and not exceed "+ Integer.MAX_VALUE)
 	private int squareFootage;
 
-	@NotBlank(message = "Required")
+	@NotBlank(message = "Please add a description.")
 	private String roomDescription;
 
 	private String preferences;

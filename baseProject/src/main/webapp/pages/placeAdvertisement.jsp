@@ -6,8 +6,7 @@
 
 <c:import url="template/header.jsp" />
 
-<pre>
-	<a href="/">Home</a>   &gt;   Place advertisement</pre>
+<pre><a href="/">Home</a>   &gt;   Place advertisement</pre>
 
 <h1>Place an advertisement</h1>
 <hr />

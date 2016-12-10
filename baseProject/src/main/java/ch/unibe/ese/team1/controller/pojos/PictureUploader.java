@@ -151,5 +151,4 @@ public class PictureUploader {
 	public List<PictureMeta> getUploadedPictureMetas() {
 		return uploadedPictureMetas;
 	}
-
 }

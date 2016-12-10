@@ -30,8 +30,8 @@ public class AuctionTestDataSaver {
 
 		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 
-		Date creationDate1 = formatter.parse("03.10.2015");
-		Date creationDate2 = formatter.parse("30.11.2014");
+		Date creationDate1 = formatter.parse("03.10.2016");
+		Date creationDate2 = formatter.parse("30.11.2015");
 
 		Date moveInDate1 = formatter.parse("15.12.2017");
 		Date moveInDate2 = formatter.parse("21.12.2017");
@@ -41,84 +41,77 @@ public class AuctionTestDataSaver {
 
 		SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm, dd.MM.yyyy");
 
-		Date endTime1 = timeFormatter.parse("11:39, 25.11.2016");
+		Date endTime1 = timeFormatter.parse("11:39, 25.12.2016");
 		Date endTime2 = timeFormatter.parse("12:00, 20.12.2017");
 
-		String roomDescription1 = "The room is a part of 3.5 rooms apartment completely renovated"
-				+ "in 2010 at Kramgasse, Bern. The apartment is about 50 m2 on 1st floor."
-				+ "Apt is equipped modern kitchen, hall and balcony. Near to shops and public"
-				+ "transportation. Monthly rent is 500 CHF including charges. Internet + TV + landline"
-				+ "charges are separate. If you are interested, feel free to drop me a message"
+		String houseDescription1 = "The house is completely furnished. It has a huge cellar,"
+				+ "a garden about 300 m2 and 3 balconies. The house itself is about 200 m2."
+				+ "If you are interested, feel free to drop me a message"
 				+ "to have an appointment for a visit or can write me for any further information";
 		String preferences1 = "Uncomplicated, open minded and easy going person (m / w),"
-				+ "non-smoker, can speak English, which of course fits in the WG, and who likes dogs."
-				+ "Cleanliness is must. Apart from personal life, sometimes glass of wine,"
-				+ "eat and cook together and go out in the evenings.";
+				+ "non-smoker, can speak English, which can pay 20% of the prize as a down payment.";
 
-		Auction auctionBern = new Auction();
-		auctionBern.setZipcode(3011);
-		auctionBern.setMoveInDate(moveInDate1);
-		auctionBern.setCreationDate(creationDate1);
-		auctionBern.setMoveOutDate(moveOutDate1);
-		auctionBern.setPrize(400);
-		auctionBern.setSquareFootage(50);
-		auctionBern.setRoomType("Room");
-		auctionBern.setSmokers(false);
-		auctionBern.setAnimals(true);
-		auctionBern.setBuyable(true);
-		auctionBern.setRoomDescription(roomDescription1);
-		auctionBern.setPreferences(preferences1);
-		auctionBern.setUser(ese);
-		auctionBern.setTitle("Roommate wanted in Bern");
-		auctionBern.setStreet("Kramgasse 22");
-		auctionBern.setCity("Bern");
-		auctionBern.setGarden(true);
-		auctionBern.setBalcony(true);
-		auctionBern.setCellar(true);
-		auctionBern.setFurnished(true);
-		auctionBern.setCable(true);
-		auctionBern.setGarage(true);
-		auctionBern.setInternet(true);
+		Auction auctionKerzers = new Auction();
+		auctionKerzers.setZipcode(3210);
+		auctionKerzers.setMoveInDate(moveInDate1);
+		auctionKerzers.setCreationDate(creationDate1);
+		auctionKerzers.setMoveOutDate(moveOutDate1);
+		auctionKerzers.setPrize(500000);
+		auctionKerzers.setSquareFootage(200);
+		auctionKerzers.setRoomType("House");
+		auctionKerzers.setSmokers(false);
+		auctionKerzers.setAnimals(true);
+		auctionKerzers.setBuyable(true);
+		auctionKerzers.setRoomDescription(houseDescription1);
+		auctionKerzers.setPreferences(preferences1);
+		auctionKerzers.setUser(ese);
+		auctionKerzers.setTitle("House for sale");
+		auctionKerzers.setStreet("Mühlegasse 53");
+		auctionKerzers.setCity("Kerzers");
+		auctionKerzers.setLatitude("46.9662051");
+		auctionKerzers.setLongitude("7.1958472999999685");
+		auctionKerzers.setGarden(true);
+		auctionKerzers.setBalcony(true);
+		auctionKerzers.setCellar(true);
+		auctionKerzers.setFurnished(true);
+		auctionKerzers.setCable(true);
+		auctionKerzers.setGarage(true);
+		auctionKerzers.setInternet(true);
 		List<AuctionPicture> pictures = new ArrayList<>();
-		pictures.add(createPicture(auctionBern, "/img/test/ad1_1.jpg"));
-		pictures.add(createPicture(auctionBern, "/img/test/ad1_2.jpg"));
-		pictures.add(createPicture(auctionBern, "/img/test/ad1_3.jpg"));
-		auctionBern.setPictures(pictures);
-		auctionBern.setAuction(true);
-		auctionBern.setEndTime(timeFormatter.format(endTime1));
-		auctionDao.save(auctionBern);
+		pictures.add(createPicture(auctionKerzers, "/img/test/ad1_1.jpg"));
+		pictures.add(createPicture(auctionKerzers, "/img/test/ad1_2.jpg"));
+		pictures.add(createPicture(auctionKerzers, "/img/test/ad1_3.jpg"));
+		auctionKerzers.setPictures(pictures);
+		auctionKerzers.setAuction(true);
+		auctionKerzers.setEndTime(timeFormatter.format(endTime1));
+		auctionDao.save(auctionKerzers);
 
-		String studioDescription2 = "It is small studio close to the"
-				+ "university and the bahnhof. The lovely neighbourhood"
-				+ "Langgasse makes it an easy place to feel comfortable."
-				+ "The studio is close to a Migross, Denner and the Coop."
-				+ "The studio is 60m2. It has it own Badroom and kitchen."
-				+ "Nothing is shared. The studio is fully furnished. The"
-				+ "studio is also provided with a balcony. So if you want to"
-				+ "have a privat space this could totally be good place for you."
-				+ "Be aware it is only till the end of March. The price is from"
-				+ "550- 700 CHF, But there is always room to talk about it.";
-		String roomPreferences2 = "I would like to have an easy going person who"
-				+ "is trustworthy and can take care of the flat. No animals please."
-				+ "Non smoker preferred.";
+		String studioDescription2 = "The house is completely furnished"
+				+ "The house itself is about 165 m2. Internet included."
+				+ "If you are interested, feel free to drop me a message"
+				+ "to have an appointment for a visit or can write me for any further information";
+		String preferences2 = "Uncomplicated, open minded and easy going person (m / w), with a family"
+				+ "non-smoker, which can pay 10% of the prize as a down payment.";
 
 		Auction auctionBern2 = new Auction();
-		auctionBern2.setZipcode(3012);
+		auctionBern2.setZipcode(3011);
 		auctionBern2.setMoveInDate(moveInDate2);
 		auctionBern2.setCreationDate(creationDate2);
 		auctionBern2.setMoveOutDate(moveOutDate2);
-		auctionBern2.setPrize(700);
-		auctionBern2.setSquareFootage(60);
+		auctionBern2.setPrize(120000);
+		auctionBern2.setSquareFootage(165);
 		auctionBern2.setRoomType("Studio");
 		auctionBern2.setSmokers(false);
 		auctionBern2.setAnimals(true);
 		auctionBern2.setBuyable(true);
 		auctionBern2.setRoomDescription(studioDescription2);
-		auctionBern2.setPreferences(roomPreferences2);
+		auctionBern2.setPreferences(preferences2);
 		auctionBern2.setUser(bernerBaer);
-		auctionBern2.setTitle("Cheap studio in Bern!");
-		auctionBern2.setStreet("LÃ¤ngassstr. 40");
+		auctionBern2.setTitle("Studio for sale in Bern!");
+		auctionBern2.setStreet("Zeughausgasse 22");
 		auctionBern2.setCity("Bern");
+		auctionBern2.setLatitude("46.9491937");
+		auctionBern2.setLongitude("7.445016399999986");
 		auctionBern2.setGarden(false);
 		auctionBern2.setBalcony(false);
 		auctionBern2.setCellar(false);
@@ -127,9 +120,9 @@ public class AuctionTestDataSaver {
 		auctionBern2.setGarage(false);
 		auctionBern2.setInternet(true);
 		List<AuctionPicture> picturesBern2 = new ArrayList<>();
-		picturesBern2.add(createPicture(auctionBern, "/img/test/ad1_1.jpg"));
-		picturesBern2.add(createPicture(auctionBern, "/img/test/ad1_2.jpg"));
-		picturesBern2.add(createPicture(auctionBern, "/img/test/ad1_3.jpg"));
+		picturesBern2.add(createPicture(auctionBern2, "/img/test/ad7_1.jpg"));
+		picturesBern2.add(createPicture(auctionBern2, "/img/test/ad7_2.jpg"));
+		picturesBern2.add(createPicture(auctionBern2, "/img/test/ad7_3.jpg"));
 		auctionBern2.setPictures(picturesBern2);
 		auctionBern2.setAuction(true);
 		auctionBern2.setEndTime(timeFormatter.format(endTime2));

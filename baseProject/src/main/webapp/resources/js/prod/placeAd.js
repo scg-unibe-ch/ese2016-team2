@@ -31881,261 +31881,230 @@ jQuery.flatfindr.search = function (window, document, $, $view, option) {
 
 
 /**
- *
  * @name place
  * @memberof jQuery.flatfindr
  * @namespace jQuery.flatfindr.place
+ *
+ * @param  {Object} window   the window as you know it
+ * @param  {Object} document the document element
+ * @param  {jQuery} $
+ * @param  {jQuery} $view    the view, defaults to the body element
+ * @param  {Object} option
  */
+jQuery.flatfindr.place = function (window, document, $, $view, option) {
+
+  // @Jerome quick and dirty.
+  $('#field-city').on('input blur', function() {
+    var streetVal = $('#field-street').val();
+    $('.gllpSearchField').val(streetVal +', '+ this.value);
+
+    $('.ui-menu')
+    .off('mouseup')
+    .on('mouseup', function () {
+      setTimeout(function() {
+        var streetVal = $('#field-street').val();
+        var cityVal = $('#field-city').val();
+        $('.gllpSearchField').val(streetVal +', '+ cityVal);
+        $('.gllpSearchButton').trigger('click');
+      }, 100);
+    });
+  });
+
+  $('#field-street').on('input blur', function() {
+    var cityVal = $('#field-city').val();
+    $('.gllpSearchField').val(this.value +', '+ cityVal);
+  });
 
 
 
-jQuery.flatfindr.register({
+  $("#field-city").autocomplete({
+    minLength : 2,
+    source : $.flatfindr.ZIP_CODES,
+    enabled : true,
+    autoFocus : true
+  });
 
-  name: 'place',
+  $('#buy').on('click', function() {
+    $('.fields-optional-sell').removeClass('js-show');
+  });
 
+  $('#rent').on('click', function() {
+    $('.fields-optional-sell').addClass('js-show');
+  });
 
   /**
-   * @memberof jQuery.flatfindr.place
-   * @method fn
-   *
-   * @protected
-   * @param  {Object}   window   the window as you know it
-   * @param  {Object}   document the document element
-   * @param  {Object}   $        jQuery
-   * @param  {jQuery}   $view    the default or custom view if set
-   * @param  {Object}   option   what ever object param if passed
-   * @return {Function}          method that sets up simple dom manipulations
+   * Initiate datepicker with no date set.
    */
-  fn: function (window, document, $, $view, option) {
+  $("#visitDay").datepicker({
+   altField: '#field-visitDay',
+   dateFormat : 'dd-mm-yy'
+  }).datepicker('setDate', null);
 
-    // Go to controller take what you need from user
-    // save it to a hidden field
-    // iterate through it
-    // if there is id == x then make "Bookmark Me" to "bookmarked"
-
-
-    // @Jerome quick and dirty.
-    $('#field-city').on('input blur', function() {
-      var streetVal = $('#field-street').val();
-      $('.gllpSearchField').val(streetVal +', '+ this.value);
-
-      $('.ui-menu')
-      .off('mouseup')
-      .on('mouseup', function () {
-        setTimeout(function() {
-          var streetVal = $('#field-street').val();
-          var cityVal = $('#field-city').val();
-          $('.gllpSearchField').val(streetVal +', '+ cityVal);
-        }, 100);
-      });
+  if ($.flatfindr.PAGE_NAME === 'editAd') {
+    $("#moveInDate").datepicker({
+      altField: '#field-moveInDate',
+      dateFormat : 'dd-mm-yy'
     });
 
-    $('#field-street').on('input blur', function() {
-      var cityVal = $('#field-city').val();
-      $('.gllpSearchField').val(this.value +', '+ cityVal);
+    $('#moveOutDate').datepicker({
+      altField: '#field-moveOutDate',
+      dateFormat : 'dd-mm-yy'
     });
 
-
-
-    $("#field-city").autocomplete({
-      minLength : 2,
-      source : $.flatfindr.ZIP_CODES,
-      enabled : true,
-      autoFocus : true
+    $('#dp-endDate').datepicker({
+      altField: '#field-endDate',
+      dateFormat : 'dd-mm-yy'
     });
+  } else {
+    $("#moveInDate").datepicker({
+      altField: '#field-moveInDate',
+      dateFormat : 'dd-mm-yy',
+      minDate: new Date(),
+      onSelect: function() {
+        var
+          date = $(this).datepicker('getDate'),
+          date_out = date.setDate(date.getDate() + 1);
+        $('#moveOutDate')
+          .datepicker('option', 'minDate', new Date(date_out));
+      }
+    }).datepicker('setDate', null)
 
-    $('#buy').on('click', function() {
-      $('.fields-optional-sell').removeClass('js-show');
-    });
-
-    $('#rent').on('click', function() {
-      $('.fields-optional-sell').addClass('js-show');
-    });
-
-    /**
-     * Initiate datepicker with no date set.
-     */
-    $("#visitDay").datepicker({
-     altField: '#field-visitDay',
-     dateFormat : 'dd-mm-yy'
+    $('#moveOutDate').datepicker({
+      altField: '#field-moveOutDate',
+      dateFormat : 'dd-mm-yy',
+      minDate: new Date()
     }).datepicker('setDate', null);
 
-    if ($.flatfindr.PAGE_NAME === 'editAd') {
-      $("#moveInDate").datepicker({
-        altField: '#field-moveInDate',
-        dateFormat : 'dd-mm-yy'
-      });
-
-      $('#moveOutDate').datepicker({
-        altField: '#field-moveOutDate',
-        dateFormat : 'dd-mm-yy'
-      });
-
-      $('#dp-endDate').datepicker({
-        altField: '#field-endDate',
-        dateFormat : 'dd-mm-yy'
-      });
-    } else {
-      $("#moveInDate").datepicker({
-        altField: '#field-moveInDate',
-        dateFormat : 'dd-mm-yy'
-      }).datepicker('setDate', null);
-
-      $('#moveOutDate').datepicker({
-        altField: '#field-moveOutDate',
-        dateFormat : 'dd-mm-yy'
-      }).datepicker('setDate', null);
-
-      $('#dp-endDate').datepicker({
-        altField: '#field-endDate',
-        dateFormat : 'dd-mm-yy'
-      }).datepicker('setDate', null);
-    }
-
-
-    $('.time-range').on('input', function () {
-      var
-        id = $(this).attr('id'),
-        val = this.value,
-        hour = Math.floor(val / 4),
-        minute = (val % 4) * 15,
-        minute = minute < 10 ? '0'+ minute : minute,
-        time = hour +':'+ minute;
-
-      $('#show-'+ id).text(time);
-
-      if (id === 'startTime' ) {
-        var $endTime = $('#endTime');
-        if (parseInt(val, 10) >= parseInt($endTime.val(), 10)) {
-          $endTime.val(this.value);
-          $('#show-endTime').text(time);
-        }
-      } else if (id === 'endTime') {
-        var $startTime = $('#startTime');
-        if (parseInt(val, 10) <= parseInt($startTime.val(), 10)) {
-          $startTime.val(val)
-          $('#show-startTime').text(time);
-        }
-      }
-    });
-
-
-
-    $("#addbutton").click(function() {
-      // Validates the input for Email Syntax
-      function validateForm(text) {
-        var positionAt = text.indexOf("@");
-        var positionDot = text.lastIndexOf(".");
-        if (positionAt< 1 || positionDot<positionAt+2 || positionDot+2>=text.length) {
-            return false;
-        } else {
-          return true;
-        }
-      }
-    });
-
-
-    $("#addVisitButton").click(function() {
-      var date = $("#field-visitDay").val();
-      if (date == "") return;
-
-
-      var startTime = $('#show-startTime').text();
-      var endTime = $('#show-endTime').text();
-
-      //
-      // var startHour = $("#startHour").val();
-      // var startMinutes = $("#startMinutes").val();
-      // var endHour = $("#endHour").val();
-      // var endMinutes = $("#endMinutes").val();
-      //
-      // if (startHour > endHour) {
-      //   alert("Invalid times. The visit can't end before being started.");
-      //   return;
-      // } else if (startHour == endHour && startMinutes >= endMinutes) {
-      //   alert("Invalid times. The visit can't end before being started.");
-      //   return;
-      // }
-      //
-      var newVisit = date +';'+ startTime +';'+ endTime;
-      var newVisitLabel = date +' '+ startTime +' to '+ endTime;
-      //
-      var index = $("#addedVisits input").length;
-      //
-      var label = createViewingPreviewElement(newVisitLabel, index);
-      var input = "<input type='hidden' value='" + newVisit + "' name='visits[" + index + "]' />";
-
-      $("#addedVisits").append(input);
-      $('#viewing-preview').append(label);
-    });
-
-
-    // @Jerome: Ugly W/A
-    $('input[type=number]').each(function(_, x) {
-      if ($(x).val() === '0')
-        $(x).val('');
-    });
-    $('form').on('submit', function(e) {
-      e.preventDefault();
-      $('input[type=number]').each(function(_, x) {
-        var hustensaft = $(x);
-        if (hustensaft.val() === '')
-          hustensaft.val(0);
-      });
-      this.submit();
-      return false;
-    });
-
-
-
-
-    function createViewingPreviewElement(viewingTime, index) {
-      var
-        $viewing_time =
-          $('<div class="row">' +
-            '<div class="tile tile-three-quarter">' +
-            '<span>'+ viewingTime +'</span>' +
-            '</div>' +
-            '<div class="tile tile-quarter">' +
-            '<span title="Remove viewing time by double clicking me." data-index="visits['+ index +']"' +
-                  'class="fa fa-times fa-2x">' +
-            '</span>' +
-            '</div>' +
-            '</div>');
-
-
-        $viewing_time
-          .find('span[data-index]')
-          .on('dblclick', function() {
-            var
-              $that = $(this),
-              viewing_index = $that.attr('data-index');
-
-              $('input[name="'+ viewing_index +'"]').remove();
-              $viewing_time.remove();
-          })
-          .hover(function() {
-            $viewing_time.find('span').first().css('color', 'tomato');
-          }, function() {
-            $viewing_time.find('span').first().removeAttr('style');
-          });
-
-      return $viewing_time;
-    }
-
-
-    (function () {
-      var error_count = $('form').find('.validationErrorText').length;
-      var error_text = 'There are '+ error_count +' fields that need to be corrected.';
-      if (error_count <= 1)
-        error_text = 'There is one field that needs to be corrected.';
-
-      if (error_count > 0)
-        $('button[type=submit]').append('<span class="base-color-opposite"> '+ error_text +'</span>');
-    }());
+    $('#dp-endDate').datepicker({
+      altField: '#field-endDate',
+      dateFormat : 'dd-mm-yy'
+    }).datepicker('setDate', null);
   }
 
-});
+
+  $('.time-range').on('input', function () {
+    var
+      id = $(this).attr('id'),
+      val = this.value,
+      hour = Math.floor(val / 4),
+      minute = (val % 4) * 15,
+      minute = minute < 10 ? '0'+ minute : minute,
+      time = hour +':'+ minute;
+
+    $('#show-'+ id).text(time);
+
+    if (id === 'startTime' ) {
+      var $endTime = $('#endTime');
+      if (parseInt(val, 10) >= parseInt($endTime.val(), 10)) {
+        $endTime.val(this.value);
+        $('#show-endTime').text(time);
+      }
+    } else if (id === 'endTime') {
+      var $startTime = $('#startTime');
+      if (parseInt(val, 10) <= parseInt($startTime.val(), 10)) {
+        $startTime.val(val)
+        $('#show-startTime').text(time);
+      }
+    }
+  });
+
+
+
+  $("#addbutton").click(function() {
+    // Validates the input for Email Syntax
+    function validateForm(text) {
+      var positionAt = text.indexOf("@");
+      var positionDot = text.lastIndexOf(".");
+      if (positionAt< 1 || positionDot<positionAt+2 || positionDot+2>=text.length) {
+          return false;
+      } else {
+        return true;
+      }
+    }
+  });
+
+
+  $("#addVisitButton").click(function() {
+    var
+      date = $("#field-visitDay").val(),
+      $viewing_preview = $('#viewing-preview'),
+      $container_scroll = $viewing_preview.parents('.container-scroll'),
+      startTime, endTime,
+      newVisit, newVisitLabel,
+      index,
+      label, input;
+
+    if (date == "") return;
+
+    startTime = $('#show-startTime').text();
+    endTime = $('#show-endTime').text();
+    newVisit = date +';'+ startTime +';'+ endTime;
+    newVisitLabel = date +' '+ startTime +' to '+ endTime;
+    index = $("#addedVisits input").length;
+    label = createViewingPreviewElement(newVisitLabel, index);
+    input = "<input type='hidden' value='" + newVisit + "' name='visits[" + index + "]' />";
+
+    $("#addedVisits").append(input);
+    $viewing_preview.append(label);
+    $container_scroll
+      .animate({scrollTop: $('.scroll-wrapper').outerHeight() + 128 - $(window).height()});
+  });
+
+
+  // @Jerome: Ugly W/A
+  $('input[type=number]').each(function(_, x) {
+    if ($(x).val() === '0')
+      $(x).val('');
+  });
+  $('form').on('submit', function(e) {
+    e.preventDefault();
+    $('input[type=number]').each(function(_, x) {
+      var hustensaft = $(x);
+      if (hustensaft.val() === '')
+        hustensaft.val(0);
+    });
+    this.submit();
+    return false;
+  });
+
+
+
+
+  function createViewingPreviewElement(viewingTime, index) {
+    var
+      $viewing_time =
+        $('<div class="row">' +
+          '<div class="tile tile-three-quarter">' +
+          '<span>'+ viewingTime +'</span>' +
+          '</div>' +
+          '<div class="tile tile-quarter">' +
+          '<span title="Remove viewing time by double clicking me." data-index="visits['+ index +']"' +
+                'class="fa fa-times fa-2x">' +
+          '</span>' +
+          '</div>' +
+          '</div>');
+
+
+      $viewing_time
+        .find('span[data-index]')
+        .on('dblclick', function() {
+          var
+            $that = $(this),
+            viewing_index = $that.attr('data-index');
+
+            $('input[name="'+ viewing_index +'"]').remove();
+            $viewing_time.remove();
+        })
+        .hover(function() {
+          $viewing_time.find('span').first().css('color', 'tomato');
+        }, function() {
+          $viewing_time.find('span').first().removeAttr('style');
+        });
+
+    return $viewing_time;
+  }
+
+};
 
 
 /**
@@ -32281,7 +32250,7 @@ jQuery.flatfindr.register({
 
     /**
      *
-     * IEEF
+     * IIFE
      * @private
      */
     $(function() {
@@ -32313,7 +32282,7 @@ jQuery.flatfindr.register({
           path;
 
 
-        if (PAGE_NAME === 'editAd') {
+        if (PAGE_NAME === 'editAd' || PAGE_NAME === 'placeAd') {
           $image_preview
             .prepend(createPreviewElement(file))
             .find('.action-delete')
@@ -32332,6 +32301,258 @@ jQuery.flatfindr.register({
   }
 
 });
+
+
+/**
+ * @name validator
+ * @memberof jQuery.flatfindr
+ * @namespace jQuery.flatfindr.validator
+ *
+ * @param  {Object} window   the window as you know it
+ * @param  {Object} document the document element
+ * @param  {jQuery} $
+ * @param  {jQuery} $view    the view, defaults to the body element
+ * @param  {Object} option
+ */
+jQuery.flatfindr.validator = function (window, document, $, $view, option) {
+
+
+  var SAFE_INT = Math.pow(2,31) - 1;
+
+
+  /**
+   * @private
+   * @type {Object}   error messages object
+   */
+  var errors = {
+    'field-password': {
+      isError: function ($this) {
+        return $this.val().length < 6;
+      },
+      is_other_than_server: false,
+      text: 'The password must be at least 6 characters long.'
+    },
+
+    'field-email': {
+      isError: function ($this, callback) {
+        $.post("/signup/doesEmailExist", {email: $this.val()}, callback);
+      },
+      is_other_than_server: true,
+      text: 'This username is taken. Please choose another one.'
+    },
+
+    'msgSubject': {
+      isError: function ($this) {
+        return $this.val() === '';
+      },
+      is_other_than_server: true,
+      text: 'Please add a subject to your message.'
+    },
+
+    'msgTextarea': {
+      isError: function ($this) {
+        return $this.val() === '';
+      },
+      is_other_than_server: true,
+      text: 'Well, it says "Leave a message", so, please drop some lines.'
+    },
+
+    'field-street': {
+      isError: function ($this) {
+        return $this.val() === '';
+      },
+      is_other_than_server: false,
+      text: 'Please add an address.'
+    },
+
+    'field-city': {
+      isError: function ($this) {
+        return $this.val() === '';
+      },
+      is_other_than_server: false,
+      text: 'Please add a locality from the list.'
+    },
+
+    'field-Prize': {
+      isError: function ($this) {
+        var int = $this.val(); // do not parseInt as string returns 1
+        return (int < 1) || (int > SAFE_INT);
+      },
+      is_other_than_server: false,
+      text: 'Price should be at least one lousy buck and not exceed '+ SAFE_INT
+    },
+
+    'field-SquareFootage': {
+      isError: function ($this) {
+        var int = $this.val();
+        return (int < 1) || (int > SAFE_INT);
+      },
+      is_other_than_server: false,
+      text: 'Square footage should be at least 1 and not exceed '+ SAFE_INT
+    },
+
+    'field-title': {
+      isError: function ($this) {
+        return $this.val() === '';
+      },
+      is_other_than_server: false,
+      text: 'Please add a title.'
+    },
+
+    'roomDescription': {
+      isError: function ($this) {
+        return $this.val() === '';
+      },
+      is_other_than_server: false,
+      text: 'Please add a description.'
+    }
+  };
+
+
+	$("#field-password").focusout(function() {
+    var $this = $(this);
+    if (isViolated($this)) showError($this, true);
+		else handleValidity($this);
+	});
+
+
+  $("#field-email").focusout(function() {
+    var $this = $(this);
+		isViolated($this, function(violated) {
+      if (violated) showError($this);
+			else handleValidity($this);
+    });
+	});
+
+
+  $("#msgSubject, #msgTextarea").focusout(function() {
+    var $this = $(this);
+    if (isViolated($this)) showError($this);
+		else handleValidity($this);
+	});
+
+
+  $("#field-street, #field-city,"+
+    "#field-Prize, #field-SquareFootage,"+
+    "#field-title, #roomDescription")
+    .focusout(function() {
+      var $this = $(this);
+      if (isViolated($this)) showError($this);
+  		else handleValidity($this);
+  	});
+
+
+
+
+  /**
+   *
+   * @private
+   * @param  {jQuery}   $this    the form field under test
+   * @param  {Function} callback a callback functoin if we have to wait for a
+   *                             server response
+   * @return {Boolean}           [description]
+   */
+  function isViolated($this, callback) {
+    var error = errors[$this.attr('id')];
+    if (callback) return error.isError($this, callback);
+    else return error.isError($this);
+  }
+
+
+
+  /**
+   *
+   * @private
+   * @param  {jQuery} $this       the form field
+   * @param  {Boolean} hiddenValue if the value should be output as bullets
+   *                               (hidden) as for passwords
+   */
+  function showError($this, hiddenValue) {
+    var
+      id = $this.attr('id'),
+      value = hiddenValue ?
+        getValueAsBullets($this.val().length) :
+        $this.val(),
+      placeholder = $this.attr('placeholder'),
+      $error_field = $('.error-'+id);
+
+    if (isSensibleError($this))
+      $error_field
+        .addClass('js-show')
+        .find('.validationErrorText')
+        .text(errors[id].text);
+    else
+      $error_field
+        .next('span.validationErrorText')
+        .animate({marginTop: '-12px', marginBottom: '12px'}, function() {
+          $(this).animate({marginTop: '0', marginBottom: '0'});
+        });
+
+    $this
+      .attr('placeholder', (value !== '' ? value : placeholder))
+      .val('')
+      .on('click', function () {
+        $this
+          .off('click')
+          .attr('placeholder', placeholder);
+      });
+  }
+
+
+
+  /**
+   * @private
+   * @param  {jQuery} $this the form field
+   */
+  function handleValidity($this) {
+    $('.error-'+$this.attr('id')).removeClass('js-show');
+  }
+
+
+
+  /**
+   *
+   * @private
+   * @param  {Number} length the length of the form field value
+   * @return {String}        a string of bullets with the same length as the
+   *                           value
+   */
+  function getValueAsBullets (length) {
+    var bullets = '';
+    while (length--) bullets += '•';
+    return bullets;
+  }
+
+
+
+  /**
+   *
+   * @private
+   * @param  {String} id  the id of the form field
+   * @return {Boolean}    [description]
+   */
+  function isSensibleError($this) {
+    var
+      id = $this.attr('id'),
+      $error_field = $('.error-'+id),
+      has_server_error = hasServerError($error_field);
+    return (!has_server_error ||
+            (has_server_error && errors[id].is_other_than_server));
+  }
+
+
+
+  /**
+   *
+   * @private
+   * @param  {jQuery}  $error_field the 'client side' error field
+   * @return {Boolean}             true if there already is a server error in the
+   *                                    dom for the form field - else false
+   */
+  function hasServerError($error_field) {
+    return $error_field.next('span.validationErrorText').length;
+  }
+}
 
 
 /**
@@ -32358,5 +32579,6 @@ jQuery.flatfindr.register({
 
 // @codekit-prepend "+place.js"
 // @codekit-prepend "+image-upload.js"
+// @codekit-prepend "+form-validator.js"
 
 

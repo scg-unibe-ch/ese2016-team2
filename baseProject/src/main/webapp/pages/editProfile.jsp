@@ -15,11 +15,9 @@
 	<c:import url="template/~top_bar.jsp">
 		<c:param name="instr" value="Edit your profile..." />
 	</c:import>
-
 	<div class="container">
 		<div class="row">
 			<div class="span-half container-pad">
-
 				<c:choose>
 					<c:when test="${loggedIn}">
 						<img
@@ -38,12 +36,9 @@
 						<a href="/login">Login</a>
 					</c:otherwise>
 				</c:choose>
-
 			</div>
-
 			<div class="span-half">
 				<div class="form form-search form-profile form-max-height">
-
 					<form:form
 						method="post"
 						modelAttribute="editProfileForm"
@@ -51,95 +46,82 @@
 						id="editProfileForm"
 						autocomplete="off"
 						enctype="multipart/form-data">
-
 						<div class="container-scroll">
-
 							<input
 								style="display:none"
 								type="file"
 								id="field-pictures"
 								accept="image/*"
 								multiple="multiple" />
-
 							<form:input
 								type="hidden"
 								id="picture"
 								path="imagePath"
 								value="${currentUser.picture.filePath}" />
-
-              <div class="row dates">
-                <div class="tile tile-full">
-                  <label>User name</label>
-                </div>
-                <div class="tile tile-full">
-									<form:input
-										class="js-has-label"
-										id="user-name"
-										path="username"
-										value="${currentUser.username}" />
+              					<div class="row dates">
+                					<div class="tile tile-full">
+                  						<label>User name</label>
+               	 					</div>
+                					<div class="tile tile-full">
+										<form:input
+											class="js-has-label"
+											id="user-name"
+											path="username"
+											value="${currentUser.username}" />
+									</div>
 								</div>
-							</div>
-
-							<div class="row dates">
-                <div class="tile tile-full">
-                  <label>First name</label>
-                </div>
-                <div class="tile tile-full">
-									<form:input
-										id="first-name"
-										path="firstName"
-										value="${currentUser.firstName}" />
-								</div>
-							</div>
-
-							<div class="row dates">
-                <div class="tile tile-full">
-                  <label>Last name</label>
-                </div>
-                <div class="tile tile-full">
-									<form:input
-										id="last-name"
-										path="lastName"
-										value="${currentUser.lastName}" />
-								</div>
-							</div>
-
-							<div class="row dates">
-                <div class="tile tile-full">
-                  <label>Password</label>
-                </div>
-                <div class="tile tile-full">
-									<form:input
-										type="password"
-										id="password"
-										path="password"
-										value="${currentUser.password}" />
-								</div>
-							</div>
-
-							<div class="row dates">
-                <div class="tile tile-full">
-                  <label>About</label>
-                </div>
-                <div class="tile tile-full">
-									<form:textarea
-										id="about-me"
-										path="aboutMe"
-										rows="10" />
-								</div>
-							</div>
-
-						</div> <%-- .container-scroll END --%>
-
-						<button type="submit">Update</button>
-
+									<div class="row dates">
+                						<div class="tile tile-full">
+                  							<label>First name</label>
+                						</div>
+                						<div class="tile tile-full">
+											<form:input
+												id="first-name"
+												path="firstName"
+												value="${currentUser.firstName}" />
+										</div>
+									</div>
+									<div class="row dates">
+						                <div class="tile tile-full">
+						                  	<label>Last name</label>
+						                </div>
+						                <div class="tile tile-full">
+											<form:input
+												id="last-name"
+												path="lastName"
+												value="${currentUser.lastName}" />
+										</div>
+									</div>
+									<div class="row dates">
+                						<div class="tile tile-full">
+                  							<label>Password</label>
+               	 						</div>
+                						<div class="tile tile-full">
+											<form:input
+												type="password"
+												id="password"
+												path="password"
+												value="${currentUser.password}" />
+										</div>
+									</div>
+									<div class="row dates">
+                						<div class="tile tile-full">
+                  							<label>About</label>
+                						</div>
+                						<div class="tile tile-full">
+											<form:textarea
+												id="about-me"
+												path="aboutMe"
+												rows="10" />
+										</div>
+									</div>
+								</div> <%-- .container-scroll END --%>
+								<button type="submit">Update</button>
 					</form:form>
-
 				</div> <%-- .form END --%>
 			</div> <%-- .span-half END --%>
 		</div> <%-- .row END --%>
 	</div> <%-- .container END --%>
-
 </main>
 
 <%-- <c:import url="template/~footer.jsp" /> --%>

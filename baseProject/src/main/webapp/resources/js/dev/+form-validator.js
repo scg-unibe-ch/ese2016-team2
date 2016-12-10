@@ -12,6 +12,8 @@
 jQuery.flatfindr.validator = function (window, document, $, $view, option) {
 
 
+  var SAFE_INT = Math.pow(2,31) - 1;
+
 
   /**
    * @private
@@ -48,6 +50,56 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
       },
       is_other_than_server: true,
       text: 'Well, it says "Leave a message", so, please drop some lines.'
+    },
+
+    'field-street': {
+      isError: function ($this) {
+        return $this.val() === '';
+      },
+      is_other_than_server: false,
+      text: 'Please add an address.'
+    },
+
+    'field-city': {
+      isError: function ($this) {
+        return $this.val() === '';
+      },
+      is_other_than_server: false,
+      text: 'Please add a locality from the list.'
+    },
+
+    'field-Prize': {
+      isError: function ($this) {
+        var int = $this.val(); // do not parseInt as string returns 1
+        return (int < 1) || (int > SAFE_INT);
+      },
+      is_other_than_server: false,
+      text: 'Price should be at least one lousy buck and not exceed '+ SAFE_INT
+    },
+
+    'field-SquareFootage': {
+      isError: function ($this) {
+        var int = $this.val();
+        return (int < 1) || (int > SAFE_INT);
+      },
+      is_other_than_server: false,
+      text: 'Square footage should be at least 1 and not exceed '+ SAFE_INT
+    },
+
+    'field-title': {
+      isError: function ($this) {
+        return $this.val() === '';
+      },
+      is_other_than_server: false,
+      text: 'Please add a title.'
+    },
+
+    'roomDescription': {
+      isError: function ($this) {
+        return $this.val() === '';
+      },
+      is_other_than_server: false,
+      text: 'Please add a description.'
     }
   };
 
@@ -73,6 +125,16 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
     if (isViolated($this)) showError($this);
 		else handleValidity($this);
 	});
+
+
+  $("#field-street, #field-city,"+
+    "#field-Prize, #field-SquareFootage,"+
+    "#field-title, #roomDescription")
+    .focusout(function() {
+      var $this = $(this);
+      if (isViolated($this)) showError($this);
+  		else handleValidity($this);
+  	});
 
 
 

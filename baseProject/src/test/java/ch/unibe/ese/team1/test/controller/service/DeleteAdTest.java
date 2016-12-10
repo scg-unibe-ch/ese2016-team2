@@ -1,7 +1,6 @@
 package ch.unibe.ese.team1.test.controller.service;
 
 import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;

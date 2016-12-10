@@ -11,23 +11,17 @@
 	<c:import url="template/~top_bar.jsp">
 		<c:param name="instr" value="Find..." />
 	</c:import>
-
 	<div class="container">
-
 		<div class="row">
-
 			<div class="span-half">
 				<div class="form form-search form-max-height">
-
 					<form:form
 						method="post"
 						id="searchForm"
 						modelAttribute="searchForm"
 						action="/results?results"
 						autocomplete="off">
-
 						<div class="container-scroll">
-
 							<form:input
 								type="text"
 								name="city"
@@ -37,8 +31,6 @@
 								tabindex="1"
 								value="" />
 							<form:errors path="city" cssClass="validationErrorText" />
-
-
 							<div class="row checkboxes">
 								<div class="tile tile-half">
 									<form:radiobutton name="buyable" id="rent" path="buyable" value="0" />
@@ -49,8 +41,6 @@
 									<label for="buy">Buy</label>
 								</div>
 							</div>
-
-
 							<div class="row checkboxes">
 								<div class="tile tile-half">
 									<form:checkbox name="auction" id="auction" path="auction" />
@@ -61,8 +51,6 @@
 									<label for="ad">Ad</label>
 								</div>
 							</div>
-
-
 							<div class="row checkboxes">
 								<div class="tile tile-third">
 									<form:checkbox name="room" id="room" path="room" />
@@ -77,12 +65,8 @@
 									<label for="house">House</label>
 								</div>
 							</div>
-
-
 							<form:checkbox style="display:none" name="neither" id="neither" path="neither" />
 							<form:errors path="neither" cssClass="validationErrorText" />
-
-
 							<form:input
 								id="radiusInput"
 								type="number"
@@ -94,8 +78,6 @@
 								max="500"
 								value="" />
 							<form:errors path="radius" cssClass="validationErrorText" />
-
-
 							<form:input
 								id="prizeInput"
 								type="number"
@@ -105,8 +87,6 @@
 								tabindex="3"
 								min="50" />
 							<form:errors path="prize" cssClass="validationErrorText" />
-
-
 							<div class="row dates">
 	              <div class="tile tile-half">
 	                <div class="row">
@@ -126,11 +106,9 @@
 	              </div>
 	              <div class="tile tile-half">
 	                <div class="datepicker" id="earliestMoveInDate">
-
 	                </div>
 	              </div>
 	            </div>
-
 	            <div class="row dates">
 	              <div class="tile tile-half">
 	                <div class="row">
@@ -150,11 +128,9 @@
 	              </div>
 	              <div class="tile tile-half">
 	                <div class="datepicker" id="earliestMoveOutDate">
-
 	                </div>
 	              </div>
 	            </div>
-
 	            <div class="row dates">
 	              <div class="tile tile-half">
 	                <div class="row">
@@ -174,11 +150,9 @@
 	              </div>
 	              <div class="tile tile-half">
 	                <div class="datepicker" id="latestMoveInDate">
-
 	                </div>
 	              </div>
 	            </div>
-
 	            <div class="row dates">
 	              <div class="tile tile-half">
 	                <div class="row">
@@ -198,13 +172,9 @@
 	              </div>
 	              <div class="tile tile-half">
 	                <div class="datepicker" id="latestMoveOutDate">
-
 	                </div>
 	              </div>
 	            </div>
-
-
-
 	            <div class="row checkboxes">
 	              <div class="tile tile-half">
 	                <form:checkbox id="field-smoker" path="smokers" value="1" />
@@ -215,7 +185,6 @@
 	                <label for="field-animals">Animals allowed</label>
 	              </div>
 	            </div>
-
 	            <div class="row checkboxes">
 	              <div class="tile tile-half">
 	                <form:checkbox id="field-balcony" path="balcony" value="1" />
@@ -226,7 +195,6 @@
 	                <label for="field-garden">Garden (co-use)</label>
 	              </div>
 	            </div>
-
 	            <div class="row checkboxes">
 	              <div class="tile tile-half">
 	                <form:checkbox id="field-cellar" path="cellar" value="1" />
@@ -237,7 +205,6 @@
 	                <label for="field-furnished">Furnished</label>
 	              </div>
 	            </div>
-
 	            <div class="row checkboxes">
 	              <div class="tile tile-half">
 	                <form:checkbox id="field-cable" path="cable" value="1" />
@@ -248,16 +215,13 @@
 	                <label for="field-garage">Garage</label>
 	              </div>
 	            </div>
-
 	            <div class="row checkboxes">
 	              <div class="tile tile-half">
 	                <form:checkbox id="field-internet" path="internet" value="1" />
 	                <label for="field-internet">WiFi</label>
 	              </div>
 	            </div>
-
-						</div> <%-- .container-scroll END --%>
-
+			</div> <%-- .container-scroll END --%>
 	          <div class="row">
 	            <div class="tile tile-half">
 	              <button type="submit" tabindex="8">Find</button>
@@ -265,16 +229,12 @@
 	            <div class="tile tile-half">
 	    					<button form="searchForm" type="reset">Clear</button>
 	            </div>
-	          </div>
-
-					</form:form>
-
+	          	</div>
+				</form:form>
 				</div> <%-- .form.form-search END --%>
 			</div> <%-- .span-half END --%>
-
 		</div> <%-- .row END --%>
 	</div> <%-- .container END --%>
-
 </main>
 
 <%-- <c:import url="template/~footer.jsp" /> --%>
