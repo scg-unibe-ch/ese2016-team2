@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Before;
@@ -64,6 +65,11 @@ public class AuctionServiceTest {
 		placeAuctionForm.setMoveInDate("27-02-2015");
 		placeAuctionForm.setEndDate("12-12-2014");
 		placeAuctionForm.setEndTime("12:00");
+		
+		List<String> visits = new ArrayList<String>();
+		visits.add("28-02-2014;10:02;13:14");
+		visits.add("27-02-2014;10:02;13:14");
+		placeAuctionForm.setVisits(visits);
 
 		placeAuctionForm.setSmokers(true);
 		placeAuctionForm.setAnimals(true);
@@ -132,6 +138,7 @@ public class AuctionServiceTest {
 		assertEquals("Hauptstrasse 13", auction1.getStreet());
 		assertEquals("Studio", auction1.getRoomType());
 		assertEquals("12:00, 12.12.2014", auction1.getEndTime());
+		assertEquals("28-02-2014 10:02", new SimpleDateFormat("dd-MM-yyyy HH:mm").format(auction1.getVisits().get(0).getStartTimestamp()));
 
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date result = df.parse("2015-02-27");
@@ -214,6 +221,24 @@ public class AuctionServiceTest {
 		assertFalse(results.contains(auction3));
 		
 		searchForm.setInternet(false);
+		searchForm.setEarliestMoveInDate("12-12-2042");
+		results = toList(searchForm, false);
+		assertFalse(results.contains(auction3));
+		
+		searchForm.setEarliestMoveInDate("12-12-2012");
+		results = toList(searchForm, false);
+		assertTrue(results.contains(auction3));
+		
+		searchForm.setLatestMoveInDate("12-12-2042");
+		results = toList(searchForm, false);
+		assertTrue(results.contains(auction3));
+		
+		searchForm.setEarliestMoveInDate(null);
+		searchForm.setLatestMoveInDate("12-12-2012");
+		results = toList(searchForm, false);
+		assertFalse(results.contains(auction3));
+		
+		searchForm.setLatestMoveInDate(null);
 		searchForm.setRoom(false);
 		results = toList(searchForm, false);
 		assertTrue(results.contains(auction3));

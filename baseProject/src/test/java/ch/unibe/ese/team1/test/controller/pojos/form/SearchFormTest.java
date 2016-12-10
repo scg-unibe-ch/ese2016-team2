@@ -233,6 +233,32 @@ public class SearchFormTest {
 	}
 	
 	@Test
+	public void testAd() {
+		boolean ad = true;
+		searchForm.setAd(ad);
+		
+		assertTrue(searchForm.getAd());
+		
+		ad = false;
+		searchForm.setAd(ad);
+		
+		assertFalse(searchForm.getAd());
+	}
+	
+	@Test
+	public void testAuction() {
+		boolean auction = true;
+		searchForm.setAuction(auction);
+		
+		assertTrue(searchForm.getAuction());
+		
+		auction = false;
+		searchForm.setAuction(auction);
+		
+		assertFalse(searchForm.getAuction());
+	}
+	
+	@Test
 	public void testEarliestMoveInDate() {
 		String earliestMoveInDate = "12-12-2012";
 		searchForm.setEarliestMoveInDate(earliestMoveInDate);

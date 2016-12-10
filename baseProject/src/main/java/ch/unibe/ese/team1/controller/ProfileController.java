@@ -1,5 +1,4 @@
-package ch.unibe.ese.team1.controller;
-
+package ch.unibe.ese.team1.controller
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -124,7 +123,6 @@ public class ProfileController {
 		return model;
 	}
 
-	
 	/** Validates the signup form and on success persists the new user. */
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public ModelAndView signupResultPage(@Valid SignupForm signupForm, BindingResult bindingResult) {
@@ -140,8 +138,7 @@ public class ProfileController {
 		return model;
 	}
 	
-		
-
+	
 	/**
 	 * Checks and returns whether a user with the given email already exists.
 	 */

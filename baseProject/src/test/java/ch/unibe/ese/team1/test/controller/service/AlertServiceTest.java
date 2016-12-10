@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
@@ -16,7 +17,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import ch.unibe.ese.team1.controller.pojos.forms.AlertForm;
+import ch.unibe.ese.team1.controller.pojos.forms.PlaceAdForm;
+import ch.unibe.ese.team1.controller.service.AdService;
 import ch.unibe.ese.team1.controller.service.AlertService;
+import ch.unibe.ese.team1.controller.service.MessageService;
 import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Alert;
 import ch.unibe.ese.team1.model.Gender;
@@ -45,6 +50,12 @@ public class AlertServiceTest {
 	
 	@Autowired
 	AlertService alertService;
+	
+	@Autowired
+	MessageService messageService;
+	
+	@Autowired
+	AdService adService;
 	
 	@Test
 	public void createAlerts() {
@@ -110,7 +121,7 @@ public class AlertServiceTest {
 		alert.setUser(testPersonAlert2);
 		alert.setAlertType("Room and Studio");
 		alert.setCity("Bern");
-		alert.setZipcode(3002);
+		alert.setZipcode(3008);
 		alert.setPrice(1000);
 		alert.setRadius(5);
 		alertDao.save(alert);
@@ -151,8 +162,114 @@ public class AlertServiceTest {
 		assertFalse(alertService.typeMismatch(oltenResidence, alertList.get(1)));
 	}
 	
+	//tests radius mismatch too
+	@Test
+	public void testSaveFrom() {
+		AlertForm alertForm = new AlertForm();
+		alertForm.setAlertType("Room and Studio");
+		alertForm.setCity("3000 - Bern");
+		alertForm.setPrice(100);
+		alertForm.setRadius(10);
+		
+		User testUserAlert = createUser("testUser@Alert.ch", "123456", "testUser", "Alert", Gender.MALE, "Normal");
+		testUserAlert.setAboutMe("Test Person Alert");
+		userDao.save(testUserAlert);
+		
+		User testUserAd = createUser("testUser@Ad.ch", "1234567", "testUser", "Ad", Gender.MALE, "Premium");
+		testUserAd.setAboutMe("Test Person which places Ad");
+		userDao.save(testUserAd);
+		
+		assertEquals(0, messageService.unread(userDao.findByUsername("testUser@Alert.ch").getId()));
+		
+		alertService.saveFrom(alertForm, testUserAlert);
+		
+		PlaceAdForm placeAdForm = new PlaceAdForm();
+		placeAdForm.setTitle("Test Ad");
+		placeAdForm.setStreet("Test Street");
+		placeAdForm.setCity("9000 - St. Gallen");
+		placeAdForm.setMoveInDate("12-12-2012");
+		placeAdForm.setMoveOutDate("");
+		placeAdForm.setPrize(50);
+		placeAdForm.setSquareFootage(50);
+		placeAdForm.setRoomDescription("Test description");
+		placeAdForm.setPreferences("Test preference");
+		placeAdForm.setRoomType("Room");
+		
+		List<String> filePaths = new ArrayList<String>();
+		filePaths.add("/img/test/ad1_1.jpg");
+		
+		adService.saveFrom(placeAdForm, filePaths, userDao.findByUsername("testUser@Ad.ch"));
+		
+		Iterable<Ad> ads = adDao.findAll();
+		Ad ad = new Ad();
+		for (Ad tempAd: ads) {
+			ad = tempAd;
+		}
+		alertService.triggerAlerts(ad);
+		
+		assertEquals(0, messageService.unread(userDao.findByUsername("testUser@Alert.ch").getId()));
+	
+		placeAdForm.setTitle("Test Ad");
+		placeAdForm.setStreet("Test Street");
+		placeAdForm.setCity("3000 - Bern");
+		placeAdForm.setMoveInDate("12-12-2012");
+		placeAdForm.setMoveOutDate("");
+		placeAdForm.setPrize(50);
+		placeAdForm.setSquareFootage(50);
+		placeAdForm.setRoomDescription("Test description");
+		placeAdForm.setPreferences("Test preference");
+		placeAdForm.setRoomType("Room");
+		
+		adService.saveFrom(placeAdForm, filePaths, userDao.findByUsername("testUser@Ad.ch"));
+		
+		ads = adDao.findAll();
+		ad = new Ad();
+		for (Ad tempAd: ads) {
+			ad = tempAd;
+		}
+		alertService.triggerAlerts(ad);
+		
+		assertEquals(1, messageService.unread(userDao.findByUsername("testUser@Alert.ch").getId()));
+	}
+	
+	@Test
+	public void testTypeMismatch() {
+		Alert alert = new Alert();
+		Ad room = new Ad();
+		Ad studio = new Ad();
+		Ad house = new Ad();
+		
+		alert.setAlertType("Room and Studio");
+		room.setRoomType("Room");
+		studio.setRoomType("Studio");
+		house.setRoomType("House");
+		assertFalse(alertService.typeMismatch(room, alert));
+		assertFalse(alertService.typeMismatch(studio, alert));
+		assertTrue(alertService.typeMismatch(house, alert));
+		
+		alert.setAlertType("Room and House");
+		assertFalse(alertService.typeMismatch(room, alert));
+		assertTrue(alertService.typeMismatch(studio, alert));
+		assertFalse(alertService.typeMismatch(house, alert));
+		
+		alert.setAlertType("Studio and House");
+		assertTrue(alertService.typeMismatch(room, alert));
+		assertFalse(alertService.typeMismatch(studio, alert));
+		assertFalse(alertService.typeMismatch(house, alert));
+		
+		alert.setAlertType("All");
+		assertFalse(alertService.typeMismatch(room, alert));
+		assertFalse(alertService.typeMismatch(studio, alert));
+		assertFalse(alertService.typeMismatch(house, alert));
+		
+		alert.setAlertType("Room");
+		assertFalse(alertService.typeMismatch(room, alert));
+		assertTrue(alertService.typeMismatch(studio, alert));
+		assertTrue(alertService.typeMismatch(house, alert));
+	}
+	
 	//Lean user creating method
-	User createUser(String email, String password, String firstName,
+	private User createUser(String email, String password, String firstName,
 			String lastName, Gender gender, String account) {
 		User user = new User();
 		user.setUsername(email);

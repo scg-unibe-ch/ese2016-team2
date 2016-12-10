@@ -44,7 +44,17 @@ public class VisitEnquiryTest {
 		VisitEnquiryState visitEnquiryState = VisitEnquiryState.OPEN;
 		visitEnquiry.setState(visitEnquiryState);
 		
-		assertEquals(visitEnquiryState, visitEnquiry.getState());
+		assertEquals(VisitEnquiryState.OPEN, visitEnquiry.getState());
+		
+		visitEnquiryState = VisitEnquiryState.DECLINED;
+		visitEnquiry.setState(visitEnquiryState);
+		
+		assertEquals(VisitEnquiryState.DECLINED, visitEnquiry.getState());
+		
+		visitEnquiryState = VisitEnquiryState.ACCEPTED;
+		visitEnquiry.setState(visitEnquiryState);
+		
+		assertEquals(VisitEnquiryState.ACCEPTED, visitEnquiry.getState());
 	}
 	
 	@Test

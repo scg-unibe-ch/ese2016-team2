@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Advertisement;
+import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.User;
 
 public class AdvertisementTest {
@@ -185,5 +186,49 @@ public class AdvertisementTest {
 		ad.setBuyable(buyable);
 		
 		assertTrue(ad.getBuyable());
+	}
+	
+	@Test
+	public void testLatitude() {
+		String latitude = "Test latitude";
+		ad.setLatitude(latitude);
+		
+		assertEquals(latitude, ad.getLatitude());
+	}
+	
+	@Test
+	public void testLongitude() {
+		String longitude = "Test longitude";
+		ad.setLongitude(longitude);
+		
+		assertEquals(longitude, ad.getLongitude());
+	}
+	
+	@Test
+	public void testGetDate() {
+		Date moveInDate = new Date();
+		Date moveOutDate = new Date();
+		
+		ad.setMoveInDate(moveInDate);
+		ad.setMoveOutDate(moveOutDate);
+		
+		assertEquals(moveInDate, ad.getDate(true));
+		assertEquals(moveOutDate, ad.getDate(false));
+	}
+	
+	@Test
+	public void testEquals() {
+		Advertisement testAd1 = new Ad();
+		Advertisement testAd2 = new Ad();
+		testAd1.setId(1);
+		testAd2.setId(2);
+		
+		assertTrue(testAd1.equals(testAd1));
+		assertFalse(testAd1.equals(null));
+		assertFalse(testAd1.equals(new Auction()));
+		assertFalse(testAd1.equals(testAd2));
+		
+		testAd2.setId(1);
+		assertTrue(testAd1.equals(testAd2));
 	}
 }
