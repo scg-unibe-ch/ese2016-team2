@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceBidForm;
 import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
-import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.AuctionPicture;
 import ch.unibe.ese.team1.model.Location;

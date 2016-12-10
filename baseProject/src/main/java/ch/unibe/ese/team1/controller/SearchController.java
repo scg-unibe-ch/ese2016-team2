@@ -23,7 +23,6 @@ import ch.unibe.ese.team1.controller.service.AuctionService;
 import ch.unibe.ese.team1.controller.service.UserService;
 import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Advertisement;
-import ch.unibe.ese.team1.model.Alert;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.User;
 

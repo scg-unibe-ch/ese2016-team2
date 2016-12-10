@@ -2,9 +2,6 @@ package ch.unibe.ese.team1.controller.pojos.forms;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
-import ch.unibe.ese.team1.model.Gender;
 
 /** This form is used when a user want to sign up for an account. */
 public class SignupGoogleForm {
