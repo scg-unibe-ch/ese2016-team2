@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Before;
@@ -24,9 +25,12 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team1.controller.service.AdService;
+import ch.unibe.ese.team1.controller.service.EditAdService;
 import ch.unibe.ese.team1.model.Ad;
+import ch.unibe.ese.team1.model.AdPicture;
 import ch.unibe.ese.team1.model.Advertisement;
 import ch.unibe.ese.team1.model.Gender;
+import ch.unibe.ese.team1.model.Picture;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.UserRole;
 import ch.unibe.ese.team1.model.dao.UserDao;
@@ -41,6 +45,9 @@ public class AdServiceTest {
 
 	@Autowired
 	private AdService adService;
+	
+	@Autowired
+	private EditAdService editAdService;
 
 	@Autowired
 	private UserDao userDao;
@@ -213,6 +220,76 @@ public class AdServiceTest {
 		searchForm.setHouse(false);
 		results = toList(searchForm, false);
 		assertFalse(results.contains(ad2));
+	}
+	
+	@Test
+	public void testEditAd() {
+		User hans = createUser("adService@Test3.ch", "password", "AdService", "Test3", Gender.MALE, "Normal");
+		hans.setAboutMe("AdServiceTest3");
+		userDao.save(hans);
+
+		adService.saveFrom(placeAdForm, filePaths, hans);
+		
+		Ad ad2 = new Ad();
+		Iterable<Ad> ads = adService.getAllAds();
+		Iterator<Ad> iterator = ads.iterator();
+
+		while (iterator.hasNext()) {
+			ad2 = iterator.next();
+		}
+		
+		List<AdPicture> pics = ad2.getPictures();
+		assertEquals(1, pics.size());
+		
+		editAdService.deletePictureFromAd(ad2.getId(), pics.get(0).getId());
+		
+		ads = adService.getAllAds();
+		iterator = ads.iterator();
+
+		while (iterator.hasNext()) {
+			ad2 = iterator.next();
+		}
+		assertEquals(0, ad2.getPictures().size());
+		
+		PlaceAdForm editAdForm = editAdService.fillForm(ad2);
+		assertEquals("Test preferences", editAdForm.getPreferences());
+		editAdForm.setCity("3000 - Bern");
+		editAdForm.setPreferences("Test preferences");
+		editAdForm.setRoomDescription("Test Room description");
+		editAdForm.setPrize(600);
+		editAdForm.setBalcony(false);
+		editAdForm.setSquareFootage(50);
+		editAdForm.setTitle("new title");
+		editAdForm.setStreet("Hauptstrasse 13");
+		editAdForm.setRoomType("Studio");
+		editAdForm.setMoveInDate("27-02-2015");
+		editAdForm.setMoveOutDate("27-04-2015");
+
+		editAdForm.setSmokers(true);
+		editAdForm.setAnimals(true);
+		editAdForm.setGarden(true);
+		editAdForm.setBalcony(true);
+		editAdForm.setCellar(true);
+		editAdForm.setFurnished(true);
+		editAdForm.setCable(true);
+		editAdForm.setGarage(true);
+		editAdForm.setInternet(false);
+		List<String> visits = new ArrayList<String>();
+		visits.add("28-02-2014;10:02;13:14");
+		visits.add("27-02-2014;10:02;13:14");
+		editAdForm.setVisits(visits);
+		
+		editAdService.saveFrom(editAdForm, filePaths, hans, ad2.getId());
+		
+		ads = adService.getAllAds();
+		iterator = ads.iterator();
+
+		while (iterator.hasNext()) {
+			ad2 = iterator.next();
+		}
+		
+		assertEquals("new title", ad2.getTitle());
+		
 	}
 
 	private ArrayList<Advertisement> toList(SearchForm searchForm, boolean premium) {
