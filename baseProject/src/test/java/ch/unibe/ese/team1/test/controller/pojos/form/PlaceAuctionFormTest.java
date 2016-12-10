@@ -179,4 +179,20 @@ public class PlaceAuctionFormTest {
 		assertEquals(endDate, placeAuctionForm.getEndDate());
 		assertEquals(endTime, placeAuctionForm.getEndTime());
 	}
+	
+	@Test
+	public void testLatitude() {
+		String latitude = "Test latitude";
+		placeAuctionForm.setLatitude(latitude);
+		
+		assertEquals(latitude, placeAuctionForm.getLatitude());
+	}
+	
+	@Test
+	public void testLongitude() {
+		String longitude = "Test longitude";
+		placeAuctionForm.setLongitude(longitude);
+		
+		assertEquals(longitude, placeAuctionForm.getLongitude());
+	}
 }

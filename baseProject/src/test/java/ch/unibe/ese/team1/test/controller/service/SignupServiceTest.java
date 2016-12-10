@@ -1,6 +1,7 @@
 package ch.unibe.ese.team1.test.controller.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
@@ -58,5 +59,7 @@ public class SignupServiceTest {
 		assertEquals(signupForm.getPassword(), currentUser.getPassword());
 		assertEquals(signupForm.getGender(), currentUser.getGender());
 		assertEquals(signupForm.getAccount(), currentUser.getAccount());
+		
+		assertFalse(signupService.doesUserWithUsernameExist("asdf"));
 	}	
 }

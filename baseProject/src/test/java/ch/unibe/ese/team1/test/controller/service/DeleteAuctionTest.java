@@ -17,17 +17,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import ch.unibe.ese.team1.controller.pojos.forms.PlaceAdForm;
-import ch.unibe.ese.team1.controller.service.AdService;
+import ch.unibe.ese.team1.controller.pojos.forms.PlaceAuctionForm;
+import ch.unibe.ese.team1.controller.service.AuctionService;
 import ch.unibe.ese.team1.controller.service.EnquiryService;
 import ch.unibe.ese.team1.controller.service.VisitService;
-import ch.unibe.ese.team1.model.Ad;
+import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.Gender;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.UserRole;
 import ch.unibe.ese.team1.model.VisitEnquiry;
 import ch.unibe.ese.team1.model.VisitEnquiryState;
-import ch.unibe.ese.team1.model.dao.AdDao;
+import ch.unibe.ese.team1.model.dao.AuctionDao;
 import ch.unibe.ese.team1.model.dao.UserDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -36,68 +36,69 @@ import ch.unibe.ese.team1.model.dao.UserDao;
 		"file:src/main/webapp/WEB-INF/config/springData.xml",
 		"file:src/main/webapp/WEB-INF/config/springSecurity.xml" })
 @WebAppConfiguration
-public class DeleteAdTest {
-	
+public class DeleteAuctionTest {
+
 	@Autowired
-	private AdService adService;
+	private AuctionService auctionService;
 	@Autowired
 	private UserDao userDao;
 	@Autowired
-	private AdDao adDao;
+	private AuctionDao auctionDao;
 	@Autowired
 	private EnquiryService enquiryService;
 	@Autowired
 	private VisitService visitService;
 	
-	private PlaceAdForm placeAdForm = new PlaceAdForm();
+	private PlaceAuctionForm placeAuctionForm = new PlaceAuctionForm();
 	private ArrayList<String> filePaths = new ArrayList<String>();
 	
 	@Before
 	public void setUp() {
-		placeAdForm.setCity("3000 - Bern");
-		placeAdForm.setPreferences("Test preferences");
-		placeAdForm.setRoomDescription("Test Room description");
-		placeAdForm.setPrize(600);
-		placeAdForm.setBalcony(false);
-		placeAdForm.setSquareFootage(50);
-		placeAdForm.setTitle("title");
-		placeAdForm.setStreet("Hauptstrasse 13");
-		placeAdForm.setRoomType("Studio");
-		placeAdForm.setMoveInDate("27-02-2015");
-		placeAdForm.setMoveOutDate("27-04-2015");
+		placeAuctionForm.setCity("3000 - Bern");
+		placeAuctionForm.setPreferences("Test preferences");
+		placeAuctionForm.setRoomDescription("Test Room description");
+		placeAuctionForm.setPrize(600);
+		placeAuctionForm.setBalcony(false);
+		placeAuctionForm.setSquareFootage(50);
+		placeAuctionForm.setTitle("title");
+		placeAuctionForm.setStreet("Hauptstrasse 13");
+		placeAuctionForm.setRoomType("Studio");
+		placeAuctionForm.setMoveInDate("27-02-2015");
+		placeAuctionForm.setEndDate("27-04-2015");
+		placeAuctionForm.setEndTime("12:12");
 
-		placeAdForm.setSmokers(true);
-		placeAdForm.setAnimals(true);
-		placeAdForm.setGarden(true);
-		placeAdForm.setBalcony(true);
-		placeAdForm.setCellar(true);
-		placeAdForm.setFurnished(true);
-		placeAdForm.setCable(true);
-		placeAdForm.setGarage(true);
-		placeAdForm.setInternet(false);
+		placeAuctionForm.setSmokers(true);
+		placeAuctionForm.setAnimals(true);
+		placeAuctionForm.setGarden(true);
+		placeAuctionForm.setBalcony(true);
+		placeAuctionForm.setCellar(true);
+		placeAuctionForm.setFurnished(true);
+		placeAuctionForm.setCable(true);
+		placeAuctionForm.setGarage(true);
+		placeAuctionForm.setInternet(false);
 		
 		filePaths.add("/img/test/ad1_1.jpg");
 	}
 	
 	@Test
 	public void deleteAdWithoutVisits() {
-		Iterable<Ad> allAdsBefore = adService.getAllAds();
-		ArrayList<Ad> allAdsListBefore = new ArrayList<Ad>();
-		for (Ad tempAd: allAdsBefore) {
+		Iterable<Auction> allAdsBefore = auctionService.getAllAds();
+		ArrayList<Auction> allAdsListBefore = new ArrayList<Auction>();
+		for (Auction tempAd: allAdsBefore) {
 			allAdsListBefore.add(tempAd);
 		}
 		
 		int numberOfAds = allAdsListBefore.size();
 		
-		User deleteAdTest = createUser("deleteAd@Test1.ch", "password", "deleteAd", "Test1", Gender.MALE, "Normal");
-		deleteAdTest.setAboutMe("deleteAdTest1");
+		User deleteAdTest = createUser("deleteAuction@Test1.ch", "password", "deleteAuction", "Test1", Gender.MALE, "Normal");
+		deleteAdTest.setAboutMe("deleteAuctionTest1");
 		userDao.save(deleteAdTest);
 
-		adService.saveFrom(placeAdForm, filePaths, deleteAdTest);
+		auctionService.saveFrom(placeAuctionForm, filePaths, deleteAdTest);
 		
-		Ad ad = new Ad();
-		Iterable<Ad> ads = adService.getAllAds();
-		Iterator<Ad> iterator = ads.iterator();
+		Auction ad = new Auction();
+		Iterable<Auction> ads = auctionService.getAllAds();
+		Iterator<Auction> iterator = ads.iterator();
 
 		while (iterator.hasNext()) {
 			ad = iterator.next();
@@ -105,9 +106,9 @@ public class DeleteAdTest {
 		
 		long adId = ad.getId();
 		
-		Iterable<Ad> allAds = adService.getAllAds();
-		ArrayList<Ad> allAdsList = new ArrayList<Ad>();
-		for (Ad tempAd: allAds) {
+		Iterable<Auction> allAds = auctionService.getAllAds();
+		ArrayList<Auction> allAdsList = new ArrayList<Auction>();
+		for (Auction tempAd: allAds) {
 			allAdsList.add(tempAd);
 		}
 		
@@ -115,11 +116,11 @@ public class DeleteAdTest {
 		
 		assertEquals(numberOfAds, numberOfAdsBefore-1);
 		
-		adDao.delete(adId);
+		auctionDao.delete(adId);
 		
-		allAds = adService.getAllAds();
-		ArrayList<Ad> allAdsListAfter = new ArrayList<Ad>();
-		for (Ad tempAd: allAds) {
+		allAds = auctionService.getAllAds();
+		ArrayList<Auction> allAdsListAfter = new ArrayList<Auction>();
+		for (Auction tempAd: allAds) {
 			if(tempAd != null) 
 			allAdsListAfter.add(tempAd);
 		}
@@ -131,9 +132,9 @@ public class DeleteAdTest {
 	
 	@Test
 	public void deleteAdsWithVisits() {
-		Iterable<Ad> allAdsBefore = adService.getAllAds();
-		ArrayList<Ad> allAdsListBefore = new ArrayList<Ad>();
-		for (Ad tempAd: allAdsBefore) {
+		Iterable<Auction> allAdsBefore = auctionService.getAllAds();
+		ArrayList<Auction> allAdsListBefore = new ArrayList<Auction>();
+		for (Auction tempAd: allAdsBefore) {
 			allAdsListBefore.add(tempAd);
 		}
 		
@@ -141,17 +142,17 @@ public class DeleteAdTest {
 		
 		List<String> visits = new ArrayList<String>();
 		visits.add("28-02-2014;10:02;13:14");
-		placeAdForm.setVisits(visits);
+		placeAuctionForm.setVisits(visits);
 		
-		User deleteAdTest2 = createUser("deleteAd@Test2.ch", "password", "deleteAd", "Test2", Gender.MALE, "Normal");
-		deleteAdTest2.setAboutMe("deleteAdTest2");
+		User deleteAdTest2 = createUser("deleteAuction@Test2.ch", "password", "deleteAuction", "Test2", Gender.MALE, "Normal");
+		deleteAdTest2.setAboutMe("deleteAuctionTest2");
 		userDao.save(deleteAdTest2);
 
-		adService.saveFrom(placeAdForm, filePaths, deleteAdTest2);
+		auctionService.saveFrom(placeAuctionForm, filePaths, deleteAdTest2);
 		
-		Ad ad = new Ad();
-		Iterable<Ad> ads = adService.getAllAds();
-		Iterator<Ad> iterator = ads.iterator();
+		Auction ad = new Auction();
+		Iterable<Auction> ads = auctionService.getAllAds();
+		Iterator<Auction> iterator = ads.iterator();
 
 		while (iterator.hasNext()) {
 			ad = iterator.next();
@@ -159,9 +160,9 @@ public class DeleteAdTest {
 		
 		long adId = ad.getId();
 		
-		Iterable<Ad> allAds = adService.getAllAds();
-		ArrayList<Ad> allAdsList = new ArrayList<Ad>();
-		for (Ad tempAd: allAds) {
+		Iterable<Auction> allAds = auctionService.getAllAds();
+		ArrayList<Auction> allAdsList = new ArrayList<Auction>();
+		for (Auction tempAd: allAds) {
 			allAdsList.add(tempAd);
 		}
 		
@@ -169,11 +170,11 @@ public class DeleteAdTest {
 		
 		assertEquals(numberOfAds, numberOfAdsBefore-1);
 		
-		adDao.delete(adId);
+		auctionDao.delete(adId);
 		
-		allAds = adService.getAllAds();
-		ArrayList<Ad> allAdsListAfter = new ArrayList<Ad>();
-		for (Ad tempAd: allAds) {
+		allAds = auctionService.getAllAds();
+		ArrayList<Auction> allAdsListAfter = new ArrayList<Auction>();
+		for (Auction tempAd: allAds) {
 			if(tempAd != null) 
 			allAdsListAfter.add(tempAd);
 		}
@@ -186,9 +187,9 @@ public class DeleteAdTest {
 	
 	@Test
 	public void deleteAdWithEnquiry() {
-		Iterable<Ad> allAdsBefore = adService.getAllAds();
-		ArrayList<Ad> allAdsListBefore = new ArrayList<Ad>();
-		for (Ad tempAd: allAdsBefore) {
+		Iterable<Auction> allAdsBefore = auctionService.getAllAds();
+		ArrayList<Auction> allAdsListBefore = new ArrayList<Auction>();
+		for (Auction tempAd: allAdsBefore) {
 			allAdsListBefore.add(tempAd);
 		}
 		
@@ -196,20 +197,20 @@ public class DeleteAdTest {
 		
 		List<String> visits = new ArrayList<String>();
 		visits.add("28-02-2014;10:02;13:14");
-		placeAdForm.setVisits(visits);
+		placeAuctionForm.setVisits(visits);
 		
-		User deleteAdTest3 = createUser("deleteAd@Test3.ch", "password", "deleteAd", "Test3", Gender.MALE, "Normal");
+		User deleteAdTest3 = createUser("deleteAuction@Test3.ch", "password", "deleteAuction", "Test3", Gender.MALE, "Normal");
 		deleteAdTest3.setAboutMe("deleteAdTest3");
 		userDao.save(deleteAdTest3);
-		User deleteAdTest4 = createUser("deleteAd@Test4.ch", "password", "deleteAd", "Test4", Gender.MALE, "Normal");
+		User deleteAdTest4 = createUser("deleteAuction@Test4.ch", "password", "deleteAuction", "Test4", Gender.MALE, "Normal");
 		deleteAdTest4.setAboutMe("deleteAdTest4");
 		userDao.save(deleteAdTest4);
 
-		adService.saveFrom(placeAdForm, filePaths, deleteAdTest3);
+		auctionService.saveFrom(placeAuctionForm, filePaths, deleteAdTest3);
 		
-		Ad ad = new Ad();
-		Iterable<Ad> ads = adService.getAllAds();
-		Iterator<Ad> iterator = ads.iterator();
+		Auction ad = new Auction();
+		Iterable<Auction> ads = auctionService.getAllAds();
+		Iterator<Auction> iterator = ads.iterator();
 
 		while (iterator.hasNext()) {
 			ad = iterator.next();
@@ -226,9 +227,9 @@ public class DeleteAdTest {
 		
 		enquiryService.saveVisitEnquiry(visitEnquiry);
 		
-		Iterable<Ad> allAds = adService.getAllAds();
-		ArrayList<Ad> allAdsList = new ArrayList<Ad>();
-		for (Ad tempAd: allAds) {
+		Iterable<Auction> allAds = auctionService.getAllAds();
+		ArrayList<Auction> allAdsList = new ArrayList<Auction>();
+		for (Auction tempAd: allAds) {
 			allAdsList.add(tempAd);
 		}
 		
@@ -236,11 +237,11 @@ public class DeleteAdTest {
 		
 		assertEquals(numberOfAds, numberOfAdsBefore-1);
 		
-		adService.delete(adId);
+		auctionService.delete(adId);
 		
-		allAds = adService.getAllAds();
-		ArrayList<Ad> allAdsListAfter = new ArrayList<Ad>();
-		for (Ad tempAd: allAds) {
+		allAds = auctionService.getAllAds();
+		ArrayList<Auction> allAdsListAfter = new ArrayList<Auction>();
+		for (Auction tempAd: allAds) {
 			if(tempAd != null) 
 			allAdsListAfter.add(tempAd);
 		}
@@ -269,4 +270,5 @@ public class DeleteAdTest {
 		user.setUserRoles(userRoles);
 		return user;
 	}
+	
 }

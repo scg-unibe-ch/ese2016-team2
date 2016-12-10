@@ -439,7 +439,7 @@ public class AdService {
 					Iterator<Ad> iterator = ads.iterator();
 					while (iterator.hasNext()) {
 						Ad ad = iterator.next();
-						if (ad.getDate(inOrOut).compareTo(earliestDate) < 0
+						if (ad.getDate(inOrOut) == null || ad.getDate(inOrOut).compareTo(earliestDate) < 0
 								|| ad.getDate(inOrOut).compareTo(latestDate) > 0) {
 							iterator.remove();
 						}
@@ -450,7 +450,7 @@ public class AdService {
 					Iterator<Ad> iterator = ads.iterator();
 					while (iterator.hasNext()) {
 						Ad ad = iterator.next();
-						if (ad.getDate(inOrOut).compareTo(earliestDate) < 0)
+						if (ad.getDate(inOrOut) == null || ad.getDate(inOrOut).compareTo(earliestDate) < 0)
 							iterator.remove();
 					}
 				}
@@ -460,7 +460,7 @@ public class AdService {
 				Iterator<Ad> iterator = ads.iterator();
 				while (iterator.hasNext()) {
 					Ad ad = iterator.next();
-					if (ad.getDate(inOrOut).compareTo(latestDate) > 0)
+					if (ad.getDate(inOrOut) == null || ad.getDate(inOrOut).compareTo(latestDate) > 0)
 						iterator.remove();
 				}
 			} else {

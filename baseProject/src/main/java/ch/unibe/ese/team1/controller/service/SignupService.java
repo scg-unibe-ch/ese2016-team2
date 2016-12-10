@@ -8,12 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.team1.controller.pojos.forms.SignupForm;
-import ch.unibe.ese.team1.controller.pojos.forms.SignupGoogleForm;
 import ch.unibe.ese.team1.model.User;
-import ch.unibe.ese.team1.model.UserGoogle;
 import ch.unibe.ese.team1.model.UserRole;
 import ch.unibe.ese.team1.model.dao.UserDao;
-import ch.unibe.ese.team1.model.dao.UserGoogleDao;
 
 /** Handles the persisting of new users */
 @Service
@@ -23,9 +20,6 @@ public class SignupService {
 	
 	@Autowired
 	private UserDao userDao;
-	
-	@Autowired
-	private UserGoogleDao userGoogleDao;
 
 	/** Handles persisting a new user to the database. */
 	@Transactional
@@ -51,28 +45,6 @@ public class SignupService {
 		userDao.save(user);
 	}
 	
-
-	/** Handles persisting a new user to the database. */
-	@Transactional
-	public void saveFromGoogle(SignupGoogleForm signupGoogleForm) {
-		UserGoogle user = new UserGoogle();
-		user.setUsername(signupGoogleForm.getEmail());
-		user.setEmail(signupGoogleForm.getEmail());
-		user.setFirstName(signupGoogleForm.getFirstName());
-		user.setLastName(signupGoogleForm.getLastName());
-		user.setEnabled(true);
-		
-		Set<UserRole> userRoles = new HashSet<>();
-		UserRole role = new UserRole();
-		role.setRole("ROLE_WHATEVER");
-		role.setUser(user);
-		userRoles.add(role);
-		
-		user.setUserRoles(userRoles);
-		
-		userGoogleDao.save(user);
-	}
-	
 	/**
 	 * Returns whether a user with the given username already exists.
 	 * @param username the username to check for
@@ -81,12 +53,5 @@ public class SignupService {
 	@Transactional
 	public boolean doesUserWithUsernameExist(String username){
 		return userDao.findByUsername(username) != null;
-	}
-	
-	
-	//@Jerome
-	@Transactional
-	public boolean doesGoogleUserWithUsernameExist(String username){
-		return userGoogleDao.findByUsername(username) != null;
 	}
 }

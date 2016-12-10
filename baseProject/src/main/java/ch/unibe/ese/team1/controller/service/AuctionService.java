@@ -186,28 +186,6 @@ public class AuctionService {
 		return auctionDao.findAll();
 	}
 
-	/**
-	 * Returns the newest auctions in the database. Parameter 'newest' says how
-	 * many.
-	 */
-	@Transactional
-	public Iterable<Auction> getNewestAds(int newest) {
-		Iterable<Auction> allAuctions = auctionDao.findAll();
-		List<Auction> auctions = new ArrayList<Auction>();
-		for (Auction auction : allAuctions)
-			auctions.add(auction);
-		Collections.sort(auctions, new Comparator<Auction>() {
-			@Override
-			public int compare(Auction auction1, Auction auction2) {
-				return auction2.getCreationDate().compareTo(auction1.getCreationDate());
-			}
-		});
-		List<Auction> fourNewest = new ArrayList<Auction>();
-		for (int i = 0; i < newest; i++)
-			fourNewest.add(auctions.get(i));
-		return fourNewest;
-	}
-
 	/** Returns all ads that were placed by the given user. */
 	public Iterable<Auction> getAuctionsByUser(User user) {
 		return auctionDao.findByUser(user);
@@ -286,8 +264,6 @@ public class AuctionService {
 		// prepare date filtering - by far the most difficult filter
 		Date earliestInDate = null;
 		Date latestInDate = null;
-		Date earliestOutDate = null;
-		Date latestOutDate = null;
 
 		// parse move-in and move-out dates
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -299,18 +275,9 @@ public class AuctionService {
 			latestInDate = formatter.parse(searchForm.getLatestMoveInDate());
 		} catch (Exception e) {
 		}
-		try {
-			earliestOutDate = formatter.parse(searchForm.getEarliestMoveOutDate());
-		} catch (Exception e) {
-		}
-		try {
-			latestOutDate = formatter.parse(searchForm.getLatestMoveOutDate());
-		} catch (Exception e) {
-		}
 
 		// filtering by dates
 		locatedResults = validateDate(locatedResults, true, earliestInDate, latestInDate);
-		locatedResults = validateDate(locatedResults, false, earliestOutDate, latestOutDate);
 
 		// filtering for the rest
 		// smokers
@@ -424,7 +391,7 @@ public class AuctionService {
 					Iterator<Auction> iterator = ads.iterator();
 					while (iterator.hasNext()) {
 						Auction ad = iterator.next();
-						if (ad.getDate(inOrOut).compareTo(earliestDate) < 0
+						if (ad.getDate(inOrOut) == null || ad.getDate(inOrOut).compareTo(earliestDate) < 0
 								|| ad.getDate(inOrOut).compareTo(latestDate) > 0) {
 							iterator.remove();
 						}
@@ -435,7 +402,7 @@ public class AuctionService {
 					Iterator<Auction> iterator = ads.iterator();
 					while (iterator.hasNext()) {
 						Auction ad = iterator.next();
-						if (ad.getDate(inOrOut).compareTo(earliestDate) < 0)
+						if (ad.getDate(inOrOut) == null || ad.getDate(inOrOut).compareTo(earliestDate) < 0)
 							iterator.remove();
 					}
 				}
@@ -445,7 +412,7 @@ public class AuctionService {
 				Iterator<Auction> iterator = ads.iterator();
 				while (iterator.hasNext()) {
 					Auction ad = iterator.next();
-					if (ad.getDate(inOrOut).compareTo(latestDate) > 0)
+					if (ad.getDate(inOrOut) == null || ad.getDate(inOrOut).compareTo(latestDate) > 0)
 						iterator.remove();
 				}
 			} else {
