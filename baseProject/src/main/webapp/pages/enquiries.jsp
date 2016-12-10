@@ -16,10 +16,8 @@
 	<c:import url="template/~top_bar.jsp">
 		<c:param name="instr" value="Manage enquiries..." />
 	</c:import>
-
 	<div class="container page-max-height">
 		<div class="container-scroll container-pad">
-
 			<div id="enquiryList">
 				<table class="styledTable">
 					<tr>
@@ -38,7 +36,6 @@
 						<fmt:formatDate value="${enquiry.visit.endTimestamp}"
 							var="endTime" type="date" pattern="HH:mm" />
 						<fmt:formatDate value="${enquiry.visit.startTimestamp }" var="date" type="date" pattern= "dd.MM.yyyy" />
-
 						<tr>
 							<td><a href="/user?id=${enquiry.sender.id}">${enquiry.sender.email}</a></td>
 							<c:choose>
@@ -69,10 +66,8 @@
 					</c:forEach>
 				</table>
 			</div>
-
 		</div>
 	</div>
-
 </main>
 
 <%-- <c:import url="template/~footer.jsp" /> --%>

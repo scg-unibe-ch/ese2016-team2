@@ -115,10 +115,7 @@ public class SearchController {
 				model.addObject("premiumResults", premiumResults);
 				return model;
 			}
-
-		} else
-
-		{
+		} else {
 			// go back
 			return searchAd();
 		}

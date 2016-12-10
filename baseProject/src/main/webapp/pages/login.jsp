@@ -5,9 +5,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
-<%-- <script src="https://apis.google.com/js/platform.js" async defer></script>
-<meta name="google-signin-client_id" content="388404425969-6u07lg832603b5udk20qal9c5e1vj213.apps.googleusercontent.com"> --%>
-
 <!-- check if user is logged in -->
 <security:authorize var="loggedIn" url="/profile" />
 
@@ -18,32 +15,24 @@
 	<c:import url="template/~top_bar.jsp">
 		<c:param name="instr" value="Sign in..." />
 	</c:import>
-
 	<div class="container">
 		<div class="row">
 			<div class="span-half">
-
 				<div class="row">
-			    <div class="tile tile-full">
-			      <div class="form form-search form-login form-max-height">
+			    	<div class="tile tile-full">
+			      		<div class="form form-search form-login form-max-height">
 							<c:choose>
-
 								<c:when test="${loggedIn}">
 									<p>You are already logged in!</p>
 								</c:when>
-
 								<c:otherwise>
-
 									<form
 										id="login-form"
 										method="post"
 										action="/j_spring_security_check">
-
 										<div class="container-scroll">
-
 											<input name="j_username" id="field-email" placeholder="Email" />
 											<input name="j_password" id="field-password" type="password" placeholder="Password" />
-
 											<c:if test="${!empty param.error}">
 												<p class="validationErrorText">
 													Incorrect email or password. Please retry using correct email
@@ -55,15 +44,11 @@
 									</form>
 								</c:otherwise>
 							</c:choose>
-
-			      </div> <%-- .form END --%>
-			    </div> <%-- .tile.tile-full END --%>
-			  </div> <%-- .row END --%>
-
+			      		</div> <%-- .form END --%>
+			    	</div> <%-- .tile.tile-full END --%>
+			  	</div> <%-- .row END --%>
 			</div> <%-- .span-half END --%>
-
 			<div class="span-half">
-
 				<div class="container-pad">
 					<h3>Test users</h3>
 					<ul>
@@ -78,11 +63,8 @@
 					</p>
 				</div>
 			</div> <%-- .span-half END --%>
-
-
 		</div> <%-- .row END --%>
 	</div> <%-- .container END --%>
-
 </main>
 
 <%-- <c:import url="template/~footer.jsp" /> --%>

@@ -12,12 +12,9 @@
 	</c:import>
 
 	<div class="container">
-
 		<div class="row">
-
 			<div class="span-half">
 				<div class="form form-search form-place form-max-height">
-
 					<form:form
 						method="post"
 						modelAttribute="placeAdForm"
@@ -25,7 +22,6 @@
 						id="placeAdForm"
 						autocomplete="off"
 						enctype="multipart/form-data">
-
 						<div class="container-scroll">
 							<div class="row checkboxes edit-section">
 								<div class="tile tile-third">
@@ -41,7 +37,6 @@
 									<label for="house">House</label>
 								</div>
 							</div>
-
 							<div class="row checkboxes edit-section">
 								<div class="tile tile-half">
 									<form:radiobutton id="rent" path="buyable" value="0" checked="checked" />
@@ -52,8 +47,6 @@
 									<label for="buy">Sell</label>
 								</div>
 							</div>
-
-
 							<form:input
 								type="text"
 								id="field-street"
@@ -64,8 +57,6 @@
 								<span class="validationErrorText"></span>
 							</div>
 							<form:errors path="street" cssClass="validationErrorText" />
-
-
 							<form:input
 								class="edit-section"
 								type="text"
@@ -77,7 +68,6 @@
 								<span class="validationErrorText"></span>
 							</div>
 							<form:errors path="city" cssClass="validationErrorText" />
-
 							<form:input id="ad-lat" path="latitude" type="hidden" value="46.947974"/>
 							<form:input id="ad-lon" path="longitude" type="hidden" value="7.447447"/>
 
@@ -95,7 +85,6 @@
 								<span class="validationErrorText"></span>
 							</div>
 							<form:errors path="prize" cssClass="validationErrorText" />
-
 							<form:input
 								class="edit-section"
 								value=""
@@ -109,150 +98,127 @@
 								<span class="validationErrorText"></span>
 							</div>
 							<form:errors path="squareFootage" cssClass="validationErrorText" />
-
-
 							<div class="row dates">
-	              <div class="tile tile-half">
-	                <div class="row">
-	                  <div class="tile tile-full">
-	                    <label>Move-in</label>
-	                  </div>
-	                  <div class="tile tile-full">
-	                    <form:input
-	                      class="js-has-label"
-	                      type="text"
-	                      id="field-moveInDate"
-	                      path="moveInDate"
-	                      tabindex="5"
-	                      placeholder="Choose from datepicker..." />
-	                  </div>
-	                </div>
-	              </div>
-	              <div class="tile tile-half">
-	                <div class="datepicker" id="moveInDate">
-
-	                </div>
-	              </div>
+	              				<div class="tile tile-half">
+	                				<div class="row">
+	                  					<div class="tile tile-full">
+	                    					<label>Move-in</label>
+	                  					</div>
+					                  	<div class="tile tile-full">
+					                    <form:input
+					                      	class="js-has-label"
+					                      	type="text"
+					                      	id="field-moveInDate"
+					                      	path="moveInDate"
+					                      	tabindex="5"
+					                      	placeholder="Choose from datepicker..." />
+					                  	</div>
+	                				</div>
+	              				</div>
+				             <div class="tile tile-half">
+				             	<div class="datepicker" id="moveInDate">
+				                </div>
+				             </div>
+	            		</div>
+	            		<div class="row dates fields-optional fields-optional-sell js-show edit-section">
+	              			<div class="tile tile-half">
+	                			<div class="row">
+	                  				<div class="tile tile-full">
+	                    				<label>Move-out (optional when selling)</label>
+	                  				</div>
+					                <div class="tile tile-full">
+					                    <form:input
+					                      class="js-has-label"
+					                      type="text"
+					                      id="field-moveOutDate"
+					                      path="moveOutDate"
+					                      tabindex="6"
+					                      placeholder="Choose from datepicker..." />
+					                </div>
+	                			</div>
+	              			</div>
+	              			<div class="tile tile-half">
+	                			<div class="datepicker" id="moveOutDate">
+	                		</div>
+	              		</div>
+	            	</div>
+					<div class="row checkboxes">
+	              		<div class="tile tile-half">
+	                		<form:checkbox id="field-smoker" path="smokers" value="1" />
+	                		<label for="field-smoker">Smoking allowed</label>
+	              		</div>
+	              		<div class="tile tile-half">
+	                		<form:checkbox id="field-animals" path="animals" value="1" />
+	                		<label for="field-animals">Animals allowed</label>
+	              		</div>
+	            	</div>
+	            	<div class="row checkboxes">
+	              		<div class="tile tile-half">
+	                		<form:checkbox id="field-balcony" path="balcony" value="1" />
+	                		<label for="field-balcony">Balcony or Patio</label>
+	              		</div>
+	              	<div class="tile tile-half">
+	                	<form:checkbox id="field-garden" path="garden" value="1" />
+	                	<label for="field-garden">Garden (co-use)</label>
+	              	</div>
 	            </div>
-
-	            <div class="row dates fields-optional fields-optional-sell js-show edit-section">
-	              <div class="tile tile-half">
-	                <div class="row">
-	                  <div class="tile tile-full">
-	                    <label>Move-out (optional when selling)</label>
-	                  </div>
-	                  <div class="tile tile-full">
-	                    <form:input
-	                      class="js-has-label"
-	                      type="text"
-	                      id="field-moveOutDate"
-	                      path="moveOutDate"
-	                      tabindex="6"
-	                      placeholder="Choose from datepicker..." />
-	                  </div>
-	                </div>
-	              </div>
-	              <div class="tile tile-half">
-	                <div class="datepicker" id="moveOutDate">
-
-	                </div>
-	              </div>
-	            </div>
-
-
-							<div class="row checkboxes">
-	              <div class="tile tile-half">
-	                <form:checkbox id="field-smoker" path="smokers" value="1" />
-	                <label for="field-smoker">Smoking allowed</label>
-	              </div>
-	              <div class="tile tile-half">
-	                <form:checkbox id="field-animals" path="animals" value="1" />
-	                <label for="field-animals">Animals allowed</label>
-	              </div>
-	            </div>
-
 	            <div class="row checkboxes">
-	              <div class="tile tile-half">
-	                <form:checkbox id="field-balcony" path="balcony" value="1" />
-	                <label for="field-balcony">Balcony or Patio</label>
-	              </div>
-	              <div class="tile tile-half">
-	                <form:checkbox id="field-garden" path="garden" value="1" />
-	                <label for="field-garden">Garden (co-use)</label>
-	              </div>
+	              	<div class="tile tile-half">
+	                	<form:checkbox id="field-cellar" path="cellar" value="1" />
+	                	<label for="field-cellar">Cellar or Attic</label>
+	              	</div>
+	              	<div class="tile tile-half">
+	                	<form:checkbox id="field-furnished" path="furnished" value="1" />
+	                	<label for="field-furnished">Furnished</label>
+	              	</div>
 	            </div>
-
 	            <div class="row checkboxes">
-	              <div class="tile tile-half">
-	                <form:checkbox id="field-cellar" path="cellar" value="1" />
-	                <label for="field-cellar">Cellar or Attic</label>
-	              </div>
-	              <div class="tile tile-half">
-	                <form:checkbox id="field-furnished" path="furnished" value="1" />
-	                <label for="field-furnished">Furnished</label>
-	              </div>
+	              	<div class="tile tile-half">
+	                	<form:checkbox id="field-cable" path="cable" value="1" />
+	                	<label for="field-cable">Cable TV</label>
+	              	</div>
+	              	<div class="tile tile-half">
+	                	<form:checkbox id="field-garage" path="garage" value="1" />
+	                	<label for="field-garage">Garage</label>
+	              	</div>
 	            </div>
-
-	            <div class="row checkboxes">
-	              <div class="tile tile-half">
-	                <form:checkbox id="field-cable" path="cable" value="1" />
-	                <label for="field-cable">Cable TV</label>
-	              </div>
-	              <div class="tile tile-half">
-	                <form:checkbox id="field-garage" path="garage" value="1" />
-	                <label for="field-garage">Garage</label>
-	              </div>
-	            </div>
-
 	            <div class="row checkboxes edit-section">
-	              <div class="tile tile-half">
-	                <form:checkbox id="field-internet" path="internet" value="1" />
-	                <label for="field-internet">WiFi</label>
-	              </div>
+	              	<div class="tile tile-half">
+	                	<form:checkbox id="field-internet" path="internet" value="1" />
+	                	<label for="field-internet">WiFi</label>
+	              	</div>
 	            </div>
-
-
-							<form:input
-								type="text"
-								id="field-title"
-								path="title"
-								placeholder="Title *"
-								tabindex="7" />
-							<div class="validator error-field-title">
-								<span class="validationErrorText"></span>
-							</div>
-							<form:errors path="title" cssClass="validationErrorText" />
-
-
-							<form:textarea
-								id="roomDescription"
-								path="roomDescription"
-								rows="10"
-								tabindex="8"
-								placeholder="Room Description *" />
-							<div class="validator error-roomDescription">
-								<span class="validationErrorText"></span>
-							</div>
-							<form:errors path="roomDescription" cssClass="validationErrorText" />
-
-
-							<form:textarea
-								class="edit-section"
-								path="preferences"
-								rows="5"
-								tabindex="9"
-								placeholder="Preferences" />
-
-
+					<form:input
+						type="text"
+						id="field-title"
+						path="title"
+						placeholder="Title *"
+						tabindex="7" />
+				<div class="validator error-field-title">
+					<span class="validationErrorText"></span>
+				</div>
+					<form:errors path="title" cssClass="validationErrorText" />
+						<form:textarea
+							id="roomDescription"
+							path="roomDescription"
+							rows="10"
+							tabindex="8"
+							placeholder="Room Description *" />
+				<div class="validator error-roomDescription">
+					<span class="validationErrorText"></span>
+				</div>
+					<form:errors path="roomDescription" cssClass="validationErrorText" />
+					<form:textarea
+						class="edit-section"
+						path="preferences"
+						rows="5"
+						tabindex="9"
+						placeholder="Preferences" />
 							<input
 								type="hidden"
 								id="field-pictures"
 								accept="image/*"
 								multiple="multiple" />
-
-
-
-
 							<h3 class="edit-section-title">
 								Viewing times
 								<span>
@@ -261,7 +227,6 @@
 									To add another one, just change the values and click the button again.
 								</span>
 							</h3>
-
 							<div class="row times">
 								<div class="tile tile-quarter">
 									<label>From</label>
@@ -273,7 +238,6 @@
 									<p id="show-startTime">12:00</p>
 								</div>
 							</div> <%-- .row.times END --%>
-
 							<div class="row times related">
 								<div class="tile tile-quarter">
 									<label>To</label>
@@ -285,28 +249,24 @@
 									<p id="show-endTime">12:00</p>
 								</div>
 							</div> <%-- .row.times END --%>
-
-
 							<div class="row dates related">
-	              <div class="tile tile-half">
-	                <div class="row">
-	                  <div class="tile tile-full">
-	                    <input
+	              				<div class="tile tile-half">
+	                				<div class="row">
+	                 					<div class="tile tile-full">
+	                    					<input
 												tabindex="10"
-	                      class="js-has-label"
-	                      type="text"
-	                      id="field-visitDay"
-	                      placeholder="Choose from datepicker..." />
-	                  </div>
-	                </div>
-	              </div>
-	              <div class="tile tile-half">
-	                <div class="datepicker" id="visitDay">
-
-	                </div>
-	              </div>
-	            </div>
-
+						                      	class="js-has-label"
+						                      	type="text"
+						                      	id="field-visitDay"
+						                      	placeholder="Choose from datepicker..." />
+	                  					</div>
+	                				</div>
+	              				</div>
+	              				<div class="tile tile-half">
+	                				<div class="datepicker" id="visitDay">
+	                				</div>
+	              				</div>
+	            			</div>
 							<div class="row times">
 								<div class="tile tile-full">
 									<div id="addVisitButton" class="action action-icon action-add">
@@ -315,14 +275,10 @@
 									</div>
 								</div>
 							</div>
-
 						</div> <%-- .container-scroll END --%>
-
-
 						<div class="row">
 							<%-- Will be populated with hidden inputs --%>
 							<div style="display: none" id="addedVisits"></div>
-
 							<div class="tile tile-half">
 								<button type="submit">Submit</button>
 							</div>
@@ -330,16 +286,12 @@
 								<a href="/"><button type="button">Cancel</button></a>
 							</div>
 						</div>
-
 					</form:form>
-
 				</div> <%-- .form.form-search END --%>
 			</div> <%-- .span-half END --%>
-
 			<div class="span-half page-max-height">
 				<div class="container-scroll">
 					<div class="scroll-wrapper">
-
 						<h3 class="edit-section-title">
 							Map
 						</h3>
@@ -365,7 +317,6 @@
 								<div id="image-preview"></div>
 							</div>
 						</div>
-
 						<h3 class="edit-section-title">
 							Your viewing times...
 							<span>
@@ -380,16 +331,13 @@
 						</div>
 						<div class="row">
 							<div class="tile tile-half">
-
 							</div>
 						</div>
 					</div> <%-- .scroll-wrapper END --%>
 				</div> <%-- .container-scroll END --%>
 			</div> <%-- .span-half END --%>
-
 		</div> <%-- .row END --%>
 	</div> <%-- .container END --%>
-
 </main>
 
 <%-- <c:import url="template/footer.jsp" /> --%>

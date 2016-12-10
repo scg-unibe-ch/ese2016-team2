@@ -16,14 +16,10 @@
 	<c:import url="template/~top_bar.jsp">
 		<c:param name="instr" value="Advance to Premium..." />
 	</c:import>
-
 	<div class="container">
-
 		<div class="row">
-
 			<div class="span-half">
 				<div class="form form-search form-filter form-max-height">
-
 					<c:choose>
 						<c:when test="${currentUser.account eq 'Normal' || currentUser.account eq NULL}">
 							<form:form
@@ -32,9 +28,7 @@
 								action="/profile/registerProfile"
 								id="registerForm"
 								autocomplete="off">
-
 								<div class="container-scroll">
-
 									<form:input
 										type="text"
 										name="street"
@@ -42,8 +36,7 @@
 										placeholder="Street"
 										tabindex="1"
 										id="field-street" />
-									<form:errors path="street" cssClass="validationErrorText" /></td>
-
+									<form:errors path="street" cssClass="validationErrorText" />
 									<form:input
 										type="text"
 										name="city"
@@ -51,25 +44,18 @@
 										path="city"
 										tabindex="2"
 										placeholder="City / Zip" />
-									<form:errors path="city" cssClass="validationErrorText" /></td>
-
+									<form:errors path="city" cssClass="validationErrorText" />
 									<form:input style="display:none" id="user-name" path="username" value="${currentUser.getUsername()}"/>
-									<form:errors path="username" cssClass="validationErrorText" /></td>
-
-									<form:checkbox style="display:none" name="account" id="account" path="account" value="PREMIUM"/></td>
-
-
+									<form:errors path="username" cssClass="validationErrorText" />
+									<form:checkbox style="display:none" name="account" id="account" path="account" value="PREMIUM"/>
 								</div>
-
 								<button type="submit">Advance</button>
-
 							</form:form>
 						</c:when>
 						<c:otherwise>
 							<h3>You are already a Premium User!</h3>
 						</c:otherwise>
 					</c:choose>
-
 				</div> <%-- .form END --%>
 			</div> <%-- .span-half END --%>
 		</div> <%-- .row END --%>

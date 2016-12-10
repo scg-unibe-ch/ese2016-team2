@@ -7,16 +7,6 @@
 
 <c:import url="template/header.jsp" />
 
-<%--
-@Jerome:
-	This was given. What for? What's the point in adding head and body twice?
-
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>The FlatFoundrs</title>
-</head>
-<body> --%>
-
 <pre>Disclaimer</pre>
 	<div class="impressum">
 		<h2>Haftungsausschluss</h2>

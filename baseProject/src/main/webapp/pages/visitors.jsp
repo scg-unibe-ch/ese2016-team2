@@ -6,11 +6,6 @@
 
 <c:import url="template/header.jsp" />
 
-<%--
-@Jerome
-	TODO: Put this js snippets somewhere else if possible (file). By adding them here,
-	they reside within the body, which is somewhat bad, i think.
---%>
 <script>
 function star(starnr, rating) {
     if(starnr <= rating)

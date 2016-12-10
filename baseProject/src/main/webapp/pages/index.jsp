@@ -9,7 +9,6 @@
 <c:import url="template/~header_wo_search.jsp" />
 
 <main role="main">
-
 	<div class="container container-pad">
 		<div class="row">
 			<div class="tile-full brand brand-primary">
@@ -17,14 +16,9 @@
 			</div>
 		</div>
 	</div>
-
 	<div class="container container-pad">
 		<div class="row">
 			<div>
-
-
-
-
 			</div>
 		</div>
 	</div>
@@ -36,41 +30,13 @@
 	 --%>
 	<div class="blender slider-blender-full">
 		<ul class="slides">
-
 			<c:choose>
-
 				<c:when test="${empty newestAds}">
-
-					<%--
-						@Jerome
-						TODO: Add fallback images if there are no ads placed yet
-
-				    <li>
-				      <img src="" />
-				    </li>
-				    <li>
-				      <img src="" />
-				    </li>
-				    <li>
-				      <img src="" />
-				    </li>
-				    <li>
-				      <img src="" />
-				    </li>
-
-					--%>
-
 				</c:when>
-
 				<c:otherwise>
-
 					<c:forEach var="advertisement" items="${newestAds}">
-
 						<c:choose>
-
 							<c:when test="${advertisement.auction}">
-
-
 								<li class="slide" style="background-image: url(${advertisement.pictures[0].filePath})">
 									<a title="View this auction." class="slide-caption" href="<c:url value='/auction?id=${advertisement.id}' />">
 										<span class="fa fa-gavel" aria-hidden="true"></span>
@@ -78,31 +44,21 @@
 										<span>${advertisement.title}</span>
 									</a>
 								</li>
-
 							</c:when>
-
 							<c:otherwise>
-
 								<li class="slide" style="background-image: url(${advertisement.pictures[0].filePath})">
 									<a title="View this ad." class="slide-caption" href="<c:url value='/ad?id=${advertisement.id}' />">
 										<span>${advertisement.city}</span>
 										<span>${advertisement.title}</span>
 									</a>
 								</li>
-
 							</c:otherwise>
-
 						</c:choose>
-
 					</c:forEach>
-
 				</c:otherwise>
-
 			</c:choose>
-
 		</ul> <%-- .slides END --%>
 	</div> <%-- .[slider|blender] END --%>
-
 </main>
 
 <%-- <c:import url="template/~footer.jsp" /> --%>

@@ -25,9 +25,7 @@
 				</p>
 			</div>
 		</div>
-
 	</div> <%-- .containerEND --%>
-
 </main>
 
 

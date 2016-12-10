@@ -61,22 +61,18 @@
 	<c:import url="template/~top_bar.jsp">
 		<c:param name="instr" value="Create an alert..." />
 	</c:import>
-
 	<div class="container">
-
 		<div class="row">
-
 			<div class="span-half">
 				<div class="form form-search form-filter form-max-height">
 					<form:form method="post" modelAttribute="alertForm" action="/profile/alerts"
 						id="alertForm" autocomplete="off">
-
 						<div class="container-scroll">
 							<fieldset>
 								<form:checkbox name="room" id="room" path="room" /><label>Room</label>
 								<form:checkbox name="studio" id="studio" path="studio" /><label>Studio</label>
 								<form:checkbox name="house" id="house" path="house" /><label>House</label>
-
+								
 								<form:checkbox style="display:none" name="neither" id="neither" path="noRoomNoStudio" />
 								<form:checkbox style="display:none" name="r" id="r" path="alertType" value="Room" />
 								<form:checkbox style="display:none" name="s" id="s" path="alertType" value="Studio" />
@@ -106,7 +102,6 @@
 							</fieldset>
 
 						</div>
-
 						<div class="row">
 							<div class="tile tile-half">
 								<button type="submit" tabindex="7" onClick="validateType(this.form)">Subscribe</button>
@@ -115,16 +110,12 @@
 								<button type="reset" tabindex="8">Cancel</button>
 							</div>
 						</div>
-
 					</form:form>
 				</div>
 			</div>
-
-
 			<div class="span-half container-pad page-max-height">
 				<div class="container-scroll">
 					<h3>Your active alerts</h2>
-
 					<div id="alertsDiv" class="alertsDiv">
 						<c:choose>
 							<c:when test="${empty alerts}">
@@ -156,13 +147,10 @@
 					</div>
 				</div>
 			</div>
-
-
 		</div> <%-- .row END --%>
 	</div> <%-- .container --%>
 </main>
 
-<%-- <c:import url="template/~footer.jsp" /> --%>
 <c:import url="template/~bottom.jsp">
 	<c:param name="js" value="alerts" />
 </c:import>
