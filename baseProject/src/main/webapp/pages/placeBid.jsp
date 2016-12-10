@@ -63,16 +63,6 @@
 															<p class="pad">${shownAuction.prize}&#32;CHF</p>
 														</div>
 													</div>
-													<c:if test="${loggedIn}">
-														<div class="row">
-															<div class="tile tile-full action action-tile">
-																<a href="/login">
-																	Login to place new bid
-																</a>
-															</div>
-														</div>
-													</c:if>
-
 												</c:when>
 												<c:otherwise>
 													<div class="row">

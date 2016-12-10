@@ -107,7 +107,7 @@ public class AuctionTestDataSaver {
 		auctionBern2.setMoveInDate(moveInDate2);
 		auctionBern2.setCreationDate(creationDate2);
 		auctionBern2.setMoveOutDate(moveOutDate2);
-		auctionBern2.setPrize(700);
+		auctionBern2.setPrize(340000);
 		auctionBern2.setSquareFootage(60);
 		auctionBern2.setRoomType("Studio");
 		auctionBern2.setSmokers(false);
