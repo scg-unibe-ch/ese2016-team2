@@ -223,8 +223,10 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
   /**
    *
    * @private
-   * @param  {String} id  the id of the form field
-   * @return {Boolean}    [description]
+   * @param  {String} $this  the form field
+   * @return {Boolean}    true if there is no server error visible or there is
+   *                           a visible server error but error on client side
+   *                           is different - else false
    */
   function isSensibleError($this) {
     var

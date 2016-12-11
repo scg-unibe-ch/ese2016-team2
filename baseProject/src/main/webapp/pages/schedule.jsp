@@ -117,8 +117,8 @@
 			</c:choose>
 			</div>
 
-		</div>
-	</div>
+		</div> <%-- .container-scroll END --%>
+	</div> <%-- .container END --%>
 
 </main>
 

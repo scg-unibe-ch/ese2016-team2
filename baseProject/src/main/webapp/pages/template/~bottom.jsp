@@ -128,6 +128,10 @@
 
 			enquiries: function () {
 				return $.flatfindr.add(['enquiries']);
+			},
+
+			visitors: function () {
+				return $.flatfindr.add(['visitors']);
 			}
 
 		};

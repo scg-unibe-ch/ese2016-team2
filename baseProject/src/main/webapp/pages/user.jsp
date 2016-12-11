@@ -15,11 +15,18 @@
 <main role="main">
 	<c:choose>
 		<c:when test="${principalID != null}">
-			<c:if test="${principalID eq user.id}">
-				<c:import url="template/~top_bar.jsp">
-					<c:param name="instr" value="Your public profile..." />
-				</c:import>
-			</c:if>
+			<c:choose>
+				<c:when test="${principalID eq user.id}">
+					<c:import url="template/~top_bar.jsp">
+						<c:param name="instr" value="Your public profile..." />
+					</c:import>
+				</c:when>
+				<c:otherwise>
+					<c:import url="template/~top_bar.jsp">
+						<c:param name="instr" value="${user.firstName} ${user.lastName}" />
+					</c:import>
+				</c:otherwise>
+			</c:choose>
 		</c:when>
 		<c:otherwise>
 			<c:import url="template/~top_bar.jsp">

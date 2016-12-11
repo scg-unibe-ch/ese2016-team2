@@ -29651,9 +29651,9 @@ jQuery.flatfindr.search = function (window, document, $, $view, option) {
 
 
 /**
- * @name message
+ * @name visitors
  * @memberof jQuery.flatfindr
- * @namespace jQuery.flatfindr.message
+ * @namespace jQuery.flatfindr.visitors
  *
  * @param  {Object} window   the window as you know it
  * @param  {Object} document the document element
@@ -29661,152 +29661,28 @@ jQuery.flatfindr.search = function (window, document, $, $view, option) {
  * @param  {Object} $view    the view, defaults to the body element
  * @param  {Object} option
  */
-jQuery.flatfindr.message = function (window, document, $, $view, option) {
+jQuery.flatfindr.visitors = function (window, document, $, $view, option) {
 
 
-  var
-    /**
-     * A bit of an extra delay in ms to prevent janky css transitions.
-     *
-     * @private
-     * @type {Number}
-     * @constant
-     */
-    DURATION_BUFFER = 10;
-
-
-
-
-  $("#messageSend").on('click', function() {
-    sendMessage.call(this, $.flatfindr.username);
+  $('.rating').each(function () {
+    ratingFor($(this).attr('id'));
   });
 
 
-  $("#new_messageSend").on('click', function() {
-    animateSubmit($(this));
-  });
-
-
-  $("#inbox").click(function() {
-		$.post("/profile/message/inbox", function(data) {
-      $('.form-messages').removeClass('js-show');
-			loadMessages(data);
-			prepareRows();
-		}, 'json');
-	});
-
-
-  $("#newMessage").click(function(){
-		$('.form-messages').addClass('js-show');
-	});
-
-
-	$("#sent").click(function() {
-		$.post("/profile/message/sent", function(data) {
-			loadMessages(data);
-			prepareRows();
-		}, 'json');
-	});
-
-
-	$("#receiverEmail").focusout(function() {
-		var text = $("#receiverEmail").val();
-
-		$.post("/profile/messages/validateEmail", {email:text}, function(data) {
-			if (data != text) {
-				alert(data);
-				$("#receiverEmail").val("");
-			}
-		});
-	});
-
-
-	$("#messageForm").submit(function (e){
-		if($("#receiverEmail").val() == ""){
-			e.preventDefault();
-		}
-	});
-
-
-
   /**
-   * Send the message.
+   * Sets up the stars for rating the visitor (user).
+   *
    * @private
+   * @param  {Number} id     the id of the visitor (user)
+   * @param  {Number} rating the rating level
    */
-  function sendMessage(recipient) {
-    var
-      $this = $(this),
-      $msgSubject = $('#msgSubject'),
-      $msgTextarea = $('#msgTextarea');
-
-    if ($this.attr('disable') ||
-        $msgSubject.val() == "" ||
-        $msgTextarea.val() == "") {
-      if ($msgSubject.val() == ""){
-        
-      }
-
-      return;
-    }
-
-    var
-      subject = $msgSubject.val(),
-      text = $msgTextarea.val(),
-      recipientEmail = recipient;
-
-    $.post("profile/messages/sendMessage", {
-      subject : subject,
-      text: text,
-      recipientEmail : recipientEmail
-    }, function () { animateSubmit($this); });
-  }
-
-
-
-
-  /**
-   * Show some animations during submitting proc, so user is happy.
-   * @private
-   */
-  function animateSubmit($this) {
-    var
-     duration = $.flatfindr.BASE_DURATION,
-     $msgSubject = $('#msgSubject'),
-     $msgTextarea = $('#msgTextarea');
-
-    $this
-      .attr('disable', 'disable')
-      .toggleClass('submit-state-before submit-state-submitting');
-    setTimeout(function () {
-      $this.toggleClass('submit-state-submitting submit-state-after');
-      $msgSubject.val("");
-      $msgTextarea.val("");
-      setTimeout(function () {
-        $this
-          .removeAttr('disable')
-          .toggleClass('submit-state-after submit-state-before');
-      }, (duration * 3));
-    }, (duration * 3) + DURATION_BUFFER);
-  }
-
-
-
-
-  /**
-   * @private
-   * @param  {Object} data
-   */
-  function loadMessages(data) {
-  	$("#messageList table tr:gt(0)").remove();
-  	$.each(data, function(index, message) {
-  		var result = '<tr data-id="' + message.id + '" class="' + message.state + '" >';
-  		result += '<td><span class="fa fa-circle" aria-hidden="true"></span>' + message.subject + '</td>';
-  		result += '<td>' + message.sender.email + '</td>';
-  		result += '<td>' + message.recipient.email + '</td>';
-  		result += '<td>' + message.dateSent + '</td></tr>';
-
-  		$("#messageList table").append(result);
-  	});
+  function stars (id, rating) {
+  	document.getElementById(id).innerHTML =
+  	"<span onClick=\"$.flatfindr.visitors.rate(" + id + ", 1)\">" + star(1, rating) + "</span>" +
+  	"<span onClick=\"$.flatfindr.visitors.rate(" + id + ", 2)\">" + star(2, rating) + "</span>" +
+  	"<span onClick=\"$.flatfindr.visitors.rate(" + id + ", 3)\">" + star(3, rating) + "</span>" +
+  	"<span onClick=\"$.flatfindr.visitors.rate(" + id + ", 4)\">" + star(4, rating) + "</span>" +
+  	"<span onClick=\"$.flatfindr.visitors.rate(" + id + ", 5)\">" + star(5, rating) + "</span>";
   }
 
 
@@ -29814,301 +29690,57 @@ jQuery.flatfindr.message = function (window, document, $, $view, option) {
   /**
    *
    * @protected
+   * @param  {Number} id the id of the visitor (user)
    */
-  function prepareRows() {
-  	var $rows = $("#messageList table tr:gt(0)");
-  	$rows.click(function() {
-      $('.form-messages').removeClass('js-show');
-  		var id = $(this).attr("data-id");
-  		$(this).removeClass("UNREAD");
-  		$.get("/profile/readMessage?id=" + id, function (data) {
-  			$.get("/profile/messages/getMessage?id=" + id, function(data) {
-  				var result = '<h3>' + data.subject + '</h3><ul>';
-  				result += '<li><b>To: </b>' + data.recipient.email + '</li>';
-  				result += '<li><b>From: </b>' + data.sender.email + '</li>';
-  				result += '<li><b>Date sent: </b>' + data.dateSent + '</li>';
-  				result += '</ul><p>' + data.text + '</p>';
-  				$("#messageDetail").html(result);
-  			}, 'json');
-  			$.flatfindr.bits.unreadMessages("header");
-  			$.flatfindr.bits.unreadMessages("messages");
-  		});
-  	});
+  function ratingFor (id) {
+    $.get("/profile/ratingFor?user=" + id, function(data) {
+      stars(id, data);
+    });
+  }
+
+
+  /**
+   * Add star entities to the rating according new rating.
+   *
+   * @private
+   * @param  {Number} starnr the star number
+   * @param  {Number} rating the rating level
+   * @return {String} html  the star entity  outlined if starnr is smaller than
+   *                        old rating - else filled
+   */
+  function star (starnr, rating) {
+      if(starnr <= rating) return "&#9733";
+      else return "&#9734";
   }
 
 
 
+  /**
+   *
+   * @type {Object} pub   public methods
+   */
   var pub = {
 
     /**
+     * Called from within jsp file, which is really ugly but we left it as is.
      *
-     * @memberof jQuery.flatfindr.message
-     * @method update
+     * @memberof jQuery.flatfindr.visitors
+     * @method rate
      *
      * @public
+     * @param  {Number} id the id of the visitor (user)
+     * @param  {Number} rating the rating level of the visitor (user)
      */
-    update: function () {
-      prepareRows();
+    rate: function (id, rating) {
+    	$.get("/profile/rateUser?rate=" + id + "&stars=" + rating, function() {
+    		ratingFor(id);
+    	});
     }
+
   };
 
   return pub;
-
 };
-
-
-/**
- * @name validator
- * @memberof jQuery.flatfindr
- * @namespace jQuery.flatfindr.validator
- *
- * @param  {Object} window   the window as you know it
- * @param  {Object} document the document element
- * @param  {jQuery} $
- * @param  {jQuery} $view    the view, defaults to the body element
- * @param  {Object} option
- */
-jQuery.flatfindr.validator = function (window, document, $, $view, option) {
-
-
-  var SAFE_INT = Math.pow(2,31) - 1;
-
-
-  /**
-   * @private
-   * @type {Object}   error messages object
-   */
-  var errors = {
-    'field-password': {
-      isError: function ($this) {
-        return $this.val().length < 6;
-      },
-      is_other_than_server: false,
-      text: 'The password must be at least 6 characters long.'
-    },
-
-    'field-email': {
-      isError: function ($this, callback) {
-        $.post("/signup/doesEmailExist", {email: $this.val()}, callback);
-      },
-      is_other_than_server: true,
-      text: 'This username is taken. Please choose another one.'
-    },
-
-    'msgSubject': {
-      isError: function ($this) {
-        return $this.val() === '';
-      },
-      is_other_than_server: true,
-      text: 'Please add a subject to your message.'
-    },
-
-    'msgTextarea': {
-      isError: function ($this) {
-        return $this.val() === '';
-      },
-      is_other_than_server: true,
-      text: 'Well, it says "Leave a message", so, please drop some lines.'
-    },
-
-    'field-street': {
-      isError: function ($this) {
-        return $this.val() === '';
-      },
-      is_other_than_server: false,
-      text: 'Please add an address.'
-    },
-
-    'field-city': {
-      isError: function ($this) {
-        return $this.val() === '';
-      },
-      is_other_than_server: false,
-      text: 'Please add a locality from the list.'
-    },
-
-    'field-Prize': {
-      isError: function ($this) {
-        var int = $this.val(); // do not parseInt as string returns 1
-        return (int < 1) || (int > SAFE_INT);
-      },
-      is_other_than_server: false,
-      text: 'Price should be at least one lousy buck and not exceed '+ SAFE_INT
-    },
-
-    'field-SquareFootage': {
-      isError: function ($this) {
-        var int = $this.val();
-        return (int < 1) || (int > SAFE_INT);
-      },
-      is_other_than_server: false,
-      text: 'Square footage should be at least 1 and not exceed '+ SAFE_INT
-    },
-
-    'field-title': {
-      isError: function ($this) {
-        return $this.val() === '';
-      },
-      is_other_than_server: false,
-      text: 'Please add a title.'
-    },
-
-    'roomDescription': {
-      isError: function ($this) {
-        return $this.val() === '';
-      },
-      is_other_than_server: false,
-      text: 'Please add a description.'
-    }
-  };
-
-
-	$("#field-password").focusout(function() {
-    var $this = $(this);
-    if (isViolated($this)) showError($this, true);
-		else handleValidity($this);
-	});
-
-
-  $("#field-email").focusout(function() {
-    var $this = $(this);
-		isViolated($this, function(violated) {
-      if (violated) showError($this);
-			else handleValidity($this);
-    });
-	});
-
-
-  $("#msgSubject, #msgTextarea").focusout(function() {
-    var $this = $(this);
-    if (isViolated($this)) showError($this);
-		else handleValidity($this);
-	});
-
-
-  $("#field-street, #field-city,"+
-    "#field-Prize, #field-SquareFootage,"+
-    "#field-title, #roomDescription")
-    .focusout(function() {
-      var $this = $(this);
-      if (isViolated($this)) showError($this);
-  		else handleValidity($this);
-  	});
-
-
-
-
-  /**
-   *
-   * @private
-   * @param  {jQuery}   $this    the form field under test
-   * @param  {Function} callback a callback functoin if we have to wait for a
-   *                             server response
-   * @return {Boolean}           [description]
-   */
-  function isViolated($this, callback) {
-    var error = errors[$this.attr('id')];
-    if (callback) return error.isError($this, callback);
-    else return error.isError($this);
-  }
-
-
-
-  /**
-   *
-   * @private
-   * @param  {jQuery} $this       the form field
-   * @param  {Boolean} hiddenValue if the value should be output as bullets
-   *                               (hidden) as for passwords
-   */
-  function showError($this, hiddenValue) {
-    var
-      id = $this.attr('id'),
-      value = hiddenValue ?
-        getValueAsBullets($this.val().length) :
-        $this.val(),
-      placeholder = $this.attr('placeholder'),
-      $error_field = $('.error-'+id);
-
-    if (isSensibleError($this))
-      $error_field
-        .addClass('js-show')
-        .find('.validationErrorText')
-        .text(errors[id].text);
-    else
-      $error_field
-        .next('span.validationErrorText')
-        .animate({marginTop: '-12px', marginBottom: '12px'}, function() {
-          $(this).animate({marginTop: '0', marginBottom: '0'});
-        });
-
-    $this
-      .attr('placeholder', (value !== '' ? value : placeholder))
-      .val('')
-      .on('click', function () {
-        $this
-          .off('click')
-          .attr('placeholder', placeholder);
-      });
-  }
-
-
-
-  /**
-   * @private
-   * @param  {jQuery} $this the form field
-   */
-  function handleValidity($this) {
-    $('.error-'+$this.attr('id')).removeClass('js-show');
-  }
-
-
-
-  /**
-   *
-   * @private
-   * @param  {Number} length the length of the form field value
-   * @return {String}        a string of bullets with the same length as the
-   *                           value
-   */
-  function getValueAsBullets (length) {
-    var bullets = '';
-    while (length--) bullets += '•';
-    return bullets;
-  }
-
-
-
-  /**
-   *
-   * @private
-   * @param  {String} $this  the form field
-   * @return {Boolean}    true if there is no server error visible or there is
-   *                           a visible server error but error on client side
-   *                           is different - else false
-   */
-  function isSensibleError($this) {
-    var
-      id = $this.attr('id'),
-      $error_field = $('.error-'+id),
-      has_server_error = hasServerError($error_field);
-    return (!has_server_error ||
-            (has_server_error && errors[id].is_other_than_server));
-  }
-
-
-
-  /**
-   *
-   * @private
-   * @param  {jQuery}  $error_field the 'client side' error field
-   * @return {Boolean}             true if there already is a server error in the
-   *                                    dom for the form field - else false
-   */
-  function hasServerError($error_field) {
-    return $error_field.next('span.validationErrorText').length;
-  }
-}
 
 
 /**
@@ -30129,7 +29761,6 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
  * Page specific
  */
 
-// @codekit-prepend "+message.js"
-// @codekit-prepend "+form-validator.js"
+// @codekit-prepend "+visitors.js"
 
 
