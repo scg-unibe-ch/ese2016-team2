@@ -41,7 +41,7 @@ public class PlaceAdFormValidationTest {
 		placeAdForm.setTitle("");
 		Set<ConstraintViolation<PlaceAdForm>> constraintViolations = validator.validate(placeAdForm);
 		assertEquals(1, constraintViolations.size());
-		assertEquals("Required", constraintViolations.iterator().next().getMessage());
+		assertEquals("Please add a title.", constraintViolations.iterator().next().getMessage());
 	}
 
 	@Test
@@ -49,7 +49,7 @@ public class PlaceAdFormValidationTest {
 		placeAdForm.setStreet("");
 		Set<ConstraintViolation<PlaceAdForm>> constraintViolations = validator.validate(placeAdForm);
 		assertEquals(1, constraintViolations.size());
-		assertEquals("Required", constraintViolations.iterator().next().getMessage());
+		assertEquals("Please add an address.", constraintViolations.iterator().next().getMessage());
 	}
 
 	@Test
@@ -65,7 +65,7 @@ public class PlaceAdFormValidationTest {
 		placeAdForm.setMoveInDate("");
 		Set<ConstraintViolation<PlaceAdForm>> constraintViolations = validator.validate(placeAdForm);
 		assertEquals(1, constraintViolations.size());
-		assertEquals("Required", constraintViolations.iterator().next().getMessage());
+		assertEquals("Please set a move-in date.", constraintViolations.iterator().next().getMessage());
 	}
 	
 	@Test
@@ -73,7 +73,7 @@ public class PlaceAdFormValidationTest {
 		placeAdForm.setPrize(-5);
 		Set<ConstraintViolation<PlaceAdForm>> constraintViolations = validator.validate(placeAdForm);
 		assertEquals(1, constraintViolations.size());
-		assertEquals("Has to be equal to 1 or more", constraintViolations.iterator().next().getMessage());
+		assertEquals("Price should be at least one lousy buck and not exceed 2147483647", constraintViolations.iterator().next().getMessage());
 	}
 	
 	@Test
@@ -81,7 +81,7 @@ public class PlaceAdFormValidationTest {
 		placeAdForm.setSquareFootage(-5);
 		Set<ConstraintViolation<PlaceAdForm>> constraintViolations = validator.validate(placeAdForm);
 		assertEquals(1, constraintViolations.size());
-		assertEquals("Has to be equal to 1 or more", constraintViolations.iterator().next().getMessage());
+		assertEquals("Square footage should be at least 1 and not exceed 2147483647", constraintViolations.iterator().next().getMessage());
 	}
 	
 	@Test
@@ -89,6 +89,6 @@ public class PlaceAdFormValidationTest {
 		placeAdForm.setRoomDescription("");
 		Set<ConstraintViolation<PlaceAdForm>> constraintViolations = validator.validate(placeAdForm);
 		assertEquals(1, constraintViolations.size());
-		assertEquals("Required", constraintViolations.iterator().next().getMessage());
+		assertEquals("Please add a description.", constraintViolations.iterator().next().getMessage());
 	}
 }

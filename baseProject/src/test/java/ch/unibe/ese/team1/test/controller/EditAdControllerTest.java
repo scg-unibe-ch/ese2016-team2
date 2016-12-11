@@ -42,7 +42,7 @@ public class EditAdControllerTest {
 	
 	@Test 
 	public void getEditAdPage() throws Exception {
-		this.mockMvc.perform(get("/profile/editAd").param("id", "1"))
+		this.mockMvc.perform(get("/profile/editAd").param("id", "3"))
 					.andExpect(status().isOk())
 					.andExpect(view().name("editAd"))
 					.andExpect(model().attributeExists("placeAdForm"));
@@ -63,7 +63,7 @@ public class EditAdControllerTest {
 		when(principal.getName()).thenReturn("user@bern.com");
 		
 		this.mockMvc.perform(post("/profile/editAd")
-				.param("adId", "1")
+				.param("adId", "3")
 				.param("title", "Test Title")
 				.param("street", "Test street")
 				.param("city", "3000 - Bern")
@@ -76,7 +76,7 @@ public class EditAdControllerTest {
 				.param("roomDescription", "Test Description")
 				.param("visits", "28-02-2014;10:02;13:14")
 				.principal(principal))
-			.andExpect(redirectedUrl("/ad?id=1"));
+			.andExpect(redirectedUrl("/ad?id=3"));
 	}
 	
 }
