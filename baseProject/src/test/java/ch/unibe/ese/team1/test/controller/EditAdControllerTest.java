@@ -79,4 +79,22 @@ public class EditAdControllerTest {
 			.andExpect(redirectedUrl("/ad?id=3"));
 	}
 	
+	@Test
+	public void testDeletePictureFromAd() throws Exception {
+		this.mockMvc.perform(post("/profile/editAd/deletePictureFromAd")
+						.param("adId", "2")
+						.param("pictureId", "4"))
+					.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void testGetUploadedPictures() throws Exception {
+		this.mockMvc.perform(post("/profile/editAd/getUploadedPictures"))
+					.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void testDeleteUploadedPicture() throws Exception {
+		this.mockMvc.perform(post("/profile/editAd/deletePicture").param("url", "Test url")).andExpect(status().isOk());
+	}
 }
