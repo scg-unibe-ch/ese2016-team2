@@ -202,5 +202,4 @@ public class PlaceAdController {
 		}
 		return placeAdForm;
 	}
-
 }

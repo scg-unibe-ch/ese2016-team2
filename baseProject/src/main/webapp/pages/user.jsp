@@ -34,7 +34,6 @@
 			</c:import>
 		</c:otherwise>
 	</c:choose>
-
 	<div class="container">
 		<div class="row">
 			<div class="span-half page-max-height">
@@ -51,7 +50,6 @@
 								</c:otherwise>
 							</c:choose>
 						</div>
-
 						<div class="span-half">
 							<c:choose>
 								<c:when test="${user.account eq 'Premium'}">
@@ -61,19 +59,13 @@
 							<h5>Username</h5>${user.email}<p>
 							<h5>Name</h5>${user.firstName}
 							${user.lastName}
-
-
 						</div>
 					</div>
-
-
 					<div class="row">
-
 						<div class="span-full container-pad">
 							<h5>About me</h5>
 							${user.aboutMe}
 						</div>
-
 						<div class="span-full container-pad">
 							<c:choose>
 								<c:when test="${principalID != null}">
@@ -83,39 +75,31 @@
 										</c:when>
 										<c:otherwise></c:otherwise>
 									</c:choose>
-
 								</c:when>
 								<c:otherwise>
 								</c:otherwise>
 							</c:choose>
 						</div>
 					</div>
-
 				</div> <%-- .container-scroll END --%>
 			</div> <%-- .span-half END --%>
-
 			<div class="span-half form-minus-3-height">
 				<div class="row">
 					<div class="tile tile-full">
 						<c:choose>
 							<c:when test="${loggedIn}">
-
 								<h3 class="section-title">Leave a message...</h3>
 								<form class="form form-message">
 									<div class="container-scroll">
-
 										<input type="text" id="msgSubject" placeholder="Subject *" />
 										<div class="validator error-msgSubject">
 											<span class="validationErrorText"></span>
 										</div>
-
 										<textarea id="msgTextarea" placeholder="Message *" rows="8"></textarea>
 										<div class="validator error-msgTextarea">
 											<span class="validationErrorText"></span>
 										</div>
-
 									</div> <%-- .container-scroll END --%>
-
 									<div class="row">
 										<div class="tile tile-half">
 											<button class="submit-state-before" type="button" id="messageSend">
@@ -130,7 +114,6 @@
 										</div>
 									</div>
 								</form>
-
 							</c:when>
 							<c:otherwise>
 								<div class="container-pad">
@@ -143,7 +126,6 @@
 			</div> <%-- .span-half END --%>
 		</div> <%-- .row END --%>
 	</div> <%-- .container END --%>
-
 </main>
 
 <%-- <c:import url="template/~footer.jsp" /> --%>

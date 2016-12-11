@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Before;
@@ -24,7 +25,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import ch.unibe.ese.team1.controller.pojos.forms.PlaceAdForm;
 import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
 import ch.unibe.ese.team1.controller.service.AdService;
+import ch.unibe.ese.team1.controller.service.EditAdService;
 import ch.unibe.ese.team1.model.Ad;
+import ch.unibe.ese.team1.model.AdPicture;
 import ch.unibe.ese.team1.model.Advertisement;
 import ch.unibe.ese.team1.model.Gender;
 import ch.unibe.ese.team1.model.User;
@@ -41,6 +44,9 @@ public class AdServiceTest {
 
 	@Autowired
 	private AdService adService;
+	
+	@Autowired
+	private EditAdService editAdService;
 
 	@Autowired
 	private UserDao userDao;
@@ -143,6 +149,8 @@ public class AdServiceTest {
 		User hans = createUser("adService@Test2.ch", "password", "AdService", "Test2", Gender.MALE, "Normal");
 		hans.setAboutMe("AdServiceTest2");
 		userDao.save(hans);
+		
+		placeAdForm.setMoveOutDate("12-12-2016");
 
 		adService.saveFrom(placeAdForm, filePaths, hans);
 		
@@ -153,6 +161,8 @@ public class AdServiceTest {
 		while (iterator.hasNext()) {
 			ad2 = iterator.next();
 		}
+		
+		assertEquals("12-12-2016", new SimpleDateFormat("dd-MM-yyyy").format(ad2.getMoveOutDate()));
 
 		results = toList(searchForm, false);
 		assertTrue(results.contains(ad2));
@@ -186,6 +196,42 @@ public class AdServiceTest {
 		assertFalse(results.contains(ad2));
 
 		searchForm.setInternet(false);
+		searchForm.setEarliestMoveInDate("12-12-2042");
+		results = toList(searchForm, false);
+		assertFalse(results.contains(ad2));
+		
+		searchForm.setEarliestMoveInDate("12-12-2012");
+		results = toList(searchForm, false);
+		assertTrue(results.contains(ad2));
+		
+		searchForm.setLatestMoveInDate("12-12-2012");
+		results = toList(searchForm, false);
+		assertFalse(results.contains(ad2));
+		
+		searchForm.setLatestMoveInDate("12-12-2042");
+		results = toList(searchForm, false);
+		assertTrue(results.contains(ad2));
+		
+		searchForm.setEarliestMoveInDate(null);
+		searchForm.setLatestMoveInDate(null);
+		searchForm.setEarliestMoveOutDate("12-12-2042");
+		results = toList(searchForm, false);
+		assertFalse(results.contains(ad2));
+		
+		searchForm.setEarliestMoveOutDate("12-12-2012");
+		results = toList(searchForm, false);
+		assertTrue(results.contains(ad2));
+		
+		searchForm.setEarliestMoveOutDate(null);
+		searchForm.setLatestMoveOutDate("12-12-2017");
+		results = toList(searchForm, false);
+		assertTrue(results.contains(ad2));
+		
+		searchForm.setLatestMoveOutDate("12-12-2012");
+		results = toList(searchForm, false);
+		assertFalse(results.contains(ad2));
+		
+		searchForm.setLatestMoveOutDate(null);
 		searchForm.setRoom(false);
 		results = toList(searchForm, false);
 		assertTrue(results.contains(ad2));
@@ -213,6 +259,87 @@ public class AdServiceTest {
 		searchForm.setHouse(false);
 		results = toList(searchForm, false);
 		assertFalse(results.contains(ad2));
+	}
+	
+	@Test
+	public void testEditAd() {
+		User hans = createUser("adService@Test3.ch", "password", "AdService", "Test3", Gender.MALE, "Normal");
+		hans.setAboutMe("AdServiceTest3");
+		userDao.save(hans);
+
+		adService.saveFrom(placeAdForm, filePaths, hans);
+		
+		Ad ad2 = new Ad();
+		Iterable<Ad> ads = adService.getAllAds();
+		Iterator<Ad> iterator = ads.iterator();
+
+		while (iterator.hasNext()) {
+			ad2 = iterator.next();
+		}
+		
+		List<AdPicture> pics = ad2.getPictures();
+		assertEquals(1, pics.size());
+		
+		editAdService.deletePictureFromAd(ad2.getId(), pics.get(0).getId());
+		
+		ads = adService.getAllAds();
+		iterator = ads.iterator();
+
+		while (iterator.hasNext()) {
+			ad2 = iterator.next();
+		}
+		assertEquals(0, ad2.getPictures().size());
+		
+		PlaceAdForm editAdForm = editAdService.fillForm(ad2);
+		assertEquals("Test preferences", editAdForm.getPreferences());
+		editAdForm.setCity("3000 - Bern");
+		editAdForm.setPreferences("New pref");
+		editAdForm.setPrize(600);
+		editAdForm.setBalcony(false);
+		editAdForm.setSquareFootage(50);
+		editAdForm.setTitle("title");
+		editAdForm.setStreet("Hauptstrasse 13");
+		editAdForm.setRoomType("Studio");
+		editAdForm.setMoveInDate("27-02-2015");
+		editAdForm.setMoveOutDate("27-04-2015");
+
+		editAdForm.setSmokers(true);
+		editAdForm.setAnimals(true);
+		editAdForm.setGarden(true);
+		editAdForm.setBalcony(true);
+		editAdForm.setCellar(true);
+		editAdForm.setFurnished(true);
+		editAdForm.setCable(true);
+		editAdForm.setGarage(true);
+		editAdForm.setInternet(false);
+		List<String> visits = new ArrayList<String>();
+		visits.add("28-02-2014;10:02;13:14");
+		visits.add("27-02-2014;10:02;13:14");
+		editAdForm.setVisits(visits);
+		
+		editAdService.saveFrom(editAdForm, filePaths, hans, ad2.getId());
+		
+		ads = adService.getAllAds();
+		iterator = ads.iterator();
+
+		while (iterator.hasNext()) {
+			ad2 = iterator.next();
+		}
+		
+		assertEquals("New pref",ad2.getPreferences());
+		
+	}
+	
+	@Test
+	public void testCheckIfAlreadyAdded() {
+		String toBeTested = "asdfasdf; TestName; asdfasdf";
+		String name = "TestName";
+		
+		assertTrue(adService.checkIfAlreadyAdded(name, toBeTested));
+		
+		name = "asdf";
+		
+		assertFalse(adService.checkIfAlreadyAdded(name, toBeTested));
 	}
 
 	private ArrayList<Advertisement> toList(SearchForm searchForm, boolean premium) {

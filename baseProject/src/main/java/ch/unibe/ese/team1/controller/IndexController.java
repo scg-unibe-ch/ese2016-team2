@@ -18,8 +18,6 @@ public class IndexController {
 	@Autowired
 	private AdService adService;
 
-
-
 	/** Displays the home page. */
 	@RequestMapping(value = "/")
 	public ModelAndView index() {

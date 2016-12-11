@@ -15,15 +15,8 @@ import ch.unibe.ese.team1.model.Ad;
 import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.User;
 
-
-/**
- * @Jerome
- * Add these imports for basic search functionality.
- */
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ch.unibe.ese.team1.controller.pojos.forms.SearchForm;
-
-
 
 @Controller
 public class MyRoomController {
@@ -36,8 +29,6 @@ public class MyRoomController {
 
 	@Autowired
 	private UserService userService;
-
-
 
 	/**
 	 * @Jerome
@@ -73,7 +64,6 @@ public class MyRoomController {
 		return model;
 	}
 
-
 	/**
 	 * @Jerome
 	 * Add this attribute for basic search functionality.
@@ -85,5 +75,4 @@ public class MyRoomController {
 		}
 		return searchForm;
 	}
-
 }

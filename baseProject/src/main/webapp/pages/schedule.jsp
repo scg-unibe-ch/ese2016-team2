@@ -12,12 +12,9 @@
 	<c:import url="template/~top_bar.jsp">
 		<c:param name="instr" value="Your schedule..." />
 	</c:import>
-
 	<div class="container page-max-height">
 		<div class="container-scroll container-pad">
-
 			<h2>Your presentations</h2>
-
 			<div id="presentationsDiv">
 			<c:choose>
 				<c:when test="${empty presentations}">
@@ -60,7 +57,6 @@
 							</c:when><c:otherwise>
 							<a href="/auction?id=${presentation.auction.id}"><button>Visit</button></a>
 							</c:otherwise></c:choose></td>
-
 							<td><a href="/profile/visitors?visit=${presentation.id}"><button>See List</button></a></td>
 						</tr>
 					</c:forEach>
@@ -68,9 +64,7 @@
 				</c:otherwise>
 			</c:choose>
 			</div><br />
-
 			<h2>Your visits</h2>
-
 			<div id="visitsDiv">
 			<c:choose>
 				<c:when test="${empty visits}">
@@ -116,10 +110,8 @@
 				</c:otherwise>
 			</c:choose>
 			</div>
-
 		</div> <%-- .container-scroll END --%>
 	</div> <%-- .container END --%>
-
 </main>
 
 <%-- <c:import url="template/~footer.jsp" /> --%>

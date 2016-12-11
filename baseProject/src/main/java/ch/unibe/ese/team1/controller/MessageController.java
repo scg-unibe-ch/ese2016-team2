@@ -123,5 +123,4 @@ public class MessageController {
 		User sender = userService.findUserByUsername(principal.getName());
 		messageService.sendMessage(sender, recipient, subject, text);
 	}
-
 }

@@ -11,6 +11,7 @@ import java.util.Set;
 import org.junit.Test;
 
 import ch.unibe.ese.team1.model.Ad;
+import ch.unibe.ese.team1.model.Auction;
 import ch.unibe.ese.team1.model.Gender;
 import ch.unibe.ese.team1.model.User;
 import ch.unibe.ese.team1.model.UserPicture;
@@ -112,5 +113,34 @@ public class UserTest {
 		
 		assertEquals(1, user.getBookmarkedAds().size());
 		assertTrue(user.getBookmarkedAds().contains(ad));
+	}
+	
+	@Test
+	public void testBookmarkedAuctions() {
+		ArrayList<Auction> bookmarkedAuctions = new ArrayList<Auction>();
+		Auction auction = new Auction();
+		bookmarkedAuctions.add(auction);
+		
+		user.setBookmarkedAuctions(bookmarkedAuctions);
+		
+		assertEquals(1, user.getBookmarkedAuctions().size());
+		assertTrue(user.getBookmarkedAuctions().contains(auction));
+	}
+	
+	@Test
+	public void testEquals() {
+		User user1 = new User();
+		User user2 = new User();
+		user1.setId(1);
+		user2.setId(2);
+		
+		assertTrue(user1.equals(user1));
+		assertFalse(user1.equals(null));
+		assertFalse(user1.equals(new Ad()));
+		assertFalse(user1.equals(user2));
+		
+		user2.setId(1);
+		assertTrue(user1.equals(user2));
+		
 	}
 }

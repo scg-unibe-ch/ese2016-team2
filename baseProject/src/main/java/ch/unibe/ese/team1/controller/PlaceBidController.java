@@ -95,5 +95,4 @@ public class PlaceBidController {
 		}
 		return placeBidForm;
 	}
-
 }

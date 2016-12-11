@@ -6,41 +6,31 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
-
 <%-- check if user is logged in --%>
 <security:authorize var="loggedIn" url="/profile" />
 
-
 <c:import url="template/~top.jsp" />
 <c:import url="template/~header_details_wo_search.jsp" />
-
 <!-- format the dates -->
 <fmt:formatDate value="${shownAuction.moveInDate}"
 	var="formattedMoveInDate" type="date" pattern="dd.MM.yyyy" />
 <fmt:formatDate value="${shownAuction.creationDate}"
 	var="formattedCreationDate" type="date" pattern="dd.MM.yyyy" />
 
-
 <div class="container sidebar">
 	<div class="row">
 		<div class="tile tile-full">
-
 			<div class="action action-icon action-sidebar">
 				<span id="js-sidebar-icon" class="fa fa-info fa-2x"></span>
 			</div>
-
 		</div>
 	</div>
-
 	<div class="row">
-
 		<c:choose>
 			<c:when test="${loggedIn}">
-
 				<div class="tile tile-half action action-tile">
 					<a href="/user?id=${shownAuction.user.id}">Visit profile</a>
 				</div>
-
 				<div class="tile tile-half action action-tile">
 					<c:if test="${loggedInUserEmail != shownAuction.user.username }">
 						<button id="newMsg" type="button">Contact Advertiser</button>
@@ -49,29 +39,22 @@
 						<%-- <a href="<c:url value='/profile/editAd?id=${shownAuction.id}' />">Edit auction</a> --%>
 					</c:if>
 				</div>
-
 			</c:when>
 			<c:otherwise>
-
 				<div class="tile tile-half action action-tile action-medium">
 					<a href="/login">Sign in to see profile</a>
 				</div>
-
 				<div class="tile tile-half action action-tile action-medium">
 					<a href="/login">Sign in to reach vendor</a>
 				</div>
-
 			</c:otherwise>
 		</c:choose>
-
 	</div>
-
 	<div class="row">
 		<div class="tile tile-full">
 			<form class="form form-message">
 				<input type="text" id="msgSubject" placeholder="Subject *" />
 				<textarea id="msgTextarea" placeholder="Message"></textarea>
-
 				<div class="row">
 					<div class="tile tile-half">
 						<button class="submit-state-before" type="button" id="messageSend">
@@ -88,27 +71,9 @@
 			</form>
 		</div>
 	</div>
-
-	<%--
-	@Jerome
-	TODO: Ask if needed.
-	<div id="confirmationDialog">
-		<form>
-		<p>Send enquiry to advertiser?</p>
-		<button type="button" id="confirmationDialogSend">Send</button>
-		<button type="button" id="confirmationDialogCancel">Cancel</button>
-		</form>
-	</div> --%>
-
 	<div class="row">
 		<div class="tile tile-three-quarter">
 			<h2>
-				<%--
-				@Jerome
-				TODO: Has an ad a premium property??
-				<c:if test="">
-					<span class="fa fa-gavel" aria-hidden="true"></span>
-				</c:if> --%>
 				<span class="fa fa-gavel" aria-hidden="true"></span>
 				&nbsp;&nbsp;${shownAuction.title}</h2>
 		</div>
@@ -124,9 +89,7 @@
 			</c:choose>
 		</div>
 	</div>
-
 	<div class="container-scroll">
-
 		<div class="row">
 			<div class="tile tile-full">
 				<table>
@@ -134,7 +97,6 @@
 						<td>Type</td>
 						<td>${shownAuction.roomType}</td>
 					</tr>
-
 					<tr>
 						<td>Address</td>
 						<td>
@@ -142,22 +104,18 @@
 									${shownAuction.zipcode} ${shownAuction.city}</a>
 						</td>
 					</tr>
-
 					<tr>
 						<td>Available from</td>
 						<td>${formattedMoveInDate}</td>
 					</tr>
-
 					<tr>
 						<td>Move-out Date</td>
 						<td>${formattedMoveOutDate}</td>
 					</tr>
-
 					<tr>
 						<td>Monthly Rent</td>
 						<td>${shownAuction.prize}&#32;CHF</td>
 					</tr>
-
 					<tr>
 						<td>Square Meters</td>
 						<td>${shownAuction.squareFootage}&#32;m²</td>
@@ -166,9 +124,6 @@
 						<td>Ad created on</td>
 						<td>${formattedCreationDate}</td>
 					</tr>
-				<%-- </table>
-
-				<table> --%>
 					<tr>
 						<td>Smoking inside allowed</td>
 						<td>
@@ -178,7 +133,6 @@
 							</c:choose>
 						</td>
 					</tr>
-
 					<tr>
 						<td>Animals allowed</td>
 						<td>
@@ -188,7 +142,6 @@
 							</c:choose>
 						</td>
 					</tr>
-
 					<tr>
 						<td>Furnished Room</td>
 						<td>
@@ -198,7 +151,6 @@
 							</c:choose>
 						</td>
 					</tr>
-
 					<tr>
 						<td>WiFi available</td>
 						<td>
@@ -208,7 +160,6 @@
 							</c:choose>
 						</td>
 					</tr>
-
 					<tr>
 						<td>Cable TV</td>
 						<td>
@@ -218,7 +169,6 @@
 							</c:choose>
 						</td>
 					</tr>
-
 					<tr>
 						<td>Garage</td>
 						<td>
@@ -228,7 +178,6 @@
 							</c:choose>
 						</td>
 					</tr>
-
 					<tr>
 						<td>Cellar</td>
 						<td>
@@ -238,7 +187,6 @@
 							</c:choose>
 						</td>
 					</tr>
-
 					<tr>
 						<td>Balcony</td>
 						<td>
@@ -248,7 +196,6 @@
 							</c:choose>
 						</td>
 					</tr>
-
 					<tr>
 						<td>Garden</td>
 						<td>
@@ -258,12 +205,9 @@
 							</c:choose>
 						</td>
 					</tr>
-
 				</table>
-
 			</div>
 		</div>
-
 		<div class="row">
 			<div class="tile tile-full">
 					<c:choose>
@@ -297,7 +241,6 @@
 									</div>
 								</c:otherwise>
 							</c:choose>
-
 						</c:when>
 						<c:otherwise>
 							<table id="adDescTable" class="adDescDiv">
@@ -337,35 +280,28 @@
 							</c:choose>
 						</c:otherwise>
 					</c:choose>
-				</table>
 			</div>
 		</div>
-
-
 		<div class="row">
 			<div class="tile tile-full">
 				<h3>Description</h3>
 				<p>${shownAuction.roomDescription}</p>
 			</div>
 		</div>
-
 		<div class="row">
 			<div class="tile tile-full">
 				<h3>Preferences</h3>
 				<p>${shownAuction.preferences}</p>
 			</div>
 		</div>
-
 		<div class="row">
 			<div class="tile tile-full">
 
 				<c:if test="${loggedInUserEmail != shownAuction.user.username}">
 					<h3 class="row-h3">Viewing times</h3>
 				</c:if>
-
 				<div class="row viewing-times">
 					<div class="tile tile-full action action-tile">
-
 						<c:choose>
 							<c:when test="${loggedIn}">
 								<c:if test="${loggedInUserEmail != shownAuction.user.username}">
@@ -393,24 +329,17 @@
 								</c:if>
 							</c:when>
 							<c:otherwise>
-
 								<a href="/login">Sign in to see viewing times</a>
-
 							</c:otherwise>
 						</c:choose>
-
 					</div>
 				</div>
-
 			</div>
 		</div>
-
 	</div> <%-- .container-scroll END --%>
-
 </div>
 
 <main role="main">
-
 	<%--
 		@Jerome
 		For the outer div slider or blender may be chosen as class. It then does
@@ -418,23 +347,19 @@
 	 --%>
 	<div class="slider slider-blender-full">
 		<ul class="slides">
-
 			<c:forEach items="${shownAuction.pictures}" var="picture">
-
 				<li class="slide" style="background-image: url(${picture.filePath})"></li>
-
 			</c:forEach>
-
 		</ul> <%-- .slides END --%>
 		<div class="row transport">
 			<div class="tile tile-half transport-prev"></div>
 			<div class="tile tile-half transport-next"></div>
 		</div>
 	</div> <%-- .[slider|blender] END --%>
-
 </main>
 
 <%-- <c:import url="template/~footer.jsp" /> --%>
 <c:import url="template/~bottom_shown_ad.jsp">
 	<c:param name="js" value="auctionDescription" />
 </c:import>
+

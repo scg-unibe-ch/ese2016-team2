@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
@@ -297,7 +299,7 @@ public class EnquiryServiceTest {
 		enquiry2.setVisit(visit2);
 		enquiry2.setDateSent(new Date());
 		enquiry2.setSender(testPersonEnquiryService2);
-		enquiry2.setState(VisitEnquiryState.OPEN);
+		enquiry2.setState(VisitEnquiryState.ACCEPTED);
 		enquiryService.saveVisitEnquiry(enquiry2);
 
 		Iterable<VisitEnquiry> enquiries = enquiryService.getEnquiriesByRecipient(testPersonEnquiryService1);
@@ -310,6 +312,34 @@ public class EnquiryServiceTest {
 		assertEquals(testPersonEnquiryService2.getUsername(), enquiryList.get(0).getSender().getUsername());
 		assertFalse(enquiryList.get(0).getVisit().getAd().getAuction());
 		assertTrue(enquiryList.get(1).getVisit().getAuction().getAuction());
+		
+		Iterable<Visit> visitsForSender = visitService.getVisitsForUser(userDao.findByUsername("testPerson@EnquiryTest2.ch"));
+		Iterator<Visit> iterator = visitsForSender.iterator();
+		List<Visit> visits = new ArrayList<Visit>();
+		while(iterator.hasNext()) {
+			visits.add(iterator.next());
+		}
+		
+		assertEquals(1, visits.size());
+		
+		//test delete the visit of the last added auction
+		Iterable<Auction> auctionIterable = auctionDao.findAll();
+		Iterator<Auction> auctions = auctionIterable.iterator();
+		Auction auc = new Auction();
+		while (auctions.hasNext()) {
+			auc = auctions.next();
+		}
+		
+		visitService.delete(auc);
+		
+		visitsForSender = visitService.getVisitsForUser(userDao.findByUsername("testPerson@EnquiryTest2.ch"));
+		iterator = visitsForSender.iterator();
+		List<Visit> visits2 = new ArrayList<Visit>();
+		while(iterator.hasNext()) {
+			visits2.add(iterator.next());
+		}
+		
+		assertEquals(0, visits2.size());
 	}
 
 	@Test

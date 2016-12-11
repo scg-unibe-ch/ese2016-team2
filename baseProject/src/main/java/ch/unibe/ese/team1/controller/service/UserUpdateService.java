@@ -40,7 +40,4 @@ public class UserUpdateService {
 
 		userDao.save(currentUser);
 	}
-
-	
-	
 }
