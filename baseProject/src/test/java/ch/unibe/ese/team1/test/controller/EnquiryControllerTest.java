@@ -9,9 +9,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -49,6 +51,47 @@ public class EnquiryControllerTest {
 					.andExpect(status().isOk())
 					.andExpect(view().name("enquiries"))
 					.andExpect(model().attributeExists("enquiries"));
+	}
+	
+	@Test
+	public void testSendEnquiryForVisis() throws Exception {
+		Principal principal = mock(Principal.class);
+		when(principal.getName()).thenReturn("user@bern.com");
+		
+		this.mockMvc.perform(get("/profile/enquiries/sendEnquiryForVisit")
+						.param("id", "1")
+						.principal(principal))
+					.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void testEnquiry() throws Exception {
+		this.mockMvc.perform(get("/profile/enquiries/acceptEnquiry").param("id", "4"))
+					.andExpect(status().isOk());
+		this.mockMvc.perform(get("/profile/enquiries/declineEnquiry").param("id", "4"))
+					.andExpect(status().isOk());
+		this.mockMvc.perform(get("/profile/enquiries/reopenEnquiry").param("id", "4"))
+					.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void testRating() throws Exception {
+		Principal principal = mock(Principal.class);
+		when(principal.getName()).thenReturn("user@bern.com");
+		
+		this.mockMvc.perform(get("/profile/rateUser")
+						.param("rate", "2")
+						.param("stars", "4")
+						.principal(principal))
+					.andExpect(status().isOk());
+		
+		MvcResult result = this.mockMvc.perform(get("/profile/ratingFor")
+				.param("user", "2")
+				.principal(principal))
+			.andExpect(status().isOk()).andReturn();
+		
+		String rating = result.getResponse().getContentAsString();
+		assertEquals("4", rating);
 	}
 	
 }

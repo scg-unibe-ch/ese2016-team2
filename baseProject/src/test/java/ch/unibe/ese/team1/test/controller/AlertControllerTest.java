@@ -14,10 +14,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import ch.unibe.ese.team1.controller.pojos.forms.AlertForm;
 import ch.unibe.ese.team1.controller.service.AlertService;
-import ch.unibe.ese.team1.model.Alert;
 import ch.unibe.ese.team1.model.dao.AlertDao;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -25,9 +23,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { 
