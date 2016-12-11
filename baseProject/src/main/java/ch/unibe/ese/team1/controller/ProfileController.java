@@ -1,4 +1,5 @@
-package ch.unibe.ese.team1.controller
+package ch.unibe.ese.team1.controller;
+
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Iterator;
