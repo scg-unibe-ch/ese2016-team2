@@ -22,14 +22,8 @@
 					advertisement: '${shownAd}',
 					username: '${shownAd.user.username}'
 				})
-				.add([
-					'search',
-					'sidebar',
-					'sliderBlender',
-					'bookmark',
-					'message',
-					'enquiry'
-				]);
+				.add(['sidebar', 'sliderBlender', 'bookmark', 'message', 'enquiry'])
+				.then('sliderBlender', 'addOnClickNavigation');
 		},
 
 		auctionDescription: function () {
@@ -39,14 +33,8 @@
 					advertisement: '${shownAuction}',
 					username: '${shownAuction.user.username}'
 				})
-				.add([
-					'search',
-					'sidebar',
-					'sliderBlender',
-					'bookmark',
-					'message',
-					'enquiry'
-				]);
+				.add(['sidebar', 'sliderBlender', 'bookmark', 'message', 'enquiry'])
+				.then('sliderBlender', 'addOnClickNavigation');
 		}
 	};
 

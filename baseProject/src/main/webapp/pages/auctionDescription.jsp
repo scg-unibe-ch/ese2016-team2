@@ -426,6 +426,10 @@
 			</c:forEach>
 
 		</ul> <%-- .slides END --%>
+		<div class="row transport">
+			<div class="tile tile-half transport-prev"></div>
+			<div class="tile tile-half transport-next"></div>
+		</div>
 	</div> <%-- .[slider|blender] END --%>
 
 </main>
@@ -434,28 +438,3 @@
 <c:import url="template/~bottom_shown_ad.jsp">
 	<c:param name="js" value="auctionDescription" />
 </c:import>
-
-
-
-<%--
-
-<table id="advertiserTable" class="adDescDiv">
-	<tr>
-	<td><h2>Advertiser</h2><br /></td>
-	</tr>
-
-	<tr>
-		<td><c:choose>
-				<c:when test="${shownAuction.user.picture.filePath != null}">
-					<img src="${shownAuction.user.picture.filePath}">
-				</c:when>
-				<c:otherwise>
-					<img src="/img/avatar.png">
-				</c:otherwise>
-			</c:choose></td>
-
-		<td>${shownAuction.user.username}</td>
-
-	</tr>
-</table>
---%>

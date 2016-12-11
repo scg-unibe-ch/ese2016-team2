@@ -45,10 +45,7 @@ jQuery.flatfindr.sliderBlender = function (window, document, $, $view, option) {
         animationSpeed: 800,
 
         controlNav: false,
-        directionNav: true,
-
-        prevText: "Prev (provi)",
-        nextText: "Next (provi)"
+        directionNav: false
       }
     };
 
@@ -65,8 +62,35 @@ jQuery.flatfindr.sliderBlender = function (window, document, $, $view, option) {
      * https://github.com/woocommerce/FlexSlider/wiki/FlexSlider-Properties
      */
     $('.blender').flexslider(config.blender);
-    $('.slider').flexslider(config.slider);
+    $slider = $('.slider').flexslider(config.slider);
 
+
+
+    /**
+     * Close any sidebars if they are in open state.
+     * @private
+     */
+    function closeSidebars() {
+      if ($view.is('.sidebarOpen'))
+        $view.trigger('sidebar:toggle');
+      if ($view.is('.headerPrimaryOpen'))
+        $view.trigger('header:toggle');
+    }
+
+
+
+    /**
+     * Transport slide according direction.
+     * @protected
+     */
+    function transport() {
+      var dir = $(this).is('.transport-next') ? 'next' : 'prev';
+      // Follow user intention and have the slider fully visible.
+      // Do it with delay, otherwise user might think sidebar is fixed
+      // to first slide.
+      setTimeout(closeSidebars, $.flatfindr.BASE_DURATION);
+      $slider.flexslider(dir);
+    }
 
 
     /**
@@ -88,6 +112,18 @@ jQuery.flatfindr.sliderBlender = function (window, document, $, $view, option) {
           function() { $slider_blender_full.addClass('js-show'); },
           function() { $slider_blender_full.removeClass('js-show'); }
         );
+      },
+
+
+      /**
+       *
+       * @memberof jQuery.flatfindr.sliderBlender
+       * @method addOnClickNavigation
+       *
+       * @public
+       */
+      addOnClickNavigation: function() {
+        $('.transport-prev, .transport-next').on('click', transport);
       }
     };
 
