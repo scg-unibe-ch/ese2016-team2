@@ -14,6 +14,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import ch.unibe.ese.team1.controller.pojos.forms.AlertForm;
 import ch.unibe.ese.team1.controller.service.AlertService;
+import ch.unibe.ese.team1.model.dao.AlertDao;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -40,6 +41,9 @@ public class AlertControllerTest {
 	
 	@Autowired
 	AlertService alertService;
+	
+	@Autowired
+	AlertDao alertDao;
 
 	@Before
 	public void setUp() {
@@ -62,7 +66,7 @@ public class AlertControllerTest {
 	public void postAlertNoErrors() throws Exception {
 		Principal principal = mock(Principal.class);
 		when(principal.getName()).thenReturn("user@bern.ch");
-		
+				
 		this.mockMvc.perform(post("/profile/alerts")
 						.principal(principal)
 						.param("city", "3000 - Bern")
@@ -74,6 +78,9 @@ public class AlertControllerTest {
 					.andExpect(view().name("alerts"))
 					.andExpect(model().attributeExists("alertForm"));
 		
+		//deletes the first alert in the database		
+		this.mockMvc.perform(get("/profile/alerts/deleteAlert").param("id", "1"))
+					.andExpect(status().isOk());
 	}
 	
 	@Test

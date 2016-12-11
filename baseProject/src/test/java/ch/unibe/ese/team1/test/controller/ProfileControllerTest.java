@@ -9,9 +9,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -73,6 +75,16 @@ public class ProfileControllerTest {
 					.andExpect(status().isOk())
 					.andExpect(view().name("signup"))
 					.andExpect(model().attributeExists("signupForm"));
+	}
+	
+	@Test
+	public void testDoesEmailExist() throws Exception {
+		MvcResult result = this.mockMvc.perform(post("/signup/doesEmailExist").param("email", "asdf"))
+					.andExpect(status().isOk())
+					.andReturn();
+		
+		String exists = result.getResponse().getContentAsString();
+		assertEquals("false", exists);
 	}
 	
 	@Test
@@ -204,7 +216,7 @@ public class ProfileControllerTest {
 	@Test
 	public void getVisitorsPage() throws Exception {		
 		this.mockMvc.perform(get("/profile/visitors")
-						.param("visit", "1"))
+						.param("visit", "4"))
 					.andExpect(status().isOk())
 					.andExpect(view().name("visitors"))
 					.andExpect(model().attributeExists("visitors"));
