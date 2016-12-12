@@ -28,6 +28,7 @@
 								action="/profile/registerProfile"
 								id="registerForm"
 								autocomplete="off">
+
 								<div class="container-scroll">
 									<form:input
 										type="text"
@@ -35,8 +36,12 @@
 										path="street"
 										placeholder="Street"
 										tabindex="1"
-										id="field-street" />
+										id="street" />
+									<div class="validator error-street">
+										<span class="validationErrorText"></span>
+									</div>
 									<form:errors path="street" cssClass="validationErrorText" />
+
 									<form:input
 										type="text"
 										name="city"
@@ -44,6 +49,9 @@
 										path="city"
 										tabindex="2"
 										placeholder="City / Zip" />
+									<div class="validator error-city">
+										<span class="validationErrorText"></span>
+									</div>
 									<form:errors path="city" cssClass="validationErrorText" />
 									<form:input style="display:none" id="user-name" path="username" value="${currentUser.getUsername()}"/>
 									<form:errors path="username" cssClass="validationErrorText" />

@@ -6,7 +6,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <c:import url="template/~top.jsp" />
-<c:import url="template/~header.jsp" />
+<c:import url="template/~header_wo_search.jsp" />
 
 <!-- check if user is logged in -->
 <security:authorize var="loggedIn" url="/profile" />

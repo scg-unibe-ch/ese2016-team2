@@ -545,6 +545,11 @@ $slip-height-medium: 73px;
     height $base-duration $base-timing,
     width $base-duration $base-timing;
 
+  .register & {
+    top: 3 * $slip-height-small + 1 !important;
+    height: (4 * $slip-height-small) - 1;
+  }
+
   // could be .wo-search +
   .results &,
   .searchAd &,
@@ -561,6 +566,11 @@ $slip-height-medium: 73px;
     .searchAd &,
     .alerts & {
       top: 2 * $slip-height-medium + 1 !important;
+    }
+
+    .register & {
+      top: 3 * $slip-height-medium + 1 !important;
+      height: (4 * $slip-height-medium) - 1;
     }
   }
 

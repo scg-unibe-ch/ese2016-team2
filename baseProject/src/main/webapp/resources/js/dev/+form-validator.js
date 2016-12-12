@@ -31,6 +31,14 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
       text: 'Please add a locality from the list.'
     },
 
+    'street': {
+      isError: function ($this) {
+        return $this.val() === '';
+      },
+      is_other_than_server: false,
+      text: 'Please add an address.'
+    },
+
 
 
     'field-password': {
@@ -156,7 +164,7 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
 	});
 
 
-  $("#city").focusout(function() {
+  $("#city, #street").focusout(function() {
     var $this = $(this);
     if (isViolated($this)) showError($this);
 		else handleValidity($this);

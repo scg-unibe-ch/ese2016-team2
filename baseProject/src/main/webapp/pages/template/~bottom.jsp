@@ -38,7 +38,9 @@
 			},
 
 			register: function () {
-		    //return $.flatfindr.add(['autoloc']);
+				return $.flatfindr
+					.add(['validator'])
+					.then('bits', 'addAutoloc', ['#city']);
 			},
 
 			alerts: function () {
