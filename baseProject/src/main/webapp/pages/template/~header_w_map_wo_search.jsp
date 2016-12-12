@@ -55,6 +55,7 @@
               <li><a href="/profile/placeAd">Place an ad</a></li>
               <li><a href="/profile/placeAuction">Place an auction</a></li>
               <li><a href="/profile/myRooms">My rooms</a></li>
+              <li><a href="/profile/bookmarks">Bookmarks</a>
               <li><a id="messageLink" href="/profile/messages">Messages</a></li>
               <li><a href="/profile/enquiries">Enquiries</a></li>
               <li><a href="/profile/schedule">Schedule</a></li>

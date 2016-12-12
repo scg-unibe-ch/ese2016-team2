@@ -7,20 +7,20 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:import url="template/~top.jsp" />
-<c:import url="template/~header.jsp" />
+<c:import url="template/~header_wo_search.jsp" />
 
 <main role="main">
 	<c:import url="template/~top_bar.jsp">
-		<c:param name="instr" value="Bookmarked Advertisements" />
+		<c:param name="instr" value="Your bookmarks..." />
 	</c:import>
 	<div class="container">
 		<div class="row">
-			<div class="span-third list-max-height">
+			<div class="span-half list-max-height">
 				<h3 class="list-title">Bookmarked Ads</h3>
 				<div class="container-scroll">
 					<c:choose>
 						<c:when test="${empty bookmarkedAdvertisements}">
-							<p>You have not bookmarked anything yet.</p>
+							<p class="container-pad">You have not bookmarked any ads yet.</p>
 						</c:when>
 						<c:otherwise>
 							<ul class="resultsDiv resultsDiv-small">
@@ -69,12 +69,12 @@
 					</c:choose>
 				</div> <%-- .container-scroll END --%>
 			</div> <%-- .span-third END --%>
-			<div class="span-third list-max-height">
+			<div class="span-half list-max-height">
 				<h3 class="list-title">Bookmarked Auctions</h3>
 				<div class="container-scroll">
 					<c:choose>
 						<c:when test="${empty bookmarkedAuctions}">
-							<p>You have not bookmarked anything yet.</p>
+							<p class="container-pad">You have not bookmarked any auctions yet.</p>
 						</c:when>
 						<c:otherwise>
 							<ul class="resultsDiv resultsDiv-small">
@@ -97,7 +97,7 @@
 											<div class="tile tile-two-thirds">
 												<div class="resultAd-text">
 													<h2>
-														<a class="link" href="<c:url value='/ad?id=${ad.id}' />">
+														<a class="link" href="<c:url value='/auction?id=${ad.id}' />">
 															${ad.title }
 														</a>
 													</h2>
