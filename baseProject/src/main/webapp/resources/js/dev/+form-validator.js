@@ -20,6 +20,19 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
    * @type {Object}   error messages object
    */
   var errors = {
+
+    'city': {
+      isError: function ($this) {
+        var val = $this.val();
+        return (val === '') ||
+               ($.inArray(val, $.flatfindr.ZIP_CODES) === -1);
+      },
+      is_other_than_server: false,
+      text: 'Please add a locality from the list.'
+    },
+
+
+
     'field-password': {
       isError: function ($this) {
         return $this.val().length < 6;
@@ -52,6 +65,9 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
       text: 'Well, it says "Leave a message", so, please drop some lines.'
     },
 
+
+
+
     'field-street': {
       isError: function ($this) {
         return $this.val() === '';
@@ -70,8 +86,8 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
 
     'field-Prize': {
       isError: function ($this) {
-        var int = $this.val(); // do not parseInt as string returns 1
-        return (int < 1) || (int > SAFE_INT);
+        var val = $this.val(); // do not parseInt as string returns 1
+        return (val < 1) || (val > SAFE_INT);
       },
       is_other_than_server: false,
       text: 'Price should be at least one lousy buck and not exceed '+ SAFE_INT
@@ -79,8 +95,8 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
 
     'field-SquareFootage': {
       isError: function ($this) {
-        var int = $this.val();
-        return (int < 1) || (int > SAFE_INT);
+        var val = $this.val();
+        return (val < 1) || (val > SAFE_INT);
       },
       is_other_than_server: false,
       text: 'Square footage should be at least 1 and not exceed '+ SAFE_INT
@@ -100,7 +116,27 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
       },
       is_other_than_server: false,
       text: 'Please add a description.'
-    }
+    },
+
+
+    'radiusInput': {
+      isError: function ($this) {
+        var val = $this.val();
+        return (val < 5) || (val > 500) || (val%5 !== 0);
+      },
+      is_other_than_server: false,
+      text: 'Radius should be at least 5 and not exceed 500. Also, enter value in 5s.'
+    },
+
+    'priceInput': {
+      isError: function ($this) {
+        var val = $this.val(); // do not parseInt as string returns 1
+        return (val < 50) || (val > SAFE_INT) || (val%50 !== 0);
+      },
+      is_other_than_server: false,
+      text: 'Price should be at least 50 lousy bucks and not exceed '+ SAFE_INT +
+            '. Also, enter value in 50s.'
+    },
   };
 
 
@@ -120,6 +156,13 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
 	});
 
 
+  $("#city").focusout(function() {
+    var $this = $(this);
+    if (isViolated($this)) showError($this);
+		else handleValidity($this);
+	});
+
+
   $("#msgSubject, #msgTextarea").focusout(function() {
     var $this = $(this);
     if (isViolated($this)) showError($this);
@@ -135,6 +178,13 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
       if (isViolated($this)) showError($this);
   		else handleValidity($this);
   	});
+
+
+  $("#radiusInput, #priceInput").focusout(function() {
+    var $this = $(this);
+    if (isViolated($this)) showError($this);
+		else handleValidity($this);
+	});
 
 
 
@@ -200,7 +250,9 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
    * @param  {jQuery} $this the form field
    */
   function handleValidity($this) {
-    $('.error-'+$this.attr('id')).removeClass('js-show');
+    var server_error_selector = '#'+ $this.attr('name') +'\\.errors';
+    $('.error-'+ $this.attr('id')).removeClass('js-show');
+    $(server_error_selector).remove();
   }
 
 

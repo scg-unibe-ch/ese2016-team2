@@ -21,7 +21,6 @@ jQuery.flatfindr.bookmark = function (window, document, $, $view, option) {
   function attachBookmarkClickHandler() {
 
     $("#bookmarkButton").click(function() {
-      console.log('bookmarking');
       $.post(url, {
           id : $.flatfindr.advertisementID,
           screening : false,
