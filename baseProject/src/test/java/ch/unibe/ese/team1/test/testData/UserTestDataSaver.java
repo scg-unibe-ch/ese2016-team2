@@ -43,7 +43,7 @@ public class UserTestDataSaver {
 		userDao.save(janeDoe);
 
 		// Another advertiser & searcher
-		User bernerBaer = createUser("user@bern.com", "password", "Berner", "BÃ¤r", 
+		User bernerBaer = createUser("user@bern.com", "password", "Berner", "Bär", 
 				"/img/avatar.jpg", Gender.MALE, "Premium", "Alpenstrasse 35", "Bern", 3000);
 		UserPicture picture = new UserPicture();
 		picture.setFilePath("/img/test/berner_baer.png");
