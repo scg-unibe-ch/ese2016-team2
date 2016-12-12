@@ -37,10 +37,7 @@ public class BookmarkController {
 	@Autowired
 	BookmarkService bookmarkService;
 	
-	/**
-	 * Add these properties for basic search functionality.
-	 */
-	private SearchForm searchForm;
+
 
 	/**
 	 * Fetches information about bookmarked ads and attaches this information to the
@@ -153,16 +150,6 @@ public class BookmarkController {
 
 		return bookmarkService.getBookmarkStatusAuction(auction, bookmarked, user);
 	}
-	 
-	/**
-	 * Add this attribute for basic search functionality.
-	 */
-	@ModelAttribute
-	public SearchForm getSearchForm() {
-		if (searchForm == null) {
-			searchForm = new SearchForm();
-		}
-		return searchForm;
-	}
+
 
 }

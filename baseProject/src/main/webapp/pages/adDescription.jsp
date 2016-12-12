@@ -288,6 +288,10 @@
 				<li class="slide" style="background-image: url(${picture.filePath})"></li>
 			</c:forEach>
 		</ul> <%-- .slides END --%>
+		<div class="row transport">
+			<div class="tile tile-half transport-prev"></div>
+			<div class="tile tile-half transport-next"></div>
+		</div>
 	</div> <%-- .[slider|blender] END --%>
 </main>
 

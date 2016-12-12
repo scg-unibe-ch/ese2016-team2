@@ -38,18 +38,11 @@
 			},
 
 			register: function () {
-		    return $.flatfindr.add(['autoloc']);
+		    //return $.flatfindr.add(['autoloc']);
 			},
 
 			alerts: function () {
-
-				function deleteAlert(button) {
-					var id = $(button).attr("data-id");
-					$.get("/profile/alerts/deleteAlert?id=" + id, function(){
-						$("#alertsDiv").load(document.URL + " #alertsDiv");
-					});
-				}
-
+				return $.flatfindr.add(['alerts', 'validator']);
 			},
 
 			updatedProfile: function () {
@@ -128,6 +121,10 @@
 
 			enquiries: function () {
 				return $.flatfindr.add(['enquiries']);
+			},
+
+			visitors: function () {
+				return $.flatfindr.add(['visitors']);
 			}
 
 		};

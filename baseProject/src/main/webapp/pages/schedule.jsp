@@ -110,8 +110,8 @@
 				</c:otherwise>
 			</c:choose>
 			</div>
-		</div>
-	</div>
+		</div> <%-- .container-scroll END --%>
+	</div> <%-- .container END --%>
 </main>
 
 <%-- <c:import url="template/~footer.jsp" /> --%>

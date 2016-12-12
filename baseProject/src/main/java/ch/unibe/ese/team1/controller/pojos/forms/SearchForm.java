@@ -34,7 +34,7 @@ public class SearchForm {
 	@AssertFalse(message = "Please select a sale type")
 	private boolean buyableNotFilled;
 	
-	@Pattern(regexp = "^[0-9]{4} - [-;\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
+	@Pattern(regexp = "^[0-9]{4} - [-;.\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
 	private String city;
 
 	@NotNull(message = "Requires a number")

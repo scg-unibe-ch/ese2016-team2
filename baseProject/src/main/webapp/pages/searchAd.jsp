@@ -15,21 +15,25 @@
 		<div class="row">
 			<div class="span-half">
 				<div class="form form-search form-max-height">
+					
 					<form:form
 						method="post"
 						id="searchForm"
 						modelAttribute="searchForm"
 						action="/results?results"
 						autocomplete="off">
+
 						<div class="container-scroll">
+
 							<form:input
 								type="text"
 								name="city"
 								id="city"
 								path="city"
-								placeholder="Find..."
+								placeholder="City / Zip"
 								tabindex="1"
 								value="" />
+
 							<form:errors path="city" cssClass="validationErrorText" />
 							<div class="row checkboxes">
 								<div class="tile tile-half">

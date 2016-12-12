@@ -101,3 +101,25 @@
     @include pad($large $huge);
   }
 }
+
+
+
+.transport {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: inherit;
+
+  .transport-prev,
+  .transport-next {
+    height: 100%;
+  }
+
+  .transport-prev {
+    cursor: url('img/arrow-left.png'), w-resize;
+  }
+
+  .transport-next {
+    cursor: url('img/arrow-right.png'), e-resize;
+  }
+}

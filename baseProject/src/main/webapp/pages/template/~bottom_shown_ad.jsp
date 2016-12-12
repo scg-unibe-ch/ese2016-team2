@@ -10,7 +10,10 @@
 	var js = {
 		common: function () {
 			return $.flatfindr
-				.with({ ZIP_CODES: <c:import url="getzipcodes.jsp" /> })
+				.with({
+					PAGE_NAME: pagename,
+					ZIP_CODES: <c:import url="getzipcodes.jsp" />
+				})
 				.add(['header'])
 				.then('bits', 'unreadMessages');
 		},
@@ -22,14 +25,8 @@
 					advertisement: '${shownAd}',
 					username: '${shownAd.user.username}'
 				})
-				.add([
-					'search',
-					'sidebar',
-					'sliderBlender',
-					'bookmark',
-					'message',
-					'enquiry'
-				]);
+				.add(['sidebar', 'sliderBlender', 'bookmark', 'message', 'enquiry'])
+				.then('sliderBlender', 'addOnClickNavigation');
 		},
 
 		auctionDescription: function () {
@@ -39,14 +36,8 @@
 					advertisement: '${shownAuction}',
 					username: '${shownAuction.user.username}'
 				})
-				.add([
-					'search',
-					'sidebar',
-					'sliderBlender',
-					'bookmark',
-					'message',
-					'enquiry'
-				]);
+				.add(['sidebar', 'sliderBlender', 'bookmark', 'message', 'enquiry'])
+				.then('sliderBlender', 'addOnClickNavigation');
 		}
 	};
 
