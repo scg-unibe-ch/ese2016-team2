@@ -118,7 +118,7 @@
 			},
 
 			placeAuction: function () {
-				return js.placeAd();
+				return $.flatfindr.add(['place', 'imageUpload', 'validator']);
 			},
 
 			enquiries: function () {

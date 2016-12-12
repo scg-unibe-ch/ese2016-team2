@@ -86,7 +86,9 @@ jQuery.flatfindr.validator = function (window, document, $, $view, option) {
 
     'field-city': {
       isError: function ($this) {
-        return $this.val() === '';
+        var val = $this.val();
+        return (val === '') ||
+               ($.inArray(val, $.flatfindr.ZIP_CODES) === -1);
       },
       is_other_than_server: false,
       text: 'Please add a locality from the list.'

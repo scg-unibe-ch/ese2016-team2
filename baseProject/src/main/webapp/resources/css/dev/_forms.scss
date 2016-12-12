@@ -260,6 +260,10 @@ $slip-height-medium: 73px;
       height: $slip-height-medium;
     }
   }
+
+  &.times-auction {
+    border-bottom: 1px solid $whiff-of-gray;
+  }
 }
 
 
