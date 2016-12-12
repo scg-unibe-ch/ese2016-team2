@@ -12,7 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import ch.unibe.ese.team1.controller.pojos.forms.AlertForm;
 import ch.unibe.ese.team1.controller.service.AlertService;
 import ch.unibe.ese.team1.model.dao.AlertDao;
 
