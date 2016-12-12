@@ -29,8 +29,11 @@ jQuery.flatfindr.search = function (window, document, $, $view, option) {
     });
 
 
-  $('button[type=submit]').on('click', function () {
-    validateType($('.form-search form')[0]);
+
+  $('form').on('submit', function(e) {
+    e.preventDefault();
+    validateType();
+    this.submit();
   });
 
 
@@ -39,9 +42,8 @@ jQuery.flatfindr.search = function (window, document, $, $view, option) {
    * Validate form inputs.
    *
    * @private
-   * @param  {Object} form the form to be validated
    */
-  function validateType(form) {
+  function validateType() {
     var
       room = document.getElementById('room'),
       studio = document.getElementById('studio'),

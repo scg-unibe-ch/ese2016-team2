@@ -16,12 +16,12 @@
 
 <div class="container">
 	<div class="row">
-		<div class="span-third list-max-height">
+		<div class="span-half list-max-height">
 			<h3 class="list-title">Ads</h3>
 			<div class="container-scroll">
 				<c:choose>
 					<c:when test="${empty ownAds}">
-						<p>You have not advertised anything yet.</p>
+						<p class="container-pad">You have not advertised anything yet.</p>
 					</c:when>
 					<c:otherwise>
 						<ul class="resultsDiv resultsDiv-small">
@@ -88,12 +88,12 @@
 			</div><%-- .container-scroll END --%>
 		</div><%-- .span-third END --%>
 
-		<div class="span-third list-max-height">
+		<div class="span-half list-max-height">
 			<h3 class="list-title">Auctions</h3>
 			<div class="container-scroll">
 				<c:choose>
 					<c:when test="${empty ownAuctions}">
-						<p>You have no auctions set yet.</p>
+						<p class="container-pad">You have no auctions set yet.</p>
 					</c:when>
 					<c:otherwise>
 						<ul class="resultsDiv resultsDiv-small">

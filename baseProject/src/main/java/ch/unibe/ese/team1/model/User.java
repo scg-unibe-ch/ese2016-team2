@@ -15,6 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /** Describes a user on the platform. */
@@ -72,10 +75,12 @@ public class User {
 	private String aboutMe;
 	
 	@JsonIgnore
+	@Fetch(FetchMode.SELECT)
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Ad> bookmarkedAds;
 	
 	@JsonIgnore
+	@Fetch(FetchMode.SELECT)
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Auction> bookmarkedAuctions;
 

@@ -41,7 +41,7 @@ public class AuctionTestDataSaver {
 
 		SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm, dd.MM.yyyy");
 
-		Date endTime1 = timeFormatter.parse("11:39, 25.12.2016");
+		Date endTime1 = timeFormatter.parse("11:39, 25.11.2016");
 		Date endTime2 = timeFormatter.parse("12:00, 20.12.2017");
 
 		String houseDescription1 = "The house is completely furnished. It has a huge cellar,"
@@ -77,6 +77,7 @@ public class AuctionTestDataSaver {
 		auctionKerzers.setCable(true);
 		auctionKerzers.setGarage(true);
 		auctionKerzers.setInternet(true);
+		auctionKerzers.setAuctionEnded(true);
 		List<AuctionPicture> pictures = new ArrayList<>();
 		pictures.add(createPicture(auctionKerzers, "/img/test/ad1_1.jpg"));
 		pictures.add(createPicture(auctionKerzers, "/img/test/ad1_2.jpg"));

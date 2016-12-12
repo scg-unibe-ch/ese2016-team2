@@ -10,7 +10,10 @@
 	var js = {
 		common: function () {
 			return $.flatfindr
-				.with({ ZIP_CODES: <c:import url="getzipcodes.jsp" /> })
+				.with({
+					PAGE_NAME: pagename,
+					ZIP_CODES: <c:import url="getzipcodes.jsp" />
+				})
 				.add(['header'])
 				.then('bits', 'unreadMessages');
 		},

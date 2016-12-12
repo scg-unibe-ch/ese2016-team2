@@ -15,3 +15,6 @@
 /**
  * Page specific
  */
+
+// @codekit-prepend "+alerts.js"
+// @codekit-prepend "+form-validator.js"
