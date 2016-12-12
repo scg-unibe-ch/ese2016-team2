@@ -85,14 +85,15 @@ public class AlertControllerTest {
 	
 	@Test
 	public void postAlertWithErrors() throws Exception {
-		AlertForm alertForm = new AlertForm();
-		alertForm.setCity("3000 - Bern");
-		alertForm.setRadius(100);
-		alertForm.setPrice(500);
-		alertForm.setNoRoomNoStudio(true);
+		Principal principal = mock(Principal.class);
+		when(principal.getName()).thenReturn("user@bern.com");
 		
 		this.mockMvc.perform(post("/profile/alerts")
-						.requestAttr("alertForm", alertForm))
+						.param("city", "3000 - Bern")
+						.param("radius", "100")
+						.param("price", "500")
+						.param("noRoomNoStudio", "true")
+						.principal(principal))
 					.andExpect(status().isOk())
 					.andExpect(view().name("alerts"));
 	}
