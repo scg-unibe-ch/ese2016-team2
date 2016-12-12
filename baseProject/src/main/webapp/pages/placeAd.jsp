@@ -85,6 +85,7 @@
 								<span class="validationErrorText"></span>
 							</div>
 							<form:errors path="prize" cssClass="validationErrorText" />
+
 							<form:input
 								class="edit-section"
 								value=""
@@ -98,6 +99,7 @@
 								<span class="validationErrorText"></span>
 							</div>
 							<form:errors path="squareFootage" cssClass="validationErrorText" />
+
 							<div class="row dates">
 	              				<div class="tile tile-half">
 	                				<div class="row">
@@ -197,13 +199,14 @@
 				<div class="validator error-field-title">
 					<span class="validationErrorText"></span>
 				</div>
-					<form:errors path="title" cssClass="validationErrorText" />
-						<form:textarea
-							id="roomDescription"
-							path="roomDescription"
-							rows="10"
-							tabindex="8"
-							placeholder="Room Description *" />
+				<form:errors path="title" cssClass="validationErrorText" />
+
+				<form:textarea
+					id="roomDescription"
+					path="roomDescription"
+					rows="10"
+					tabindex="8"
+					placeholder="Room Description *" />
 				<div class="validator error-roomDescription">
 					<span class="validationErrorText"></span>
 				</div>

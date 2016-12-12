@@ -12,7 +12,7 @@
 jQuery.flatfindr.place = function (window, document, $, $view, option) {
 
   // @Jerome quick and dirty.
-  $('#field-city').on('input blur', function() {
+  $('#field-city').on('input focusout', function() {
     var streetVal = $('#field-street').val();
     $('.gllpSearchField').val(streetVal +', '+ this.value);
 
@@ -93,9 +93,13 @@ jQuery.flatfindr.place = function (window, document, $, $view, option) {
       minDate: new Date()
     }).datepicker('setDate', null);
 
+    var
+      dp_date = new Date(),
+      dp_date_out = dp_date.setDate(dp_date.getDate() + 1);
     $('#dp-endDate').datepicker({
       altField: '#field-endDate',
-      dateFormat : 'dd-mm-yy'
+      dateFormat : 'dd-mm-yy',
+      minDate: new Date(dp_date_out)
     }).datepicker('setDate', null);
   }
 
@@ -123,6 +127,8 @@ jQuery.flatfindr.place = function (window, document, $, $view, option) {
         $startTime.val(val)
         $('#show-startTime').text(time);
       }
+    } else if (id === 'auctionEndTime') {
+      $('#field-endTime').val(time);
     }
   });
 

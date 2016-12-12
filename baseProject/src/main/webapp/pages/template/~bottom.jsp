@@ -38,7 +38,9 @@
 			},
 
 			register: function () {
-		    //return $.flatfindr.add(['autoloc']);
+				return $.flatfindr
+					.add(['validator'])
+					.then('bits', 'addAutoloc', ['#city']);
 			},
 
 			alerts: function () {
@@ -116,7 +118,7 @@
 			},
 
 			placeAuction: function () {
-				return js.placeAd();
+				return $.flatfindr.add(['place', 'imageUpload', 'validator']);
 			},
 
 			enquiries: function () {

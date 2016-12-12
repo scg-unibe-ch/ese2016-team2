@@ -20,10 +20,12 @@
 						method="post"
 						modelAttribute="placeAuctionForm"
 						action="/profile/placeAuction"
-						id="placeAuctionForm"
+						id="placeAdForm"
 						autocomplete="off"
 						enctype="multipart/form-data">
+
 						<div class="container-scroll">
+							
 							<div class="row checkboxes edit-section">
 								<div class="tile tile-third">
 									<form:radiobutton id="room" path="roomType" value="Room" checked="checked" />
@@ -38,12 +40,18 @@
 									<label for="house">House</label>
 								</div>
 							</div>
+
 							<form:input
 								type="text"
 								id="field-street"
 								path="street"
 								placeholder="Address"
 								tabindex="1" />
+							<div class="validator error-field-street">
+								<span class="validationErrorText"></span>
+							</div>
+							<form:errors path="street" cssClass="validationErrorText" />
+
 							<form:input
 								class="edit-section"
 								type="text"
@@ -51,7 +59,13 @@
 								path="city"
 								placeholder="City"
 								tabindex="2" />
+							<div class="validator error-field-city">
+								<span class="validationErrorText"></span>
+							</div>
 							<form:errors path="city" cssClass="validationErrorText" />
+							<form:input id="ad-lat" path="latitude" type="hidden" value="46.947974"/>
+							<form:input id="ad-lon" path="longitude" type="hidden" value="7.447447"/>
+
 							<%-- @Jerome: for some reason it autosets '0' as value. W/A: setto '' by js. --%>
 							<form:input
 								value=""
@@ -61,7 +75,11 @@
 								placeholder="Minimun bid in CHF"
 								tabindex="3"
 								min="1" />
+							<div class="validator error-field-Prize">
+								<span class="validationErrorText"></span>
+							</div>
 							<form:errors path="prize" cssClass="validationErrorText" />
+
 							<form:input
 								class="edit-section"
 								value=""
@@ -71,65 +89,52 @@
 								placeholder="Space in m²"
 								tabindex="4"
 								min="5" />
+							<div class="validator error-field-SquareFootage">
+								<span class="validationErrorText"></span>
+							</div>
 							<form:errors path="squareFootage" cssClass="validationErrorText" />
+
 							<h3 class="edit-section-title">
-								End date
+								End date and time
 								<span>
 									Choose a date and a time for the auction to end.
 								</span>
 							</h3>
 							<div class="row dates related">
-				            	<div class="tile tile-half">
-				                	<div class="row">
-				                  		<div class="tile tile-full">
-				                    		<input
+				        <div class="tile tile-half">
+				          <div class="row">
+				            <div class="tile tile-full">
+				              <form:input
 												tabindex="10"
-	                      						class="js-has-label"
-	                      						type="text"
-	                      						id="field-endDate"
+	                      class="js-has-label"
+	                      type="text"
+	                      id="field-endDate"
 												path="endDate"
-	                      						placeholder="Choose from datepicker..." />
-	                  					</div>
-	                				</div>
-	              				</div>
-	              			<div class="tile tile-half">
-	                			<div class="datepicker" id="dp-endDate">
-	                			</div>
-	              			</div>
-	            		</div>
-							<div class="row times edit-section">
-								<div class="tile tile-half">
-									<div class="row">
-										<div class="tile tile-full">
-	                   			 			<label>End: Hour</label>
-	                  					</div>
-										<div class="tile tile-full action action-tile">
-											<select id="auctionEndHour">
-												<% for (int i = 0; i < 24; i++) {
-													String hour = String.format("%02d", i);
-													out.print("<option value=\"" + hour + "\">" + hour +"</option>");
-												} %>
-											</select>
-										</div>
-									</div>
+	                      placeholder="Choose from datepicker..." />
+	                  </div>
+	                </div>
+	              </div>
+								<form:errors path="endDate" cssClass="validationErrorText" />
+	              <div class="tile tile-half">
+	                <div class="datepicker" id="dp-endDate">
+                	</div>
+              	</div>
+	            </div>
+
+							<div class="row times times-auction">
+								<div class="tile tile-quarter">
+									<label>Time</label>
 								</div>
 								<div class="tile tile-half">
-									<div class="row">
-										<div class="tile tile-full">
-	                    					<label>Minute</label>
-	                  					</div>
-										<div class="tile tile-full action action-tile">
-											<select id="auctionEndMinute">
-												<% for (int i = 0; i < 60; i++) {
-													String minute = String.format("%02d", i);
-													out.print("<option value=\"" + minute + "\">" + minute +"</option>");
-												} %>
-											</select>
-	                  					</div>
-									</div>
+									<input class="time-range" id="auctionEndTime" type="range" value="48" min="0" max="96">
 								</div>
-							</div>
-							<form:input id="field-endTime" type="hidden" path="endTime" /></td>
+								<div class="tile tile-quarter show-time">
+									<p id="show-auctionEndTime">12:00</p>
+								</div>
+							</div> <%-- .row.times END --%>
+							<form:input id="field-endTime" type="hidden" path="endTime" value="12:00" />
+							<form:errors path="endTime" cssClass="validationErrorText" />
+
 							<div class="row dates">
 	              				<div class="tile tile-half">
 	                				<div class="row">
@@ -202,15 +207,24 @@
 								type="text"
 								id="field-title"
 								path="title"
-								placeholder="Title"
+								placeholder="Title *"
 								tabindex="7" />
+							<div class="validator error-field-title">
+								<span class="validationErrorText"></span>
+							</div>
+							<form:errors path="title" cssClass="validationErrorText" />
+
 							<form:textarea
 								id="roomDescription"
 								path="roomDescription"
 								rows="10"
 								tabindex="8"
-								placeholder="Room Description" />
+								placeholder="Room Description *" />
+							<div class="validator error-roomDescription">
+								<span class="validationErrorText"></span>
+							</div>
 							<form:errors path="roomDescription" cssClass="validationErrorText" />
+
 							<form:textarea
 								class="edit-section"
 								path="preferences"
@@ -292,40 +306,58 @@
 					</form:form>
 				</div> <%-- .form.form-search END --%>
 			</div> <%-- .span-half END --%>
-			<div class="span-half">
-				<h3 class="edit-section-title">
-					Drop images here...
-					<span>
-						Drag and drop images onto the window.<br>
-						You can remove an image by double clicking it.
-					</span>
-				</h3>
-				<div class="row">
-					<div class="tile tile-full action-dropzone">
-						<div id="image-preview"></div>
-					</div>
-				</div>
-				<h3 class="edit-section-title">
-					Your viewing times...
-					<span>
-						Add viewing times from the panel to your left at the bottom of the
-						form. You can remove a viewing time by double clicking the corresponding
-						<i class="fa fa-times base-color-opposite"></i>.
-				</h3>
-				<div class="row">
-					<div class="tile tile-full action-viewing-delete">
-						<div id="viewing-preview"></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="tile tile-half">
-					</div>
-				</div>
-			</div>
+			<div class="span-half page-max-height">
+				<div class="container-scroll">
+					<div class="scroll-wrapper">
+						<h3 class="edit-section-title">
+							Map
+						</h3>
+						<div class="row container-pad">
+							<fieldset class="gllpLatlonPicker">
+								<input type="text" class="gllpSearchField">
+								<input type="button" class="gllpSearchButton" value="search">
+								<div class="gllpMap">Google Maps</div>
+								<input id="map-lat" type="hidden" class="gllpLatitude" value="46.947974"/>
+								<input id="map-lon" type="hidden" class="gllpLongitude" value="7.447447"/>
+								<input type="hidden" class="gllpZoom" value="14"/>
+							</fieldset>
+						</div>
+						<h3 class="edit-section-title">
+							Drop images here...
+							<span>
+								Drag and drop images onto the window.<br>
+								You can remove an image by double clicking it.
+							</span>
+						</h3>
+						<div class="row">
+							<div class="tile tile-full action-dropzone">
+								<div id="image-preview"></div>
+							</div>
+						</div>
+						<h3 class="edit-section-title">
+							Your viewing times...
+							<span>
+								Add viewing times from the panel to your left at the bottom of the
+								form. You can remove a viewing time by double clicking the corresponding
+								<i class="fa fa-times base-color-opposite"></i>.
+						</h3>
+						<div class="row">
+							<div class="tile tile-full action-viewing-delete">
+								<div id="viewing-preview"></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="tile tile-half">
+							</div>
+						</div>
+					</div> <%-- .scroll-wrapper END --%>
+				</div> <%-- .container-scroll END --%>
+			</div> <%-- .span-half END --%>
 		</div> <%-- .row END --%>
 	</div> <%-- .container END --%>
 </main>
 
 <c:import url="template/~bottom.jsp">
 	<c:param name="js" value="placeAuction" />
+	<c:param name="map" value="2" />
 </c:import>
