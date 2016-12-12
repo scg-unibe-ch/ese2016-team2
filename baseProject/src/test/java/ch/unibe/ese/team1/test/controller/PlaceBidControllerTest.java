@@ -52,7 +52,7 @@ public class PlaceBidControllerTest {
 		when(principal.getName()).thenReturn("user@bern.com");
 		
 		this.mockMvc.perform(get("/auction/placeBid")
-						.param("id", "1")
+						.param("id", "2")
 						.principal(principal))
 					.andExpect(status().isOk())
 					.andExpect(view().name("placeBid"))
@@ -65,11 +65,11 @@ public class PlaceBidControllerTest {
 		when(principal.getName()).thenReturn("user@bern.com");
 		
 		this.mockMvc.perform(post("/auction/placeBid")
-						.param("id", "1")
+						.param("id", "2")
 						.param("prize", "-1")
 						.principal(principal))
 					.andExpect(status().isOk())
-					.andExpect(forwardedUrl("/pages/auction?id=1.jsp"));
+					.andExpect(forwardedUrl("/pages/auction?id=2.jsp"));
 	}
 	
 	@Test
@@ -78,7 +78,7 @@ public class PlaceBidControllerTest {
 		when(principal.getName()).thenReturn("user@bern.com");
 		
 		this.mockMvc.perform(post("/auction/placeBid")
-						.param("id", "1")
+						.param("id", "2")
 						.param("prize", "1")
 						.principal(principal))
 					.andExpect(status().is(302));
@@ -90,12 +90,12 @@ public class PlaceBidControllerTest {
 		when(principal.getName()).thenReturn("user@bern.com");
 		
 		this.mockMvc.perform(post("/auction/placeBid")
-						.param("id", "1")
+						.param("id", "2")
 						.param("prize", "1000000")
 						.principal(principal))
 					.andExpect(status().is(302));
 		
-		assertEquals(1000000, auctionService.getAuctionById(1).getPrize());
+		assertEquals(1000000, auctionService.getAuctionById(2).getPrize());
 	}
 	
 }

@@ -82,4 +82,15 @@ public class PlaceAuctionControllerTest {
 			.andExpect(status().is(302)); //redirected
 	}
 	
+	@Test
+	public void testGetUploadedPictures() throws Exception {
+		this.mockMvc.perform(post("/profile/placeAuction/getUploadedPictures"))
+					.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void testDeleteUploadedPicture() throws Exception {
+		this.mockMvc.perform(post("/profile/placeAuction/deletePicture").param("url", "Test url")).andExpect(status().isOk());
+	}
+	
 }
