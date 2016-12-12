@@ -173,7 +173,9 @@ jQuery.flatfindr.register({
           path;
 
 
-        if (PAGE_NAME === 'editAd' || PAGE_NAME === 'placeAd') {
+        if (PAGE_NAME === 'editAd' ||
+            PAGE_NAME === 'placeAd' ||
+            PAGE_NAME === 'placeAuction') {
           $image_preview
             .prepend(createPreviewElement(file))
             .find('.action-delete')
