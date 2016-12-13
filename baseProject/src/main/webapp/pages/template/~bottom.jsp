@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <security:authorize var="loggedIn" url="/profile" />
 
@@ -79,6 +80,15 @@
 			},
 
 			editProfile: function () {
+				$('form').on('submit', function(e) {
+			    e.preventDefault();
+			    var
+			      $about_me = $('#about-me'),
+			      val = $about_me.val();
+			    $about_me.val(val.replace(/(\r\n|\n|\r)/gm, ' '));
+			    this.submit();
+			  });
+
 				return $.flatfindr
 					.with({
 						popul: { '#about-me': {
@@ -95,7 +105,7 @@
 			},
 
 			searchAd: function () {
-				return $.flatfindr.add(['search']);
+				return $.flatfindr.add(['search', 'validator']);
 			},
 
 			results: function () {

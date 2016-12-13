@@ -15,18 +15,43 @@ jQuery.flatfindr.search = function (window, document, $, $view, option) {
   $.flatfindr.bits.addAutoloc('#city');
 
 
-  [ 'earliestMoveInDate',
-    'earliestMoveOutDate',
-    'latestMoveInDate',
-    'latestMoveOutDate' ]
-    .forEach(function (name) {
-      $.flatfindr.bits.addDatepicker({
-        selector: '#'+ name,
-        altfield: '#field-'+ name,
-        format: 'dd-mm-yy',
-        unset: true
-      });
-    });
+  $.flatfindr.bits.addDatepicker({
+    selector: '#earliestMoveInDate',
+    altfield: '#field-earliestMoveInDate',
+    select: function() {
+      var
+        date = $(this).datepicker('getDate'),
+        date_out = date.setDate(date.getDate() + 1),
+        date_lout = date.setDate(date.getDate() + 1);
+
+      $('#earliestMoveOutDate, #latestMoveInDate')
+        .datepicker('option', 'minDate', new Date(date_out));
+      $('#latestMoveOutDate')
+        .datepicker('option', 'minDate', new Date(date_lout));
+    },
+    unset: true
+  });
+
+
+  $.flatfindr.bits.addDatepicker({
+    selector: '#latestMoveInDate',
+    altfield: '#field-latestMoveInDate',
+    unset: true
+  });
+
+
+  $.flatfindr.bits.addDatepicker({
+    selector: '#earliestMoveOutDate',
+    altfield: '#field-earliestMoveOutDate',
+    unset: true
+  });
+
+
+  $.flatfindr.bits.addDatepicker({
+    selector: '#latestMoveOutDate',
+    altfield: '#field-latestMoveOutDate',
+    unset: true
+  });
 
 
 

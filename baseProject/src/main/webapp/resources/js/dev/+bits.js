@@ -31,7 +31,9 @@ jQuery.flatfindr.bits = function (window, document, $) {
       $datepicker =
         $(item.selector).datepicker({
           altField: item.altfield,
-          dateFormat: item.format
+          dateFormat: item.format || 'dd-mm-yy',
+          minDate: item.min || new Date(),
+          onSelect: item.select || null  
         });
 
       if (item.unset)

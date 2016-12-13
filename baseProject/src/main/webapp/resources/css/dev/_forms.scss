@@ -554,6 +554,12 @@ $slip-height-medium: 73px;
     height: (4 * $slip-height-small) - 1;
   }
 
+  .placeAd &,
+  .placeAuction & {
+    top: 5 * $slip-height-small + 1 !important;
+    height: (3 * $slip-height-small) - 1;
+  }
+
   // could be .wo-search +
   .results &,
   .searchAd &,
@@ -575,6 +581,12 @@ $slip-height-medium: 73px;
     .register & {
       top: 3 * $slip-height-medium + 1 !important;
       height: (4 * $slip-height-medium) - 1;
+    }
+
+    .placeAd &,
+    .placeAuction & {
+      top: 5 * $slip-height-medium + 1 !important;
+      height: (3 * $slip-height-medium) - 1;
     }
   }
 

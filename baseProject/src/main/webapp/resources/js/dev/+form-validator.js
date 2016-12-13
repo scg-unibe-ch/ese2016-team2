@@ -12,7 +12,7 @@
 jQuery.flatfindr.validator = function (window, document, $, $view, option) {
 
 
-  var SAFE_INT = Math.pow(2,31) - 1;
+  var SAFE_INT = "2'100'000'000"; //Math.pow(2,31) - 1;
 
 
   /**
