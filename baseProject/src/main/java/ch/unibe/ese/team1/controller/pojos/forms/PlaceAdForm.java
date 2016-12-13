@@ -39,13 +39,7 @@ public class PlaceAdForm {
 
 	private String preferences;
 
-	// optional for input
-	private String roomFriends;
-
 	private String roomType;
-
-	//true if studio, false if room
-	private boolean studio;
 
 	private boolean buyable;
 
