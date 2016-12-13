@@ -19,13 +19,9 @@ public class PlaceAuctionForm {
 	@Pattern(regexp = "^[0-9]{4} - [-;.\\w\\s\\u00C0-\\u00FF]*", message = "Please pick a city from the list")
 	private String city;
 	
-	
-	
 	private String latitude;
 	
 	private String longitude;
-	
-	
 	
 	@NotBlank(message = "Required")
 	private String moveInDate;
