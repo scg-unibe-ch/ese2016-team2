@@ -408,16 +408,15 @@ public class AdService {
 		}
 		
 		Iterator<Ad> iterator = locatedResults.iterator();
-		List<Ad> finalResults = new ArrayList<>();
 		while (iterator.hasNext()) {
 			Ad ad = iterator.next();
 			User user = ad.getUser();
-			if (user.getAccount().equals("Premium") == premium){
-				finalResults.add(ad); 
+			if (user.getAccount().equals("Premium") != premium){
+				iterator.remove();
 			}
 		}
 		
-		return finalResults;
+		return locatedResults;
 	}
 	
 	/**

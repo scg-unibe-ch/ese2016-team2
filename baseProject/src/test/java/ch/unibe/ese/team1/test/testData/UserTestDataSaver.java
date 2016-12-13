@@ -43,7 +43,7 @@ public class UserTestDataSaver {
 		userDao.save(janeDoe);
 
 		// Another advertiser & searcher
-		User bernerBaer = createUser("user@bern.com", "password", "Berner", "BÃ¤r", 
+		User bernerBaer = createUser("user@bern.com", "password", "Berner", "Bär", 
 				"/img/avatar.jpg", Gender.MALE, "Premium", "Alpenstrasse 35", "Bern", 3000);
 		UserPicture picture = new UserPicture();
 		picture.setFilePath("/img/test/berner_baer.png");
@@ -119,7 +119,7 @@ public class UserTestDataSaver {
 		return "I am a Master student from switzerland. I'm 25 years old, "
 				+ "my hobbies are summer-sports, hiking, traveling and cooking. "
 				+ "I enjoy spending time with friends, watching movies, "
-				+ "going for drinks and organizing dinners. I have lived in FrÃ¤kmÃ¼ntegg, "
+				+ "going for drinks and organizing dinners. I have lived in Fräkmüntegg, "
 				+ "London and Zurich, always in flatshares and i have never had "
 				+ "problems with my flatmates because I am a nice person.";
 	}

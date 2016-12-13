@@ -34,7 +34,8 @@
 										id="bid-prize"
 										type="number"
 										path="prize"
-										placeholder="${shownAuction.prize}" step="50" />
+										placeholder="${shownAuction.prize}" step="50" 
+										min="1" />
 									<form:checkbox
 										style="display:none"
 										id="id" name="id"

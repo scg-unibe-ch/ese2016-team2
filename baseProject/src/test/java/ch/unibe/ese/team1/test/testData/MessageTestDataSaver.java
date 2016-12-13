@@ -62,7 +62,7 @@ public class MessageTestDataSaver {
 
 		message = new Message();
 		message.setSubject("Check this out");
-		message.setText("Hello Mr. BÃ¤r\n " + getDummyText3());
+		message.setText("Hello Mr. Bär\n " + getDummyText3());
 		message.setSender(oprah);
 		message.setRecipient(testerMuster);
 		message.setState(MessageState.READ);
@@ -106,25 +106,6 @@ public class MessageTestDataSaver {
 		message.setState(MessageState.READ);
 		message.setDateSent(dateFormat.parse("11:30 24.02.2014"));
 		messageDao.save(message);
-
-		/* Messages for Oprah
-		message = new Message();
-		message.setSubject("Best Ad ever");
-		message.setText("Hey Oprah\n\n" + getDummyText1());
-		message.setSender(jane);
-		message.setRecipient(oprah);
-		message.setState(MessageState.UNREAD);
-		message.setDateSent(dateFormat.parse("12:30 24.02.2014"));
-		messageDao.save(message);
-
-		message = new Message();
-		message.setSubject("You gotta see this");
-		message.setText("Whats up Oprah?\n\n" + getDummyText2());
-		message.setSender(bernerBaer);
-		message.setRecipient(oprah);
-		message.setState(MessageState.UNREAD);
-		message.setDateSent(dateFormat.parse("11:30 24.02.2014"));
-		messageDao.save(message);*/
 	}
 
 	private String getDummyText1() {
@@ -140,7 +121,7 @@ public class MessageTestDataSaver {
 	private String getDummyText2() {
 		return "I totally agree with you, glad that we settled this. I can visit the flat another time, this"
 				+ "is no problem for me, looking forward to it."
-				+ "\nSee you later,\n\n" + "Berner BÃ¤r";
+				+ "\nSee you later,\n\n" + "Berner Bärr";
 	}
 
 	private String getDummyText3() {

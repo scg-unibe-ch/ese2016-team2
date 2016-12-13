@@ -41,7 +41,7 @@ public class AlertTestDataSaver {
 		alert = new Alert();
 		alert.setUser(ese);
 		alert.setAlertType("Room");
-		alert.setCity("ZÃ¼rich");
+		alert.setCity("Zürich");
 		alert.setZipcode(8000);
 		alert.setPrice(1000);
 		alert.setRadius(25);

@@ -50,7 +50,7 @@
 									<div class="row">
 										<div class="tile tile-full">
 											<div class="resultAd-text resultAd-details">
-												<p>${ad.street},${ad.zipcode}${ad.city}</p>
+												<p>${ad.street},${ad.zipcode} ${ad.city}</p>
 												<p>${ad.roomType}</p>
 												<div class="row">
 													<div class="tile tile-three-quarter">
@@ -123,7 +123,7 @@
 									<div class="row">
 										<div class="tile tile-full">
 											<div class="resultAd-text resultAd-details">
-												<p>${ad.street},${ad.zipcode}${ad.city}</p>
+												<p>${ad.street},${ad.zipcode} ${ad.city}</p>
 												<p>${ad.roomType}</p>
 												<div class="row">
 													<div class="tile tile-three-quarter">
