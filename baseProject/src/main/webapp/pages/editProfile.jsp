@@ -105,7 +105,7 @@
 										</div>
 									</div>
 									<div class="row dates">
-                						<div class="tile tile-full">
+                						<%-- <div class="tile tile-full">
                   							<label>About</label>
                 						</div>
                 						<div class="tile tile-full">
@@ -114,7 +114,7 @@
 												path="aboutMe"
 												rows="10" />
 										</div>
-									</div>
+									</div> --%>
 								</div> <%-- .container-scroll END --%>
 								<button type="submit">Update</button>
 					</form:form>
