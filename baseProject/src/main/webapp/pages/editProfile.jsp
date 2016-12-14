@@ -24,13 +24,13 @@
 							id="profile-picture"
 							src="${currentUser.picture.filePath}"
 							alt="${currentUser.firstName} ${currentUser.lastName}">
-							<h3 class="edit-section-title">
+							<%-- <h3 class="edit-section-title">
 								Drag and drop a new profile image...<br>
 								<span>
 									To change your profile image, just drag and drop your new image
 									onto the window.
 								</span>
-							</h3>
+							</h3> --%>
 					</c:when>
 					<c:otherwise>
 						<a href="/login">Login</a>
